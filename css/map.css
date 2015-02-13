@@ -1,0 +1,89 @@
+/* MAIN MAP */
+
+		#mapContainer svg {
+		    display:block;
+		    margin:0 auto;
+		    background-color: gray;
+		}
+		#mapContainer path {
+		  fill:#DDD;
+		  stroke:#FFF;
+		}
+		
+		.countries{
+			fill:#cacaca;
+			stroke: #ada9a9;
+		    stroke-width: 0.5px;
+			
+		}
+		
+		.countries .active {
+		  fill: black;
+		}
+		
+		.country-borders {
+		  fill: none;
+		  stroke: #FFF6E5;
+		  stroke-width: 1px;
+		  stroke-linejoin: round;
+		  stroke-linecap: round;
+		  pointer-events: none;
+		}
+		
+		.background {
+		  fill: none;
+		  pointer-events: all;
+		  width: 100%;
+		  height: 100%;
+		}
+
+
+
+
+/* ZOOM */
+		#zoom_control{
+			position: absolute;
+			top:10px;
+			right:30px;
+			background-color: none;
+			height:50px;
+			width:90px;
+			z-index:3;
+		}
+		
+		#zoom-in{
+			position: absolute;
+			top:0px;
+			left:0px;
+			background: url("../img/plus.png") no-repeat;
+			width: 40px;
+			height:40px;
+		}
+		
+		#zoom-out{
+			position: absolute;
+			top:0px;
+			left:50px;
+			background: url("../img/minus.png") no-repeat;
+			width: 40px;
+			height:40px;
+			
+		}
+		
+		#zoom-in:hover{
+			background:url("../img/plus2.png") no-repeat;
+			-webkit-transition: all 500ms ease;
+			-moz-transition: all 500ms ease;
+			-ms-transition: all 500ms ease;
+			transition: all 500ms ease;
+			cursor: pointer;
+		}
+		
+		#zoom-out:hover{
+			background:url("../img/minus2.png") no-repeat;
+			-webkit-transition: all 500ms ease;
+			-moz-transition: all 500ms ease;
+			-ms-transition: all 500ms ease;
+			transition: all 500ms ease;
+			cursor: pointer;
+		}

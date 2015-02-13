@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+  
+    <title>Ant Maps</title>
+
+    <link rel="icon" type="image/png" href="img/spp.png">
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    
+    <!-- Font Awesome CSS -->
+    <link href="css/font-awesome.css" rel="stylesheet">
+    
+    <!-- Bootstrap Social CSS -->
+    <link href="css/bootstrap-social.css" rel="stylesheet">
+    
+    <!-- Google Fonts Dosis -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Dosis">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- Map CSS -->
+    <link rel="stylesheet" href="css/map.css">
+    
+
+</head>
+<body>
+
+ <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">AntMaps</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#">About</a>
+                    </li>
+                  
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
+                    <li>
+                        <div id="facebook-button" class="share-button">
+                            <a class="btn btn-social-icon btn-facebook">
+							    <i class="fa fa-facebook"></i>
+							  </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div id="twitter-button" class="share-button">
+                             <a class="btn btn-social-icon btn-twitter">
+							    <i class="fa fa-twitter"></i>
+							  </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div id="twitter-button" class="share-button">
+                             <a class="btn btn-social-icon btn-reddit">
+							    <i class="fa fa-reddit"></i>
+							  </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+    </nav>
+    
+    
+    
+    <div id="side">
+	    	<h3 id="view-title">
+	    				Species View
+	    	</h3>
+	    		  
+	    		  <div class="button-wrap">
+				    <div class="button-bg">
+				      <div class="button-switch"></div>
+				    </div>
+				  </div>
+				  
+			
+			
+			<div id="spp_view">
+				<form id="query">
+					<label> Subfamily </label><br>
+						<select id="subfamily-select" name="subfamily">
+							<option value="Select Subfamily">Select Subfamily:</option>
+						</select><br>
+						
+					<label> Genus </label><br>
+						<select id="genus-select" name="genus">
+							<option value="Select Genus">Select Genus:</option>
+						</select><br>
+						
+					<label> Species </label><br>
+						<select id="species-select" name="species">
+							<option value="Select Species">Select Species:</option>
+						</select><br>
+						
+					<input type="submit" id="map-spp" class="text-center" name="map" alt="search" value="">
+					<!-- map button -->
+					
+			</div> <!-- end spp_view -->
+			
+			<div id="diversity_view"> 
+				
+				<div class="diversity-button diversity-active">  Subfamily </div> 
+				<div class="diversity-button"> Genus </div> 
+				<div class="diversity-button"> Location </div> 
+				
+				<div id="diversity_subfamily">
+					<label> Subfamily </label><br>
+					<select id="subfamily-select2" name="subfamily">
+							<option value="Select Subfamily">Select Subfamily:</option>
+					</select><br>
+					<input type="submit" id="map-subfamily" class="text-center" name="map" alt="search" value="">
+					<!-- map button -->
+				</div>
+				
+				<div id="diversity_genus">
+					<label> Subfamily </label><br>
+						<select id="subfamily-select3" name="subfamily">
+							<option value="Select Subfamily">Select Subfamily:</option>
+						</select><br>
+						
+					<label> Genus </label><br>
+						<select id="genus-select2" name="genus">
+							<option value="Select Genus">Select Genus:</option>
+						</select><br>
+					<input type="submit" id="map-genus" class="text-center" name="map" alt="search" value="">
+					<!-- map button -->
+
+				</div>
+				
+				<div id="diversity_location">
+				</div>
+
+				
+				
+			</div><!-- end diversity_view -->
+	    
+    </div>
+    
+    
+    <div id="main">
+    
+    
+    	<div id="mapContainer">
+   			<svg  width="100%" height="600"></svg>
+   		</div>
+    
+    
+    	<div id="zoom_control">	
+    		<div id="zoom-in"></div>
+    		<div id="zoom-out"></div>
+    	</div>
+    	
+    	
+    	
+    
+    </div>
+    
+    
+    
+    
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    
+    <!-- Underscore -->
+    <script src="http://underscorejs.org/underscore-min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    
+    <!-- D3 -->
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    
+    <!-- D3.geo -->
+    <script src="http://d3js.org/d3.geo.projection.v0.min.js"></script>
+    
+    <!-- Topojson -->
+	<script src="http://d3js.org/topojson.v1.min.js"></script>
+	
+	<!-- D3 tooltip -->
+	<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+	<!-- D3/Javascript custom code file -->
+	<script src="js/map.js"></script>
+   
+    <script>
+
+	/*  Script to switch views */
+	
+	$("document").ready(function(){
+	 
+		$('.button-wrap').on("click", function(){
+		  $(this).toggleClass('button-active');
+		  $('#view-title').html($('#view-title').text() == 'Diversity View' ? 'Species View' : 'Diversity View');
+		  
+		  if($('.button-wrap').hasClass("button-active")){
+			
+			$("#spp_view").css("display","none");
+			$("#diversity_view").css("display","inline");			
+
+		}else{
+			
+			$("#spp_view").css("display","inline");
+			$("#diversity_view").css("display","none");
+
+		}
+		  
+		});	
+			
+	});
+	
+	</script>
+
+
+
+</body>
+</html>
