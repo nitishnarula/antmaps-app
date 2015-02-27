@@ -25,6 +25,9 @@
     <!-- Google Fonts Dosis -->
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Dosis">
     
+    <!-- Hover.css -->
+    <link rel="stylesheet" href="css/hover-min.css">
+    
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/main.css">
     
@@ -86,7 +89,12 @@
     
     
     <div id="side">
-	    	<h3 id="view-title">
+    	
+    		<a id ="info1" data-title="SPECIES VIEW:  Select a species to map its distribution or browse species" data-html="true" rel="tooltip" href="#"><div id="info" class="hvr-shrink"></div></a>
+    		<a id ="resetAll1" data-title="&nbsp;&nbsp;&nbsp;&nbsp;RESET ALL" data-html="true" rel="tooltip" href="#"><div id="resetAll" class="hvr-shrink"></div></a>
+    		<a id ="export1" data-title="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORT" data-html="true" rel="tooltip" href="#"><div id="export" class="hvr-shrink"></div></a>
+    	
+	    	<h3 id="view-title" class="text-center">
 	    				Species View
 	    	</h3>
 	    		  
@@ -102,55 +110,67 @@
 				<form id="query">
 					<label> Subfamily </label><br>
 						<select id="subfamily-select" name="subfamily">
-							<option value="Select Subfamily">Select Subfamily:</option>
+							<option value="Select Subfamily">Select Subfamily</option>
 						</select><br>
 						
 					<label> Genus </label><br>
 						<select id="genus-select" name="genus">
-							<option value="Select Genus">Select Genus:</option>
+							<option value="Select Genus">Select Genus</option>
 						</select><br>
 						
 					<label> Species </label><br>
 						<select id="species-select" name="species">
-							<option value="Select Species">Select Species:</option>
+							<option value="Select Species">Select Species</option>
 						</select><br>
-						
-					<input type="submit" id="map-spp" class="text-center" name="map" alt="search" value="">
+					</form>	
+					
+					<a id ="browse1" data-title="&nbsp;&nbsp;BROWSE SPECIES" data-html="true" rel="tooltip" href="#"><div id="browse" class="hvr-shrink"></div></a>
+					
+					<div id="map-spp" class="text-center" onclick="updateSpeciesMap()"></div>
+					<!-- <input type="submit" id="map-spp" class="text-center" value="" onclick="updateSpeciesMap()"> -->
 					<!-- map button -->
 					
+					<div id = "species-legend"> </div>
 			</div> <!-- end spp_view -->
 			
 			<div id="diversity_view"> 
-				
-				<div class="diversity-button diversity-active">  Subfamily </div> 
-				<div class="diversity-button"> Genus </div> 
-				<div class="diversity-button"> Location </div> 
+				<div id="diveristy-subfamily-button" class="diversity-button diversity-active">  Subfamily </div> 
+				<div id="diveristy-genus-button" class="diversity-button"> Genus </div> 
+				<div id="diveristy-location-button" class="diversity-button"> Location </div> 
 				
 				<div id="diversity_subfamily">
 					<label> Subfamily </label><br>
 					<select id="subfamily-select2" name="subfamily">
-							<option value="Select Subfamily">Select Subfamily:</option>
+							<option value="Select Subfamily">Select Subfamily</option>
 					</select><br>
-					<input type="submit" id="map-subfamily" class="text-center" name="map" alt="search" value="">
+					<div id="map-subfamily" class="text-center"></div>
 					<!-- map button -->
+					
+					<div id = "diversity-legend"> </div>
 				</div>
 				
-				<div id="diversity_genus">
+				<div id="diversity_genus" class="none">
 					<label> Subfamily </label><br>
 						<select id="subfamily-select3" name="subfamily">
-							<option value="Select Subfamily">Select Subfamily:</option>
+							<option value="Select Subfamily">Select Subfamily</option>
 						</select><br>
 						
 					<label> Genus </label><br>
 						<select id="genus-select2" name="genus">
-							<option value="Select Genus">Select Genus:</option>
+							<option value="Select Genus">Select Genus</option>
 						</select><br>
-					<input type="submit" id="map-genus" class="text-center" name="map" alt="search" value="">
+					<div id="map-genus" class="text-center"></div>
 					<!-- map button -->
 
 				</div>
 				
-				<div id="diversity_location">
+				<div id="diversity_location" class="none">
+					<p class="text-center"> Click on a Bentity </p>
+					<p class="text-center"> Or </p>
+					<label> Bentity </label>
+					<select id="bentity-select" name="bentity">
+							<option value="Select Bentity">Select Bentity</option>
+					</select><br>
 				</div>
 
 				
@@ -164,22 +184,30 @@
     
     
     	<div id="mapContainer">
-   			<svg  width="100%" height="600"></svg>
    		</div>
+ 
+ 
+ 		<div class="hvr-shrink" id="reset_zoom" onclick="resetZoom()">
+ 		</div>
+
+    </div>
     
-    
-    	<div id="zoom_control">	
-    		<div id="zoom-in"></div>
-    		<div id="zoom-out"></div>
-    	</div>
-    	
-    	
-    	
-    
+    <div id="bottom">
+    <h1> Selected Data </h1>
+    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque 
+    laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto 
+    beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit 
+    aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro 
+    quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius 
+    modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis 
+    nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis 
+    autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum 
+    qui dolorem eum fugiat quo voluptas nulla pariatur?
+    </p>
     </div>
     
     
-    
+    <div id="spp-browse-panel"></div>
     
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
@@ -197,40 +225,22 @@
     <script src="http://d3js.org/d3.geo.projection.v0.min.js"></script>
     
     <!-- Topojson -->
-	<script src="http://d3js.org/topojson.v1.min.js"></script>
+	<!-- <script src="http://d3js.org/topojson.v1.min.js"></script> -->
+	<!-- <script src="js/topojson.js"></script> -->
+	<script src="topojson-js/topojson.min.js"></script> 
 	
 	<!-- D3 tooltip -->
 	<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
+	<!-- D3 geo.tile -->
+	<script src="http://d3js.org/d3.geo.tile.v0.min.js"></script>
+	
 	<!-- D3/Javascript custom code file -->
-	<script src="js/map.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/newMap.js"></script>
+	
    
     <script>
-
-	/*  Script to switch views */
-	
-	$("document").ready(function(){
-	 
-		$('.button-wrap').on("click", function(){
-		  $(this).toggleClass('button-active');
-		  $('#view-title').html($('#view-title').text() == 'Diversity View' ? 'Species View' : 'Diversity View');
-		  
-		  if($('.button-wrap').hasClass("button-active")){
-			
-			$("#spp_view").css("display","none");
-			$("#diversity_view").css("display","inline");			
-
-		}else{
-			
-			$("#spp_view").css("display","inline");
-			$("#diversity_view").css("display","none");
-
-		}
-		  
-		});	
-			
-	});
-	
 	</script>
 
 

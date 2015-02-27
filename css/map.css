@@ -1,54 +1,39 @@
 /* MAIN MAP */
 
 		#mapContainer svg {
-		    display:block;
-		    margin:0 auto;
-		    background-color: gray;
-		}
-		#mapContainer path {
-		  fill:#DDD;
-		  stroke:#FFF;
+
 		}
 		
-		.countries{
-			fill:#cacaca;
-			stroke: #ada9a9;
-		    stroke-width: 0.5px;
-			
+		.gratLines{
+		  stroke:#FFF6E5;
 		}
 		
-		.countries .active {
-		  fill: black;
-		}
-		
-		.country-borders {
-		  fill: none;
-		  stroke: #FFF6E5;
-		  stroke-width: 1px;
-		  stroke-linejoin: round;
-		  stroke-linecap: round;
-		  pointer-events: none;
-		}
-		
-		.background {
-		  fill: none;
-		  pointer-events: all;
-		  width: 100%;
-		  height: 100%;
+		.gratBackground{
+		  fill:#E3CDA4;
+		  /* #7ECEFD; */
 		}
 
-
+		.bentities{
+			stroke: black;
+			fill:#3E454C;
+			/* opacity:0.5; */
+			stroke-width:0.5px;
+		}
+		
+		.water{
+			fill:blue;
+		}
+	
 
 
 /* ZOOM */
 		#zoom_control{
 			position: absolute;
 			top:10px;
-			right:30px;
+			left:10px;
 			background-color: none;
 			height:50px;
 			width:90px;
-			z-index:3;
 		}
 		
 		#zoom-in{
@@ -87,3 +72,71 @@
 			transition: all 500ms ease;
 			cursor: pointer;
 		}
+		
+/* RESET ZOOM */
+
+	#reset_zoom{
+			position: absolute;
+			top:20px;
+			left:20px;
+			background-color: none;
+			height:50px;
+			width:50px;
+			background: url("../img/reset-map.png") no-repeat;
+			cursor: pointer;
+		}
+/* 
+	#reset_zoom:hover{
+			background:url("../img/reset2.png") no-repeat;
+			-webkit-transition: all 500ms ease;
+			-moz-transition: all 500ms ease;
+			-ms-transition: all 500ms ease;
+			transition: all 500ms ease;
+			cursor: pointer;
+		}
+ */
+
+/* LEGEND */
+
+	#species-legend{
+		position:absolute;
+		margin-top:20px;
+		margin-left:10px;
+		left:10;
+		top:100;
+		background-color:none;
+		width:200px;
+		height:200px;
+	}
+	
+	#legendColors{
+		float:left;
+		margin-top:10px;
+		margin-left:10px;
+	}
+	
+	#legendColorsDiv{
+		float:left;
+		margin-top:10px;
+		margin-left:10px;
+	}
+	
+	#legendScale{
+		 margin-top:10px;
+		 
+	}
+	
+	
+	.colorbox{
+		width:50px;
+		height:25px;
+		margin-top:5px;
+		border: 1px solid black;
+	}
+	
+	.categoryName{
+		color:white;
+		margin-top:11px;
+		margin-left:30px;
+		float:right;
+	}

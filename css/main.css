@@ -37,6 +37,13 @@
 		.show{
 			opacity: 1;
 		}
+		.inline{
+			display: inline;
+		}
+		.none{
+			display: none;
+		}
+		
     	
     	/* NAV */
     	
@@ -61,35 +68,82 @@
 		  margin: 0;
 		  position: absolute;    
 		  top: 100px;
-		  left: 20px;
+		  left: 10px;
 		  margin-bottom: 20px; 
-		  min-height: 620px; 
-		  overflow: auto;    
-		  width: 300px;  
+		  min-height: 750px; 
+		  /* overflow: auto;  */   
+		  width: 280px;  
 		  background-color: none;  
-		  z-index: 2;
 		}
 		
-		#species_view{
+		/* SIDE: top icons */
+		#info{
 			position: absolute;
-			top:150px;
-			left:30px;
+			top:-30px;
+			left:27px;
+			background: url("../img/info.png") no-repeat;
+			width:50px;
+			height:50px;
+		
 		}
 		
+		#resetAll{
+			position: absolute;
+			top:-30px;
+			left:87px;
+			background: url("../img/reset-all.png") no-repeat;
+			width:50px;
+			height:50px;
+		
+		}
+		
+		#export{
+			position: absolute;
+			top:-30px;
+			left:147px;
+			background: url("../img/export.png") no-repeat;
+			width:50px;
+			height:50px;
+		
+		}
+		
+		#info:hover,#resetAll:hover,#export:hover{
+			cursor:pointer;	
+		}
+		
+		/* SIDE: 2 views */
 		
 		#diversity_view{
+			/* opacity: 0; */
 			display: none;
 			position: absolute;
 			top:150px;
 			left:0px;
 		}
 		
+		
+		#spp_view{
+			position: absolute;
+			top:120px;
+		}
+		
+		
+		#view-title{
+			position: absolute;
+			top:5px;
+			left:50px;
+		}
+		
+		
 		/* TOGGLE BUTTON */
 		
 		.button-wrap {
 		  width: 100px;
-		  margin: auto 0;
+		  margin: 40px auto 0;
 		  cursor: pointer;
+		  position: absolute;
+		  left: 50px;
+		  top:35px;
 		}
 		.button-bg {
 		  width: 100%;
@@ -140,22 +194,29 @@
     		margin-left: 10px;
     	}
     	
+    	#bentity-select{
+    		max-width: 150px;
+    	}
+    	
     	/* FORM DIVERSITY VIEW*/
     	.diversity-button{
 	    	margin-top: 10px;
-	    	margin-left: 5px;
+	    	margin-left: 3px;
 	    	font-family: Antenna,Helvetica,sans-serif;
 			display: inline-block;
 			text-align: center;
-			padding: 8px;
+			padding-top: 8px;
+			padding-bottom: 8px;
+			padding-left: 4px;
+			padding-right: 4px;
 			text-decoration: none;
 			font-weight: bold;
 			font-size: 10px;
-			line-height: 1;
+			line-height: 1.5;
 			text-transform: uppercase;
 			position: relative;
 			height: 30px;
-			min-width: 80px;
+			width: 70px;
 			background: none;
 			color: #111;
 			border: 2px solid #111;
@@ -169,88 +230,253 @@
 			 text-decoration: none;
 			 color:white;
 			 background-color: black;
+			 cursor:pointer;
 	    }
 	    
-	    input#map-spp{
-			background:url("../img/map3.png");
-			background-repeat: no-repeat;
-			border: 0;
-			width: 50px;
-			height: 50px;
-			margin-top: 50px;
-			margin-left: 115px;
-			margin-right: 115px;
-		}
-		
-		input#map-spp:hover{
-			background:url("../img/map4.png");
-			-webkit-transition: all 500ms ease;
-			-moz-transition: all 500ms ease;
-			-ms-transition: all 500ms ease;
-			transition: all 500ms ease;
-		}
-		
-		input#map-subfamily{
-			background:url("../img/map3.png");
-			background-repeat: no-repeat;
-			border: 0;
-			width: 50px;
-			height: 50px;
-			margin-top: 50px;
-			margin-left: 115px;
-			margin-right: 115px;
-		}
-		
-		input#map-subfamily:hover{
-			background:url("../img/map4.png");
-			-webkit-transition: all 500ms ease;
-			-moz-transition: all 500ms ease;
-			-ms-transition: all 500ms ease;
-			transition: all 500ms ease;
-		}
-		
-		input#map-genus{
-			background:url("../img/map3.png");
-			background-repeat: no-repeat;
-			border: 0;
-			width: 50px;
-			height: 50px;
-			margin-top: 50px;
-			margin-left: 115px;
-			margin-right: 115px;
-		}
-		
-		input#map-genus:hover{
-			background:url("../img/map4.png");
-			-webkit-transition: all 500ms ease;
-			-moz-transition: all 500ms ease;
-			-ms-transition: all 500ms ease;
-			transition: all 500ms ease;
-		}
-    	
-    	.diversity-button.diversity-active{
+	    .diversity-active{
     		-webkit-box-shadow: 0px 0px 10px 5px rgba(255, 255, 190, .3);
 			-moz-box-shadow: 0px 0px 10px 5px rgba(255, 255, 190, .3);
 			box-shadow: 0px 0px 10px 5px rgba(255, 255, 190, .3);
     	}
     	
+    	#diversity_location p{
+    		margin-top:20px;
+    	}
+    	
+    	
+    	/* BROWSE SPP BUTTON */
+    	
+    	#browse{
+    		margin-top: 40px;
+			margin-left: 82px;
+			width: 50px;
+			height: 50px;
+			background:url("../img/browse.png");
+			background-repeat: no-repeat;
+    	}
+    	
+    	
+    	/* MAP BUTTONS */
+	    
+	    #map-spp{
+			background:url("../img/map3.png");
+			background-repeat: no-repeat;
+			border: 0;
+			width: 50px;
+			height: 50px;
+			margin-top: 10px;
+			margin-left: 80px;
+		}
+		
+		#map-spp:hover{
+			background:url("../img/map4.png");
+			-webkit-transition: all 500ms ease;
+			-moz-transition: all 500ms ease;
+			-ms-transition: all 500ms ease;
+			transition: all 500ms ease;
+			cursor: pointer;
+		}
+		
+		#map-subfamily{
+			background:url("../img/map3.png");
+			background-repeat: no-repeat;
+			border: 0;
+			width: 50px;
+			height: 50px;
+			margin-top: 50px;
+			margin-left: 80px;
+		}
+		
+		#map-subfamily:hover{
+			background:url("../img/map4.png");
+			-webkit-transition: all 500ms ease;
+			-moz-transition: all 500ms ease;
+			-ms-transition: all 500ms ease;
+			transition: all 500ms ease;
+			cursor: pointer;
+		}
+		
+		#map-genus{
+			background:url("../img/map3.png");
+			background-repeat: no-repeat;
+			border: 0;
+			width: 50px;
+			height: 50px;
+			margin-top: 50px;
+			margin-left: 80px;
+			
+		}
+		
+		#map-genus:hover{
+			background:url("../img/map4.png");
+			-webkit-transition: all 500ms ease;
+			-moz-transition: all 500ms ease;
+			-ms-transition: all 500ms ease;
+			transition: all 500ms ease;
+			cursor: pointer;
+		}
+    	
+    	
     	/* MAIN PANEL */
     	#main {
 		  padding: 0;
 		  margin-top: 0;
+		  margin-bottom: 0;
 		  margin-left: 0;
 		  margin-right: 20px;
 		  position: absolute;    
-		  top: 100px;
-		  left: 200px;
+		  top: 80px;
+		  left: 250px;
 		  right: 20px;
-		  bottom: 20px;
+		  bottom: 10px;
 		  overflow: auto;
-		  /* background-color: #3E454C; can use to test*/
-		  background-color: gray;
-		  min-width: 600px;
-		  min-height: 700px;
-		  z-index: 1;
+		  background-color:/*  #3E454C */none;
+		  min-width: 1200px;
+		  height: 820px;
+		}
+		
+		/* BOTTOM DATA PANEL */
+		
+		#bottom{
+		  padding: 20px;
+		  margin-top: 15px;
+		  margin-bottom: 15px;
+		  margin-left: 0;
+		  margin-right: 20px;
+		  position: absolute;    
+		  top: 885px;
+		  left: 250px;
+		  right: 20px;
+		  bottom:20px;
+		  min-width: 1200px;
+		  height:300px;
+		  background-color:black;
+		  overflow-y:scroll;
+ 
+		
+		}
+		
+		/* SPECIES BROWSE PANEL */
+		#spp-browse-panel{
+			width: 50%;
+			margin-left:25%;
+			margin-right:25%;
+			margin-top:300px;
+			height:400px;
+			background-color:black;
+			z-index:99999999;
+		}
+		
+		/* TOOLTIP */
+		a {
+		  color: #900;
+		  text-decoration: none;
+		}
+
+		a:hover {
+		  color: red;
+		  position: relative;
+		}
+
+		a#info1[data-title]:hover:after {
+		  text-align: center;
+		  font-family: 'Dosis', sans-serif;
+		  content: attr(data-title);
+		  padding: 4px 8px;
+		  color: #333;
+		  position: absolute;
+		  width:140px;
+		  left: 0;
+		  top:15px;
+		  /* white-space: nowrap; */
+		  z-index: 9999;
+		  -moz-border-radius: 5px;
+		  -webkit-border-radius: 5px;
+		  border-radius: 5px;
+		  -moz-box-shadow: 0px 0px 4px #222;
+		  -webkit-box-shadow: 0px 0px 4px #222;
+		  box-shadow: 0px 0px 4px #222;
+		  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+		  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #eeeeee),color-stop(1, #cccccc));
+		  background-image: -webkit-linear-gradient(top, #eeeeee, #cccccc);
+		  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+		  background-image: -ms-linear-gradient(top, #eeeeee, #cccccc);
+		  background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
+		}
+		
+		a#resetAll1[data-title]:hover:after {
+		  font-family: 'Dosis', sans-serif;
+		  content: attr(data-title);
+		  padding: 4px 8px;
+		  color: #333;
+		  position: absolute;
+		  width:100px;
+		  left: 60px;
+		  top:15px;
+		  /* white-space: nowrap; */
+		  z-index: 9999;
+		  -moz-border-radius: 5px;
+		  -webkit-border-radius: 5px;
+		  border-radius: 5px;
+		  -moz-box-shadow: 0px 0px 4px #222;
+		  -webkit-box-shadow: 0px 0px 4px #222;
+		  box-shadow: 0px 0px 4px #222;
+		  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+		  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #eeeeee),color-stop(1, #cccccc));
+		  background-image: -webkit-linear-gradient(top, #eeeeee, #cccccc);
+		  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+		  background-image: -ms-linear-gradient(top, #eeeeee, #cccccc);
+		  background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
+		}
+		
+		a#export1[data-title]:hover:after {
+		  font-family: 'Dosis', sans-serif;
+		  content: attr(data-title);
+		  padding: 4px 8px;
+		  color: #333;
+		  position: absolute;
+		  width:100px;
+		  left: 120px;
+		  top:15px;
+		  /* white-space: nowrap; */
+		  z-index: 9999;
+		  -moz-border-radius: 5px;
+		  -webkit-border-radius: 5px;
+		  border-radius: 5px;
+		  -moz-box-shadow: 0px 0px 4px #222;
+		  -webkit-box-shadow: 0px 0px 4px #222;
+		  box-shadow: 0px 0px 4px #222;
+		  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+		  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #eeeeee),color-stop(1, #cccccc));
+		  background-image: -webkit-linear-gradient(top, #eeeeee, #cccccc);
+		  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+		  background-image: -ms-linear-gradient(top, #eeeeee, #cccccc);
+		  background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
+		}
+		
+		a#browse1[data-title]:hover:after {
+		  font-family: 'Dosis', sans-serif;
+		  content: attr(data-title);
+		  padding: 4px 8px;
+		  color: #333;
+		  position: absolute;
+		  width:120px;
+		  left: 40px;
+		  top:50px;
+		  /* white-space: nowrap; */
+		  z-index: 9999;
+		  -moz-border-radius: 5px;
+		  -webkit-border-radius: 5px;
+		  border-radius: 5px;
+		  -moz-box-shadow: 0px 0px 4px #222;
+		  -webkit-box-shadow: 0px 0px 4px #222;
+		  box-shadow: 0px 0px 4px #222;
+		  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+		  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #eeeeee),color-stop(1, #cccccc));
+		  background-image: -webkit-linear-gradient(top, #eeeeee, #cccccc);
+		  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+		  background-image: -ms-linear-gradient(top, #eeeeee, #cccccc);
+		  background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
 		}
 		
 		
