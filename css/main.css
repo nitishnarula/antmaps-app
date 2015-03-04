@@ -315,6 +315,28 @@
 			transition: all 500ms ease;
 			cursor: pointer;
 		}
+		
+		#map-location{
+			background:url("../img/map3.png");
+			background-repeat: no-repeat;
+			border: 0;
+			width: 50px;
+			height: 50px;
+			margin-top: 50px;
+			margin-left: 80px;
+			
+		}
+		
+		#map-location:hover{
+			background:url("../img/map4.png");
+			-webkit-transition: all 500ms ease;
+			-moz-transition: all 500ms ease;
+			-ms-transition: all 500ms ease;
+			transition: all 500ms ease;
+			cursor: pointer;
+		}
+		
+		
     	
     	
     	/* MAIN PANEL */
@@ -358,13 +380,40 @@
 		
 		/* SPECIES BROWSE PANEL */
 		#spp-browse-panel{
-			width: 50%;
-			margin-left:25%;
-			margin-right:25%;
-			margin-top:300px;
-			height:400px;
+			width: 60%;
+			margin-left:20%;
+			margin-right:20%;
+			margin-top:200px;
+			height:500px;
 			background-color:black;
-			z-index:99999999;
+			z-index:100;
+			position:absolute;
+			top:0;
+			left:0;
+			display:none;
+			opacity:0.8;
+		}
+		
+		#close{
+			opacity:1;
+			color:white;
+			background-color:black;
+			z-index:101;
+			position:absolute;
+			width:50px;
+			height:50px;
+			top:0;
+			right:0;
+			padding:6px;
+			font-size:30px;
+		}
+		#close:hover{
+			cursor:pointer;
+			color:gray;
+			-webkit-transition: all 1s ease;
+			-moz-transition: all 1s ease;
+			-ms-transition: all 1s ease;
+			transition: all 1s ease;
 		}
 		
 		/* TOOLTIP */

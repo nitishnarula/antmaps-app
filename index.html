@@ -126,7 +126,7 @@
 					
 					<a id ="browse1" data-title="&nbsp;&nbsp;BROWSE SPECIES" data-html="true" rel="tooltip" href="#"><div id="browse" class="hvr-shrink"></div></a>
 					
-					<div id="map-spp" class="text-center" onclick="updateSpeciesMap()"></div>
+					<div id="map-spp" class="text-center" onclick="updateResults()"></div>
 					<!-- <input type="submit" id="map-spp" class="text-center" value="" onclick="updateSpeciesMap()"> -->
 					<!-- map button -->
 					
@@ -139,17 +139,20 @@
 				<div id="diveristy-location-button" class="diversity-button"> Location </div> 
 				
 				<div id="diversity_subfamily">
+				<form id="query2">
 					<label> Subfamily </label><br>
 					<select id="subfamily-select2" name="subfamily">
 							<option value="Select Subfamily">Select Subfamily</option>
 					</select><br>
-					<div id="map-subfamily" class="text-center"></div>
+				</form>
+					<div id="map-subfamily" class="text-center" onclick="updateResults()"></div>
 					<!-- map button -->
 					
 					<div id = "diversity-legend"> </div>
 				</div>
 				
 				<div id="diversity_genus" class="none">
+				<form id="query3">
 					<label> Subfamily </label><br>
 						<select id="subfamily-select3" name="subfamily">
 							<option value="Select Subfamily">Select Subfamily</option>
@@ -159,7 +162,8 @@
 						<select id="genus-select2" name="genus">
 							<option value="Select Genus">Select Genus</option>
 						</select><br>
-					<div id="map-genus" class="text-center"></div>
+				</form>
+					<div id="map-genus" class="text-center" onclick="updateResults()"></div>
 					<!-- map button -->
 
 				</div>
@@ -167,10 +171,13 @@
 				<div id="diversity_location" class="none">
 					<p class="text-center"> Click on a Bentity </p>
 					<p class="text-center"> Or </p>
+				<form id="query4">
 					<label> Bentity </label>
 					<select id="bentity-select" name="bentity">
 							<option value="Select Bentity">Select Bentity</option>
 					</select><br>
+				</form>
+				<div id="map-location" class="text-center" onclick="updateResults()"></div>
 				</div>
 
 				
@@ -187,7 +194,7 @@
    		</div>
  
  
- 		<div class="hvr-shrink" id="reset_zoom" onclick="resetZoom()">
+ 		<div class="hvr-shrink" id="reset_zoom" onclick="javascript:myMap.resetZoom()">
  		</div>
 
     </div>
@@ -207,7 +214,9 @@
     </div>
     
     
-    <div id="spp-browse-panel"></div>
+    <div id="spp-browse-panel">
+    	<div id="close">X</div>
+    </div>
     
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
@@ -237,7 +246,6 @@
 	
 	<!-- D3/Javascript custom code file -->
 	<script src="js/main.js"></script>
-	<script src="js/newMap.js"></script>
 	
    
     <script>
