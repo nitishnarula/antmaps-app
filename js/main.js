@@ -1,13 +1,13 @@
 //GLOBAL VARIABLES
 	
 	//to populate dropdown / autocomplete
-	var subfamilyArray= ["Agroecomyrmecinae","Amblyoponinae","Aneuretinae"];
-		//should be around 19 subfamilies
-	var genusArray=[];
-	var speciesArray=[];
-	var bentityArray= [];
+//	var subfamilyArray= ["Agroecomyrmecinae","Amblyoponinae","Aneuretinae"];
+	 //should be around 19 subfamilies
+//	var genusArray=[];
+//	var speciesArray=[];
+//	var bentityArray= [];
 	
-	var sppBrowseArray = []; // All species, to populate species browse panel on species view
+//	var sppBrowseArray = []; // All species, to populate species browse panel on species view
 	
 	//to detect current mode: speciesMode, diversitySubfamilyMode, 
 	// diversityGenusMode, diversityLocationMode
@@ -15,7 +15,7 @@
 				"diversityLocationMode"];
 	var currentMode = modes[0];// default is species mode
 	
-	var subfamilySelected;
+//	var subfamilySelected;
 	var genusSelected;
 	var speciesSelected;
 	var locationSelected; // or bentity selected
@@ -54,85 +54,10 @@
 	
 
 				
-		
 	
-	
-	 /*  Script to switch views */
-		$('.button-wrap').on("click", function(){
-		  $(this).toggleClass('button-active');
-		  $('#view-title').html($('#view-title').text() == 
-		  'Diversity View' ? 'Species View' : 'Diversity View');
-		  
-		  if($('.button-wrap').hasClass("button-active")){
-			
-			$("#spp_view").css("display","none");
-			$("#diversity_view").css("display","inline");
-			
-		//to make the subfamily tab default and always the one active when switching views
-			$(".diversity-button").removeClass("diversity-active");
-			$("#diveristy-subfamily-button").addClass("diversity-active");		
-			
-			$("#diversity_subfamily").css("display","inline");
-				$("#diversity_genus").css("display","none");
-				$("#diversity_location").css("display","none");
-				
-				currentMode = modes[1];
-				updateColorSubfamilyMap();					
-		}else{
-			
-			$("#spp_view").css("display","inline");
-			$("#diversity_view").css("display","none");
-			
-			currentMode = modes[0];
-			//call function to populate dropdowns
-			loadDropdownSpeciesMode();
-			updateColorSpeciesMap();
-		}
-		  
-		});	
 
 		
-		//diversity view 3-mode toggle		
-			$(".diversity-button").on("click",function(){
-				$(".diversity-button").removeClass("diversity-active");
-				$(this).addClass("diversity-active");
-				
-				if($("#diveristy-subfamily-button").hasClass("diversity-active")){
-
-				$("#diversity_subfamily").css("display","inline");
-				$("#diversity_genus").css("display","none");
-				$("#diversity_location").css("display","none");
-				
-				currentMode = modes[1];
-				
-				loadDropdownDiversitySubfamilyMode();
-				//updateMapSubfamily(); // not working
-
-			}else if($("#diveristy-genus-button").hasClass("diversity-active")){
 		
-				$("#diversity_subfamily").css("display","none");
-				$("#diversity_genus").css("display","inline");
-				$("#diversity_location").css("display","none");
-				
-				currentMode = modes[2];
-				
-				loadDropdownDiversityGenusMode();
-
-			}else if($("#diveristy-location-button").hasClass("diversity-active")){
-				
-				$("#diversity_subfamily").css("display","none");
-				$("#diversity_genus").css("display","none");
-				$("#diversity_location").css("display","inline");
-				
-				currentMode = modes[3];
-				
-				loadBentityDropdown();
-
-			}else{
-				
-			}
-			
-		}); // end diversity-button on click
 		
 		
 		//species browse button, on click then opens the panel
@@ -169,7 +94,7 @@
 			}
 			
 			
-			 $("#subfamily-select").change(function () {
+			 /*$("#subfamily-select").change(function () {
 			 	
 			 
 			 	subfamilySelected = $("#subfamily-select option:selected").text();
@@ -183,7 +108,7 @@
 			 	
 			 	//do the same for species
 		
-			 });
+			 });*/
 		
 		}
 		
@@ -296,26 +221,13 @@
 		//resetZoom()
 		function setMap(){
 		
-			//sets width and height of map
-			var width = $("#mapContainer").parent().width();
-			var height= 800;
 
-			var  rotate = 60;// so that [-60, 30] becomes initial center of projection
-			var  maxlat = 83;// clip northern and southern poles (infinite in mercator)
-
-			//initial projection
-			var projection = d3.geo.mercator()
-				.rotate([rotate,0])
-				.scale(1)           // we'll scale up to match viewport shortly.
-				.translate([width/2, height/2])
-				.center([0,30]);	
-			
-			//final translation and scale	
-			var tlast = [0,0];
-			var slast = null;
 
 			
-			var mapFunctions = {}; //key pointers to functions
+			
+
+			
+
 	
 		
 		    // find the top left and bottom right of current projection
