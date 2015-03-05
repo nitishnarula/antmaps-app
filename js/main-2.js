@@ -162,30 +162,9 @@ var baseMap = (function() {
 			.attr("id","map");	
 		
 		
-	 var graticule = d3.geo.graticule()
-			.step([20, 20]);
-		
 		 path = d3.geo.path()
 						.projection(projection);
-					
-		 map.append("path")
-				.datum(graticule)
-				.attr("class", "graticule")
-				.attr("d", path);
-		
-	  var gratBackground=map.append("path")
-				.datum(graticule.outline)
-				.attr("class","gratBackground")
-				.attr("d",path)
-			
-	  var gratLines=map.selectAll(".gratLines")
-				.data(graticule.lines)
-				.enter()
-				.append("path")
-				.attr("class","gratLines")
-				.attr("d",path);
-
-		   
+					   
 			
 		  //load bentities	
 			d3.json("../data/bentities_highres_new.json", function(error, data){
@@ -194,26 +173,6 @@ var baseMap = (function() {
 				 bentities = 
 				  topojson.feature(data,data.objects.bentities_Jan2015_highres).features;
 					
-				console.log(bentities.length);//534 for low res, 527 for high res
-				  
-				 _.each(bentities, function(bentity){
-					//console.log(bentity.properties.BENTITY);
-				 var category = categoryArray[Math.floor(Math.random()*categoryArray.length)];
-					//randomly assign a category to the newly created 
-					//category property for each bentity 
-					_.extend(bentity.properties,{"category":category});
-				
-					bentityArray.push(bentity.properties.BENTITY); 
-					// push bentities into bentityArray 
-				 
-					bentityArray = _.sortBy(bentityArray, function(d) {
-									return d;
-									});//sort array alphabetically	
-								
-					// var number = arr[Math.floor(Math.random()*arr.length)];
-					//_.extend(bentity.properties,{"subfamily":number});		 
-			 
-					});
 
 			  var bentitiesMapped = map.selectAll(".bentities")
 										.data(topojson.feature(data,
