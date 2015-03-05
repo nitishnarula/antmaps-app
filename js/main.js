@@ -137,7 +137,7 @@ var controls = (function() {
 
 
 
-
+// contains leaflet map, draws bentities
 var baseMap = (function() {
 	
 	var members = {}; // methods and variables to return and expose externally
@@ -149,7 +149,12 @@ var baseMap = (function() {
 	// set width and height of Leaflet map div
 	$("#mapContainer").css({'height':height, 'width':width})
 
-	var map = new L.Map("mapContainer", {center: [37.8, -96.9], zoom: 4});
+	var map = new L.Map("mapContainer", 
+		{
+			center: [37.8, 0], 
+			zoom: 2,
+			minZoom: 2
+		});
 	
 	// overlay pane for bentities
 	var svg = d3.select(map.getPanes().overlayPane).append("svg"),
