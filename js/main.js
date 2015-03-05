@@ -47,8 +47,8 @@ var controls = (function() {
 		// swap title
 		$('#view-title').html($('#view-title').text() == 
 			'Diversity View' ? 'Species View' : 'Diversity View');
-	  
-	  // button-active == diversity views
+		
+		// button-active == diversity views
 		if($('.button-wrap').hasClass("button-active")){
 		
 			$("#spp_view").css("display","none");
@@ -74,7 +74,7 @@ var controls = (function() {
 		loadDropdownSpeciesMode(); //FIXME
 		updateColorSpeciesMap(); //FIXME
 	}
-	  
+	
 	});	
 	
 	
@@ -158,23 +158,33 @@ var baseMap = (function() {
 	
 	// overlay pane for bentities
 	var svg = d3.select(map.getPanes().overlayPane).append("svg"),
-    g = svg.append("g").attr("class", "leaflet-zoom-hide");
+		g = svg.append("g").attr("class", "leaflet-zoom-hide");
 	
 	// Leaflet projection for D3
 	function projectPoint(x, y) {
-  	var point = map.latLngToLayerPoint(new L.LatLng(y, x));
-  	this.stream.point(point.x, point.y);
+		var point = map.latLngToLayerPoint(new L.LatLng(y, x));
+		this.stream.point(point.x, point.y);
 	}
 	var transform = d3.geo.transform({point: projectPoint}),
-    path = d3.geo.path().projection(transform);
+		path = d3.geo.path().projection(transform);
+	
+	// projection to use for Russia and Fiji, accross the 180th meridian
+	// subtract 30 degrees from longitude, then project, then move back by 30 degrees projected
+	function projectPoint180(x, y) {
+		var point = map.latLngToLayerPoint(new L.LatLng(y, x > 0 ? x - 30 : -30 - x));
+	  point.x = point.x + map.project(new L.LatLng(0, 30)).subtract(map.project(new L.LatLng(0, 0))).x;
+		this.stream.point(point.x, point.y);
+	}
+	var transform180 = d3.geo.transform({point: projectPoint180}),
+		path180 = d3.geo.path().projection(transform180);
 	
 	//load bentities	
-	d3.json("../data/bentities_highres_new.json", function(error, data){
+	d3.json("../data/bentities_lores2.topojson", function(error, data){
 	
-		var bentities = topojson.feature(data,data.objects.bentities_Jan2015_highres); //.features;
+		external.bentities = topojson.feature(data,data.objects.bentities_Jan2015_highres); //.features;
 		
 		var feature = g.selectAll("path.bentities")
-			.data(bentities.features)
+			.data(external.bentities.features)
 			.enter().append("path")
 			.attr("class","bentities")
 			.style("fill", '#333');
@@ -185,18 +195,25 @@ var baseMap = (function() {
 		
 		// Reposition the SVG to cover the features on zoom/pan
 		function reset() {
-		 	var bounds = path.bounds(bentities),
+		 	var bounds = path.bounds(external.bentities),
 				topLeft = bounds[0],
 		 		bottomRight = bounds[1];
 
-			svg.attr("width", bottomRight[0] - topLeft[0])
+			svg.attr("width", bottomRight[0] - topLeft[0] + 1000)
 					.attr("height", bottomRight[1] - topLeft[1])
 					.style("left", topLeft[0] + "px")
 					.style("top", topLeft[1] + "px");
 
 			g.attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
 
-			feature.attr("d", path);
+			feature.attr("d", function(d) {
+				if (d.properties.BENTITY == "Russia East" || d.properties.BENTITY == "Fiji") {
+					return path180(d)
+				}
+				else {
+					return path(d);
+				}
+			});
 		}
 		
 	});
