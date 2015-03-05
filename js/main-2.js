@@ -1,6 +1,6 @@
 var controls = (function() {
 
-	var methods = {}; // methods to return and expose externally
+	var members = {}; // methods and variables to return and expose externally
 	
 	
 	// keep track of which mode is currently selected
@@ -24,14 +24,14 @@ var controls = (function() {
 	// FIXME: move into mode objects
 
 	// return the currently-selected subfamily
-	methods.getSubfamily = function() {
+	members.getSubfamily = function() {
 		// TODO: use subfamily ID instead?
 		return $("#subfamily-select option:selected").text();
 	};
 	
 	
 	// return the currently-selected subfamily
-	methods.getGenus = function() {
+	members.getGenus = function() {
 		// TODO: use genus ID instead?
 		return $("#subfamily-select option:selected").text();
 	};
@@ -131,73 +131,72 @@ var controls = (function() {
 	
 	
 	
-	return methods;
+	return members;
 })();
-
-
 
 
 
 
 
 var baseMap = (function() {
-
-	var methods = {}; // methods to return and expose externally
-
+	
+	var members = {}; // methods and variables to return and expose externally
+	
 	// map width and height in pixels
 	var width = $("#mapContainer").parent().width();
 	var height= 800;
-
-	//initial projection
-	var projection = d3.geo.mercator()
-		.scale(180)           // we'll scale up to match viewport shortly.
-		.translate([width/2, height/2])
-		.center([370, 38]);
 	
-	 //took out the var to make it global so recolor functions can access it
-     map= d3.select("#mapContainer")
-			.append("svg")
-			.attr("width",width)
-			.attr("height",height)
-			.attr("id","map");	
-		
-		
-		 path = d3.geo.path()
-						.projection(projection);
-					   
-			
-		  //load bentities	
-			d3.json("../data/bentities_highres_new.json", function(error, data){
-					
-				//was var	
-				 bentities = 
-				  topojson.feature(data,data.objects.bentities_Jan2015_highres).features;
-					
+	// set width and height of Leaflet map div
+	$("#mapContainer").css({'height':height, 'width':width})
 
-			  var bentitiesMapped = map.selectAll(".bentities")
-										.data(topojson.feature(data,
-										 data.objects.bentities_Jan2015_highres).features)
-										.enter()
-										.append("path")
-										.attr("class","bentities")
-										.attr("d",path);
-										//.style("fill", function(d) { //color enumeration units
-										//	return choropleth(d, categoryColorScale); 
-										//})
-										//.on("mouseover",highlight);
-												
-					   
-			   
-	});//end d3.json
-
-
-
-
-	// get the projection 
-	methods.getProjection = function() {
-		return projection;
+	var map = new L.Map("mapContainer", {center: [37.8, -96.9], zoom: 4});
+	
+	// overlay pane for bentities
+	var svg = d3.select(map.getPanes().overlayPane).append("svg"),
+    g = svg.append("g").attr("class", "leaflet-zoom-hide");
+	
+	// Leaflet projection for D3
+	function projectPoint(x, y) {
+  	var point = map.latLngToLayerPoint(new L.LatLng(y, x));
+  	this.stream.point(point.x, point.y);
 	}
+	var transform = d3.geo.transform({point: projectPoint}),
+    path = d3.geo.path().projection(transform);
+	
+	//load bentities	
+	d3.json("../data/bentities_highres_new.json", function(error, data){
+	
+		var bentities = topojson.feature(data,data.objects.bentities_Jan2015_highres); //.features;
+		
+		var feature = g.selectAll("path.bentities")
+			.data(bentities.features)
+			.enter().append("path")
+			.attr("class","bentities")
+			.style("fill", '#333');
+		
+		map.on("viewreset", reset);
+		reset();
 
+		
+		// Reposition the SVG to cover the features on zoom/pan
+		function reset() {
+		 	var bounds = path.bounds(bentities),
+				topLeft = bounds[0],
+		 		bottomRight = bounds[1];
 
-	return methods;
+			svg.attr("width", bottomRight[0] - topLeft[0])
+					.attr("height", bottomRight[1] - topLeft[1])
+					.style("left", topLeft[0] + "px")
+					.style("top", topLeft[1] + "px");
+
+			g.attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
+
+			feature.attr("d", path);
+		}
+		
+	});
+	
+	return members;
 })();
+
+
