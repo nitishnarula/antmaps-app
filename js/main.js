@@ -1,6 +1,6 @@
 var controls = (function() {
 
-	var members = {}; // methods and variables to return and expose externally
+	var external = {}; // methods and variables to return and expose externally
 	
 	
 	// keep track of which mode is currently selected
@@ -24,14 +24,14 @@ var controls = (function() {
 	// FIXME: move into mode objects
 
 	// return the currently-selected subfamily
-	members.getSubfamily = function() {
+	external.getSubfamily = function() {
 		// TODO: use subfamily ID instead?
 		return $("#subfamily-select option:selected").text();
 	};
 	
 	
 	// return the currently-selected subfamily
-	members.getGenus = function() {
+	external.getGenus = function() {
 		// TODO: use genus ID instead?
 		return $("#subfamily-select option:selected").text();
 	};
@@ -131,7 +131,7 @@ var controls = (function() {
 	
 	
 	
-	return members;
+	return external;
 })();
 
 
@@ -140,7 +140,7 @@ var controls = (function() {
 // contains leaflet map, draws bentities
 var baseMap = (function() {
 	
-	var members = {}; // methods and variables to return and expose externally
+	var external = {}; // methods and variables to return and expose externally
 	
 	// map width and height in pixels
 	var width = $("#mapContainer").parent().width();
@@ -201,7 +201,7 @@ var baseMap = (function() {
 		
 	});
 	
-	return members;
+	return external;
 })();
 
 
