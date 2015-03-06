@@ -26,14 +26,14 @@ var controls = (function() {
 	// return the currently-selected subfamily
 	external.getSubfamily = function() {
 		// TODO: use subfamily ID instead?
-		return $("#subfamily-select option:selected").text();
+		return $("#sppView-subfamily-select option:selected").text();
 	};
 	
 	
 	// return the currently-selected subfamily
 	external.getGenus = function() {
 		// TODO: use genus ID instead?
-		return $("#subfamily-select option:selected").text();
+		return $("#sppView-genus-select option:selected").text();
 	};
 	
 	

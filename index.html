@@ -16,12 +16,6 @@
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
     
-    <!-- Font Awesome CSS -->
-    <link href="css/font-awesome.css" rel="stylesheet">
-    
-    <!-- Bootstrap Social CSS -->
-    <link href="css/bootstrap-social.css" rel="stylesheet">
-    
     <!-- Google Fonts Dosis -->
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Dosis">
     
@@ -62,27 +56,6 @@
                     <li>
                         <a href="#">Contact</a>
                     </li>
-                    <li>
-                        <div id="facebook-button" class="share-button">
-                            <a class="btn btn-social-icon btn-facebook">
-							    <i class="fa fa-facebook"></i>
-							  </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div id="twitter-button" class="share-button">
-                             <a class="btn btn-social-icon btn-twitter">
-							    <i class="fa fa-twitter"></i>
-							  </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div id="twitter-button" class="share-button">
-                             <a class="btn btn-social-icon btn-reddit">
-							    <i class="fa fa-reddit"></i>
-							  </a>
-                        </div>
-                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -109,19 +82,19 @@
 			
 			
 			<div id="spp_view">
-				<form id="query">
+				<form id="querySpecies">
 					<label> Subfamily </label><br>
-						<select id="subfamily-select" name="subfamily">
+						<select id="sppView-subfamily-select" name="subfamily">
 							<option value="Select Subfamily">Select Subfamily</option>
 						</select><br>
 						
 					<label> Genus </label><br>
-						<select id="genus-select" name="genus">
+						<select id="sppView-genus-select" name="genus">
 							<option value="Select Genus">Select Genus</option>
 						</select><br>
 						
 					<label> Species </label><br>
-						<select id="species-select" name="species">
+						<select id="sppView-species-select" name="species">
 							<option value="Select Species">Select Species</option>
 						</select><br>
 					</form>	
@@ -141,9 +114,9 @@
 				<div id="diveristy-location-button" class="diversity-button"> Location </div> 
 				
 				<div id="diversity_subfamily">
-				<form id="query2">
+				<form id="querySubfamily">
 					<label> Subfamily </label><br>
-					<select id="subfamily-select2" name="subfamily">
+					<select id="subfamilyView-subfamily-select" name="subfamily">
 							<option value="Select Subfamily">Select Subfamily</option>
 					</select><br>
 				</form>
@@ -154,14 +127,14 @@
 				</div>
 				
 				<div id="diversity_genus" class="none">
-				<form id="query3">
+				<form id="queryGenus">
 					<label> Subfamily </label><br>
-						<select id="subfamily-select3" name="subfamily">
+						<select id="genusView-subfamily-select" name="subfamily">
 							<option value="Select Subfamily">Select Subfamily</option>
 						</select><br>
 						
 					<label> Genus </label><br>
-						<select id="genus-select2" name="genus">
+						<select id="genusView-genus-select" name="genus">
 							<option value="Select Genus">Select Genus</option>
 						</select><br>
 				</form>
@@ -173,9 +146,9 @@
 				<div id="diversity_location" class="none">
 					<p class="text-center"> Click on a Bentity </p>
 					<p class="text-center"> Or </p>
-				<form id="query4">
+				<form id="queryBentity">
 					<label> Bentity </label>
-					<select id="bentity-select" name="bentity">
+					<select id="bentityView-bentity-select" name="bentity">
 							<option value="Select Bentity">Select Bentity</option>
 					</select><br>
 				</form>
@@ -238,15 +211,7 @@
     <script src="http://d3js.org/d3.geo.projection.v0.min.js"></script>
     
     <!-- Topojson -->
-	<!-- <script src="http://d3js.org/topojson.v1.min.js"></script> -->
-	<!-- <script src="js/topojson.js"></script> -->
 	<script src="topojson-js/topojson.min.js"></script> 
-	
-	<!-- D3 tooltip -->
-	<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-
-	<!-- D3 geo.tile -->
-	<script src="http://d3js.org/d3.geo.tile.v0.min.js"></script>
 	
 	<!-- Leaflet -->
 	<script src="js/leaflet/leaflet.js" type="text/javascript"></script>
