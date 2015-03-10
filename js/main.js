@@ -189,8 +189,8 @@ var baseMap = (function() {
 			.attr("class","bentities")
 			.style("fill", '#333');
 		
-		map.on("viewreset", reset);
-		reset();
+		map.on("viewreset", loadBentities);
+		reset(external.bentities);
 
 		
 		// Reposition the SVG to cover the features on zoom/pan
@@ -214,6 +214,30 @@ var baseMap = (function() {
 					return path(d);
 				}
 			});
+		}
+		
+		function loadBentities() {
+			var bbox = map.getBounds().toBBoxString();
+			
+			$('path.bentities').remove();
+			
+			$.getJSON('/dataserver/bentities', {'bbox': bbox})
+			.fail(function(){
+				alert('Whoops!  Something went wrong.  Please check your internet connection and try again.');
+			})
+			.done(function(data){
+				external.bentities = data;
+				
+				feature = g.selectAll("path.bentities")
+					.data(external.bentities.features)
+					.enter().append("path")
+					.attr("class","bentities")
+					.style("fill", '#333');
+					
+				reset();
+			});
+			
+			
 		}
 		
 	});
