@@ -1,3 +1,8 @@
+
+function whoopsNetworkError() {
+	alert('Whoops!  Something went wrong.  Please check your internet connection and try again, or refresh the page.');
+}
+
 var controls = (function() {
 
 	var external = {}; // methods and variables to return and expose externally
@@ -34,17 +39,13 @@ var controls = (function() {
 			$("#diversity_genus").css("display","none");
 			$("#diversity_location").css("display","none");
 			
-			currentMode = modes[1];
-			diversitySubfamilyMode.subfamily_dropdown();		
+			currentMode = modes[1];		
 		}else{
 		
 		$("#spp_view").css("display","inline");
 		$("#diversity_view").css("display","none");
 		
 		currentMode = modes[0];
-		
-		//call function to populate dropdowns
-		speciesMode.subfamily_dropdown();  //FIXED
 		
 	}
 	
@@ -95,6 +96,88 @@ var controls = (function() {
 
 		}
 	}); // end diversity-button on click	
+	
+	
+	
+	//////////////////////////////////////////////////////////////////////////
+	// Taxon select boxes
+	
+	// Populate a given select box (jquery object) with the given data
+	function fillSelectbox(JQselectbox, data) {
+		for (var i = 0; i < data.length; i++) {
+			$('<option/>', {text:data[i].display, value:data[i].key}).appendTo(JQselectbox);
+		}
+	}
+	
+	// On page load, get list of subspecies and fill subspecies select boxes
+	$(document).ready(function() {
+		$.getJSON('/dataserver/subfamily-list')
+		.done(function(data) {
+			var boxes = $('#genusView-subfamily-select, #subfamilyView-subfamily-select, #sppView-subfamily-select');
+			boxes.html('<option value="">Select Subfamily</option>');
+			fillSelectbox(boxes, data.subfamilies);
+			boxes.prop('disabled', false);
+		})
+		.fail(whoopsNetworkError);
+	});
+	
+	// When the species-view subfamily select box changes, populate genus select box
+	$('#sppView-subfamily-select').change(function() {
+		var selected = $(this).val();
+		$('#sppView-species-select').html('<option value="">Select Species</option>').prop('disabled', 'disabled');
+		if (selected) {
+			var box = $('#sppView-genus-select');
+			box.html('<option value="">Loading...</option>');
+			box.prop('disabled', 'disabled');
+			$.getJSON('/dataserver/genus-list', {subfamily: selected}, function(data) {
+				box.html('<option value="">Select Genus</option>');
+				fillSelectbox(box, data.genera);
+				box.prop('disabled', false);
+			})
+			.fail(whoopsNetworkError);
+		}
+		else {
+			$('#sppView-genus-select').html('<option value="">Select Genus</option>').prop('disabled', 'disabled');
+		}
+	});
+	
+	// When the species-view "select-genus" box changes, update the 'select-species' box
+	$('#sppView-genus-select').change(function() {
+		var selected = $(this).val();
+		if (selected) {
+			var box = $('#sppView-species-select');
+			box.html('<option value="">Loading...</option>');
+			box.prop('disabled', 'disabled');
+			$.getJSON('/dataserver/species-list', {genus: selected}, function(data) {
+				box.html('<option value="">Select Species</option>');
+				fillSelectbox(box, data.species);
+				box.prop('disabled', false);
+			})
+			.fail(whoopsNetworkError);
+		}
+		else {
+			$('#sppView-species-select').html('<option value="">Select Species</option>').prop('disabled', 'disabled');
+		}
+	});
+	
+	// When the genus-view subfamily select box changes, populate genus select box
+	$('#genusView-subfamily-select').change(function() {
+		var selected = $(this).val();
+		if (selected) {
+			var box = $('#genusView-genus-select');
+			box.html('<option value="">Loading...</option>');
+			box.prop('disabled', 'disabled');
+			$.getJSON('/dataserver/genus-list', {subfamily: selected}, function(data) {
+				box.html('<option value="">Select Genus</option>');
+				fillSelectbox(box, data.genera);
+				box.prop('disabled', false);
+			})
+			.fail(whoopsNetworkError);
+		}
+		else {
+			$('#genusView-genus-select').html('<option value="">Select Genus</option>').prop('disabled', 'disabled');
+		}
+	});
 	
 	return external;
 })();
@@ -319,24 +402,6 @@ var speciesMode = (function() {
 	
 	//FIXED: moved from controls 
 	
-	// subfamilies to populate dropdown box (use ID's later?)
-	var subfamilies= ["Agroecomyrmecinae","Amblyoponinae","Aneuretinae"];
-
-	//load dropdown menu
-	external.subfamily_dropdown = function(){
-	
-			console.log("entered speciesMode.external.subfamily_dropdown");
-			
-			$('#sppView-subfamily-select').empty();
-		
-			for(var field=0; field<subfamilies.length;field++){
-				  
-				$('#sppView-subfamily-select').append(
-			        $('<option></option>')
-			        .val(subfamilies[field]).html(subfamilies[field])
-			      );	       
-			}
-	};
 	
 	// TODO: populate genus/species boxes
 

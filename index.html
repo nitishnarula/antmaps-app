@@ -84,17 +84,17 @@
 			<div id="spp_view">
 				<form id="querySpecies">
 					<label> Subfamily </label><br>
-						<select id="sppView-subfamily-select" name="subfamily">
-							<option value="Select Subfamily">Select Subfamily</option>
+						<select id="sppView-subfamily-select" name="subfamily" disabled>
+							<option>Loading...</option>
 						</select><br>
 						
 					<label> Genus </label><br>
-						<select id="sppView-genus-select" name="genus">
+						<select id="sppView-genus-select" name="genus" disabled>
 							<option value="Select Genus">Select Genus</option>
 						</select><br>
 						
 					<label> Species </label><br>
-						<select id="sppView-species-select" name="species">
+						<select id="sppView-species-select" name="species" disabled>
 							<option value="Select Species">Select Species</option>
 						</select><br>
 					</form>	
@@ -116,8 +116,8 @@
 				<div id="diversity_subfamily">
 				<form id="querySubfamily">
 					<label> Subfamily </label><br>
-					<select id="subfamilyView-subfamily-select" name="subfamily">
-							<option value="Select Subfamily">Select Subfamily</option>
+					<select id="subfamilyView-subfamily-select" name="subfamily" disabled>
+						<option>Loading...</option>
 					</select><br>
 				</form>
 					<div id="map-subfamily" class="text-center" onclick="updateResults()"></div>
@@ -129,12 +129,12 @@
 				<div id="diversity_genus" class="none">
 				<form id="queryGenus">
 					<label> Subfamily </label><br>
-						<select id="genusView-subfamily-select" name="subfamily">
-							<option value="Select Subfamily">Select Subfamily</option>
+						<select id="genusView-subfamily-select" name="subfamily" disabled>
+							<option>Loading...</option>
 						</select><br>
 						
 					<label> Genus </label><br>
-						<select id="genusView-genus-select" name="genus">
+						<select id="genusView-genus-select" name="genus" disabled>
 							<option value="Select Genus">Select Genus</option>
 						</select><br>
 				</form>
