@@ -306,12 +306,12 @@ var baseMap = (function() {
 	// return the projection used in the leaflet map
 	// TODO later maybe use other projection for points in bentities crossing 180th meridian
 	external.getProjection = function() {
-		return projectPoint;
+		return function(xy){ return map.latLngToLayerPoint(new L.LatLng(xy[1], xy[0])) };
 	}
 	
 	// return G element to plot points into
-	external.getOverlaySVG = function() {
-		return svg;
+	external.getOverlayG = function() {
+		return g;
 	}
 	
 	// bind a function to the map's viewreset event, fired when the map needs to re-draw
@@ -430,7 +430,20 @@ var speciesMode = (function() {
 		.done(function(data) {
 			if (data.records) {
 				// TODO plot records on map
-				alert(data.records);
+				var g = baseMap.getOverlayG();
+				
+				g.selectAll('.dot')
+					.data(data.records)
+					.enter()
+					.append('circle')
+					.attr('class', 'dot')
+					.attr('cx',function(d){
+						return baseMap.getProjection()([d.lon,d.lat])[0];
+					})
+					.attr('cy',function(d){
+						return baseMap.getProjection()([d.lon,d.lat])[1];
+					}).attr("fill","black")
+					.attr('r',4);
 			}
 			else {
 				alert('No records for this species'); // annoying, probably don't actually want to do this in real life
