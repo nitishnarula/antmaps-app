@@ -69,8 +69,6 @@ var controls = (function() {
 			$("#diversity_location").css("display","none");
 	
 			currentMode = modes[1];
-	
-			diversitySubfamilyMode.getSubfamily();  //FIXED
 
 		} 
 		else if($("#diveristy-genus-button").hasClass("diversity-active")){
@@ -80,8 +78,6 @@ var controls = (function() {
 			$("#diversity_location").css("display","none");
 	
 			currentMode = modes[2];
-	
-			diversityGenusMode.getGenus();  //FIXED
 
 		}
 		else if($("#diveristy-location-button").hasClass("diversity-active")){
@@ -91,8 +87,6 @@ var controls = (function() {
 			$("#diversity_location").css("display","inline");
 	
 			currentMode = modes[3];
-	
-			diversityBentityMode.getBentity();  //FIXED
 
 		}
 	}); // end diversity-button on click	
@@ -247,6 +241,8 @@ var baseMap = (function() {
 	var transform180 = d3.geo.transform({point: projectPoint180}),
 		path180 = d3.geo.path().projection(transform180);
 	
+	
+	
 	//load bentities	
 	d3.json("../data/bentities_lores2.topojson", function(error, data){
 	
@@ -305,6 +301,23 @@ var baseMap = (function() {
 		}
 		
 	});
+	
+	
+	// return the projection used in the leaflet map
+	// TODO later maybe use other projection for points in bentities crossing 180th meridian
+	external.getProjection = function() {
+		return projectPoint;
+	}
+	
+	// return G element to plot points into
+	external.getOverlaySVG = function() {
+		return svg;
+	}
+	
+	// bind a function to the map's viewreset event, fired when the map needs to re-draw
+	external.registerResetListner = function(listner) {
+		map.on("viewreset", listner);
+	}
 	
 	return external;
 })();
@@ -400,28 +413,31 @@ var speciesMode = (function() {
 
 	var external = {};
 	
-	//FIXED: moved from controls 
+	function getSelectedSpecies() {
+		return $('#sppView-species-select').val();
+	}
 	
-	
-	// TODO: populate genus/species boxes
-
-	// TODO: species select box (?)
-
-
-	//FIXED: moved from controls 
-
-	// return the currently-selected subfamily
-	external.getSubfamily = function() {
-		// TODO: use subfamily ID instead?
-		return $("#sppView-subfamily-select option:selected").text();
-	};
-	
-	
-	// return the currently-selected subfamily
-	external.getGenus = function() {
-		// TODO: use genus ID instead?
-		return $("#sppView-genus-select option:selected").text();
-	};
+	external.update = function() {
+		var selectedSpp = getSelectedSpecies();
+		
+		if (!selectedSpp) {
+			alert('Please select a species to map.');
+			return;
+		}
+		
+		// TODO show loading graphic?
+		$.getJSON('/dataserver/species-points', {taxon_code: selectedSpp})
+		.done(function(data) {
+			if (data.records) {
+				// TODO plot records on map
+				alert(data.records);
+			}
+			else {
+				alert('No records for this species'); // annoying, probably don't actually want to do this in real life
+			}
+		})
+		.fail(whoopsNetworkError);
+	}
 	
 	external.drawLegend = function(){
 	};
