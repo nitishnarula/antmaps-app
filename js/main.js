@@ -13,8 +13,9 @@ var controls = (function() {
 			"diversityBentityMode"];
 	var currentMode = modes[0];// default is species mode
 
-
-
+	// references to each of the mode objects.  This is filled in at the bottom
+	// of this file, after the mode objects have been declared.  Keys are the modes in 'modes'
+	external.modeObjects = {};  
 	
 	// switch between species and 3-diversity modes when toggle button is clicked
 	$('.button-wrap').on("click", function(){
@@ -39,13 +40,17 @@ var controls = (function() {
 			$("#diversity_genus").css("display","none");
 			$("#diversity_location").css("display","none");
 			
+			external.getCurrentModeObject().deactivateMode();
 			currentMode = modes[1];		
+			external.getCurrentModeObject().activateMode();
 		}else{
 		
 		$("#spp_view").css("display","inline");
 		$("#diversity_view").css("display","none");
 		
+		external.getCurrentModeObject().deactivateMode();
 		currentMode = modes[0];
+		external.getCurrentModeObject().activateMode();
 		
 	}
 	
@@ -68,7 +73,9 @@ var controls = (function() {
 			$("#diversity_genus").css("display","none");
 			$("#diversity_location").css("display","none");
 	
+			external.getCurrentModeObject().deactivateMode();
 			currentMode = modes[1];
+			external.getCurrentModeObject().activateMode();
 
 		} 
 		else if($("#diveristy-genus-button").hasClass("diversity-active")){
@@ -77,7 +84,9 @@ var controls = (function() {
 			$("#diversity_genus").css("display","inline");
 			$("#diversity_location").css("display","none");
 	
+			external.getCurrentModeObject().deactivateMode();
 			currentMode = modes[2];
+			external.getCurrentModeObject().activateMode();
 
 		}
 		else if($("#diveristy-location-button").hasClass("diversity-active")){
@@ -86,7 +95,9 @@ var controls = (function() {
 			$("#diversity_genus").css("display","none");
 			$("#diversity_location").css("display","inline");
 	
+			external.getCurrentModeObject().deactivateMode();
 			currentMode = modes[3];
+			external.getCurrentModeObject().activateMode();
 
 		}
 	}); // end diversity-button on click	
@@ -173,6 +184,10 @@ var controls = (function() {
 		}
 	});
 	
+	external.getCurrentModeObject = function() {
+		return external.modeObjects[currentMode];
+	};
+	
 	return external;
 })();
 
@@ -204,8 +219,6 @@ var baseMap = (function() {
 			zoom: 2,
 			minZoom: 2
 		});
-		
-
 		
 	
 	 L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -260,8 +273,8 @@ var baseMap = (function() {
 					_.extend(bentity.properties,{"category":category});
 					});
 		
-		console.log("external.bentities");
-		console.log(external.bentities);
+		//console.log("external.bentities");
+		//console.log(external.bentities);
 		
 		var feature = g.selectAll("path.bentities")
 			.data(external.bentities.features)
@@ -319,6 +332,13 @@ var baseMap = (function() {
 		map.on("viewreset", listner);
 	}
 	
+	
+	// update the map when the view is reset
+	map.on('viewreset', function() {
+		controls.getCurrentModeObject().resetView();
+	});
+	
+	
 	return external;
 })();
 
@@ -332,7 +352,7 @@ var mapUtilities = (function() {
 	var external = {};
 	
 	external.highlight = function(data){
-			console.log(data.properties.BENTITY);
+			//console.log(data.properties.BENTITY);
 			var props = external.datatest(data);
 			
 			var finalId = props.BENTITY.replace(" ","");
@@ -344,7 +364,7 @@ var mapUtilities = (function() {
 				finalId = finalId.replace("&","");
 				finalId = finalId.replace(",","");
 				
-				console.log(finalId);
+				//console.log(finalId);
 				
 				
 			d3.select(this) //select the current bentity in the DOM
@@ -388,8 +408,8 @@ var mapUtilities = (function() {
 	
 			var bents = d3.select(this); //designate selector variable for brevity
 			var fillcolor = bents.attr("originalcolor"); //access original color from desc
-			console.log("fillcolor");
-			console.log(fillcolor);
+			//console.log("fillcolor");
+			//console.log(fillcolor);
 			bents.style("fill", fillcolor)
 			.style("opacity",0.5)
 			.style("stroke","#000"); //reset enumeration unit to orginal color
@@ -412,41 +432,75 @@ var mapUtilities = (function() {
 var speciesMode = (function() {
 
 	var external = {};
-	
-	function getSelectedSpecies() {
-		return $('#sppView-species-select').val();
+
+	// the current data selected and mapped by the user
+	var currentData = {
+		'speciesName': null,
+		'pointRecords': null
 	}
 	
-	external.update = function() {
+	
+	function getSelectedSpecies() {
+		return { taxon_code:  $('#sppView-species-select').val(),
+				 speciesName: $('#sppView-species-select').text() };
+	}
+	
+	
+	// Re-draws all the points on the map
+	// Called when the user updates the data, and when the map needs to be re-drawn (eg for zoom)
+	external.resetView = function() {
+		if (currentData.pointRecords) {
+		
+			var g = baseMap.getOverlayG();
+	
+			g.selectAll('.dot').remove(); // clear all dots
+	
+			g.selectAll('.dot')
+				.data(currentData.pointRecords)
+				.enter()
+				.append('circle')
+				.attr('class', 'dot')
+				.attr('cx',function(d){
+					return baseMap.getProjection()([d.lon,d.lat]).x;
+				})
+				.attr('cy',function(d){
+					return baseMap.getProjection()([d.lon,d.lat]).y;
+				})
+				.attr("fill","black")
+				.attr('r',4);
+		
+		}
+	}
+	
+	// called when this mode is selected
+	external.activateMode = function() {
+		external.resetView();
+	}
+	
+	// called to reset the map back to its original state, without any data
+	// for this mode, so a different map mode can render the map
+	external.deactivateMode = function() {
+		baseMap.getOverlayG().selectAll('.dot').remove(); // clear all dots
+	}
+	
+	
+	// called when the user presses the "map" button
+	external.updateData = function() {
 		var selectedSpp = getSelectedSpecies();
 		
-		if (!selectedSpp) {
+		if (!selectedSpp.taxon_code) {
 			alert('Please select a species to map.');
 			return;
 		}
 		
 		// TODO show loading graphic?
-		$.getJSON('/dataserver/species-points', {taxon_code: selectedSpp})
+		$.getJSON('/dataserver/species-points', {taxon_code: selectedSpp.taxon_code})
 		.done(function(data) {
 			if (data.records) {
-				// TODO plot records on map
-				var g = baseMap.getOverlayG();
+				currentData.pointRecords = data.records;
+				currentData.speciesName = selectedSpp.speciesName;
 				
-				g.selectAll('.dot')
-					.data(data.records)
-					.enter()
-					.append('circle')
-					.attr('class', 'dot')
-					.attr('cx',function(d){
-						return baseMap.getProjection()([d.lon,d.lat])[0];
-					})
-					.attr('cy',function(d){
-						return baseMap.getProjection()([d.lon,d.lat])[1];
-					}).attr("fill","black")
-					.attr('r',4);
-			}
-			else {
-				alert('No records for this species'); // annoying, probably don't actually want to do this in real life
+				external.resetView();
 			}
 		})
 		.fail(whoopsNetworkError);
@@ -458,8 +512,6 @@ var speciesMode = (function() {
 	external.updateMapColor = function(){
 	};
 	
-	external.updateMapPoints = function(){
-	};
 	
 	external.choropleth = function(d, recolorMap){
 	//Get data value
@@ -478,17 +530,39 @@ var speciesMode = (function() {
 var diversitySubfamilyMode = (function() {
 	
 	var external = {};
+	external.activateMode = function(){};
+	external.deactivateMode = function(){};
+	external.resetView = function(){};
 	
 	external.subfamily_dropdown = function(){};
-	
-	external.choropleth = function(){
-	};
+	external.choropleth = function(){};
 	
 	return external;
 })();
 
 var diversityGenusMode = (function() {
+	var external = {};
+	external.activateMode = function(){};
+	external.deactivateMode = function(){};
+	external.resetView = function(){};
+	return external;
 })();
 
 var diversityBentityMode = (function() {
+	var external = {};
+	external.activateMode = function(){};
+	external.deactivateMode = function(){};
+	external.resetView = function(){};
+	return external;
 })();
+
+
+
+// give the controls object a reference to each of the modes
+controls.modeObjects = {
+	'speciesMode': speciesMode,
+	'diversitySubfamilyMode': diversitySubfamilyMode,
+	'diversityGenusMode': diversityGenusMode,
+	'diversityBentityMode': diversityBentityMode
+}
+controls.getCurrentModeObject().activateMode(); // activate the first mode
