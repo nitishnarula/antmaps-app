@@ -76,6 +76,8 @@
 		  background-color: none;  
 		}
 		
+		
+		
 		/* SIDE: top icons */
 		#info{
 			position: absolute;
@@ -211,6 +213,10 @@
     		max-width: 150px;
     	}
     	
+    	#sppView-species-select{
+    		max-width:200px;
+    	}
+    	
     	/* FORM DIVERSITY VIEW*/
     	.diversity-button{
 	    	margin-top: 10px;
@@ -260,7 +266,7 @@
     	/* BROWSE SPP BUTTON */
     	
     	#browse{
-    		margin-top: 40px;
+    		margin-top: 44px;
 			margin-left: 90px;
 			width: 50px;
 			height: 50px;
@@ -369,28 +375,33 @@
 		  min-width: 1200px;
 		  height: 820px;
 		}	
-	
-	
-		/* BOTTOM DATA PANEL */
 		
-		#bottom{
-		  padding: 20px;
-		  margin-top: 15px;
-		  margin-bottom: 15px;
-		  margin-left: 0;
-		  margin-right: 20px;
-		  position: absolute;    
-		  top: 885px;
-		  left: 250px;
-		  right: 20px;
-		  bottom:20px;
-		  min-width: 1200px;
-		  height:300px;
-		  background-color:black;
-		  overflow-y:scroll;
- 
 		
+		#current-spp-title{
+			margin-top: 10px;
+			margin-left: 50px;
+			color:black;
+			font-family: 'Dosis', sans-serif;
+			font-size:20px;
+			position:absolute;
+			z-index:99999999999999999999999;
+			text-shadow: 1px 2px 3px white;
 		}
+		
+		#current-species{
+			color:black;
+			position: absolute;
+			margin-top: 40px;
+			margin-left: 50px;
+			font-family: 'Dosis', sans-serif;
+			font-size:18px;
+			font-style: italic;
+			z-index:999999999999999;
+			text-shadow: 1px 2px 3px white;
+		}
+	
+	
+
 		
 		/* SPECIES BROWSE PANEL */
 		#spp-browse-panel{

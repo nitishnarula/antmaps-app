@@ -1,7 +1,19 @@
+//////////////////////////////////////////////////////////////////////////
+// Error Message
+//////////////////////////////////////////////////////////////////////////
 
 function whoopsNetworkError() {
 	alert('Whoops!  Something went wrong.  Please check your internet connection and try again, or refresh the page.');
 }
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////
+//  Controls: Switch modes & fill select boxes
+//  Included functions: fillSelectbox
+//////////////////////////////////////////////////////////////////////////
 
 var controls = (function() {
 
@@ -17,6 +29,7 @@ var controls = (function() {
 	// of this file, after the mode objects have been declared.  Keys are the modes in 'modes'
 	external.modeObjects = {};  
 	
+	//////////////////////////////////////////////////////////////////////////
 	// switch between species and 3-diversity modes when toggle button is clicked
 	$('.button-wrap').on("click", function(){
 	
@@ -43,10 +56,16 @@ var controls = (function() {
 			external.getCurrentModeObject().deactivateMode();
 			currentMode = modes[1];		
 			external.getCurrentModeObject().activateMode();
+			
+			$("#current-spp-title").css("display","none");
+			$("#current-species").css("display","none");
 		}else{
 		
 		$("#spp_view").css("display","inline");
 		$("#diversity_view").css("display","none");
+		
+		$("#current-spp-title").css("display","inline");
+		$("#current-species").css("display","inline");
 		
 		external.getCurrentModeObject().deactivateMode();
 		currentMode = modes[0];
@@ -55,16 +74,15 @@ var controls = (function() {
 	}
 	
 	});	
-	
-	
-	
-	
+
+	//////////////////////////////////////////////////////////////////////////
 	//diversity view 3-mode toggle		
 	$(".diversity-button").on("click",function(){
 	
 		// toggles button display 
 		$(".diversity-button").removeClass("diversity-active");
 		$(this).addClass("diversity-active");
+		
 	
 		if($("#diveristy-subfamily-button").hasClass("diversity-active")){
 
@@ -101,12 +119,10 @@ var controls = (function() {
 
 		}
 	}); // end diversity-button on click	
-	
-	
+
 	
 	//////////////////////////////////////////////////////////////////////////
 	// Taxon select boxes
-	
 	// Populate a given select box (jquery object) with the given data
 	function fillSelectbox(JQselectbox, data) {
 		for (var i = 0; i < data.length; i++) {
@@ -114,7 +130,8 @@ var controls = (function() {
 		}
 	}
 	
-	// On page load, get list of subspecies and fill subspecies select boxes
+	//////////////////////////////////////////////////////////////////////////
+	// On page load, get list of subfamilies and fill subspecies select boxes
 	$(document).ready(function() {
 		$.getJSON('/dataserver/subfamily-list')
 		.done(function(data) {
@@ -126,6 +143,7 @@ var controls = (function() {
 		.fail(whoopsNetworkError);
 	});
 	
+	//////////////////////////////////////////////////////////////////////////
 	// When the species-view subfamily select box changes, populate genus select box
 	$('#sppView-subfamily-select').change(function() {
 		var selected = $(this).val();
@@ -146,6 +164,7 @@ var controls = (function() {
 		}
 	});
 	
+	//////////////////////////////////////////////////////////////////////////
 	// When the species-view "select-genus" box changes, update the 'select-species' box
 	$('#sppView-genus-select').change(function() {
 		var selected = $(this).val();
@@ -165,6 +184,7 @@ var controls = (function() {
 		}
 	});
 	
+	//////////////////////////////////////////////////////////////////////////
 	// When the genus-view subfamily select box changes, populate genus select box
 	$('#genusView-subfamily-select').change(function() {
 		var selected = $(this).val();
@@ -184,6 +204,8 @@ var controls = (function() {
 		}
 	});
 	
+	//////////////////////////////////////////////////////////////////////////
+	// get the current mode
 	external.getCurrentModeObject = function() {
 		return external.modeObjects[currentMode];
 	};
@@ -194,7 +216,15 @@ var controls = (function() {
 
 
 
-// contains leaflet map, draws bentities
+
+//////////////////////////////////////////////////////////////////////////
+// Draw base map: set width and height, add tile with leaflet
+// draw polygons with D3 after loading json file
+// define projection in leaflet + D3 and function to reset zoom
+// Included functions: projectPoint, projectPoint180, reset, getProjection,
+//					   getOverlayG, registerResetListner
+//////////////////////////////////////////////////////////////////////////
+
 var baseMap = (function() {
 
 	//TEMPORARY
@@ -232,6 +262,7 @@ var baseMap = (function() {
 		g = svg.append("g").attr("class", "leaflet-zoom-hide");
 	//The leaflet-zoom-hide class is needed so that the overlay is hidden during Leaflet’s zoom animation
 	
+	//////////////////////////////////////////////////////////////////////////
 	// Leaflet projection for D3
 	// latLngToLayerPoint: Returns the map layer point that corresponds to the given geographical coordinates (useful for placing overlays on the map).
 	function projectPoint(x, y) {
@@ -244,6 +275,7 @@ var baseMap = (function() {
 	var transform = d3.geo.transform({point: projectPoint}), //there are no arguments passed to projectPoint(?)
 		path = d3.geo.path().projection(transform);
 	
+	//////////////////////////////////////////////////////////////////////////
 	// projection to use for Russia and Fiji, accross the 180th meridian
 	// subtract 30 degrees from longitude, then project, then move back by 30 degrees projected
 	function projectPoint180(x, y) {
@@ -255,7 +287,7 @@ var baseMap = (function() {
 		path180 = d3.geo.path().projection(transform180);
 	
 	
-	
+	//////////////////////////////////////////////////////////////////////////
 	//load bentities	
 	d3.json("../data/bentities_lores2.topojson", function(error, data){
 	
@@ -290,6 +322,7 @@ var baseMap = (function() {
 		reset();
 
 		
+		//////////////////////////////////////////////////////////////////////////
 		// Reposition the SVG to cover the features on zoom/pan
 		function reset() {
 		 	var bounds = path.bounds(external.bentities),
@@ -315,24 +348,27 @@ var baseMap = (function() {
 		
 	});
 	
-	
+	//////////////////////////////////////////////////////////////////////////
 	// return the projection used in the leaflet map
 	// TODO later maybe use other projection for points in bentities crossing 180th meridian
 	external.getProjection = function() {
 		return function(xy){ return map.latLngToLayerPoint(new L.LatLng(xy[1], xy[0])) };
 	}
 	
+	//////////////////////////////////////////////////////////////////////////
 	// return G element to plot points into
 	external.getOverlayG = function() {
 		return g;
 	}
 	
+	//////////////////////////////////////////////////////////////////////////
 	// bind a function to the map's viewreset event, fired when the map needs to re-draw
 	external.registerResetListner = function(listner) {
 		map.on("viewreset", listner);
 	}
 	
 	
+	//////////////////////////////////////////////////////////////////////////
 	// update the map when the view is reset
 	map.on('viewreset', function() {
 		controls.getCurrentModeObject().resetView();
@@ -345,8 +381,15 @@ var baseMap = (function() {
 
 
 
-var mapUtilities = (function() {
 
+
+//////////////////////////////////////////////////////////////////////////
+// Map-related functions: highlight/ dehighlight polygons and points, draw info panel
+// Included functions: highlight, dehighlight, datatest, openInfoPanel, 
+//                     circleHighlight, circleDehighlight
+//////////////////////////////////////////////////////////////////////////
+
+var mapUtilities = (function() {
 	
 
 	var external = {};
@@ -370,7 +413,7 @@ var mapUtilities = (function() {
 			d3.select(this) //select the current bentity in the DOM
 			    .attr("originalcolor", d3.select(this).style('fill'))
 				.style("fill", "black")
-				.style("opacity",1)
+				.style("opacity",0.2)
 				.style("stroke","#fff");
 			//the above code is not working, Uncaught TypeError: Cannot read property 'getComputedStyle' of null
 			//the style part is not working
@@ -425,8 +468,66 @@ var mapUtilities = (function() {
 			};
 	};
 	
+	external.openInfoPanel= function(data){
+		console.log(d3.select(this));
+	
+		var props = external.datatest(data);
+	
+		var labelAttribute = "<h3 class='text-center'>"+props.gabi_acc_number+"</h3>"+
+		"<br> Geographic Coordinates<b>:  ( "+props.lat+" , "+props.lon+" )</b>";
+				
+		var finalId = props.lat+props.lon;
+				
+				//create info label div
+		var infolabel = d3.select("body").append("div")
+			.attr("class", "infopanel") //for styling label
+			.attr("id", finalId+"label") //for future access to label div
+			.html(labelAttribute)
+			.append("div")
+			.attr("class","close-info")
+			.attr("id","close-info")
+			.html("x");
+			
+			d3.selectAll(".close-info")
+			.on("click",function(){
+				console.log("clicked");
+				d3.selectAll(".infopanel").style("display","none");
+			});
+	};
+	
+	external.circleHighlight=function(data){
+	
+		var props = external.datatest(data);
+				
+		var labelAttribute = "<h3 class='text-center'>"+props.gabi_acc_number+"</h3>";
+				
+		var finalId = props.gabi_acc_number;
+				
+		var infolabel = d3.select("body").append("div")
+					.attr("class", "infolabel") //for styling label
+					.attr("id", finalId+"label") //for future access to label div
+					.html(labelAttribute) //add text
+					.append("div") //add child div for feature name
+					.attr("class", "labelname"); //for styling name
+	};
+	
+	external.circleDehighlight=function(data){
+	
+	};
+	
 	return external;
 })();	
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////
+//  Functionalities for species mode: gets data, gets current species, draws points,
+//                                    recolors map, draws legend, resets mode 
+//  Included functions: resetView, activateMode, deactivateMode, updateData,
+//                      drawLegend, updateMapColor,choropleth
+//////////////////////////////////////////////////////////////////////////
 
 
 var speciesMode = (function() {
@@ -467,7 +568,33 @@ var speciesMode = (function() {
 					return baseMap.getProjection()([d.lon,d.lat]).y;
 				})
 				.attr("fill","black")
-				.attr('r',4);
+				.attr('r',4)
+				.on("click",mapUtilities.openInfoPanel)
+				.on("mouseover",mapUtilities.circleHighlight)
+				.on("mouseout",mapUtilities.circleDehighlight)
+				.on("mouseover.border",function(){
+					d3.select(this)
+					.transition()
+					.duration(1000)
+					.style({
+						'stroke-width':10,
+						'stroke-opacity':0.3,
+						'fill-opacity':1,
+						'stroke':'white',
+						'cursor':'pointer'
+					});
+				})
+				.on("mouseout.border",function(){
+					d3.select(this)
+					.transition()
+					.duration(2000)
+					.style({
+						'stroke-width':1,
+						'stroke-opacity':1,
+						'fill-opacity':1,
+						'stroke':'black'
+					});
+				});
 		
 		}
 	}
@@ -487,6 +614,10 @@ var speciesMode = (function() {
 	// called when the user presses the "map" button
 	external.updateData = function() {
 		var selectedSpp = getSelectedSpecies();
+		
+		var displaySpp = selectedSpp.taxon_code.replace("."," ");
+		console.log(displaySpp);
+		$("#current-species").html(displaySpp);
 		
 		if (!selectedSpp.taxon_code) {
 			alert('Please select a species to map.');
@@ -527,6 +658,11 @@ var speciesMode = (function() {
 	
 })();
 
+
+//////////////////////////////////////////////////////////////////////////
+//
+//////////////////////////////////////////////////////////////////////////
+
 var diversitySubfamilyMode = (function() {
 	
 	var external = {};
@@ -540,6 +676,11 @@ var diversitySubfamilyMode = (function() {
 	return external;
 })();
 
+
+//////////////////////////////////////////////////////////////////////////
+//
+//////////////////////////////////////////////////////////////////////////
+
 var diversityGenusMode = (function() {
 	var external = {};
 	external.activateMode = function(){};
@@ -547,6 +688,10 @@ var diversityGenusMode = (function() {
 	external.resetView = function(){};
 	return external;
 })();
+
+//////////////////////////////////////////////////////////////////////////
+//
+//////////////////////////////////////////////////////////////////////////
 
 var diversityBentityMode = (function() {
 	var external = {};
