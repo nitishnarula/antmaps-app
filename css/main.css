@@ -106,6 +106,19 @@
 			height:50px;
 		
 		}
+		/* RESET ZOOM */
+
+	    #reset_zoom{
+			position: absolute;
+			top:-30px;
+			left:147px;
+			background-color: none;
+			height:50px;
+			width:50px;
+			background: url("../img/reset-map.png") no-repeat;
+			cursor: pointer;
+		}
+		
 		
 		#info:hover,#resetAll:hover,#export:hover{
 			cursor:pointer;	
@@ -248,7 +261,7 @@
     	
     	#browse{
     		margin-top: 40px;
-			margin-left: 82px;
+			margin-left: 90px;
 			width: 50px;
 			height: 50px;
 			background:url("../img/browse.png");
@@ -265,7 +278,7 @@
 			width: 50px;
 			height: 50px;
 			margin-top: 10px;
-			margin-left: 80px;
+			margin-left: 86px;
 		}
 		
 		#map-spp:hover{
@@ -355,8 +368,9 @@
 		  background-color:/*  #3E454C */none;
 		  min-width: 1200px;
 		  height: 820px;
-		}
-		
+		}	
+	
+	
 		/* BOTTOM DATA PANEL */
 		
 		#bottom{
@@ -434,8 +448,8 @@
 		  padding: 4px 8px;
 		  color: #333;
 		  position: absolute;
-		  width:140px;
-		  left: 0;
+		  width:200px;
+		  left: 10px;
 		  top:15px;
 		  /* white-space: nowrap; */
 		  z-index: 9999;
@@ -478,7 +492,7 @@
 		  background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
 		}
 		
-		a#export1[data-title]:hover:after {
+		a#resetZoom[data-title]:hover:after {
 		  font-family: 'Dosis', sans-serif;
 		  content: attr(data-title);
 		  padding: 4px 8px;
@@ -510,7 +524,7 @@
 		  color: #333;
 		  position: absolute;
 		  width:120px;
-		  left: 40px;
+		  left: 50px;
 		  top:50px;
 		  /* white-space: nowrap; */
 		  z-index: 9999;
@@ -527,5 +541,7 @@
 		  background-image: -ms-linear-gradient(top, #eeeeee, #cccccc);
 		  background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
 		}
+		
+
 		
 		

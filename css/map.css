@@ -72,19 +72,7 @@
 			transition: all 500ms ease;
 			cursor: pointer;
 		}
-		
-/* RESET ZOOM */
-
-	#reset_zoom{
-			position: absolute;
-			top:20px;
-			left:50px;
-			background-color: none;
-			height:50px;
-			width:50px;
-			background: url("../img/reset-map.png") no-repeat;
-			cursor: pointer;
-		}
+	
 
 /* INFOLABEL */
 
