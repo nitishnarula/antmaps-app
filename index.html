@@ -65,10 +65,19 @@
     
     <div id="side">
     	
-    		<a id ="info1" data-title="SPECIES VIEW:  Select a species to map its distribution or browse species" data-html="true" rel="tooltip" href="#"><div id="info" class="hvr-shrink"></div></a>
+    		<a id ="info1" data-title="There are four views in this application, each view allows you to visualize something different.&nbsp;&nbsp;
+    		(1) SPECIES VIEW:  Select a species to map its distribution and see its status in a bentity. &nbsp;&nbsp;
+    		(2) DIVERSITY VIEW-Subfamily: Select a subfamily to map its diversity. &nbsp;&nbsp;
+    		(3) DIVERSITY VIEW-Genus: Select a genus to map its diversity. &nbsp;&nbsp;
+    		(4) DIVERSITY VIEW-Bentity: Select a bentity to visualize how its fauna is distributed across other bentities.&nbsp;&nbsp;
+    		** Bentity: The basic unit of the polygons, can be either a country or the administrative areas of a country such as states, depending on how big a country is." data-html="true" rel="tooltip" href="#"><div id="info" class="hvr-shrink"></div></a>
     		<a id ="resetAll1" data-title="&nbsp;&nbsp;&nbsp;&nbsp;RESET ALL" data-html="true" rel="tooltip" href="#"><div id="resetAll" class="hvr-shrink"></div></a>
-    		<a id ="export1" data-title="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORT" data-html="true" rel="tooltip" href="#"><div id="export" class="hvr-shrink"></div></a>
+    		<a id ="resetZoom" data-title="&nbsp;&nbsp;&nbsp;&nbsp;RESET ZOOM" data-html="true" rel="tooltip" href="#"><div class="hvr-shrink" id="reset_zoom" onclick="javascript:myMap.resetZoom()">
+ 		    </div></a>
+    		<!-- 
+<a id ="export1" data-title="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORT" data-html="true" rel="tooltip" href="#"><div id="export" class="hvr-shrink"></div></a>
     	
+ -->
 	    	<h3 id="view-title" class="text-center">
 	    				Species View
 	    	</h3>
@@ -111,7 +120,7 @@
 			<div id="diversity_view"> 
 				<div id="diveristy-subfamily-button" class="diversity-button diversity-active">  Subfamily </div> 
 				<div id="diveristy-genus-button" class="diversity-button"> Genus </div> 
-				<div id="diveristy-location-button" class="diversity-button"> Location </div> 
+				<div id="diveristy-location-button" class="diversity-button"> Bentity </div> 
 				
 				<div id="diversity_subfamily">
 				<form id="querySubfamily">
@@ -169,8 +178,7 @@
    		</div>
  
  
- 		<div class="hvr-shrink" id="reset_zoom" onclick="javascript:myMap.resetZoom()">
- 		</div>
+
 
     </div>
     
