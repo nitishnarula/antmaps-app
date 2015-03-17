@@ -131,7 +131,13 @@ var controls = (function() {
 	}
 	
 	//////////////////////////////////////////////////////////////////////////
-	// On page load, get list of subfamilies and fill subspecies select boxes
+	// Taxon select boxes
+	// Remove a given select box (jquery object) 
+	function clearSelectbox(){
+	}
+	
+	//////////////////////////////////////////////////////////////////////////
+	// On page load, get list of subfamilies and fill subfamily select boxes
 	$(document).ready(function() {
 		$.getJSON('/dataserver/subfamily-list')
 		.done(function(data) {
@@ -316,7 +322,8 @@ var baseMap = (function() {
 											return speciesMode.choropleth(d, categoryColorScale); 
 										})
 			.on("mouseover",mapUtilities.highlight)
-			.on("mouseout",mapUtilities.dehighlight);
+			.on("mouseout",mapUtilities.dehighlight)
+			.on("click", mapUtilities.openPanelBentity);
 		
 		map.on("viewreset", reset);
 		reset();
@@ -373,6 +380,12 @@ var baseMap = (function() {
 	map.on('viewreset', function() {
 		controls.getCurrentModeObject().resetView();
 	});
+	
+	//////////////////////////////////////////////////////////////////////////
+	// resets zoom level and centering to the original values as when map was first loaded
+	external.resetZoom = function(){
+		map.setView(new L.LatLng(37.8, 0), 2);
+	};
 	
 	
 	return external;
@@ -469,7 +482,7 @@ var mapUtilities = (function() {
 	};
 	
 	external.openInfoPanel= function(data){
-		console.log(d3.select(this));
+		//console.log(d3.select(this));
 	
 		var props = external.datatest(data);
 	
@@ -477,6 +490,33 @@ var mapUtilities = (function() {
 		"<br> Geographic Coordinates<b>:  ( "+props.lat+" , "+props.lon+" )</b>";
 				
 		var finalId = props.lat+props.lon;
+				
+				//create info label div
+		var infolabel = d3.select("body").append("div")
+			.attr("class", "infopanel") //for styling label
+			.attr("id", finalId+"label") //for future access to label div
+			.html(labelAttribute)
+			.append("div")
+			.attr("class","close-info")
+			.attr("id","close-info")
+			.html("x");
+			
+			d3.selectAll(".close-info")
+			.on("click",function(){
+				console.log("clicked");
+				d3.selectAll(".infopanel").style("display","none");
+			});
+	};
+	
+	external.openPanelBentity = function(data){
+	
+		console.log(d3.select(data));
+		var props = external.datatest(data);
+	
+		var labelAttribute = "<h3 class='text-center'>"+props.BENTITY+"</h3>"+
+		"<br> Category<b>: "+props.category+"</b>";
+				
+		var finalId = props.BENTITY;
 				
 				//create info label div
 		var infolabel = d3.select("body").append("div")
@@ -599,6 +639,9 @@ var speciesMode = (function() {
 		}
 	}
 	
+
+
+	
 	// called when this mode is selected
 	external.activateMode = function() {
 		external.resetView();
@@ -711,3 +754,11 @@ controls.modeObjects = {
 	'diversityBentityMode': diversityBentityMode
 }
 controls.getCurrentModeObject().activateMode(); // activate the first mode
+
+
+function resetMap(){
+	speciesMode.deactivateMode(); //not working for some reason
+	controls.clearSelectbox();
+	baseMap.resetZoom(); 
+	
+}

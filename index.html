@@ -71,8 +71,8 @@
     		(3) DIVERSITY VIEW-Genus: Select a genus to map its diversity. &nbsp;&nbsp;
     		(4) DIVERSITY VIEW-Bentity: Select a bentity to visualize how its fauna is distributed across other bentities.&nbsp;&nbsp;
     		** Bentity: The basic unit of the polygons, can be either a country or the administrative areas of a country such as states, depending on how big a country is." data-html="true" rel="tooltip" href="#"><div id="info" class="hvr-shrink"></div></a>
-    		<a id ="resetAll1" data-title="&nbsp;&nbsp;&nbsp;&nbsp;RESET ALL" data-html="true" rel="tooltip" href="#"><div id="resetAll" class="hvr-shrink"></div></a>
-    		<a id ="resetZoom" data-title="&nbsp;&nbsp;&nbsp;&nbsp;RESET ZOOM" data-html="true" rel="tooltip" href="#"><div class="hvr-shrink" id="reset_zoom" onclick="javascript:myMap.resetZoom()">
+    		<a id ="resetAll1" data-title="&nbsp;&nbsp;&nbsp;&nbsp;RESET ALL" data-html="true" rel="tooltip" href="#" onclick="resetMap();" ><div id="resetAll" class="hvr-shrink"></div></a>
+    		<a id ="resetZoom" data-title="&nbsp;&nbsp;&nbsp;&nbsp;RESET ZOOM" data-html="true" rel="tooltip" href="#" onclick="baseMap.resetZoom();"><div class="hvr-shrink" id="reset_zoom">
  		    </div></a>
     		<!-- 
 <a id ="export1" data-title="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORT" data-html="true" rel="tooltip" href="#"><div id="export" class="hvr-shrink"></div></a>
@@ -113,8 +113,6 @@
 					<a id ="browse1" data-title="&nbsp;&nbsp;BROWSE SPECIES" data-html="true" rel="tooltip" href="#"><div id="browse" class="hvr-shrink"></div></a>
 					
 					<div id="map-spp" class="text-center" onclick="speciesMode.updateData();"></div>
-					<!-- <input type="submit" id="map-spp" class="text-center" value="" onclick="updateSpeciesMap()"> -->
-					<!-- map button -->
 					
 					<div id = "species-legend"> </div>
 			</div> <!-- end spp_view -->
