@@ -635,7 +635,7 @@ var speciesMode = (function() {
 			var isClicked = $('#resetAll1').data('clicked');
 
 			if( isClicked == 'yes') {
-			   // do something
+			   $('#resetAll1').data('clicked', 'no');
 			} else {
 			  
 			  g.selectAll('.dot')
