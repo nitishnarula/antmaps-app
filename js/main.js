@@ -601,11 +601,16 @@ var speciesMode = (function() {
 	var external = {};
 
 	// the current data selected and mapped by the user
-	var currentData = {
+	var currentData = null;
+	
+	
+	external.resetData = function() {
+		currentData = {
 		'speciesName': null,
 		'pointRecords': null
-	}
-	
+		}
+	};
+	external.resetData();
 	
 	function getSelectedSpecies() {
 		return { taxon_code:  $('#sppView-species-select').val(),
@@ -627,16 +632,16 @@ var speciesMode = (function() {
 	
 			g.selectAll('.dot').remove(); // clear all dots
 	
-	
-			$('#resetAll1').on('click', function() {
-			  $(this).data('clicked', 'yes');
-			});
-			
-			var isClicked = $('#resetAll1').data('clicked');
-
-			if( isClicked == 'yes') {
-			   $('#resetAll1').data('clicked', 'no');
-			} else {
+// 	
+// 			$('#resetAll1').on('click', function() {
+// 			  $(this).data('clicked', 'yes');
+// 			});
+// 			
+// 			var isClicked = $('#resetAll1').data('clicked');
+// 
+// 			if( isClicked == 'yes') {
+// 			   //$('#resetAll1').data('clicked', 'no');
+// 			} else {}
 			  
 			  g.selectAll('.dot')
 				.data(currentData.pointRecords)
@@ -680,7 +685,7 @@ var speciesMode = (function() {
 			  
 			  
 			  
-			}
+
 			
 			
 			
@@ -815,6 +820,7 @@ function resetMap(){
 	controls.getCurrentModeObject().deactivateMode(); //not working for some reason...because the points redraw on zoom change
 	//then should set mode to species mode and activate mode
 	controls.setCurrentModeObject("speciesMode");
+	speciesMode.resetData();
 	//controls.getCurrentModeObject().activateMode(); 
 	// then should switch the toggle button back
 	$(".button-wrap").removeClass("button-active");
