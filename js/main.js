@@ -132,9 +132,11 @@ var controls = (function() {
 	
 	//////////////////////////////////////////////////////////////////////////
 	// Taxon select boxes
-	// Remove a given select box (jquery object) 
-	function clearSelectbox(){
-	}
+	// Remove a given select box, called by reset all
+	external.clearSelectbox = function() {
+		var boxes = $('#sppView-genus-select, #sppView-species-select, #genusView-genus-select');
+		boxes.prop('disabled', true);
+	};
 	
 	//////////////////////////////////////////////////////////////////////////
 	// On page load, get list of subfamilies and fill subfamily select boxes
@@ -148,6 +150,20 @@ var controls = (function() {
 		})
 		.fail(whoopsNetworkError);
 	});
+	
+	
+	//////////////////////////////////////////////////////////////////////////
+	// Same as above function but called by resetMap
+	external.getSubfamilies = function(){
+		$.getJSON('/dataserver/subfamily-list')
+		.done(function(data) {
+			var boxes = $('#genusView-subfamily-select, #subfamilyView-subfamily-select, #sppView-subfamily-select');
+			boxes.html('<option value="">Select Subfamily</option>');
+			fillSelectbox(boxes, data.subfamilies);
+			boxes.prop('disabled', false);
+		})
+		.fail(whoopsNetworkError);
+	};
 	
 	//////////////////////////////////////////////////////////////////////////
 	// When the species-view subfamily select box changes, populate genus select box
@@ -216,8 +232,15 @@ var controls = (function() {
 		return external.modeObjects[currentMode];
 	};
 	
+	//////////////////////////////////////////////////////////////////////////
+	// set the current mode
+	external.setCurrentModeObject = function(mode) {
+		currentMode = mode;
+	};
+	
 	return external;
 })();
+
 
 
 
@@ -379,6 +402,7 @@ var baseMap = (function() {
 	// update the map when the view is reset
 	map.on('viewreset', function() {
 		controls.getCurrentModeObject().resetView();
+		//***************** might have problem here since I don't want to call resetView when resetMap is called ***************** 
 	});
 	
 	//////////////////////////////////////////////////////////////////////////
@@ -390,6 +414,7 @@ var baseMap = (function() {
 	
 	return external;
 })();
+
 
 
 
@@ -562,6 +587,7 @@ var mapUtilities = (function() {
 
 
 
+
 //////////////////////////////////////////////////////////////////////////
 //  Functionalities for species mode: gets data, gets current species, draws points,
 //                                    recolors map, draws legend, resets mode 
@@ -588,15 +614,31 @@ var speciesMode = (function() {
 	
 	
 	// Re-draws all the points on the map
-	// Called when the user updates the data, and when the map needs to be re-drawn (eg for zoom)
+	// Called when the user updates the data, and when the map needs to be re-drawn 
+	// (eg every time the user zooms)
 	external.resetView = function() {
+	
+		console.log("reset view");
+		console.log("caller is " + arguments.callee.caller.toString());
+	
 		if (currentData.pointRecords) {
 		
 			var g = baseMap.getOverlayG();
 	
 			g.selectAll('.dot').remove(); // clear all dots
 	
-			g.selectAll('.dot')
+	
+			$('#resetAll1').on('click', function() {
+			  $(this).data('clicked', 'yes');
+			});
+			
+			var isClicked = $('#resetAll1').data('clicked');
+
+			if( isClicked == 'yes') {
+			   // do something
+			} else {
+			  
+			  g.selectAll('.dot')
 				.data(currentData.pointRecords)
 				.enter()
 				.append('circle')
@@ -635,6 +677,13 @@ var speciesMode = (function() {
 						'stroke':'black'
 					});
 				});
+			  
+			  
+			  
+			}
+			
+			
+			
 		
 		}
 	}
@@ -702,6 +751,9 @@ var speciesMode = (function() {
 })();
 
 
+
+
+
 //////////////////////////////////////////////////////////////////////////
 //
 //////////////////////////////////////////////////////////////////////////
@@ -720,6 +772,9 @@ var diversitySubfamilyMode = (function() {
 })();
 
 
+
+
+
 //////////////////////////////////////////////////////////////////////////
 //
 //////////////////////////////////////////////////////////////////////////
@@ -731,6 +786,9 @@ var diversityGenusMode = (function() {
 	external.resetView = function(){};
 	return external;
 })();
+
+
+
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -746,6 +804,34 @@ var diversityBentityMode = (function() {
 
 
 
+
+//////////////////////////////////////////////////////////////////////////
+// Resets the map to its original view as when just loaded
+// Resets zoom, sets toggle button to species view, clear points, 
+// resets dropdown menus, closes all info panels
+//////////////////////////////////////////////////////////////////////////
+
+function resetMap(){
+	controls.getCurrentModeObject().deactivateMode(); //not working for some reason...because the points redraw on zoom change
+	//then should set mode to species mode and activate mode
+	controls.setCurrentModeObject("speciesMode");
+	//controls.getCurrentModeObject().activateMode(); 
+	// then should switch the toggle button back
+	$(".button-wrap").removeClass("button-active");
+	$("#spp_view").css("display","inline");
+	$("#diversity_view").css("display","none");
+	$("#view-title").html("Species View");
+	$("#current-species").html("");
+	$(".infopanel").css("display","none");
+	//then should repopulate subfamily select boxes
+	controls.clearSelectbox(); // hmmm weird
+	controls.getSubfamilies();	
+	baseMap.resetZoom(); 
+	//the points are redrawn everytime the zoom is different, so resetZoom and deactivateMode automatically cancels each other out
+	
+}
+
+
 // give the controls object a reference to each of the modes
 controls.modeObjects = {
 	'speciesMode': speciesMode,
@@ -756,9 +842,4 @@ controls.modeObjects = {
 controls.getCurrentModeObject().activateMode(); // activate the first mode
 
 
-function resetMap(){
-	speciesMode.deactivateMode(); //not working for some reason
-	controls.clearSelectbox();
-	baseMap.resetZoom(); 
-	
-}
+
