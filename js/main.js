@@ -876,7 +876,7 @@ var diversitySubfamilyMode = (function() {
 		if (!$.isEmptyObject(currentData.sppPerBentity)) {
 			var colorScale = mapUtilities.logBinColorScale(currentData.maxSpeciesCount, zeroColor, colorArray);
 			
-			currentData.colorBinLabels = colorScale.binLabels().splice(0,0,0); // at a zero to the front
+			currentData.colorBinLabels = ['0'].concat(colorScale.binLabels()); // at a zero to the front
 			
 			//console.log ("currentData.colorBinLabels");
 			//console.log (currentData.colorBinLabels);
@@ -909,49 +909,13 @@ var diversitySubfamilyMode = (function() {
 					.enter()
 					.append('div')
 					.attr('class', 'legendRow')
-					.each(function() {
-						this.append('div')
+					.each(function(d, i) {
+						d3.select(this).append('div')
 							.attr("class","colorbox")
-								.style("background-color",function(d,i){
-										return legendColor[i];
-								 })
-								 .style("opacity",0.7);
-						this.append('span').text(function(d){d});
+								.style("background-color", legendColor[i])
+								.style("opacity",0.7);
+						d3.select(this).append('span').text(d);
 					});
-					
-				/*
-				var legendColors = legend.append("div").attr("class","legendColorsDiv");
-	    		
-	    			    		
-	    		legendColors.selectAll(".colorbox")
-								.data(legendColor)
-								.enter()
-								.append("div")
-								.attr("class","colorbox")
-								.style("background-color",function(d){
-										return d
-								 })
-								 .style("opacity",0.7);
-								 
-				 
-				 legend.selectAll('div.legendNumDiv').remove();
-				
-				//create a separate div to hold each number in the number scale
-				var legendNum = legend.append("div").attr("class","legendNumDiv");
-				
-				
-				
-				//console.log(currentData.colorBinLabels);
-				
-				legendNum.selectAll(".legendNum")
-					.data(currentData.colorBinLabels)
-					.enter()
-					.append("div")
-					.attr("class","legendNum")
-					.html(function(d){
-						return d
-					});*/
-		
 			
 	}
 	

@@ -142,37 +142,22 @@
 		width:200px;
 		height:200px;
 	}
-	
-	#legendColors{
-		float:left;
-		margin-top:10px;
-		margin-left:10px;
-	}
-	
-	.legendColorsDiv{
-		float:left;
-		margin-top:10px;
-		margin-left:10px;
-	}
+		
 	
 	.colorbox{
 		width:50px;
 		height:25px;
 		margin-top:5px;
 		border: 1px solid black;
+		display: inline-block;
+		margin-right: 20px;
+		vertical-align: middle;
 	}
 
-	.legendNumDiv{
-		float:right;
-		margin-top:10px;
+	.legendRow {
+		color: white;
+		vertical-align: middle;
 	}
-	
-	.legendNum {
-		margin-top:5px;
-		font-family: 'Quicksand', sans-serif;
-	}
-	
-	
 	
 	
 	.categoryName{
