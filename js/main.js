@@ -585,10 +585,17 @@ var mapUtilities = (function() {
 	external.logBinColorScale = function(maxSpecies, colorArray) {
 
 		// maxSpecies+1 so the output is never colorArray.length, so we don't overstep the color array
-		var logscale = d3.scale.log().domain([0, maxSpecies+1]).range([0, colorArray.length]);
+		// domain of log scale can never be 0
+		var logscale = d3.scale.log().domain([1, maxSpecies+1]).range([0, colorArray.length]);
 
 		return function(x) {
-			return colorArray[Math.floor(logscale(x))];
+			if (x==0) {
+				return colorArray[0]
+			}
+			else {
+				// map log number to colors
+				return colorArray[Math.floor(logscale(x))];
+			}
 		}
 	};
 	
@@ -850,11 +857,11 @@ var diversitySubfamilyMode = (function() {
 			var colorScale = mapUtilities.logBinColorScale(currentData.maxSpeciesCount, colorArray);
 			
 			d3.selectAll('path.bentities')
-				.attr('fill', function(d) {
+				.style('fill', function(d) {
 					if (currentData.sppPerBentity[d.properties.gid]) {
 						return colorScale(currentData.sppPerBentity[d.properties.gid]);
 					}
-					else { return undefined; }
+					else { return colorScale(0); }
 				});
 		}
 	};
