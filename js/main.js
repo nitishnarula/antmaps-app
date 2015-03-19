@@ -772,8 +772,9 @@ var diversitySubfamilyMode = (function() {
 	var currentData = null;
 	external.resetData = function() {
 		currentData = {
-			subfamilyName: null,
-			bentities: null
+			subfamilyName: null,  // name of the current subfamily
+			sppPerBentity: {},    // keys are bentity ID, values are species count
+			maxSpeciesCount: 0    // maximum number of species for a bentity (for scale)
 		}
 	}
 	external.resetData();
@@ -791,8 +792,21 @@ var diversitySubfamilyMode = (function() {
 		}
 		
 		$.getJSON('/dataserver/species-per-bentity', {subfamily_name: selected.subfamilyKey})
-		.done(function(data) {		
-			currentData.bentities = data.bentities;
+		.done(function(data) {	
+			
+			external.resetData();
+
+			for (var i = 0; i < data.bentities.length; i++) {
+				var record = data.bentities[i];
+				
+				// keep track of the highest species count we've seen so far
+				if (record.species_count > currentData.maxSpeciesCount) {
+					currentData.maxSpeciesCount = record.species_count;
+				}
+				
+				currentData.sppPerBentity[record.gid] = record.species_count;
+			}
+			
 			external.resetView();
 			choropleth();
 		})
