@@ -580,6 +580,22 @@ var mapUtilities = (function() {
 	
 	};
 	
+	
+	// scale generator
+	external.logBinColorScale = function(maxSpecies, colorArray) {
+
+		// maxSpecies+1 so the output is never colorArray.length, so we don't overstep the color array
+		var logscale = d3.scale.log().domain([0, maxSpecies+1]).range([0, colorArray.length]);
+
+		return function(x) {
+			return colorArray[Math.floor(logscale(x))];
+		}
+	};
+	
+	
+	
+	
+	
 	return external;
 })();	
 
@@ -757,6 +773,8 @@ var speciesMode = (function() {
 //////////////////////////////////////////////////////////////////////////
 
 var diversitySubfamilyMode = (function() {
+
+	var colorArray = ["#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
 	
 	var external = {};
 	
@@ -805,6 +823,7 @@ var diversitySubfamilyMode = (function() {
 				}
 				
 				currentData.sppPerBentity[record.gid] = record.species_count;
+				//key = gid, value = species_count
 			}
 			
 			external.resetView();
@@ -827,8 +846,16 @@ var diversitySubfamilyMode = (function() {
 	
 
 	function choropleth(){
-		if (currentData.bentities) {
-			// TODO color bentities and draw legend
+		if (currentData.sppPerBentity) {
+			var colorScale = mapUtilities.logBinColorScale(currentData.maxSpeciesCount, colorArray);
+			
+			d3.selectAll('path.bentities')
+				.attr('fill', function(d) {
+					if (currentData.sppPerBentity[d.properties.gid]) {
+						return colorScale(currentData.sppPerBentity[d.properties.gid]);
+					}
+					else { return undefined; }
+				});
 		}
 	};
 	
@@ -865,6 +892,7 @@ var diversityBentityMode = (function() {
 	external.resetView = function(){};
 	return external;
 })();
+
 
 
 
