@@ -93,17 +93,17 @@
 			<div id="spp_view">
 				<form id="querySpecies">
 					<label> Subfamily </label><br>
-						<select id="sppView-subfamily-select" name="subfamily" disabled>
+						<select id="sppView-subfamily-select" name="subfamily" disabled="disabled">
 							<option>Loading...</option>
 						</select><br>
 						
 					<label> Genus </label><br>
-						<select id="sppView-genus-select" name="genus" disabled>
+						<select id="sppView-genus-select" name="genus" disabled="disabled">
 							<option value="Select Genus">Select Genus</option>
 						</select><br>
 						
 					<label> Species </label><br>
-						<select id="sppView-species-select" name="species" disabled>
+						<select id="sppView-species-select" name="species" disabled="disabled">
 							<option value="Select Species">Select Species</option>
 						</select><br>
 					</form>	
@@ -129,7 +129,7 @@
 						<option>Loading...</option>
 					</select><br>
 				</form>
-					<div id="map-subfamily" class="text-center" onclick="updateResults()"></div>
+					<div id="map-subfamily" class="text-center" onclick="diversitySubfamilyMode.updateData()"></div>
 					<!-- map button -->
 					
 					<div id = "diversity-legend"> </div>

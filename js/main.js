@@ -612,6 +612,8 @@ var speciesMode = (function() {
 	};
 	external.resetData();
 	
+	// taxon_code is the key to send the server,
+	// speciesName is what to display to the user
 	function getSelectedSpecies() {
 		return { taxon_code:  $('#sppView-species-select').val(),
 				 speciesName: $('#sppView-species-select').text() };
@@ -682,13 +684,6 @@ var speciesMode = (function() {
 						'stroke':'black'
 					});
 				});
-			  
-			  
-			  
-
-			
-			
-			
 		
 		}
 	}
@@ -712,9 +707,7 @@ var speciesMode = (function() {
 	external.updateData = function() {
 		var selectedSpp = getSelectedSpecies();
 		
-		var displaySpp = selectedSpp.taxon_code.replace("."," ");
-		console.log(displaySpp);
-		$("#current-species").html(displaySpp);
+		$("#current-species").html(selectedSpp.speciesName);
 		
 		if (!selectedSpp.taxon_code) {
 			alert('Please select a species to map.');
@@ -766,12 +759,64 @@ var speciesMode = (function() {
 var diversitySubfamilyMode = (function() {
 	
 	var external = {};
-	external.activateMode = function(){};
-	external.deactivateMode = function(){};
-	external.resetView = function(){};
 	
-	external.subfamily_dropdown = function(){};
-	external.choropleth = function(){};
+	// subfamilyKey is the key to send to the web server,
+	// subfamilyName is what to show the user
+	function getSelectedSubfamily() {
+		return { subfamilyKey:  $('#subfamilyView-subfamily-select').val(),
+				 subfamilyName: $('#subfamilyView-subfamily-select').text() };
+	}
+	
+	
+	// keep track of the data we're looking at right now
+	var currentData = null;
+	external.resetData = function() {
+		currentData = {
+			subfamilyName: null,
+			bentities: null
+		}
+	}
+	external.resetData();
+	
+	
+	external.updateData = function() {
+		var selected = getSelectedSubfamily();
+		
+		external.resetData();
+		currentData.subFamilyName = selected.subfamilyName;
+		
+		if (!selected.subfamilyKey) {
+			alert('Please select a subfamily to map');
+			return;
+		}
+		
+		$.getJSON('/dataserver/species-per-bentity', {subfamily_name: selected.subfamilyKey})
+		.done(function(data) {		
+			currentData.bentities = data.bentities;
+			external.resetView();
+			choropleth();
+		})
+		.fail(whoopsNetworkError);
+		
+	};
+	
+	
+	external.activateMode = function(){
+		choropleth();
+	};
+	
+	external.resetView = function(){};  // don't think this function needs to do anything
+	
+	external.deactivateMode = function(){
+		// TODO reset bentity color
+	};
+	
+
+	function choropleth(){
+		if (currentData.bentities) {
+			// TODO color bentities and draw legend
+		}
+	};
 	
 	return external;
 })();
