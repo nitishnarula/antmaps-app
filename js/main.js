@@ -12,7 +12,8 @@ function whoopsNetworkError() {
 
 //////////////////////////////////////////////////////////////////////////
 //  Controls: Switch modes & fill select boxes
-//  Included functions: fillSelectbox
+//  Included functions: fillSelectbox,clearSelectbox,getSubfamilies
+//					    getCurrentModeObject, setCurrentModeObject
 //////////////////////////////////////////////////////////////////////////
 
 var controls = (function() {
@@ -391,6 +392,7 @@ var baseMap = (function() {
 		return g;
 	}
 	
+	//do we need this?
 	//////////////////////////////////////////////////////////////////////////
 	// bind a function to the map's viewreset event, fired when the map needs to re-draw
 	external.registerResetListner = function(listner) {
@@ -402,7 +404,6 @@ var baseMap = (function() {
 	// update the map when the view is reset
 	map.on('viewreset', function() {
 		controls.getCurrentModeObject().resetView();
-		//***************** might have problem here since I don't want to call resetView when resetMap is called ***************** 
 	});
 	
 	//////////////////////////////////////////////////////////////////////////
@@ -650,16 +651,6 @@ var speciesMode = (function() {
 	
 			g.selectAll('.dot').remove(); // clear all dots
 	
-// 	
-// 			$('#resetAll1').on('click', function() {
-// 			  $(this).data('clicked', 'yes');
-// 			});
-// 			
-// 			var isClicked = $('#resetAll1').data('clicked');
-// 
-// 			if( isClicked == 'yes') {
-// 			   //$('#resetAll1').data('clicked', 'no');
-// 			} else {}
 			  
 			  g.selectAll('.dot')
 				.data(currentData.pointRecords)
