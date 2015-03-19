@@ -153,10 +153,7 @@ var controls = (function() {
 		.fail(whoopsNetworkError);
 	});
 	
-	$(document).ready(function(){
-			diversitySubfamilyMode.drawLegend();
-			diversityGenusMode.drawLegend();
-	});
+
 	
 	//////////////////////////////////////////////////////////////////////////
 	// Same as above function but called by resetMap
@@ -534,14 +531,14 @@ var mapUtilities = (function() {
 			
 			d3.selectAll(".close-info")
 			.on("click",function(){
-				console.log("clicked");
+				//console.log("clicked");
 				d3.selectAll(".infopanel").style("display","none");
 			});
 	};
 	
 	external.openPanelBentity = function(data){
 	
-		console.log(d3.select(data));
+		//console.log(d3.select(data));
 		var props = external.datatest(data);
 	
 		var labelAttribute = "<h3 class='text-center'>"+props.BENTITY+"</h3>"+
@@ -561,7 +558,7 @@ var mapUtilities = (function() {
 			
 			d3.selectAll(".close-info")
 			.on("click",function(){
-				console.log("clicked");
+				//console.log("clicked");
 				d3.selectAll(".infopanel").style("display","none");
 			});
 	};
@@ -676,8 +673,8 @@ var speciesMode = (function() {
 	// (eg every time the user zooms)
 	external.resetView = function() {
 	
-		console.log("reset view");
-		console.log("caller is " + arguments.callee.caller.toString());
+		//console.log("reset view");
+		
 	
 		if (currentData.pointRecords) {
 		
@@ -783,6 +780,8 @@ var speciesMode = (function() {
 			} else {
 				return "black"; 
 			};
+			
+			
 	};
 	
 	return external;
@@ -819,7 +818,8 @@ var diversitySubfamilyMode = (function() {
 		currentData = {
 			subfamilyName: null,  // name of the current subfamily
 			sppPerBentity: {},    // keys are bentity ID, values are species count
-			maxSpeciesCount: 0    // maximum number of species for a bentity (for scale)
+			maxSpeciesCount: 0,    // maximum number of species for a bentity (for scale)
+			colorBinLabels: []
 		}
 	}
 	external.resetData();
@@ -840,8 +840,8 @@ var diversitySubfamilyMode = (function() {
 		.done(function(data) {	
 			
 			external.resetData();
-
-			for (var i = 0; i < data.bentities.length; i++) {
+	
+				for (var i = 0; i < data.bentities.length; i++) {
 				var record = data.bentities[i];
 				
 				// keep track of the highest species count we've seen so far
@@ -873,8 +873,13 @@ var diversitySubfamilyMode = (function() {
 	
 
 	function choropleth(){
-		if (currentData.sppPerBentity) {
+		if (!$.isEmptyObject(currentData.sppPerBentity)) {
 			var colorScale = mapUtilities.logBinColorScale(currentData.maxSpeciesCount, zeroColor, colorArray);
+			
+			currentData.colorBinLabels = colorScale.binLabels();
+			
+			//console.log ("currentData.colorBinLabels");
+			//console.log (currentData.colorBinLabels);
 			
 			d3.selectAll('path.bentities')
 				.style('fill', function(d) {
@@ -884,7 +889,12 @@ var diversitySubfamilyMode = (function() {
 					else { return colorScale(0); // 0 species
 					}
 				});
+				
+			diversitySubfamilyMode.drawLegend();
 		}
+		
+		
+		
 	};
 	
 	external.drawLegend = function(){
@@ -892,8 +902,11 @@ var diversitySubfamilyMode = (function() {
 							   .attr("width",200)
 							   .attr("height",250);
 				
+				legend.selectAll('div.legendColorsDiv').remove();
+				
 				var legendColors = legend.append("div").attr("class","legendColorsDiv");
 	    		
+	    			    		
 	    		legendColors.selectAll(".colorbox")
 								.data(legendColor)
 								.enter()
@@ -903,6 +916,28 @@ var diversitySubfamilyMode = (function() {
 										return d
 								 })
 								 .style("opacity",0.7);
+								 
+				 
+				 legend.selectAll('div.legendNumDiv').remove();
+				
+				//create a separate div to hold each number in the number scale
+				var legendNum = legend.append("div").attr("class","legendNumDiv");
+				
+				
+				currentData.colorBinLabels.splice(0, 0, 0);
+				
+				//console.log(currentData.colorBinLabels);
+				
+				legendNum.selectAll(".legendNum")
+					.data(currentData.colorBinLabels)
+					.enter()
+					.append("div")
+					.attr("class","legendNum")
+					.html(function(d){
+						return d
+					});
+		
+			
 	}
 	
 	return external;
@@ -929,6 +964,8 @@ var diversityGenusMode = (function() {
 							   .attr("height",250);
 				
 				var legendColors = legend.append("div").attr("class","legendColorsDiv");
+	    		
+	    		legendColors.selectAll(".colorbox").remove(); 
 	    		
 	    		legendColors.selectAll(".colorbox")
 								.data(legendColor)

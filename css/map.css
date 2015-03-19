@@ -155,18 +155,25 @@
 		margin-left:10px;
 	}
 	
-	#legendScale{
-		 margin-top:10px;
-		 
-	}
-	
-	
 	.colorbox{
 		width:50px;
 		height:25px;
 		margin-top:5px;
 		border: 1px solid black;
 	}
+
+	.legendNumDiv{
+		float:right;
+		margin-top:10px;
+	}
+	
+	.legendNum {
+		margin-top:5px;
+		font-family: 'Quicksand', sans-serif;
+	}
+	
+	
+	
 	
 	.categoryName{
 		color:white;
