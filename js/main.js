@@ -607,7 +607,7 @@ var mapUtilities = (function() {
 		
 			// get the boundries of the different color categories
 			var boundries = [0];
-			for (var y = 1; y < colorArray.length; y++) {
+			for (var y = 1; y < colorArray.length && y < maxSpecies; y++) {
 				boundries.push(Math.floor(logscale.invert(y)));
 			}
 			boundries.push(maxSpecies);
@@ -876,7 +876,7 @@ var diversitySubfamilyMode = (function() {
 		if (!$.isEmptyObject(currentData.sppPerBentity)) {
 			var colorScale = mapUtilities.logBinColorScale(currentData.maxSpeciesCount, zeroColor, colorArray);
 			
-			currentData.colorBinLabels = colorScale.binLabels();
+			currentData.colorBinLabels = colorScale.binLabels().splice(0,0,0); // at a zero to the front
 			
 			//console.log ("currentData.colorBinLabels");
 			//console.log (currentData.colorBinLabels);
@@ -902,8 +902,24 @@ var diversitySubfamilyMode = (function() {
 							   .attr("width",200)
 							   .attr("height",250);
 				
-				legend.selectAll('div.legendColorsDiv').remove();
+				legend.selectAll('div.legendRow').remove();
 				
+				legend.selectAll('div.legendRow')
+					.data(currentData.colorBinLabels)
+					.enter()
+					.append('div')
+					.attr('class', 'legendRow')
+					.each(function() {
+						this.append('div')
+							.attr("class","colorbox")
+								.style("background-color",function(d,i){
+										return legendColor[i];
+								 })
+								 .style("opacity",0.7);
+						this.append('span').text(function(d){d});
+					});
+					
+				/*
 				var legendColors = legend.append("div").attr("class","legendColorsDiv");
 	    		
 	    			    		
@@ -924,7 +940,6 @@ var diversitySubfamilyMode = (function() {
 				var legendNum = legend.append("div").attr("class","legendNumDiv");
 				
 				
-				currentData.colorBinLabels.splice(0, 0, 0);
 				
 				//console.log(currentData.colorBinLabels);
 				
@@ -935,7 +950,7 @@ var diversitySubfamilyMode = (function() {
 					.attr("class","legendNum")
 					.html(function(d){
 						return d
-					});
+					});*/
 		
 			
 	}
