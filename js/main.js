@@ -616,7 +616,7 @@ var speciesMode = (function() {
 	// speciesName is what to display to the user
 	function getSelectedSpecies() {
 		return { taxon_code:  $('#sppView-species-select').val(),
-				 speciesName: $('#sppView-species-select').text() };
+				 speciesName: $('#sppView-species-select option:selected').text() };
 	}
 	
 	
@@ -764,7 +764,7 @@ var diversitySubfamilyMode = (function() {
 	// subfamilyName is what to show the user
 	function getSelectedSubfamily() {
 		return { subfamilyKey:  $('#subfamilyView-subfamily-select').val(),
-				 subfamilyName: $('#subfamilyView-subfamily-select').text() };
+				 subfamilyName: $('#subfamilyView-subfamily-select option:selected').text() };
 	}
 	
 	
