@@ -60,6 +60,7 @@ var controls = (function() {
 			
 			$("#current-spp-title").css("display","none");
 			$("#current-species").css("display","none");
+			
 		}else{
 		
 		$("#spp_view").css("display","inline");
@@ -152,6 +153,10 @@ var controls = (function() {
 		.fail(whoopsNetworkError);
 	});
 	
+	$(document).ready(function(){
+			diversitySubfamilyMode.drawLegend();
+			diversityGenusMode.drawLegend();
+	});
 	
 	//////////////////////////////////////////////////////////////////////////
 	// Same as above function but called by resetMap
@@ -583,7 +588,7 @@ var mapUtilities = (function() {
 	
 	
 	// color scale generator
-	external.logBinColorScale = function(maxSpecies, colorArray) {
+	external.logBinColorScale = function(maxSpecies, zeroColor, colorArray) {
 
 		// maxSpecies+1 so the output is never colorArray.length, so we don't overstep the color array
 		// domain of log scale can never be 0
@@ -592,7 +597,7 @@ var mapUtilities = (function() {
 		// convert log value to color
 		var colorscale = function(x) {
 			if (x==0) {
-				return colorArray[0]
+				return zeroColor;
 			}
 			else {
 				// round log value down to nearest integer to get colors
@@ -794,7 +799,9 @@ var speciesMode = (function() {
 
 var diversitySubfamilyMode = (function() {
 
+	var zeroColor = "#ffffff";
 	var colorArray = ["#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
+	var legendColor = ["#ffffff","#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
 	
 	var external = {};
 	
@@ -867,17 +874,35 @@ var diversitySubfamilyMode = (function() {
 
 	function choropleth(){
 		if (currentData.sppPerBentity) {
-			var colorScale = mapUtilities.logBinColorScale(currentData.maxSpeciesCount, colorArray);
+			var colorScale = mapUtilities.logBinColorScale(currentData.maxSpeciesCount, zeroColor, colorArray);
 			
 			d3.selectAll('path.bentities')
 				.style('fill', function(d) {
 					if (currentData.sppPerBentity[d.properties.gid]) {
 						return colorScale(currentData.sppPerBentity[d.properties.gid]);
 					}
-					else { return colorScale(0); }
+					else { return colorScale(0); // 0 species
+					}
 				});
 		}
 	};
+	
+	external.drawLegend = function(){
+				var legend = d3.select("#diversity-subfamily-legend")
+							   .attr("width",200)
+							   .attr("height",250);
+				
+				var legendColors = legend.append("div").attr("class","legendColorsDiv");
+	    		
+	    		legendColors.selectAll(".colorbox")
+								.data(legendColor)
+								.enter()
+								.append("div")
+								.attr("class","colorbox")
+								.style("background-color",function(d){
+										return d
+								 });
+	}
 	
 	return external;
 })();
@@ -891,10 +916,28 @@ var diversitySubfamilyMode = (function() {
 //////////////////////////////////////////////////////////////////////////
 
 var diversityGenusMode = (function() {
+
+	var legendColor = ["#ffffff","#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
 	var external = {};
 	external.activateMode = function(){};
 	external.deactivateMode = function(){};
 	external.resetView = function(){};
+	external.drawLegend = function(){
+				var legend = d3.select("#diversity-genus-legend")
+							   .attr("width",200)
+							   .attr("height",250);
+				
+				var legendColors = legend.append("div").attr("class","legendColorsDiv");
+	    		
+	    		legendColors.selectAll(".colorbox")
+								.data(legendColor)
+								.enter()
+								.append("div")
+								.attr("class","colorbox")
+								.style("background-color",function(d){
+										return d
+								 });
+	}
 	return external;
 })();
 

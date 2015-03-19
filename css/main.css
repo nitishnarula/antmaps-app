@@ -333,7 +333,7 @@
 			cursor: pointer;
 		}
 		
-		#map-location{
+		#map-bentity{
 			background:url("../img/map3.png");
 			background-repeat: no-repeat;
 			border: 0;
@@ -344,7 +344,7 @@
 			
 		}
 		
-		#map-location:hover{
+		#map-bentity:hover{
 			background:url("../img/map4.png");
 			-webkit-transition: all 500ms ease;
 			-moz-transition: all 500ms ease;
