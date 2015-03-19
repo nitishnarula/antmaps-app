@@ -457,7 +457,7 @@ var mapUtilities = (function() {
 			d3.select(this) //select the current bentity in the DOM
 			    .attr("originalcolor", d3.select(this).style('fill'))
 				.style("fill", "black")
-				.style("opacity",0.2)
+			// 	.style("opacity",0.2)
 				.style("stroke","#fff");
 			//the above code is not working, Uncaught TypeError: Cannot read property 'getComputedStyle' of null
 			//the style part is not working
@@ -498,7 +498,7 @@ var mapUtilities = (function() {
 			//console.log("fillcolor");
 			//console.log(fillcolor);
 			bents.style("fill", fillcolor)
-			.style("opacity",0.5)
+			// .style("opacity",0.5)
 			.style("stroke","#000"); //reset enumeration unit to orginal color
 	
 			d3.select("#"+finalId+"label").remove(); //remove info label
@@ -901,7 +901,8 @@ var diversitySubfamilyMode = (function() {
 								.attr("class","colorbox")
 								.style("background-color",function(d){
 										return d
-								 });
+								 })
+								 .style("opacity",0.7);
 	}
 	
 	return external;
