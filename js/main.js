@@ -582,22 +582,44 @@ var mapUtilities = (function() {
 	};
 	
 	
-	// scale generator
+	// color scale generator
 	external.logBinColorScale = function(maxSpecies, colorArray) {
 
 		// maxSpecies+1 so the output is never colorArray.length, so we don't overstep the color array
 		// domain of log scale can never be 0
 		var logscale = d3.scale.log().domain([1, maxSpecies+1]).range([0, colorArray.length]);
 
-		return function(x) {
+		// convert log value to color
+		var colorscale = function(x) {
 			if (x==0) {
 				return colorArray[0]
 			}
 			else {
-				// map log number to colors
+				// round log value down to nearest integer to get colors
 				return colorArray[Math.floor(logscale(x))];
 			}
 		}
+		
+		// return an array of labels for the legend
+		colorscale.binLabels = function() {
+		
+			// get the boundries of the different color categories
+			var boundries = [0];
+			for (var y = 1; y < colorArray.length; y++) {
+				boundries.push(Math.floor(logscale.invert(y)));
+			}
+			boundries.push(maxSpecies);
+			
+			// make string labels for each color category
+			var binLabels = [];
+			for (var b = 0; b < boundries.length - 1; b++) {
+				binLabels.push((boundries[b] + 1) + ' ~ ' + boundries[b+1]);
+			}
+			
+			return binLabels;
+		}
+		
+		return colorscale;
 	};
 	
 	
