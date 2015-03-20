@@ -156,7 +156,7 @@ var controls = (function() {
 
 	
 	//////////////////////////////////////////////////////////////////////////
-	// Same as above function but called by resetMap
+	// Same as above function but called by resetMap instead of on page load
 	external.getSubfamilies = function(){
 		$.getJSON('/dataserver/subfamily-list')
 		.done(function(data) {
@@ -275,6 +275,18 @@ var baseMap = (function() {
 	// set width and height of Leaflet map div
 	$("#mapContainer").css({'height':height, 'width':width})
 
+	
+		
+	var tile1 = L.tileLayer('http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png', {
+				attribution: '&copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+				}),
+    	tile2 = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}', {
+				attribution: 'Tiles &copy; Esri &mdash; Source: USGS, Esri, TANA, DeLorme, and NPS'
+				}),
+		tile3 = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}', {
+				attribution: 'Tiles &copy; Esri &mdash; Source: Esri'
+				});
+		
 	var map = new L.Map("mapContainer", 
 		{
 			center: [37.8, 0], 
@@ -282,10 +294,16 @@ var baseMap = (function() {
 			minZoom: 2
 		});
 		
+		
+	var baseMaps = {
+	  "OSM Hot": tile1,
+	  "Terrain": tile2,
+	  "Shaded Relief":tile3
+	};
 	
-	 L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-	}).addTo(map);
+	L.control.layers(baseMaps).addTo(map);
+	
+	tile1.addTo(map);
 	
 	// overlay pane for bentities
 	// overlayPane = Pane for overlays like polylines and polygons.
@@ -347,9 +365,9 @@ var baseMap = (function() {
 			.style("fill", function(d) { //color enumeration units
 											return speciesMode.choropleth(d, categoryColorScale); 
 										})
-			.on("mouseover",mapUtilities.highlight)
-			.on("mouseout",mapUtilities.dehighlight)
-			.on("click", mapUtilities.openPanelBentity);
+			.on("mouseover",speciesMode.highlight)
+			.on("mouseout",speciesMode.dehighlight)
+			.on("click", mapUtilities.infoPanelBentity); // maybe add code to disable click on pan?
 		
 		map.on("viewreset", reset);
 		reset();
@@ -361,6 +379,9 @@ var baseMap = (function() {
 		 	var bounds = path.bounds(external.bentities),
 				topLeft = bounds[0],
 		 		bottomRight = bounds[1];
+		 	//path.bounds computes the projected bounding box in pixels for the specified feature
+		 	//This is handy for ie zooming in to a particular feature. 
+		 	//This method observes any clipping and resampling performed by the projection stream.
 
 			svg.attr("width", bottomRight[0] - topLeft[0] + 1000)
 					.attr("height", bottomRight[1] - topLeft[1])
@@ -394,7 +415,6 @@ var baseMap = (function() {
 		return g;
 	}
 	
-	//do we need this?
 	//////////////////////////////////////////////////////////////////////////
 	// bind a function to the map's viewreset event, fired when the map needs to re-draw
 	external.registerResetListner = function(listner) {
@@ -435,71 +455,7 @@ var mapUtilities = (function() {
 
 	var external = {};
 	
-	external.highlight = function(data){
-			//console.log(data.properties.BENTITY);
-			var props = external.datatest(data);
-			
-			var finalId = props.BENTITY.replace(" ","");
-				finalId = finalId.replace(" ","");
-				finalId = finalId.replace(".","");
-				finalId = finalId.replace("(","");
-				finalId = finalId.replace(")","");
-				finalId = finalId.replace("_","");
-				finalId = finalId.replace("&","");
-				finalId = finalId.replace(",","");
-				
-				//console.log(finalId);
-				
-				
-			d3.select(this) //select the current bentity in the DOM
-			    .attr("originalcolor", d3.select(this).style('fill'))
-				.style("fill", "black")
-			// 	.style("opacity",0.2)
-				.style("stroke","#fff");
-			//the above code is not working, Uncaught TypeError: Cannot read property 'getComputedStyle' of null
-			//the style part is not working
-			
-				
-				var labelAttribute = "<h3 class='text-center'>"+props.BENTITY+"</h3><br><b>"+props.category+"</b>";
-				
-				
-				//create info label div
-				var infolabel = d3.select("body").append("div")
-					.attr("class", "infolabel") //for styling label
-					.attr("id", finalId+"label") //for future access to label div
-					.html(labelAttribute) //add text
-					.append("div") //add child div for feature name
-					.attr("class", "labelname"); //for styling name
-			
-			
-				
-				
-	};
 	
-	external.dehighlight = function(data){
-		
-			
-			var props = external.datatest(data);
-			
-			var finalId = props.BENTITY.replace(" ","");
-				finalId = finalId.replace(" ","");
-				finalId = finalId.replace(".","");
-				finalId = finalId.replace("(","");
-				finalId = finalId.replace(")","");
-				finalId = finalId.replace("_","");
-				finalId = finalId.replace("&","");
-				finalId = finalId.replace(",","");
-	
-			var bents = d3.select(this); //designate selector variable for brevity
-			var fillcolor = bents.attr("originalcolor"); //access original color from desc
-			//console.log("fillcolor");
-			//console.log(fillcolor);
-			bents.style("fill", fillcolor)
-			// .style("opacity",0.5)
-			.style("stroke","#000"); //reset enumeration unit to orginal color
-	
-			d3.select("#"+finalId+"label").remove(); //remove info label
-	};
 	
 	external.datatest= function(data){
 			if (data.properties){ //if json data
@@ -509,11 +465,39 @@ var mapUtilities = (function() {
 			};
 	};
 	
-	external.openInfoPanel= function(data){
+	external.infoWindow = function(data, labelAttribute){
+		var props = external.datatest(data);
+		
+		var finalId = props.BENTITY.replace(" ","");
+				finalId = finalId.replace(" ","");
+				finalId = finalId.replace(".","");
+				finalId = finalId.replace("(","");
+				finalId = finalId.replace(")","");
+				finalId = finalId.replace("_","");
+				finalId = finalId.replace("&","");
+				finalId = finalId.replace(",","");
+		
+		
+		//create info label div
+		var infolabel = d3.select("body").append("div")
+			.attr("class", "infolabel") //for styling label
+			.attr("id", finalId+"label") //for future access to label div
+			.html(labelAttribute) //add text
+			.append("div") //add child div for feature name
+			.attr("class", "labelname"); //for styling name
+	
+	};
+	
+	
+	
+	//////////////////////////////////////////////////////////////////////////
+	// Open info panel for point data when clicked
+	external.infoPanelPoints= function(data){
 		//console.log(d3.select(this));
 	
 		var props = external.datatest(data);
 	
+		// label content for info panel when point is clicked
 		var labelAttribute = "<h3 class='text-center'>"+props.gabi_acc_number+"</h3>"+
 		"<br> Geographic Coordinates<b>:  ( "+props.lat+" , "+props.lon+" )</b>";
 				
@@ -536,7 +520,10 @@ var mapUtilities = (function() {
 			});
 	};
 	
-	external.openPanelBentity = function(data){
+	
+	//////////////////////////////////////////////////////////////////////////
+	// Open info panel for bentity when clicked
+	external.infoPanelBentity = function(data){
 	
 		//console.log(d3.select(data));
 		var props = external.datatest(data);
@@ -563,25 +550,7 @@ var mapUtilities = (function() {
 			});
 	};
 	
-	external.circleHighlight=function(data){
 	
-		var props = external.datatest(data);
-				
-		var labelAttribute = "<h3 class='text-center'>"+props.gabi_acc_number+"</h3>";
-				
-		var finalId = props.gabi_acc_number;
-				
-		var infolabel = d3.select("body").append("div")
-					.attr("class", "infolabel") //for styling label
-					.attr("id", finalId+"label") //for future access to label div
-					.html(labelAttribute) //add text
-					.append("div") //add child div for feature name
-					.attr("class", "labelname"); //for styling name
-	};
-	
-	external.circleDehighlight=function(data){
-	
-	};
 	
 	
 	// color scale generator
@@ -696,9 +665,9 @@ var speciesMode = (function() {
 				})
 				.attr("fill","black")
 				.attr('r',4)
-				.on("click",mapUtilities.openInfoPanel)
-				.on("mouseover",mapUtilities.circleHighlight)
-				.on("mouseout",mapUtilities.circleDehighlight)
+				.on("click",mapUtilities.infoPanelPoints)
+				.on("mouseover",external.circleHighlight)
+				.on("mouseout",external.circleDehighlight)
 				.on("mouseover.border",function(){
 					d3.select(this)
 					.transition()
@@ -771,6 +740,83 @@ var speciesMode = (function() {
 	external.updateMapColor = function(){
 	};
 	
+	//////////////////////////////////////////////////////////////////////////
+	// called when user mouses over a bentity 
+	external.highlight = function(data){
+			//console.log(data.properties.BENTITY);
+			var props = mapUtilities.datatest(data);
+			
+			var finalId = props.BENTITY.replace(" ","");
+				finalId = finalId.replace(" ","");
+				finalId = finalId.replace(".","");
+				finalId = finalId.replace("(","");
+				finalId = finalId.replace(")","");
+				finalId = finalId.replace("_","");
+				finalId = finalId.replace("&","");
+				finalId = finalId.replace(",","");
+				
+				//console.log(finalId);
+				
+				
+			d3.select(this) //select the current bentity in the DOM
+			    .attr("originalcolor", d3.select(this).style('fill'))
+				.style("fill", "black")
+				.style("stroke","#fff");
+				
+				
+			var labelAttribute = "<h3 class='text-center'>"+props.BENTITY+"</h3><br><b>"+props.category+"</b>";
+				
+			mapUtilities.infoWindow(data, labelAttribute);
+				
+	};
+	
+	//////////////////////////////////////////////////////////////////////////
+	// called when user mouses out a bentity
+	external.dehighlight = function(data){
+		
+			
+			var props = mapUtilities.datatest(data);
+			
+			var finalId = props.BENTITY.replace(" ","");
+				finalId = finalId.replace(" ","");
+				finalId = finalId.replace(".","");
+				finalId = finalId.replace("(","");
+				finalId = finalId.replace(")","");
+				finalId = finalId.replace("_","");
+				finalId = finalId.replace("&","");
+				finalId = finalId.replace(",","");
+	
+			var bents = d3.select(this); //designate selector variable for brevity
+			var fillcolor = bents.attr("originalcolor"); //access original color from desc
+			//console.log("fillcolor");
+			//console.log(fillcolor);
+			bents.style("fill", fillcolor)
+			// .style("opacity",0.5)
+			.style("stroke","#000"); //reset enumeration unit to orginal color
+	
+			d3.select("#"+finalId+"label").remove(); //remove info label
+	};
+	
+	
+	external.circleHighlight = function(data){
+	
+		var props = mapUtilities.datatest(data);
+				
+		var labelAttribute = "<h3 class='text-center'>"+props.gabi_acc_number+"</h3>";
+				
+		var finalId = props.gabi_acc_number;
+				
+		var infolabel = d3.select("body").append("div")
+					.attr("class", "infolabel") //for styling label
+					.attr("id", finalId+"label") //for future access to label div
+					.html(labelAttribute) //add text
+					.append("div") //add child div for feature name
+					.attr("class", "labelname"); //for styling name
+	};
+	
+	external.circleDehighlight=function(data){
+	
+	};
 	
 	external.choropleth = function(d, recolorMap){
 	//Get data value
@@ -825,11 +871,13 @@ var diversitySubfamilyMode = (function() {
 	external.resetData();
 	
 	
+	external.getCurrentData = function() { return currentData; }
+	
 	external.updateData = function() {
 		var selected = getSelectedSubfamily();
 		
 		external.resetData();
-		currentData.subFamilyName = selected.subfamilyName;
+		var subfamilyName = selected.subfamilyName;
 		
 		if (!selected.subfamilyKey) {
 			alert('Please select a subfamily to map');
@@ -838,10 +886,11 @@ var diversitySubfamilyMode = (function() {
 		
 		$.getJSON('/dataserver/species-per-bentity', {subfamily_name: selected.subfamilyKey})
 		.done(function(data) {	
-			
+
 			external.resetData();
+			currentData.subfamilyName = subfamilyName;
 	
-				for (var i = 0; i < data.bentities.length; i++) {
+			for (var i = 0; i < data.bentities.length; i++) {
 				var record = data.bentities[i];
 				
 				// keep track of the highest species count we've seen so far
@@ -857,6 +906,9 @@ var diversitySubfamilyMode = (function() {
 			choropleth();
 		})
 		.fail(whoopsNetworkError);
+		
+		
+		console.log(currentData);
 		
 	};
 	
@@ -882,13 +934,29 @@ var diversitySubfamilyMode = (function() {
 			//console.log (currentData.colorBinLabels);
 			
 			d3.selectAll('path.bentities')
-				.style('fill', function(d) {
+				/*.style('fill', function(d) {
 					if (currentData.sppPerBentity[d.properties.gid]) {
 						return colorScale(currentData.sppPerBentity[d.properties.gid]);
 					}
-					else { return colorScale(0); // 0 species
+					else { return zeroColor; // 0 species
 					}
-				});
+				})*/
+				//.attr('choropleth-color', function() {d3.select(this).style('fill')})
+				.each( function(d) {
+					var color = null;
+					
+					if (currentData.sppPerBentity[d.properties.gid]) {
+						color = colorScale(currentData.sppPerBentity[d.properties.gid]);
+					}
+					else { 
+						color = zeroColor; // 0 species
+					}
+					
+					d3.select(this).style('fill', color);
+					d3.select(this).attr('choropleth-color', color);
+				})
+				.on("mouseover",external.highlight)
+				.on("mouseout",external.dehighlight);
 				
 			diversitySubfamilyMode.drawLegend();
 		}
@@ -918,6 +986,72 @@ var diversitySubfamilyMode = (function() {
 					});
 			
 	}
+	
+		//////////////////////////////////////////////////////////////////////////
+	// called when user mouses over a bentity 
+	external.highlight = function(data){
+			//console.log(data.properties.BENTITY);
+			var props = mapUtilities.datatest(data);
+			
+			var finalId = props.BENTITY.replace(" ","");
+				finalId = finalId.replace(" ","");
+				finalId = finalId.replace(".","");
+				finalId = finalId.replace("(","");
+				finalId = finalId.replace(")","");
+				finalId = finalId.replace("_","");
+				finalId = finalId.replace("&","");
+				finalId = finalId.replace(",","");
+				
+				//console.log(finalId);
+				
+				
+			d3.select(this) //select the current bentity in the DOM
+			    .attr("originalcolor", d3.select(this).style('fill'))
+				.style("fill", "black")
+				.style("stroke","#fff");
+				
+			
+			var modeData = controls.getCurrentModeObject().getCurrentData();
+			var numSpecies = modeData.sppPerBentity[props.gid];
+			var subfamilyName = modeData.subfamilyName;
+			
+			console.log(modeData);
+			console.log(subfamilyName);
+			
+			var labelAttribute = "<h4 class='text-center'>"+props.BENTITY+"</h4><br><b>"+subfamilyName+"</b><br><b>"+numSpecies+"</b/>";
+				
+			mapUtilities.infoWindow(data, labelAttribute);
+				
+	};
+	
+	//////////////////////////////////////////////////////////////////////////
+	// called when user mouses out a bentity
+	external.dehighlight = function(data){
+		
+			
+			var props = mapUtilities.datatest(data);
+			
+			var finalId = props.BENTITY.replace(" ","");
+				finalId = finalId.replace(" ","");
+				finalId = finalId.replace(".","");
+				finalId = finalId.replace("(","");
+				finalId = finalId.replace(")","");
+				finalId = finalId.replace("_","");
+				finalId = finalId.replace("&","");
+				finalId = finalId.replace(",","");
+	
+			var bents = d3.select(this); //designate selector variable for brevity
+			var fillcolor = bents.attr("choropleth-color"); //access original color from desc
+			//console.log("fillcolor");
+			//console.log(fillcolor);
+			bents.style("fill", fillcolor)
+			// .style("opacity",0.5)
+			.style("stroke","#000"); //reset enumeration unit to orginal color
+	
+			d3.select("#"+finalId+"label").remove(); //remove info label
+	};
+	
+
 	
 	return external;
 })();
