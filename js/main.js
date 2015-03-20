@@ -294,7 +294,7 @@ var baseMap = (function() {
 		g = svg.append("g").attr("class", "leaflet-zoom-hide");
 	//The leaflet-zoom-hide class is needed so that the overlay is hidden during Leaflet’s zoom animation
 	
-	//////////////////////////////////////////////////////////////////////////
+
 	// Leaflet projection for D3
 	// latLngToLayerPoint: Returns the map layer point that corresponds to the given geographical coordinates (useful for placing overlays on the map).
 	function projectPoint(x, y) {
@@ -307,7 +307,7 @@ var baseMap = (function() {
 	var transform = d3.geo.transform({point: projectPoint}), //there are no arguments passed to projectPoint(?)
 		path = d3.geo.path().projection(transform);
 	
-	//////////////////////////////////////////////////////////////////////////
+
 	// projection to use for Russia and Fiji, accross the 180th meridian
 	// subtract 30 degrees from longitude, then project, then move back by 30 degrees projected
 	function projectPoint180(x, y) {
@@ -319,7 +319,7 @@ var baseMap = (function() {
 		path180 = d3.geo.path().projection(transform180);
 	
 	
-	//////////////////////////////////////////////////////////////////////////
+
 	//load bentities	
 	d3.json("../data/bentities_lores2.topojson", function(error, data){
 	
@@ -337,8 +337,6 @@ var baseMap = (function() {
 					_.extend(bentity.properties,{"category":category});
 					});
 		
-		//console.log("external.bentities");
-		//console.log(external.bentities);
 		
 		var feature = g.selectAll("path.bentities")
 			.data(external.bentities.features)
@@ -355,7 +353,7 @@ var baseMap = (function() {
 		reset();
 
 		
-		//////////////////////////////////////////////////////////////////////////
+
 		// Reposition the SVG to cover the features on zoom/pan
 		function reset() {
 		 	var bounds = path.bounds(external.bentities),
@@ -381,27 +379,24 @@ var baseMap = (function() {
 		
 	});
 	
-	//////////////////////////////////////////////////////////////////////////
+	
 	// return the projection used in the leaflet map
-	// TODO later maybe use other projection for points in bentities crossing 180th meridian
 	external.getProjection = function() {
 		return function(xy){ return map.latLngToLayerPoint(new L.LatLng(xy[1], xy[0])) };
 	}
 	
-	//////////////////////////////////////////////////////////////////////////
+	
 	// return G element to plot points into
 	external.getOverlayG = function() {
 		return g;
 	}
 		
 	
-	//////////////////////////////////////////////////////////////////////////
 	// update the map when the view is reset
 	map.on('viewreset', function() {
 		controls.getCurrentModeObject().resetView();
 	});
 	
-	//////////////////////////////////////////////////////////////////////////
 	// resets zoom level and centering to the original values as when map was first loaded
 	external.resetZoom = function(){
 		map.setView(new L.LatLng(37.8, 0), 2);
@@ -413,6 +408,30 @@ var baseMap = (function() {
 		d3.selectAll('path.bentities').style('fill', null);
 		d3.selectAll('div.legendRow').remove();
 	};
+	
+	
+	
+	// called to 
+	external.drawLegend = function (legendContainer, legendLabels, legendColors) {
+		
+		// remove previously-existing legend
+		legendContainer.selectAll('div.legendRow').remove();
+		
+		// create a div for each legend item (color + label)
+		legendContainer.selectAll('div.legendRow')
+			.data(legendLabels)
+			.enter()
+			.append('div')
+			.attr('class', 'legendRow')
+			.each(function(d, i) {
+				// add color box and label to each row
+				d3.select(this).append('div')
+					.attr("class","colorbox")
+						.style("background-color", legendColors[i])
+						.style("opacity",0.7);
+					d3.select(this).append('span').text(d);
+				});
+			}
 	
 	return external;
 })();
@@ -446,8 +465,6 @@ var mapUtilities = (function() {
 				finalId = finalId.replace("_","");
 				finalId = finalId.replace("&","");
 				finalId = finalId.replace(",","");
-				
-				//console.log(finalId);
 				
 				
 			d3.select(this) //select the current bentity in the DOM
@@ -491,10 +508,7 @@ var mapUtilities = (function() {
 	
 			var bents = d3.select(this); //designate selector variable for brevity
 			var fillcolor = bents.attr("originalcolor"); //access original color from desc
-			//console.log("fillcolor");
-			//console.log(fillcolor);
 			bents.style("fill", fillcolor)
-			// .style("opacity",0.5)
 			.style("stroke","#000"); //reset enumeration unit to orginal color
 	
 			d3.select("#"+finalId+"label").remove(); //remove info label
@@ -509,7 +523,6 @@ var mapUtilities = (function() {
 	};
 	
 	external.openInfoPanel= function(data){
-		//console.log(d3.select(this));
 	
 		var props = external.datatest(data);
 	
@@ -818,8 +831,7 @@ var diversitySubfamilyMode = (function() {
 		currentData = {
 			subfamilyName: null,  // name of the current subfamily
 			sppPerBentity: {},    // keys are bentity ID, values are species count
-			maxSpeciesCount: 0,    // maximum number of species for a bentity (for scale)
-			colorBinLabels: []
+			maxSpeciesCount: 0    // maximum number of species for a bentity (for scale)
 		}
 	}
 	external.resetData();
@@ -878,12 +890,8 @@ var diversitySubfamilyMode = (function() {
 
 	function choropleth(){
 		if (!$.isEmptyObject(currentData.sppPerBentity)) {
+			
 			var colorScale = mapUtilities.logBinColorScale(currentData.maxSpeciesCount, zeroColor, colorArray);
-			
-			currentData.colorBinLabels = ['0'].concat(colorScale.binLabels()); // at a zero to the front
-			
-			//console.log ("currentData.colorBinLabels");
-			//console.log (currentData.colorBinLabels);
 			
 			d3.selectAll('path.bentities')
 				.style('fill', function(d) {
@@ -894,7 +902,7 @@ var diversitySubfamilyMode = (function() {
 					}
 				});
 				
-			diversitySubfamilyMode.drawLegend();
+			drawLegend(['0'].concat(colorScale.binLabels())); // draw legend, pass bin labels with '0' prepended
 			
 		}
 		else { // no data
@@ -902,30 +910,15 @@ var diversitySubfamilyMode = (function() {
 		}
 		
 		
-		
 	};
 	
-	external.drawLegend = function(){
-				var legend = d3.select("#diversity-subfamily-legend")
-							   .attr("width",200)
-							   .attr("height",250);
-				
-				legend.selectAll('div.legendRow').remove();
-				
-				legend.selectAll('div.legendRow')
-					.data(currentData.colorBinLabels)
-					.enter()
-					.append('div')
-					.attr('class', 'legendRow')
-					.each(function(d, i) {
-						d3.select(this).append('div')
-							.attr("class","colorbox")
-								.style("background-color", legendColor[i])
-								.style("opacity",0.7);
-						d3.select(this).append('span').text(d);
-					});
-			
+	
+	function drawLegend(binLabels){
+		var legend = d3.select("#diversity-subfamily-legend");
+		baseMap.drawLegend(legend, binLabels, legendColor);
 	}
+	
+	
 	
 	return external;
 })();
@@ -946,22 +939,7 @@ var diversityGenusMode = (function() {
 	external.deactivateMode = function(){};
 	external.resetView = function(){};
 	external.drawLegend = function(){
-				var legend = d3.select("#diversity-genus-legend")
-							   .attr("width",200)
-							   .attr("height",250);
 				
-				var legendColors = legend.append("div").attr("class","legendColorsDiv");
-	    		
-	    		legendColors.selectAll(".colorbox").remove(); 
-	    		
-	    		legendColors.selectAll(".colorbox")
-								.data(legendColor)
-								.enter()
-								.append("div")
-								.attr("class","colorbox")
-								.style("background-color",function(d){
-										return d
-								 });
 	}
 	return external;
 })();

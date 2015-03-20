@@ -16,7 +16,7 @@
 		.bentities{
 			stroke: black;
 			fill:#3E454C;
-			opacity:0.7; 
+			opacity:0.6; 
 			stroke-width:0.5px;
 		}
 		
@@ -24,7 +24,15 @@
 			fill:blue;
 		}
 	
-
+/* LAYER CONTROL */
+		.layer-titles{
+			color:black;
+			padding:0;
+			font-size:16px;
+			margin-top:0px;
+			width:100px;
+			display:inline;
+		}
 
 /* ZOOM */
 		#zoom_control{
@@ -78,8 +86,8 @@
 
 		.infolabel{
 			position:absolute;
-			top:80px;
-			right:40px;
+			top:80px;  /* 40px at corner */
+			right:100px;
 			width:300px;
 			height:110px;
 			z-index:10000;
