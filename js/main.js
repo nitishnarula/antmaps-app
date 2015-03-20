@@ -312,6 +312,7 @@ var baseMap = (function() {
 	  "<div class='layer-titles'> Terrain </div>": tile2,
 	  "<div class='layer-titles'> Shaded Relief </div>":tile3
 	};
+
 	
 	L.control.layers(baseMaps).addTo(map);
 	
@@ -379,13 +380,12 @@ var baseMap = (function() {
 			.on("mouseout",speciesMode.dehighlight)
 			.on("click", mapUtilities.infoPanelBentity); // maybe add code to disable click on pan?
 		
-		map.on("viewreset", reset);
-		reset();
+
 
 		
 
 		// Reposition the SVG to cover the features on zoom/pan
-		function reset() {
+		function resetView() {
 		 	var bounds = path.bounds(external.bentities),
 				topLeft = bounds[0],
 		 		bottomRight = bounds[1];
@@ -410,7 +410,11 @@ var baseMap = (function() {
 			});
 		}
 		
+		map.on("viewreset", resetView);
+		resetView();
+		
 	});
+	
 	
 	
 	// return the projection used in the leaflet map
@@ -419,16 +423,20 @@ var baseMap = (function() {
 	}
 	
 	
+	
 	// return G element to plot points into
 	external.getOverlayG = function() {
 		return g;
 	}
 		
 	
+
 	// update the map when the view is reset
 	map.on('viewreset', function() {
 		controls.getCurrentModeObject().resetView();
 	});
+	
+	
 	
 	// resets zoom level and centering to the original values as when map was first loaded
 	external.resetZoom = function(){
@@ -436,37 +444,17 @@ var baseMap = (function() {
 	};
 	
 	
-	// reset map colors
+	
+	// reset map colors and legend
 	external.resetChoropleth = function() {
-		d3.selectAll('path.bentities').style('fill', null);
+		d3.selectAll('path.bentities').style('fill', null).attr('choropleth-color', null);
 		d3.selectAll('div.legendRow').remove();
 	};
 	
 	
 	
-	// called to 
-	external.drawLegend = function (legendContainer, legendLabels, legendColors) {
-		
-		// remove previously-existing legend
-		legendContainer.selectAll('div.legendRow').remove();
-		
-		// create a div for each legend item (color + label)
-		legendContainer.selectAll('div.legendRow')
-			.data(legendLabels)
-			.enter()
-			.append('div')
-			.attr('class', 'legendRow')
-			.each(function(d, i) {
-				// add color box and label to each row
-				d3.select(this).append('div')
-					.attr("class","colorbox")
-						.style("background-color", legendColors[i])
-						.style("opacity",0.7);
-					d3.select(this).append('span').text(d);
-				});
-			}
-	
 	return external;
+	
 })();
 
 
@@ -487,6 +475,7 @@ var mapUtilities = (function() {
 	var external = {};
 		
 	
+
 	external.datatest= function(data){
 			if (data.properties){ //if json data
 				return data.properties;
@@ -517,9 +506,10 @@ var mapUtilities = (function() {
 			.attr("class", "labelname"); //for styling name
 	};
 	
+
 	
 
-	//////////////////////////////////////////////////////////////////////////
+
 	// Open info panel for point data when clicked
 	external.infoPanelPoints= function(data){
 
@@ -549,7 +539,8 @@ var mapUtilities = (function() {
 	};
 	
 	
-	//////////////////////////////////////////////////////////////////////////
+
+
 	// Open info panel for bentity when clicked
 	external.infoPanelBentity = function(data){
 	
@@ -577,6 +568,7 @@ var mapUtilities = (function() {
 				d3.selectAll(".infopanel").style("display","none");
 			});
 	};
+	
 	
 	
 	
@@ -610,7 +602,7 @@ var mapUtilities = (function() {
 			boundries.push(maxSpecies);
 			
 			// make string labels for each color category
-			var binLabels = [];
+			var binLabels = ['0'];
 			for (var b = 0; b < boundries.length - 1; b++) {
 				binLabels.push((boundries[b] + 1) + ' ~ ' + boundries[b+1]);
 			}
@@ -623,6 +615,35 @@ var mapUtilities = (function() {
 	
 	
 	
+	
+	// Renders the legend -- "legendContainer" is the D3 selection in which to 
+	// put the legend, "legendLabels" is an array with the legend labels, 
+	// and "legendColors" is an array with HTML color codes.
+	// The legend will have as many rows as legendLabels.length
+	external.drawLegend = function (legendContainer, legendLabels, legendColors) {
+						
+		// remove previously-existing legend
+		legendContainer.selectAll('div.legendRow').remove();
+						
+		// create a div for each legend item (color + label)
+		legendContainer.selectAll('div.legendRow')
+			.data(legendLabels)
+			.enter()
+			.append('div')
+			.attr('class', 'legendRow')
+			.each(function(d, i) {
+				// add color box and label to each row
+				d3.select(this).append('div')
+					.attr("class","colorbox")
+						.style("background-color", legendColors[i])
+						.style("opacity",0.7);
+				d3.select(this).append('span').text(d);
+			});
+	}
+
+	
+	
+
 	
 	
 	return external;
@@ -875,7 +896,7 @@ var diversitySubfamilyMode = (function() {
 
 	var zeroColor = "#ffffff";
 	var colorArray = ["#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
-	var legendColor = ["#ffffff","#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
+	var legendColors = ["#ffffff","#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
 	
 	var external = {};
 	
@@ -921,6 +942,7 @@ var diversitySubfamilyMode = (function() {
 			if (data.bentities.length==0) { 
 				alert('No data for this taxon!');
 			};
+
 	
 			for (var i = 0; i < data.bentities.length; i++) {
 				var record = data.bentities[i];
@@ -962,24 +984,28 @@ var diversitySubfamilyMode = (function() {
 			var colorScale = mapUtilities.logBinColorScale(currentData.maxSpeciesCount, zeroColor, colorArray);
 			
 			d3.selectAll('path.bentities')
-				.each( function(d) {
-					var color = null;
-					
-					if (currentData.sppPerBentity[d.properties.gid]) {
-						color = colorScale(currentData.sppPerBentity[d.properties.gid]);
-					}
-					else { 
-						color = zeroColor; // 0 species
-					}
-					
-					d3.select(this).style('fill', color);
-					d3.select(this).attr('choropleth-color', color);
-				})
-				.on("mouseover",external.highlight)
-				.on("mouseout",external.dehighlight);
+			.each( function(d) {
+				var color = null;
 				
-			drawLegend(['0'].concat(colorScale.binLabels())); // draw legend, pass bin labels with '0' prepended
+				if (currentData.sppPerBentity[d.properties.gid]) {
+					color = colorScale(currentData.sppPerBentity[d.properties.gid]);
+				}
+				else { 
+					color = zeroColor; // 0 species
+				}
+				
+				d3.select(this).style('fill', color);
+				d3.select(this).attr('choropleth-color', color);
+			})
+			.on("mouseover",external.highlight)
+			.on("mouseout",external.dehighlight);
+				
 			
+			mapUtilities.drawLegend(
+				d3.select("#diversity-subfamily-legend"),
+				colorScale.binLabels(),
+				legendColors
+			)
 		}
 		else { // no data
 			baseMap.resetChoropleth();
@@ -989,10 +1015,6 @@ var diversitySubfamilyMode = (function() {
 	};
 	
 	
-	function drawLegend(binLabels){
-		var legend = d3.select("#diversity-subfamily-legend");
-		baseMap.drawLegend(legend, binLabels, legendColor);
-	}
 	
 
 	//////////////////////////////////////////////////////////////////////////
@@ -1059,6 +1081,72 @@ var diversitySubfamilyMode = (function() {
 			d3.select("#"+finalId+"label").remove(); //remove info label
 	};
 	
+		//////////////////////////////////////////////////////////////////////////
+	// called when user mouses over a bentity 
+	external.highlight = function(data){
+			//console.log(data.properties.BENTITY);
+			var props = mapUtilities.datatest(data);
+			
+			var finalId = props.BENTITY.replace(" ","");
+				finalId = finalId.replace(" ","");
+				finalId = finalId.replace(".","");
+				finalId = finalId.replace("(","");
+				finalId = finalId.replace(")","");
+				finalId = finalId.replace("_","");
+				finalId = finalId.replace("&","");
+				finalId = finalId.replace(",","");
+				
+				//console.log(finalId);
+				
+				
+			d3.select(this) //select the current bentity in the DOM
+			    .attr("originalcolor", d3.select(this).style('fill'))
+				.style("fill", "black")
+				.style("stroke","#fff");
+				
+			
+			var modeData = controls.getCurrentModeObject().getCurrentData();
+			var numSpecies = modeData.sppPerBentity[props.gid];
+			var subfamilyName = modeData.subfamilyName;
+			
+			console.log(modeData);
+			console.log(subfamilyName);
+			
+			var labelAttribute = "<h4 class='text-center'>"+props.BENTITY+"</h4><br><b>"+subfamilyName+"</b><br><b>"+numSpecies+"</b/>";
+				
+			mapUtilities.infoWindow(data, labelAttribute);
+				
+	};
+	
+	//////////////////////////////////////////////////////////////////////////
+	// called when user mouses out a bentity
+	external.dehighlight = function(data){
+		
+			
+			var props = mapUtilities.datatest(data);
+			
+			var finalId = props.BENTITY.replace(" ","");
+				finalId = finalId.replace(" ","");
+				finalId = finalId.replace(".","");
+				finalId = finalId.replace("(","");
+				finalId = finalId.replace(")","");
+				finalId = finalId.replace("_","");
+				finalId = finalId.replace("&","");
+				finalId = finalId.replace(",","");
+	
+			var bents = d3.select(this); //designate selector variable for brevity
+			var fillcolor = bents.attr("choropleth-color"); //access original color from desc
+			//console.log("fillcolor");
+			//console.log(fillcolor);
+			bents.style("fill", fillcolor)
+			// .style("opacity",0.5)
+			.style("stroke","#000"); //reset enumeration unit to orginal color
+	
+			d3.select("#"+finalId+"label").remove(); //remove info label
+	};
+	
+
+	
 	return external;
 })();
 
@@ -1072,7 +1160,7 @@ var diversitySubfamilyMode = (function() {
 
 var diversityGenusMode = (function() {
 
-	var legendColor = ["#ffffff","#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
+	var legendColors = ["#ffffff","#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
 	var external = {};
 	external.activateMode = function(){};
 	external.deactivateMode = function(){};
