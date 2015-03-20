@@ -254,7 +254,7 @@ var controls = (function() {
 // draw polygons with D3 after loading json file
 // define projection in leaflet + D3 and function to reset zoom
 // Included functions: projectPoint, projectPoint180, reset, getProjection,
-//					   getOverlayG, registerResetListner
+//					   getOverlayG,
 //////////////////////////////////////////////////////////////////////////
 
 var baseMap = (function() {
@@ -393,14 +393,7 @@ var baseMap = (function() {
 	external.getOverlayG = function() {
 		return g;
 	}
-	
-	//do we need this?
-	//////////////////////////////////////////////////////////////////////////
-	// bind a function to the map's viewreset event, fired when the map needs to re-draw
-	external.registerResetListner = function(listner) {
-		map.on("viewreset", listner);
-	}
-	
+		
 	
 	//////////////////////////////////////////////////////////////////////////
 	// update the map when the view is reset
@@ -414,6 +407,12 @@ var baseMap = (function() {
 		map.setView(new L.LatLng(37.8, 0), 2);
 	};
 	
+	
+	// reset map colors
+	external.resetChoropleth = function() {
+		d3.selectAll('path.bentities').style('fill', null);
+		d3.selectAll('div.legendRow').remove();
+	};
 	
 	return external;
 })();
@@ -738,6 +737,7 @@ var speciesMode = (function() {
 	// for this mode, so a different map mode can render the map
 	external.deactivateMode = function() {
 		baseMap.getOverlayG().selectAll('.dot').remove(); // clear all dots
+		baseMap.clearChoropleth();
 	}
 	
 	
@@ -841,7 +841,11 @@ var diversitySubfamilyMode = (function() {
 			
 			external.resetData();
 	
-				for (var i = 0; i < data.bentities.length; i++) {
+			if (data.bentities.length==0) { 
+				alert('No data for this taxon!');
+			};
+	
+			for (var i = 0; i < data.bentities.length; i++) {
 				var record = data.bentities[i];
 				
 				// keep track of the highest species count we've seen so far
@@ -891,6 +895,10 @@ var diversitySubfamilyMode = (function() {
 				});
 				
 			diversitySubfamilyMode.drawLegend();
+			
+		}
+		else { // no data
+			baseMap.resetChoropleth();
 		}
 		
 		
