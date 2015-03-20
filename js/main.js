@@ -296,9 +296,9 @@ var baseMap = (function() {
 		
 		
 	var baseMaps = {
-	  "OSM Hot": tile1,
-	  "Terrain": tile2,
-	  "Shaded Relief":tile3
+	  "<div class='layer-titles'> OSM Hot </div>": tile1,
+	  "<div class='layer-titles'> Terrain </div>": tile2,
+	  "<div class='layer-titles'> Shaded Relief </div>":tile3
 	};
 	
 	L.control.layers(baseMaps).addTo(map);

@@ -24,7 +24,15 @@
 			fill:blue;
 		}
 	
-
+/* LAYER CONTROL */
+		.layer-titles{
+			color:black;
+			padding:0;
+			font-size:16px;
+			margin-top:0px;
+			width:100px;
+			display:inline;
+		}
 
 /* ZOOM */
 		#zoom_control{
