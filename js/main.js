@@ -689,9 +689,25 @@ var mapUtilities = (function() {
 
 
 
+///////////////////////////////////////////////////////////////////////////////
+// MAP MODES
+
+/*
+* Each mode needs to have the following external methods:
+* activateMode() -- called when the user switches to this mode
+* deactivateMode() -- called to clean up, when the user switches to a different mode
+* updateData() -- called when the "map" button is pressed
+* resetData() -- clear the currently-saved data for this mode
+* resetView() -- called when the map has to be re-drawn, like on zoom
+*/
+
+
+
 
 
 //////////////////////////////////////////////////////////////////////////
+//  SPECIES MODE
+//
 //  Functionalities for species mode: gets data, gets current species, draws points,
 //                                    recolors map, draws legend, resets mode 
 //  Included functions: resetView, activateMode, deactivateMode, updateData,
@@ -826,12 +842,9 @@ var speciesMode = (function() {
 		.fail(whoopsNetworkError);
 	}
 	
-	external.drawLegend = function(){
-	};
-	
-	external.updateMapColor = function(){
-	};
-	
+
+
+
 	//////////////////////////////////////////////////////////////////////////
 	// called when user mouses over a bentity 
 	external.highlight = function(data){
@@ -931,8 +944,8 @@ var speciesMode = (function() {
 
 
 //////////////////////////////////////////////////////////////////////////
-//
-//////////////////////////////////////////////////////////////////////////
+// DIVERSITY SUBFAMILY MODE
+
 
 var diversitySubfamilyMode = (function() {
 
@@ -942,12 +955,17 @@ var diversitySubfamilyMode = (function() {
 	
 	var external = {};
 	
-	// subfamilyKey is the key to send to the web server,
-	// subfamilyName is what to show the user
+	
+	
+	
+	// key is the key to send to the web server,
+	// name is what to show the user
 	function getSelectedSubfamily() {
-		return { subfamilyKey:  $('#subfamilyView-subfamily-select').val(),
-				 subfamilyName: $('#subfamilyView-subfamily-select option:selected').text() };
+		return { key:  $('#subfamilyView-subfamily-select').val(),
+				 name: $('#subfamilyView-subfamily-select option:selected').text() };
 	}
+	
+	
 	
 	
 	// keep track of the data we're looking at right now
@@ -961,21 +979,24 @@ var diversitySubfamilyMode = (function() {
 	}
 	external.resetData();
 	
-	
 	external.getCurrentData = function() { return currentData; }
 	
+	
+	
+	
+	// called by "map" button
 	external.updateData = function() {
 		var selected = getSelectedSubfamily();
 		
 		external.resetData();
-		var subfamilyName = selected.subfamilyName;
+		var subfamilyName = selected.name;
 		
-		if (!selected.subfamilyKey) {
+		if (!selected.key) {
 			alert('Please select a subfamily to map');
 			return;
 		}
 		
-		$.getJSON('/dataserver/species-per-bentity', {subfamily_name: selected.subfamilyKey})
+		$.getJSON('/dataserver/species-per-bentity', {subfamily_name: selected.key})
 		.done(function(data) {	
 
 			external.resetData();
@@ -1003,23 +1024,31 @@ var diversitySubfamilyMode = (function() {
 		})
 		.fail(whoopsNetworkError);
 		
-		
-		console.log(currentData);
-		
 	};
 	
 	
+	
+	// draw choropeth when mode is activated
 	external.activateMode = function(){
 		choropleth();
 	};
 	
-	external.resetView = function(){};  // don't think this function needs to do anything
+	
+	
+	
+	external.resetView = function(){};  // don't think this function needs to do anything for this mode
+	
+	
+	
 	
 	external.deactivateMode = function(){
 		baseMap.resetChoropleth();
 	};
 	
 
+
+
+	// draw diversity-mode choropleth
 	function choropleth(){
 		if (!$.isEmptyObject(currentData.sppPerBentity)) {
 			
@@ -1029,7 +1058,8 @@ var diversitySubfamilyMode = (function() {
 			// data (d) for the bentity
 			var bentityColor = function(d) {
 				var color = null;
-								if (currentData.sppPerBentity[d.properties.gid]) {
+				
+				if (currentData.sppPerBentity[d.properties.gid]) {
 					color = colorScale(currentData.sppPerBentity[d.properties.gid]);
 				}
 				else { 
@@ -1135,20 +1165,134 @@ var diversitySubfamilyMode = (function() {
 
 
 //////////////////////////////////////////////////////////////////////////
-//
-//////////////////////////////////////////////////////////////////////////
+//  DIVERSITY GENUS MODE
+
 
 var diversityGenusMode = (function() {
 
+	var zeroColor = "#ffffff";
+	var colorArray = ["#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
 	var legendColors = ["#ffffff","#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
+	
 	var external = {};
-	external.activateMode = function(){};
-	external.deactivateMode = function(){};
-	external.resetView = function(){};
-	external.resetData = function(){};
-	external.drawLegend = function(){
-				
+	
+
+	
+	// key is the key to send to the web server,
+	// name is what to show the user
+	function getSelectedGenus() {
+		return { key:  $('#genusView-genus-select').val(),
+			     name: $('#genusView-genus-select option:selected').text() };
 	}
+
+	
+	
+	
+	
+	// keep track of the data we're looking at right now
+	var currentData = null;
+	external.resetData = function() {
+		currentData = {
+			genusName: null,      // name of the current genus
+			sppPerBentity: {},    // keys are bentity ID, values are species count
+			maxSpeciesCount: 0    // maximum number of species for a bentity (for scale)
+		}
+	}
+	external.resetData();
+
+
+	external.updateData = function() {
+		var selected = getSelectedGenus();
+		
+		external.resetData();
+		var genusName = selected.name;
+	
+		if (!selected.key) {
+			alert('Please select a genus to map.');
+			return;
+		}
+		
+		$.getJSON('/dataserver/species-per-bentity', {genus_name: selected.key})
+		.done(function(data) {	
+			external.resetData();
+			currentData.genusName = genusName;
+			
+			if (data.bentities.length==0) { 
+				alert('No data for this taxon!');
+			};
+			
+			
+			for (var i = 0; i < data.bentities.length; i++) {
+				var record = data.bentities[i];
+								
+				// keep track of the highest species count we've seen so far
+				if (record.species_count > currentData.maxSpeciesCount) {
+					currentData.maxSpeciesCount = record.species_count;
+				}
+				
+				currentData.sppPerBentity[record.gid] = record.species_count;
+				//key = gid, value = species_count
+			}
+			
+			choropleth();
+		})
+		.fail(whoopsNetworkError);
+	};
+	
+	
+	
+	external.activateMode = function(){
+		choropleth();
+	};
+	
+	
+	external.deactivateMode = function(){
+		baseMap.resetChoropleth();
+	};
+	
+	
+	external.resetView = function(){};  // doesn't need to do anything for this mode
+
+
+
+	// draw diversity-mode choropleth
+	function choropleth(){
+		if (!$.isEmptyObject(currentData.sppPerBentity)) {
+			
+			var colorScale = mapUtilities.logBinColorScale(currentData.maxSpeciesCount, zeroColor, colorArray);
+			
+			// function called to determine color of each bentity, given d3-bound
+			// data (d) for the bentity
+			var bentityColor = function(d) {
+				var color = null;
+								if (currentData.sppPerBentity[d.properties.gid]) {
+					color = colorScale(currentData.sppPerBentity[d.properties.gid]);
+				}
+				else { 
+					color = zeroColor; // 0 species
+				}
+				return color;
+			};
+			
+			baseMap.choropleth(bentityColor);
+			
+			mapUtilities.drawLegend(
+				d3.select("#diversity-genus-legend"),
+				colorScale.binLabels(),
+				legendColors
+			);
+			
+			// TODO put somewhere else
+			d3.selectAll('path.bentities')
+			.on("mouseover",external.highlight)
+			.on("mouseout",external.dehighlight);
+		}
+		else { // no data
+			baseMap.resetChoropleth();
+		}
+	};
+	
+
 	return external;
 })();
 
