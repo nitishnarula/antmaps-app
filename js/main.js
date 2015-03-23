@@ -660,9 +660,9 @@ var mapUtilities = (function() {
 	// color scale generator for choropleth
 	external.logBinColorScale = function(maxSpecies, zeroColor, colorArray) {
 
-		// maxSpecies+1 so the output is never colorArray.length, so we don't overstep the color array
+		// maxSpecies+0.0001 so the output is never colorArray.length, so we don't overstep the color array
 		// domain of log scale can never be 0
-		var logscale = d3.scale.log().domain([1, maxSpecies+1]).range([0, colorArray.length]);
+		var logscale = d3.scale.log().domain([1, maxSpecies+0.0001]).range([0, colorArray.length]);
 
 		// convert log value to color
 		var colorscale = function(x) {
@@ -689,7 +689,12 @@ var mapUtilities = (function() {
 			// make string labels for each color category
 			var binLabels = ['0'];
 			for (var b = 0; b < boundries.length - 1; b++) {
-				binLabels.push((boundries[b] + 1) + ' ~ ' + boundries[b+1]);
+				if (boundries[b] == boundries[b+1] || (boundries[b] + 1) == boundries[b+1]) {
+					binLabels.push(boundries[b+1]);
+				}
+				else {
+					binLabels.push((boundries[b] + 1) + ' ~ ' + boundries[b+1]);
+				}
 			}
 			
 			return binLabels;
@@ -1269,6 +1274,18 @@ var diversityGenusMode = (function() {
 			baseMap.resetChoropleth();
 		}
 	};
+	
+	
+	
+	
+	
+	
+	external.bentityInfoLabelHTML = function(d, i) {
+		return "<h4 class='text-center'>" 
+		+ d.properties.BENTITY + "</h4><br><b>" 
+		+ (currentData.genusName || "") + "</b><br><b>" 
+		+ (currentData.sppPerBentity[d.properties.gid] || "0") + " species</b/>";
+	}
 	
 
 	return external;
