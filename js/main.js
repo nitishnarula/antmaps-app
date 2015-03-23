@@ -352,7 +352,7 @@ var baseMap = (function() {
 	function bindBentityListners() {
 		var bentities = baseMap.getBentities();
 		for (var i = 0; i < bentityEventListners.length; i++) {
-			bentities.on(bentityEventListners[0][0], bentityEventListners[0][1]);
+			bentities.on(bentityEventListners[i][0], bentityEventListners[i][1]);
 		}
 	}
 	
@@ -535,6 +535,8 @@ var baseMap = (function() {
 
 
 //////////////////////////////////////////////////////////////////////////
+// MAP UTILITIES
+//
 // Map-related functions: highlight/ dehighlight polygons and points, draw info panel
 // Included functions: highlight, dehighlight, datatest, openInfoPanel, 
 //                     circleHighlight, circleDehighlight
@@ -559,6 +561,8 @@ var mapUtilities = (function() {
 	
 	function infoLabel(d, i){
 		var labelHTML = controls.getCurrentModeObject().bentityInfoLabelHTML(d, i);
+		
+		mapUtilities.removeInfoLabel(); // clear already-existing label
 		
 		var infolabel = d3.select("body").append("div")
 			.attr("class", "infolabel") //for styling
