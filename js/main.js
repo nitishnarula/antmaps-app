@@ -1127,7 +1127,10 @@ var diversitySubfamilyMode = (function() {
 	
 	
 	external.bentityInfoLabelHTML = function(d, i) {
-		return "<h4 class='text-center'>" + d.properties.BENTITY + "</h4><br><b>" + currentData.subfamilyName + "</b><br><b>" + currentData.sppPerBentity[d.properties.gid] + " species</b/>";
+		return "<h4 class='text-center'>" 
+		+ d.properties.BENTITY + "</h4><br><b>" 
+		+ (currentData.subfamilyName || "") + "</b><br><b>" 
+		+ (currentData.sppPerBentity[d.properties.gid] || "0") + " species</b/>";
 	}
 	
 
