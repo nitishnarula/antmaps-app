@@ -336,6 +336,29 @@ var baseMap = (function() {
 	
 	
 	
+	// Keep track of event listners to be bound to bentities.
+	// This is necessary because we'll be periodically removing and re-creating bentities,
+	// and will need to re-bind event listners each time.
+	var bentityEventListners = []; // list of [event-type, event-handler] sub-lists
+	
+	
+	external.addBentityEventListner = function(eventType, eventHandler) {
+		baseMap.getBentities().on(eventType, eventHandler);
+		bentityEventListners.push([eventType, eventHandler]);
+	}
+	
+	
+	// Bind event listners to bentities.  Call this function every time bentities are re-created.
+	function bindBentityListners() {
+		var bentities = baseMap.getBentities();
+		for (var i = 0; i < bentityEventListners.length; i++) {
+			bentities.on(bentityEventListners[0][0], bentityEventListners[0][1]);
+		}
+	}
+	
+	
+	
+	
 	
 	// overlayPane = Pane for overlays like polylines and polygons.
 	// the SVG element is initialized with no width or height; the dimensions must be set dynamically because they change on zoom
@@ -344,6 +367,12 @@ var baseMap = (function() {
 	//The leaflet-zoom-hide class is needed so that the overlay is hidden during Leaflet’s zoom animation
 	
 
+
+
+	// Return D3 selection with bentity polygons
+	external.getBentities = function() {
+		return g.selectAll("path.bentities");
+	}
 
 
 
@@ -386,18 +415,21 @@ var baseMap = (function() {
 			external.bentities = topojson.feature(data,data.objects.bentities_Jan2015_highres); 
 		
 		
-			var feature = g.selectAll("path.bentities")
+			var feature = external.getBentities()
 				.data(external.bentities.features)
 				.enter().append("path")
-				.attr("class","bentities")
-				.on("mouseover",speciesMode.highlight)
-				.on("mouseout",speciesMode.dehighlight)
-				.on("click", mapUtilities.infoPanelBentity); // maybe add code to disable click on pan?
+				.attr("class","bentities");
+				//.on("mouseover",speciesMode.highlight)
+				//.on("mouseout",speciesMode.dehighlight)
+				//.on("click", mapUtilities.infoPanelBentity); // maybe add code to disable click on pan?
+		
+			bindBentityListners();
 		
 			resetView();
 		});
 	}
-	loadBentities();  // TODO defer probably
+	loadBentities();  
+	
 
 
 
@@ -435,7 +467,7 @@ var baseMap = (function() {
 	
 	
 	
-	// return the projection used in the leaflet map
+	// return the projection used in the leaflet map for plotting points
 	external.getProjection = function() {
 		return function(xy){ return map.latLngToLayerPoint(new L.LatLng(xy[1], xy[0])) };
 	}
@@ -470,7 +502,7 @@ var baseMap = (function() {
 	// bentity as an argument, and returns the HTML color for the bentity.
 	external.choropleth = function(bentityColor) {
 		
-		d3.selectAll('path.bentities')
+		baseMap.getBentities()
 		.each( function(d) {
 			var color = bentityColor(d);
 			
@@ -486,7 +518,7 @@ var baseMap = (function() {
 	
 	// reset map colors and legend
 	external.resetChoropleth = function() {
-		d3.selectAll('path.bentities').style('fill', null).attr('choropleth-color', null);
+		baseMap.getBentities().style('fill', null).attr('choropleth-color', null);
 		d3.selectAll('div.legendRow').remove();
 	};
 	
@@ -512,7 +544,7 @@ var mapUtilities = (function() {
 	var external = {};
 		
 	
-
+	// what is this for?
 	external.datatest= function(data){
 			if (data.properties){ //if json data
 				return data.properties;
@@ -521,30 +553,38 @@ var mapUtilities = (function() {
 			}
 	};
 	
-	external.infoWindow = function(data, labelAttribute){
-		var props = external.datatest(data);
+	
+	
+	
+	
+	function infoLabel(d, i){
+		var labelHTML = controls.getCurrentModeObject().bentityInfoLabelHTML(d, i);
 		
-		var finalId = props.BENTITY.replace(" ","");
-				finalId = finalId.replace(" ","");
-				finalId = finalId.replace(".","");
-				finalId = finalId.replace("(","");
-				finalId = finalId.replace(")","");
-				finalId = finalId.replace("_","");
-				finalId = finalId.replace("&","");
-				finalId = finalId.replace(",","");
-		
-		
-		//create info label div
 		var infolabel = d3.select("body").append("div")
-			.attr("class", "infolabel") //for styling label
-			.attr("id", finalId+"label") //for future access to label div
-			.html(labelAttribute) //add text
-			.append("div") //add child div for feature name
-			.attr("class", "labelname"); //for styling name
-	};
-	
+			.attr("class", "infolabel") //for styling
+			.attr("id", "infolabel-" + i) // to remove label
+			.html(labelHTML); //add text
 
+	};
+	baseMap.addBentityEventListner('mouseenter.infolabel', infoLabel);
 	
+	
+	
+	
+	external.removeInfoLabel = function(d, i) {
+		if (i === undefined) {  
+			// if removeInfoLabel was not called as an event handler, i will not be present, so remove all info lables
+			d3.select(".infolabel").remove();
+		}
+		else {
+			// if removeInfoLabel is called as an event handler, i will be present, so remove only the div with i in the ID to prevent glitches with mouseover/mouseout timing
+			d3.select("#infolabel-" + i).remove();
+		}
+	};
+	baseMap.addBentityEventListner('mouseleave.infolabel', external.removeInfoLabel);
+
+
+
 
 
 	// Open info panel for point data when clicked
@@ -574,6 +614,7 @@ var mapUtilities = (function() {
 				d3.selectAll(".infopanel").style("display","none");
 			});
 	};
+	
 	
 	
 
@@ -610,7 +651,9 @@ var mapUtilities = (function() {
 	
 	
 	
-	// color scale generator
+	
+	
+	// color scale generator for choropleth
 	external.logBinColorScale = function(maxSpecies, zeroColor, colorArray) {
 
 		// maxSpecies+1 so the output is never colorArray.length, so we don't overstep the color array
@@ -628,7 +671,8 @@ var mapUtilities = (function() {
 			}
 		}
 		
-		// return an array of labels for the legend
+		
+		// return an array of labels for the legend  (call like logBinColorScale().binLabels)
 		colorscale.binLabels = function() {
 		
 			// get the boundries of the different color categories
@@ -649,6 +693,7 @@ var mapUtilities = (function() {
 		
 		return colorscale;
 	};
+	
 	
 	
 	
@@ -699,6 +744,7 @@ var mapUtilities = (function() {
 * updateData() -- called when the "map" button is pressed
 * resetData() -- clear the currently-saved data for this mode
 * resetView() -- called when the map has to be re-drawn, like on zoom
+* bentityInfoLabelHTML(d, i) -- returns the info-label text for a bentity, given D3-bound data d and index i
 */
 
 
@@ -849,47 +895,29 @@ var speciesMode = (function() {
 	// called when user mouses over a bentity 
 	external.highlight = function(data){
 			//console.log(data.properties.BENTITY);
-			var props = mapUtilities.datatest(data);
-			
-			var finalId = props.BENTITY.replace(" ","");
-				finalId = finalId.replace(" ","");
-				finalId = finalId.replace(".","");
-				finalId = finalId.replace("(","");
-				finalId = finalId.replace(")","");
-				finalId = finalId.replace("_","");
-				finalId = finalId.replace("&","");
-				finalId = finalId.replace(",","");
-				
-				//console.log(finalId);
-				
-				
+
 			d3.select(this) //select the current bentity in the DOM
 			    .attr("originalcolor", d3.select(this).style('fill'))
 				.style("fill", "black")
 				.style("stroke","#fff");
-				
-				
-			var labelAttribute = "<h3 class='text-center'>"+props.BENTITY+"</h3><br><b>"+props.category+"</b>";
-				
-			mapUtilities.infoWindow(data, labelAttribute);
+
 				
 	};
+	
+	
+	
+	
+	external.bentityInfoLabelHTML = function(d, i) {
+		return "<h3 class='text-center'>"+d.props.BENTITY+"</h3><br><b>"+d.props.category+"</b>";
+	};
+	
 	
 	//////////////////////////////////////////////////////////////////////////
 	// called when user mouses out a bentity
 	external.dehighlight = function(data){
 		
 			
-			var props = mapUtilities.datatest(data);
-			
-			var finalId = props.BENTITY.replace(" ","");
-				finalId = finalId.replace(" ","");
-				finalId = finalId.replace(".","");
-				finalId = finalId.replace("(","");
-				finalId = finalId.replace(")","");
-				finalId = finalId.replace("_","");
-				finalId = finalId.replace("&","");
-				finalId = finalId.replace(",","");
+
 	
 			var bents = d3.select(this); //designate selector variable for brevity
 			var fillcolor = bents.attr("originalcolor"); //access original color from desc
@@ -899,7 +927,6 @@ var speciesMode = (function() {
 			// .style("opacity",0.5)
 			.style("stroke","#000"); //reset enumeration unit to orginal color
 	
-			d3.select("#"+finalId+"label").remove(); //remove info label
 	};
 	
 	
@@ -938,6 +965,8 @@ var speciesMode = (function() {
 	return external;
 	
 })();
+
+
 
 
 
@@ -1036,7 +1065,7 @@ var diversitySubfamilyMode = (function() {
 	
 	
 	
-	external.resetView = function(){};  // don't think this function needs to do anything for this mode
+	external.resetView = function(){};  // this function doesn't need to do anything for this mode
 	
 	
 	
@@ -1078,7 +1107,7 @@ var diversitySubfamilyMode = (function() {
 			
 			
 			// TODO put somewhere else
-			d3.selectAll('path.bentities')
+			baseMap.getBentities()
 			.on("mouseover",external.highlight)
 			.on("mouseout",external.dehighlight);
 		}
@@ -1091,71 +1120,13 @@ var diversitySubfamilyMode = (function() {
 	
 	
 	
+	
+	
+	external.bentityInfoLabelHTML = function(d, i) {
+		return "<h4 class='text-center'>" + d.properties.BENTITY + "</h4><br><b>" + currentData.subfamilyName + "</b><br><b>" + currentData.sppPerBentity[d.properties.gid] + " species</b/>";
+	}
+	
 
-	//////////////////////////////////////////////////////////////////////////
-	// called when user mouses over a bentity 
-	external.highlight = function(data){
-			//console.log(data.properties.BENTITY);
-			var props = mapUtilities.datatest(data);
-			
-			var finalId = props.BENTITY.replace(" ","");
-				finalId = finalId.replace(" ","");
-				finalId = finalId.replace(".","");
-				finalId = finalId.replace("(","");
-				finalId = finalId.replace(")","");
-				finalId = finalId.replace("_","");
-				finalId = finalId.replace("&","");
-				finalId = finalId.replace(",","");
-				
-				//console.log(finalId);
-				
-				
-			d3.select(this) //select the current bentity in the DOM
-			    .attr("originalcolor", d3.select(this).style('fill'))
-				.style("fill", "black")
-				.style("stroke","#fff");
-				
-			
-			var modeData = controls.getCurrentModeObject().getCurrentData();
-			var numSpecies = modeData.sppPerBentity[props.gid];
-			var subfamilyName = modeData.subfamilyName;
-			
-			console.log(modeData);
-			console.log(subfamilyName);
-			
-			var labelAttribute = "<h4 class='text-center'>"+props.BENTITY+"</h4><br><b>"+subfamilyName+"</b><br><b>"+numSpecies+"</b/>";
-				
-			mapUtilities.infoWindow(data, labelAttribute);
-				
-	};
-	
-	//////////////////////////////////////////////////////////////////////////
-	// called when user mouses out a bentity
-	external.dehighlight = function(data){
-		
-			
-			var props = mapUtilities.datatest(data);
-			
-			var finalId = props.BENTITY.replace(" ","");
-				finalId = finalId.replace(" ","");
-				finalId = finalId.replace(".","");
-				finalId = finalId.replace("(","");
-				finalId = finalId.replace(")","");
-				finalId = finalId.replace("_","");
-				finalId = finalId.replace("&","");
-				finalId = finalId.replace(",","");
-	
-			var bents = d3.select(this); //designate selector variable for brevity
-			var fillcolor = bents.attr("choropleth-color"); //access original color from desc
-			//console.log("fillcolor");
-			//console.log(fillcolor);
-			bents.style("fill", fillcolor)
-			// .style("opacity",0.5)
-			.style("stroke","#000"); //reset enumeration unit to orginal color
-	
-			d3.select("#"+finalId+"label").remove(); //remove info label
-	};
-	
 	
 	return external;
 })();
@@ -1283,7 +1254,7 @@ var diversityGenusMode = (function() {
 			);
 			
 			// TODO put somewhere else
-			d3.selectAll('path.bentities')
+			baseMap.getBentities()
 			.on("mouseover",external.highlight)
 			.on("mouseout",external.dehighlight);
 		}
@@ -1326,6 +1297,7 @@ function resetMap(){
 
 	speciesMode.resetData();
 	diversitySubfamilyMode.resetData();
+	diversityGenusMode.resetData();
 
 	//then should set mode to species mode and activate mode
 	controls.setMode("speciesMode");
