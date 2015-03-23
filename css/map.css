@@ -20,6 +20,11 @@
 			stroke-width:0.5px;
 		}
 		
+		.bentities:hover {
+			stroke: white;
+			fill: black !important; /* !important to override element-level choropleth styles */
+		}
+		
 		.water{
 			fill:blue;
 		}

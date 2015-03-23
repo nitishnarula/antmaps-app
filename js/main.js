@@ -507,8 +507,8 @@ var baseMap = (function() {
 			var color = bentityColor(d);
 			
 			d3.select(this)
-			.style('fill', color)
-			.attr('choropleth-color', color);
+			.style('fill', color);
+			//.attr('choropleth-color', color);
 		});
 		
 	}
@@ -897,21 +897,6 @@ var speciesMode = (function() {
 		.fail(whoopsNetworkError);
 	}
 	
-
-
-
-	//////////////////////////////////////////////////////////////////////////
-	// called when user mouses over a bentity 
-	external.highlight = function(data){
-			//console.log(data.properties.BENTITY);
-
-			d3.select(this) //select the current bentity in the DOM
-			    .attr("originalcolor", d3.select(this).style('fill'))
-				.style("fill", "black")
-				.style("stroke","#fff");
-
-				
-	};
 	
 	
 	
@@ -921,22 +906,7 @@ var speciesMode = (function() {
 	};
 	
 	
-	//////////////////////////////////////////////////////////////////////////
-	// called when user mouses out a bentity
-	external.dehighlight = function(data){
-		
-			
 
-	
-			var bents = d3.select(this); //designate selector variable for brevity
-			var fillcolor = bents.attr("originalcolor"); //access original color from desc
-			//console.log("fillcolor");
-			//console.log(fillcolor);
-			bents.style("fill", fillcolor)
-			// .style("opacity",0.5)
-			.style("stroke","#000"); //reset enumeration unit to orginal color
-	
-	};
 	
 	
 	external.circleHighlight = function(data){
