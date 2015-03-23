@@ -419,8 +419,6 @@ var baseMap = (function() {
 				.data(external.bentities.features)
 				.enter().append("path")
 				.attr("class","bentities");
-				//.on("mouseover",speciesMode.highlight)
-				//.on("mouseout",speciesMode.dehighlight)
 				//.on("click", mapUtilities.infoPanelBentity); // maybe add code to disable click on pan?
 		
 			bindBentityListners();
@@ -559,8 +557,17 @@ var mapUtilities = (function() {
 	
 	
 	
-	function infoLabel(d, i){
-		var labelHTML = controls.getCurrentModeObject().bentityInfoLabelHTML(d, i);
+	// Renders an info label for a bentity or point.
+	// D is the D3-bound data, i is a unique ID for the bentity or point, j is given by D3 but not used.
+	// labelHTMLoption is an optional argument containing the HTML to show in the label.
+	// If labelHTMLoption is not supplied, call the current mode's bentityInfoLabelHTML function.
+	external.infoLabel = function(d, i, j, labelHTMLoption){
+		
+		var labelHTML = labelHTMLoption;
+		
+		if (labelHTMLoption === undefined) {
+			labelHTML = controls.getCurrentModeObject().bentityInfoLabelHTML(d, i);
+		}
 		
 		mapUtilities.removeInfoLabel(); // clear already-existing label
 		
@@ -570,7 +577,7 @@ var mapUtilities = (function() {
 			.html(labelHTML); //add text
 
 	};
-	baseMap.addBentityEventListner('mouseenter.infolabel', infoLabel);
+	baseMap.addBentityEventListner('mouseenter.infolabel', external.infoLabel);
 	
 	
 	
@@ -828,8 +835,13 @@ var speciesMode = (function() {
 				.attr("fill","black")
 				.attr('r',4)
 				.on("click",mapUtilities.infoPanelPoints)
-				.on("mouseover",external.circleHighlight)
-				.on("mouseout",external.circleDehighlight)
+				.on("mouseover", function(d, i) {
+					var labelHTML = "<h3 class='text-center'>" + d.gabi_acc_number + "</h3>";
+					mapUtilities.infoLabel(d, "dot" + i, 0, labelHTML);
+				})
+				.on("mouseout", function(d,i) {
+					mapUtilities.removeInfoLabel(d, "dot"+i);
+				})
 				.on("mouseover.border",function(){
 					d3.select(this)
 					.transition()
@@ -902,7 +914,7 @@ var speciesMode = (function() {
 	
 	
 	external.bentityInfoLabelHTML = function(d, i) {
-		return "<h3 class='text-center'>"+d.props.BENTITY+"</h3><br><b>"+d.props.category+"</b>";
+		return "<h3 class='text-center'>"+d.properties.BENTITY+"</h3><br><b>Native</b>";
 	};
 	
 	
@@ -910,8 +922,6 @@ var speciesMode = (function() {
 	
 	
 	external.circleHighlight = function(data){
-	
-		var props = mapUtilities.datatest(data);
 				
 		var labelAttribute = "<h3 class='text-center'>"+props.gabi_acc_number+"</h3>";
 				
@@ -925,9 +935,7 @@ var speciesMode = (function() {
 					.attr("class", "labelname"); //for styling name
 	};
 	
-	external.circleDehighlight=function(data){
-	
-	};
+
 	
 	external.choropleth = function(d, recolorMap){
 	//Get data value
