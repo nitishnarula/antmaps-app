@@ -172,6 +172,22 @@ var controls = (function() {
 		.fail(whoopsNetworkError);
 	});
 	
+	
+	
+	
+	// On page load, get list of subfamilies and fill bentity select box
+	$(document).ready(function() {
+		$.getJSON('/dataserver/bentity-list')
+		.done(function(data) {
+			var boxes = $('#bentityView-bentity-select');
+			boxes.html('<option value="">Select Region</option>');
+			fillSelectbox(boxes, data.bentities);
+			boxes.prop('disabled', false);
+		})
+		.fail(whoopsNetworkError);
+	});
+	
+	
 
 
 	// reset subfamiy selector controls (called by resetAll)
