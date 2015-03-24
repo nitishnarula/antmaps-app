@@ -1345,19 +1345,22 @@ var diversityBentityMode = (function() {
 		}
 		
 		resetMappedData();
+		var selectedBentity = getSelectedBentity();
 		
 		$.getJSON('/dataserver/species-in-common', {bentity: getSelectedBentity().key})
 		.fail(whoopsNetworkError)
 		.done(function(data) {
 		
 			resetMappedData();
+			currentData.mappedBentity = selectedBentity;
 
 			
 			for (var i = 0; i < data.bentities.length; i++) {
 				var record = data.bentities[i];
 				
-				// keep track of the highest species count we've seen so far
-				if (record.species_count > currentData.maxSpeciesCount) {
+				// keep track of the highest species count we've seen so far (except for the selected bentity)
+				if (record.species_count > currentData.maxSpeciesCount 
+								&& record.gid != currentData.mappedBentity.key) {
 					currentData.maxSpeciesCount = record.species_count;
 				}
 				
@@ -1411,10 +1414,18 @@ var diversityBentityMode = (function() {
 	
 	
 	external.bentityInfoLabelHTML = function(d, i) {
-		return "<h4 class='text-center'>" 
+		var labelHTML = "<h4 class='text-center'>" 
 		+ d.properties.BENTITY + "</h4><br><b>" 
-		+ (currentData.subfamilyName || "") + "</b><br><b>" 
-		+ (currentData.sppPerBentity[d.properties.gid] || "0") + " species</b/>";
+		+ (currentData.sppPerBentity[d.properties.gid] || "0")
+		
+		if (d.properties.gid == currentData.mappedBentity.key) {
+			labelHTML += " species in total</b>";
+		}
+		else {
+			labelHTML += " species in common with<br />" + currentData.mappedBentity.name + "</b/>";
+		}
+		
+		return labelHTML;
 	}
 	
 	return external;
