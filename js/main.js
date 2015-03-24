@@ -1218,14 +1218,8 @@ var diversityGenusMode = (function() {
 	
 	
 	
-	external.activateMode = function(){
-		choropleth();
-	};
-	
-	
-	external.deactivateMode = function(){
-		baseMap.resetChoropleth();
-	};
+	external.activateMode = function(){ choropleth(); };
+	external.deactivateMode = function(){ baseMap.resetChoropleth(); };
 	
 	
 	external.resetView = function(){};  // doesn't need to do anything for this mode
@@ -1259,10 +1253,7 @@ var diversityGenusMode = (function() {
 				legendColors
 			);
 			
-			// TODO put somewhere else
-			baseMap.getBentities()
-			.on("mouseover",external.highlight)
-			.on("mouseout",external.dehighlight);
+
 		}
 		else { // no data
 			baseMap.resetChoropleth();
@@ -1288,16 +1279,144 @@ var diversityGenusMode = (function() {
 
 
 
+
+
 //////////////////////////////////////////////////////////////////////////
-//
+// DIVERSITY BENTITY MODE
 //////////////////////////////////////////////////////////////////////////
 
 var diversityBentityMode = (function() {
 	var external = {};
-	external.activateMode = function(){};
-	external.deactivateMode = function(){};
-	external.resetView = function(){};
-	external.resetData = function(){};
+	
+	var selectedBentityFill = 'darkorange';
+	
+	var zeroColor = "#ffffff";
+	var colorArray = ["#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
+	var legendColors = ["#ffffff","#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
+	
+	var currentData = null;
+	external.resetData = function(){
+		currentData = {
+			selectedBentity: {// bentity selected in controls (may be different than currently-mapped bentity)
+				key: null,    // key to send to the server
+				name: null    // name to show the user
+			},
+			mappedBentity: {  // bentity currently mapped
+				key: null,    
+				name: null    // name to display for currently-mapped bentity
+			},
+			sppPerBentity: {}, // keys are bentity ID, values are species count
+			maxSpeciesCount: 0 // max number of species seen so far (for scale)
+		};
+	};
+	external.resetData();
+	
+	// reset everything except for selected bentity, used for updating data to prevent asynchronous-related bugs
+	function resetMappedData() {
+		var selectedBentity = currentData.selectedBentity;
+		external.resetData();
+		currentData.selectedBentity = selectedBentity;
+	}
+	
+	
+	$('#bentityView-bentity-select').change(function() {
+		currentData.selectedBentity.key  = $('#bentityView-bentity-select').val();
+		currentData.selectedBentity.name = $('#bentityView-bentity-select option:selected').text();
+	});
+	
+	function getSelectedBentity() { return currentData.selectedBentity; }
+	
+	
+	
+	external.activateMode = function(){ choropleth(); };
+	external.deactivateMode = function(){ baseMap.resetChoropleth(); };
+	
+	
+	external.resetView = function(){}; // not needed for this mode
+	
+	
+	
+	
+	external.updateData = function() {
+	
+		if (!getSelectedBentity().key) {
+			alert('Please select a region to map.');
+			return;
+		}
+		
+		resetMappedData();
+		
+		$.getJSON('/dataserver/species-in-common', {bentity: getSelectedBentity().key})
+		.fail(whoopsNetworkError)
+		.done(function(data) {
+		
+			resetMappedData();
+
+			
+			for (var i = 0; i < data.bentities.length; i++) {
+				var record = data.bentities[i];
+				
+				// keep track of the highest species count we've seen so far
+				if (record.species_count > currentData.maxSpeciesCount) {
+					currentData.maxSpeciesCount = record.species_count;
+				}
+				
+				currentData.sppPerBentity[record.gid] = record.species_count;
+				//key = gid, value = species_count
+			}
+			
+			choropleth();
+		
+		});
+		
+		
+	}
+	
+	function choropleth() {
+		if (!$.isEmptyObject(currentData.sppPerBentity)) {
+			
+			var colorScale = mapUtilities.logBinColorScale(currentData.maxSpeciesCount, zeroColor, colorArray);
+			
+			// function called to determine color of each bentity, given d3-bound
+			// data (d) for the bentity
+			var bentityColor = function(d) {
+				var color = null;
+				if (d.properties.gid == currentData.mappedBentity.key) {
+					color = selectedBentityFill;
+				}
+				else if (currentData.sppPerBentity[d.properties.gid]) {
+					color = colorScale(currentData.sppPerBentity[d.properties.gid]);
+				}
+				else { 
+					color = zeroColor; // 0 species
+				}
+				return color;
+			};
+				
+			baseMap.choropleth(bentityColor);
+			mapUtilities.drawLegend(
+				d3.select("#diversity-bentity-legend"),
+				colorScale.binLabels(),
+				legendColors
+			);
+				
+		}
+		else { // no data
+			baseMap.resetChoropleth();
+			if (getSelectedBentity().name) { // alert if there's a bentity selected
+				alert("No data with overlapping species for " + getSelectedBentity().name + ".");
+			}
+		}
+	}
+	
+	
+	external.bentityInfoLabelHTML = function(d, i) {
+		return "<h4 class='text-center'>" 
+		+ d.properties.BENTITY + "</h4><br><b>" 
+		+ (currentData.subfamilyName || "") + "</b><br><b>" 
+		+ (currentData.sppPerBentity[d.properties.gid] || "0") + " species</b/>";
+	}
+	
 	return external;
 })();
 
