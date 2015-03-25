@@ -200,14 +200,14 @@
 		label{
 			color:white;
 	    	font-family: 'Dosis', sans-serif;
-	    	margin-top: 30px;
+	    	margin-top: 20px;
 	    	margin-left: 10px;
     	}
     	select{
     		margin-left: 10px;
     	}
     	
-    	#bentity-select{
+    	#bentityView-bentity-select{
     		max-width: 150px;
     	}
     	
@@ -256,7 +256,7 @@
 			box-shadow: 0px 0px 10px 5px rgba(255, 255, 190, .3);
     	}
     	
-    	#diversity_location p{
+    	#diversity_bentity p{
     		margin-top:20px;
     	}
     	
@@ -301,7 +301,7 @@
 			width: 50px;
 			height: 50px;
 			margin-top: 50px;
-			margin-left: 80px;
+			margin-left: 86px;
 		}
 		
 		#map-subfamily:hover{
@@ -320,7 +320,7 @@
 			width: 50px;
 			height: 50px;
 			margin-top: 50px;
-			margin-left: 80px;
+			margin-left: 86px;
 			
 		}
 		
@@ -340,7 +340,7 @@
 			width: 50px;
 			height: 50px;
 			margin-top: 50px;
-			margin-left: 80px;
+			margin-left: 86px;
 			
 		}
 		
@@ -353,8 +353,47 @@
 			cursor: pointer;
 		}
 		
+		/* BENTITY MODE */
 		
-    	
+		#bentity-instruction{
+			text-align: center;
+			margin-left: -55px;
+		}
+		
+    	/* BENTITY CLICKED / MAP DIFFERENT REGION BUTTON */
+	    
+	    #bentity-clicked{
+			margin-top: 30px;
+	    	margin-left: 14px;
+	    	font-family: Antenna,Helvetica,sans-serif;
+			display: inline-block;
+			text-align: center;
+			padding-top: 12px;
+			padding-bottom: 12px;
+			padding-left: 4px;
+			padding-right: 4px;
+			text-decoration: none;
+			font-weight: bold;
+			font-size: 12px;
+			line-height: 1.5;
+			text-transform: uppercase;
+			position: relative;
+			height: 40px;
+			width: 200px;
+			background: #F47D66;
+			color: white;
+			border-radius:6px;
+			-webkit-transition: all 500ms ease;
+			-moz-transition: all 500ms ease;
+			-ms-transition: all 500ms ease;
+			transition: all 500ms ease;
+		}
+		
+		#bentity-clicked:hover{
+			color:black;
+			background-color:#F05253;
+			cursor:pointer;
+		}
     	
     	/* MAIN PANEL */
     	#main {
@@ -396,7 +435,18 @@
 			z-index:999999999999999;
 			text-shadow: 1px 2px 3px white;
 		}
-	
+		
+		#current-subfamily-title,#current-genus-title,#current-bentity-title{
+			display: none;
+			margin-top: 10px;
+			margin-left: 50px;
+			color:black;
+			font-family: 'Dosis', sans-serif;
+			font-size:20px;
+			position:absolute;
+			z-index:99999999999999999999999;
+			text-shadow: 1px 2px 3px white;
+		}
 	
 
 		
