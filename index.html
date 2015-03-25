@@ -54,7 +54,7 @@
                     </li>
                   
                     <li>
-                        <a href="#">Contact</a>
+                        <a href="report.html">Report Error</a>
                     </li>
                 </ul>
             </div>
@@ -120,7 +120,7 @@
 			<div id="diversity_view"> 
 				<div id="diveristy-subfamily-button" class="diversity-button diversity-active">  Subfamily </div> 
 				<div id="diveristy-genus-button" class="diversity-button"> Genus </div> 
-				<div id="diveristy-location-button" class="diversity-button"> Bentity </div> 
+				<div id="diveristy-bentity-button" class="diversity-button"> Region </div> 
 				
 				<div id="diversity_subfamily">
 				<form id="querySubfamily">
@@ -152,17 +152,17 @@
 					<div id = "diversity-genus-legend"> </div>
 				</div>
 				
-				<div id="diversity_location" class="none">
-					<p class="text-center"> Click on a Bentity </p>
-					<p class="text-center"> Or </p>
-				<form id="queryBentity">
-					<label> Region </label>
-					<select id="bentityView-bentity-select" name="bentity" disabled>
-						<option>Loading...</option>
-					</select><br>
-				</form>
-				<div id="map-bentity" class="text-center" onclick="updateResults()"></div>
-				<div id = "diversity-bentity-legend"> </div>
+				<div id="diversity_bentity" class="none">
+					<div id="bentity-clicked">Map Different Region</div>
+					<p id="bentity-instruction"> Click on a region on the map <br><br> Or</p>
+					<form id="queryBentity">
+						<label> Region </label>
+						<select id="bentityView-bentity-select" name="bentity" disabled>
+							<option>Loading...</option>
+						</select><br>
+					</form>
+					<div id="map-bentity" class="text-center" onclick="updateResults()"></div>
+					<div id = "diversity-bentity-legend"> </div>
 				</div>
 
 				
@@ -177,6 +177,15 @@
     
     	<div id="current-spp-title"> Current Species: </div>
 		<div id="current-species"> </div>
+		
+		<div id="current-subfamily-title"> Current Subfamily: </div>
+		<div id="current-subfamily"> </div>
+		
+		<div id="current-genus-title"> Current Genus: </div>
+		<div id="current-genus"> </div>
+		
+		<div id="current-bentity-title"> Current Region: </div>
+		<div id="current-bentity"> </div>
     
     
     	<div id="mapContainer">

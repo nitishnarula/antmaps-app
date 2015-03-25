@@ -73,7 +73,7 @@ var controls = (function() {
 		
 			$("#diversity_subfamily").css("display","inline");
 			$("#diversity_genus").css("display","none");
-			$("#diversity_location").css("display","none");
+			$("#diversity_bentity").css("display","none");
 			
 			external.setMode(modes[1])
 			
@@ -112,7 +112,7 @@ var controls = (function() {
 			// toggle mode-specific controls
 			$("#diversity_subfamily").css("display","inline");
 			$("#diversity_genus").css("display","none");
-			$("#diversity_location").css("display","none");
+			$("#diversity_bentity").css("display","none");
 	
 			external.setMode(modes[1])
 
@@ -121,16 +121,16 @@ var controls = (function() {
 
 			$("#diversity_subfamily").css("display","none");
 			$("#diversity_genus").css("display","inline");
-			$("#diversity_location").css("display","none");
+			$("#diversity_bentity").css("display","none");
 	
 			external.setMode(modes[2])
 
 		}
-		else if($("#diveristy-location-button").hasClass("diversity-active")){
+		else if($("#diveristy-bentity-button").hasClass("diversity-active")){
 	
 			$("#diversity_subfamily").css("display","none");
 			$("#diversity_genus").css("display","none");
-			$("#diversity_location").css("display","inline");
+			$("#diversity_bentity").css("display","inline");
 			
 			external.setMode(modes[3])
 
