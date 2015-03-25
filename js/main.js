@@ -677,7 +677,25 @@ var mapUtilities = (function() {
 	
 	
 	
-	
+	// Open an overlay on top of the map
+	// Return a D3 selection of a div that you can use to append content to the
+	// info panel.
+	external.openInfoPanel = function() {
+		var infoPanel = d3.select("body").append("div")
+			.attr("class", "infopanel"); //for styling label
+		
+		// close-info-panel button
+		infoPanel.append("div")
+		.attr("class","close-info")
+		.attr("id","close-info")
+		.text("x")
+		.on("click", function(){ infoPanel.remove() });
+			
+		var infoPanelContent = infoPanel.append("div").html('yo');
+		
+		return infoPanelContent;
+	}
+	baseMap.addBentityEventListner('click', external.openInfoPanel);
 	
 	
 	
