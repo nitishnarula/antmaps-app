@@ -49,7 +49,8 @@ var controls = (function() {
 		return external.modeObjects[currentMode];
 	};
 
-
+	
+	
 
 
 	// switch between species and 3-diversity modes when toggle button is clicked
@@ -913,6 +914,8 @@ var speciesMode = (function() {
 		}
 		
 		// TODO show loading graphic?
+		$("#loading-message").show();
+		
 		$.getJSON('/dataserver/species-points', {taxon_code: selectedSpp.taxon_code})
 		.done(function(data) {
 			if (data.records) {
@@ -921,6 +924,9 @@ var speciesMode = (function() {
 				
 				external.resetView();
 			}
+		})
+		.always( function() {
+			$("#loading-message").hide();
 		})
 		.fail(whoopsNetworkError);
 	}
@@ -1028,6 +1034,8 @@ var diversitySubfamilyMode = (function() {
 			return;
 		}
 		
+		$("#loading-message").show();
+		
 		$.getJSON('/dataserver/species-per-bentity', {subfamily_name: selected.key})
 		.done(function(data) {	
 
@@ -1053,6 +1061,9 @@ var diversitySubfamilyMode = (function() {
 			
 			external.resetView();
 			choropleth();
+		})
+		.always( function() {
+			$("#loading-message").hide();
 		})
 		.fail(whoopsNetworkError);
 		
@@ -1189,6 +1200,9 @@ var diversityGenusMode = (function() {
 			return;
 		}
 		
+		
+		$("#loading-message").show();
+		
 		$.getJSON('/dataserver/species-per-bentity', {genus_name: selected.key})
 		.done(function(data) {	
 			external.resetData();
@@ -1212,6 +1226,9 @@ var diversityGenusMode = (function() {
 			}
 			
 			choropleth();
+		})
+		.always( function() {
+			$("#loading-message").hide();
 		})
 		.fail(whoopsNetworkError);
 	};
@@ -1347,6 +1364,10 @@ var diversityBentityMode = (function() {
 		resetMappedData();
 		var selectedBentity = getSelectedBentity();
 		
+		
+		
+		$("#loading-message").show();
+		
 		$.getJSON('/dataserver/species-in-common', {bentity: getSelectedBentity().key})
 		.fail(whoopsNetworkError)
 		.done(function(data) {
@@ -1370,6 +1391,9 @@ var diversityBentityMode = (function() {
 			
 			choropleth();
 		
+		})
+		.always( function() {
+			$("#loading-message").hide();
 		});
 		
 		

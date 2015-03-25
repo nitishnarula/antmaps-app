@@ -448,6 +448,14 @@
 			text-shadow: 1px 2px 3px white;
 		}
 	
+		/* AJAX LOADER */
+		#loading-message{
+			position:absolute;
+			margin-top:30%;
+			margin-left:50%;
+			z-index:99999999999999999999999;
+			display:none;
+		}
 
 		
 		/* SPECIES BROWSE PANEL */
