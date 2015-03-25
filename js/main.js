@@ -412,7 +412,7 @@ var baseMap = (function() {
 	// projection to use for Russia and Fiji bentities, accross the 180th meridian
 	// subtract 30 degrees from longitude, then project, then move back by 30 degrees projected
 	function projectPoint180(x, y) {
-		var point = map.latLngToLayerPoint(new L.LatLng(y, x > 0 ? x - 30 : -30 - x));
+		var point = map.latLngToLayerPoint(new L.LatLng(y, x > 0 ? x - 30 : 330 + x) );
 	  point.x = point.x + map.project(new L.LatLng(0, 30)).subtract(map.project(new L.LatLng(0, 0))).x;
 		this.stream.point(point.x, point.y);
 	}
