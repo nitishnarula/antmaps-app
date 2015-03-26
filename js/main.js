@@ -1388,6 +1388,27 @@ var diversityGenusMode = (function() {
 	}
 	
 
+
+	// Open an info panel with a list of species for this bentity+genus
+	external.bentityClickHandle = function(d, i) {
+		if (!$.isEmptyObject(currentData.sppPerBentity)) { // is there some data mapped?
+			var infoPanel = mapUtilities.openInfoPanel();
+			
+			infoPanel.html("<h4>" + (currentData.sppPerBentity[d.properties.gid] || "0") + " species for " + currentData.genusName + " in " + d.properties.BENTITY + "</h4>");
+			
+			// look up species list
+			$.getJSON('/dataserver/species-list', {bentity: d.properties.gid, genus: currentData.genusName})
+			.error(whoopsNetworkError)
+			.done(function(data) {
+				var ul = infoPanel.append('ul');
+						ul.selectAll('li')
+				.data(data.species)
+				.enter().append('li').text(function(d) {return d.display});
+			});
+		}
+	}
+
+
 	return external;
 })();
 
@@ -1555,6 +1576,27 @@ var diversityBentityMode = (function() {
 		
 		return labelHTML;
 	}
+	
+	
+	// Open an info panel with a list of species for this bentity+subfamily
+	external.bentityClickHandle = function(d, i) {
+		if (!$.isEmptyObject(currentData.sppPerBentity)) { // is there some data mapped?
+			var infoPanel = mapUtilities.openInfoPanel();
+			
+			infoPanel.html("<h4>" + (currentData.sppPerBentity[d.properties.gid] || "0") + " species in common between " + d.properties.BENTITY + " and " + currentData.mappedBentity.name + "</h4>");
+			
+			// look up species list
+			$.getJSON('/dataserver/species-list', {bentity: d.properties.gid, bentity2: currentData.mappedBentity.key})
+			.error(whoopsNetworkError)
+			.done(function(data) {
+				var ul = infoPanel.append('ul');
+					ul.selectAll('li')
+				.data(data.species)
+				.enter().append('li').text(function(d) {return d.display});
+			});
+		}
+	}
+	
 	
 	return external;
 })();
