@@ -77,17 +77,13 @@ var controls = (function() {
 			$("#diversity_bentity").css("display","none");
 			
 			external.setMode(modes[1])
-			
-			$("#current-spp-title").css("display","none");
-			$("#current-species").css("display","none");
+		
 			
 		}else{
 		
 		$("#spp_view").css("display","inline");
 		$("#diversity_view").css("display","none");
 		
-		$("#current-spp-title").css("display","inline");
-		$("#current-species").css("display","inline");
 		
 		external.getCurrentModeObject().deactivateMode();
 		currentMode = modes[0];
@@ -319,9 +315,7 @@ var baseMap = (function() {
 		return map;
 	}();
 		
-		
-		
-	
+
 	
 	// add tile layers and layer control to Leaflet map	
 	(function() {	
@@ -341,7 +335,7 @@ var baseMap = (function() {
 		
 		// layer control
 		var layerControlItems = {
-		  "<div class='layer-titles'> OSM Hot </div>": tile1,
+		  "<div class='layer-titles'> OSM Landscape </div>": tile1,
 		  "<div class='layer-titles'> Terrain </div>": tile2,
 		  "<div class='layer-titles'> Shaded Relief </div>":tile3
 		};
@@ -563,8 +557,7 @@ var baseMap = (function() {
 		
 	}
 	
-	
-	
+
 	
 	// reset map colors and legend
 	external.resetChoropleth = function() {
@@ -647,8 +640,8 @@ var mapUtilities = (function() {
 	baseMap.addBentityEventListner('mouseleave.infolabel', external.removeInfoLabel);
 
 
-
-
+	
+	
 
 	// Open info panel for point data when clicked
 	external.infoPanelPoints= function(data){
@@ -704,6 +697,19 @@ var mapUtilities = (function() {
 		return infoPanelContent;
 	}
 
+
+
+	
+	
+	// sets the title for the current mode and displays the current selection
+	external.setTitle = function(currentMode, currentSelection){
+			
+			var currentTitleText = "Current "+ currentMode+ " :";
+			var currentSelectionText =currentSelection;
+			
+			$('#current-selection-title').html(currentTitleText);
+			$('#current-selection').html(currentSelectionText);
+	};
 	
 	
 	
@@ -918,7 +924,7 @@ var speciesMode = (function() {
 	
 	// called when this mode is selected
 	external.activateMode = function() {
-		external.resetView();
+		renderMap();
 	}
 	
 	// called to reset the map back to its original state, without any data
@@ -934,8 +940,8 @@ var speciesMode = (function() {
 	// called when the user presses the "map" button
 	external.updateData = function() {
 		var selectedSpp = getSelectedSpecies();
-		
-		$("#current-species").html(selectedSpp.speciesName);
+	
+
 		
 		if (!selectedSpp.taxon_code) {
 			alert('Please select a species to map.');
@@ -951,7 +957,7 @@ var speciesMode = (function() {
 				currentData.pointRecords = data.records;
 				currentData.speciesName = selectedSpp.speciesName;
 				
-				external.resetView();
+				renderMap();
 			}
 		})
 		.always( function() {
@@ -961,6 +967,17 @@ var speciesMode = (function() {
 	}
 	
 	
+	
+	// plot points and render choropleth
+	function renderMap() {
+	
+		var speciesName = currentData.speciesName;
+		var currentModeTitle = "Species";
+		mapUtilities.setTitle(currentModeTitle,speciesName);
+	
+		external.resetView();
+		//external.choropleth();
+	}
 	
 	
 	
@@ -990,6 +1007,7 @@ var speciesMode = (function() {
 	
 	external.choropleth = function(d, recolorMap){
 	//Get data value
+			
 			var value = d.properties.category; 
 			if (value) {
 				return recolorMap(value);
@@ -1055,8 +1073,12 @@ var diversitySubfamilyMode = (function() {
 	external.updateData = function() {
 		var selected = getSelectedSubfamily();
 		
+		
+		
 		external.resetData();
 		var subfamilyName = selected.name;
+		
+	
 		
 		if (!selected.key) {
 			alert('Please select a subfamily to map');
@@ -1122,6 +1144,12 @@ var diversitySubfamilyMode = (function() {
 
 	// draw diversity-mode choropleth
 	function choropleth(){
+
+		var genusName = currentData.subfamilyName;
+		var currentModeTitle = "Subfamily";
+		mapUtilities.setTitle(currentModeTitle,genusName);
+		
+	
 		if (!$.isEmptyObject(currentData.sppPerBentity)) {
 			
 			var colorScale = mapUtilities.logBinColorScale(currentData.maxSpeciesCount, zeroColor, colorArray);
@@ -1249,6 +1277,7 @@ var diversityGenusMode = (function() {
 		external.resetData();
 		var genusName = selected.name;
 	
+	
 		if (!selected.key) {
 			alert('Please select a genus to map.');
 			return;
@@ -1299,6 +1328,12 @@ var diversityGenusMode = (function() {
 
 	// draw diversity-mode choropleth
 	function choropleth(){
+		var genusName = currentData.genusName;
+		
+		//NEW
+		var currentModeTitle = "Genus";
+		mapUtilities.setTitle(currentModeTitle,genusName);
+		
 		if (!$.isEmptyObject(currentData.sppPerBentity)) {
 			
 			var colorScale = mapUtilities.logBinColorScale(currentData.maxSpeciesCount, zeroColor, colorArray);
@@ -1417,8 +1452,7 @@ var diversityBentityMode = (function() {
 		
 		resetMappedData();
 		var selectedBentity = getSelectedBentity();
-		
-		
+
 		
 		$("#loading-message").show();
 		
@@ -1454,6 +1488,13 @@ var diversityBentityMode = (function() {
 	}
 	
 	function choropleth() {
+	
+		var selectedBentity = getSelectedBentity();
+		
+		var currentModeTitle = "Region";
+		mapUtilities.setTitle(currentModeTitle,selectedBentity.name);
+		
+		
 		if (!$.isEmptyObject(currentData.sppPerBentity)) {
 			
 			var colorScale = mapUtilities.logBinColorScale(currentData.maxSpeciesCount, zeroColor, colorArray);
@@ -1534,7 +1575,7 @@ function resetMap(){
 	$("#spp_view").css("display","inline");
 	$("#diversity_view").css("display","none");
 	$("#view-title").html("Species View");
-	$("#current-species").html("");
+	//$("#current-species").html("");
 	$(".infopanel").css("display","none");
 	//then should repopulate subfamily select boxes
 

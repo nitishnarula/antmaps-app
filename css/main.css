@@ -413,7 +413,7 @@
 		}	
 		
 		
-		#current-spp-title{
+		#current-selection-title{
 			margin-top: 10px;
 			margin-left: 50px;
 			color:black;
@@ -424,7 +424,7 @@
 			text-shadow: 1px 2px 3px white;
 		}
 		
-		#current-species{
+		#current-selection{
 			color:black;
 			position: absolute;
 			margin-top: 40px;
@@ -433,18 +433,6 @@
 			font-size:18px;
 			font-style: italic;
 			z-index:999999999999999;
-			text-shadow: 1px 2px 3px white;
-		}
-		
-		#current-subfamily-title,#current-genus-title,#current-bentity-title{
-			display: none;
-			margin-top: 10px;
-			margin-left: 50px;
-			color:black;
-			font-family: 'Dosis', sans-serif;
-			font-size:20px;
-			position:absolute;
-			z-index:99999999999999999999999;
 			text-shadow: 1px 2px 3px white;
 		}
 	
