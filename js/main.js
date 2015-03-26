@@ -38,7 +38,7 @@ var controls = (function() {
 	external.setMode = function(modeName) {
 		external.getCurrentModeObject().deactivateMode();
 		currentMode = modeName;
-		external.getCurrentModeObject().activateMode()
+		external.getCurrentModeObject().activateMode();
 	}
 
 
@@ -562,9 +562,7 @@ var mapUtilities = (function() {
 				return data; //else...what if it is null?
 			}
 	};
-	
-	
-	
+
 	
 	
 	// Renders an info label for a bentity or point.
@@ -798,8 +796,8 @@ var speciesMode = (function() {
 	var external = {};
 
 
-	categoryArray=["endemic","native","unknown","dubious","non-native","invasive"];
-	categoryColor = ["#2166ac","#67a9cf","#d1e5f0","#fddbc7","#ef8a62","#b2182b"];
+	categoryArray=["native","internal introduced","invasive","dubious","unverified"];
+	categoryColor = ["#0571b0","#92c5de","#ca0020","#f4a582","#f7f7f7"];
 
 
 
@@ -1181,8 +1179,8 @@ var diversitySubfamilyMode = (function() {
 var diversityGenusMode = (function() {
 
 	var zeroColor = "#ffffff";
-	var colorArray = ["#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
-	var legendColors = ["#ffffff","#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
+	var colorArray = ["#bfd3e6","#8c96c6","#8c6bb1","#88419d","#6e016b"];
+	var legendColors = ["#ffffff","#bfd3e6","#8c96c6","#8c6bb1","#88419d","#6e016b"];
 	
 	var external = {};
 	
@@ -1337,8 +1335,8 @@ var diversityBentityMode = (function() {
 	var selectedBentityFill = 'darkorange';
 	
 	var zeroColor = "#ffffff";
-	var colorArray = ["#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
-	var legendColors = ["#ffffff","#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
+	var colorArray = ["#d4b9da","#c994c7","#df65b0","#dd1c77","#980043"];
+	var legendColors = ["#ffffff","#d4b9da","#c994c7","#df65b0","#dd1c77","#980043"];
 	
 	var currentData = null;
 	external.resetData = function(){
