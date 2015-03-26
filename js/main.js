@@ -376,7 +376,6 @@ var baseMap = (function() {
 	
 	
 	
-	
 	// overlayPane = Pane for overlays like polylines and polygons.
 	// the SVG element is initialized with no width or height; the dimensions must be set dynamically because they change on zoom
 	var svg = d3.select(map.getPanes().overlayPane).append("svg"),
@@ -389,7 +388,37 @@ var baseMap = (function() {
 	// Return D3 selection with bentity polygons
 	external.getBentities = function() {
 		return g.selectAll("path.bentities");
-	}
+	};
+
+
+
+
+
+
+	// Custom "nondragclick" event on the map, that will fire if the user clicks
+	// the map without dragging/panning it.  (to open info panel)
+	(function() {
+		var dragStarted = false; // whether this click is a drag
+			
+		map.on("mousedown", function(e) {
+			dragStarted = false;	
+		});
+			
+		map.on("dragstart", function(e) {
+			dragStarted = true;
+		});
+			
+		d3.select(map.getContainer()).on("mouseup", function() {
+			if (!dragStarted) {
+				// fire "nondragclick" event if the user clicked the map but isn't dragging
+				var event = document.createEvent("UIEvents");
+				event.initUIEvent("nondragclick", true, true, window, 1);
+				d3.event.target.dispatchEvent(event);
+			}
+		});
+	})();
+
+
 
 
 
@@ -695,7 +724,7 @@ var mapUtilities = (function() {
 		
 		return infoPanelContent;
 	}
-	baseMap.addBentityEventListner('click', external.openInfoPanel);
+	baseMap.addBentityEventListner('nondragclick', external.openInfoPanel);
 	
 	
 	
