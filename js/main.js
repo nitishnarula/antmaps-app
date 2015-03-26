@@ -545,9 +545,7 @@ var baseMap = (function() {
 //////////////////////////////////////////////////////////////////////////
 // MAP UTILITIES
 //
-// Map-related functions: highlight/ dehighlight polygons and points, draw info panel
-// Included functions: highlight, dehighlight, datatest, openInfoPanel, 
-//                     circleHighlight, circleDehighlight
+// Included functions: 
 //////////////////////////////////////////////////////////////////////////
 
 var mapUtilities = (function() {
@@ -575,7 +573,7 @@ var mapUtilities = (function() {
 		
 		if (labelHTMLoption === undefined) {
 			labelHTML = controls.getCurrentModeObject().bentityInfoLabelHTML(d, i);
-		}
+		} // there is a bentityInfoLabelHTML function in each mode
 		
 		mapUtilities.removeInfoLabel(); // clear already-existing label
 		
