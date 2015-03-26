@@ -682,17 +682,25 @@ var mapUtilities = (function() {
 	// Return a D3 selection of a div that you can use to append content to the
 	// info panel.
 	external.openInfoPanel = function() {
-		var infoPanel = d3.select("body").append("div")
-			.attr("class", "infopanel"); //for styling label
+		var panelOverlay = d3.select("body").append("div")
+		.attr("class", "infopanel-overlay")
+		.on("click", closeInfoPanel);
+	
+		var infoPanel = panelOverlay.append("div")
+			.attr("class", "infopanel") //for styling label
+			.on("click", function(){ return false }); // keep click event from bubbling up
+		
+		function closeInfoPanel() { panelOverlay.remove(); }
 		
 		// close-info-panel button
 		infoPanel.append("div")
 		.attr("class","close-info")
 		.attr("id","close-info")
 		.text("x")
-		.on("click", function(){ infoPanel.remove() });
+		.on("click", closeInfoPanel);
 			
-		var infoPanelContent = infoPanel.append("div").html('Loading...');
+		var infoPanelContent = infoPanel.append("div").attr("class", "infopanel-content")
+		.html('Loading...');
 		
 		return infoPanelContent;
 	}
@@ -1229,6 +1237,7 @@ var diversitySubfamilyMode = (function() {
 	
 	return external;
 })();
+
 
 
 
