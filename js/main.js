@@ -360,14 +360,14 @@ var baseMap = (function() {
 	
 	
 	external.addBentityEventListner = function(eventType, eventHandler) {
-		baseMap.getBentities().on(eventType, eventHandler);
+		external.getBentities().on(eventType, eventHandler);
 		bentityEventListners.push([eventType, eventHandler]);
 	}
 	
 	
 	// Bind event listners to bentities.  Call this function every time bentities are re-created.
 	function bindBentityListners() {
-		var bentities = baseMap.getBentities();
+		var bentities = external.getBentities();
 		for (var i = 0; i < bentityEventListners.length; i++) {
 			bentities.on(bentityEventListners[i][0], bentityEventListners[i][1]);
 		}
@@ -531,6 +531,12 @@ var baseMap = (function() {
 	});
 	
 	
+	external.addBentityEventListner("nondragclick", function(d, i) {
+		if (controls.getCurrentModeObject()['bentityClickHandle']) {
+			controls.getCurrentModeObject().bentityClickHandle(d, i);
+		}
+	});
+	
 	
 	// resets zoom level and centering to the original values as when map was first loaded
 	external.resetZoom = function(){
@@ -676,34 +682,7 @@ var mapUtilities = (function() {
 	
 
 
-	// Open info panel for bentity when clicked
-	external.infoPanelBentity = function(data){
-	
-		//console.log(d3.select(data));
-		var props = external.datatest(data);
-	
-		var labelAttribute = "<h3 class='text-center'>"+props.BENTITY+"</h3>"+
-		"<br> Category<b>: "+props.category+"</b>";
-				
-		var finalId = props.BENTITY;
-				
-				//create info label div
-		var infolabel = d3.select("body").append("div")
-			.attr("class", "infopanel") //for styling label
-			.attr("id", finalId+"label") //for future access to label div
-			.html(labelAttribute)
-			.append("div")
-			.attr("class","close-info")
-			.attr("id","close-info")
-			.html("x");
-			
-			d3.selectAll(".close-info")
-			.on("click",function(){
-				//console.log("clicked");
-				d3.selectAll(".infopanel").style("display","none");
-			});
-	};
-	
+
 	
 	
 	// Open an overlay on top of the map
@@ -720,11 +699,12 @@ var mapUtilities = (function() {
 		.text("x")
 		.on("click", function(){ infoPanel.remove() });
 			
-		var infoPanelContent = infoPanel.append("div").html('yo');
+		var infoPanelContent = infoPanel.append("div").html('Loading...');
 		
 		return infoPanelContent;
 	}
-	baseMap.addBentityEventListner('nondragclick', external.openInfoPanel);
+
+	
 	
 	
 	
@@ -947,6 +927,8 @@ var speciesMode = (function() {
 		baseMap.getOverlayG().selectAll('.dot').remove(); // clear all dots
 		baseMap.resetChoropleth();
 	}
+	
+	
 	
 	
 	// called when the user presses the "map" button
@@ -1188,8 +1170,33 @@ var diversitySubfamilyMode = (function() {
 		+ d.properties.BENTITY + "</h4><br><b>" 
 		+ (currentData.subfamilyName || "") + "</b><br><b>" 
 		+ (currentData.sppPerBentity[d.properties.gid] || "0") + " species</b/>";
-	}
+	};
 	
+
+
+
+
+	// Open an info panel with a list of species for this bentity+subfamily
+	external.bentityClickHandle = function(d, i) {
+		if (!$.isEmptyObject(currentData.sppPerBentity)) { // is there some data mapped?
+			var infoPanel = mapUtilities.openInfoPanel();
+		
+
+			infoPanel.html("<h4>" + (currentData.sppPerBentity[d.properties.gid] || "0") + " species for " + currentData.subfamilyName + " in " + d.properties.BENTITY + "</h4>");
+		
+			// look up species list
+			$.getJSON('/dataserver/species-list', {bentity: d.properties.gid, subfamily: currentData.subfamilyName})
+			.error(whoopsNetworkError)
+			.done(function(data) {
+				var ul = infoPanel.append('ul');
+			
+				ul.selectAll('li')
+				.data(data.species)
+				.enter().append('li').text(function(d) {return d.display});
+			});
+		
+		}
+	}
 
 	
 	return external;
