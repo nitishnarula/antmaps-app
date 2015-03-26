@@ -354,19 +354,18 @@ var baseMap = (function() {
 	
 	
 	external.addBentityEventListner = function(eventType, eventHandler) {
-		baseMap.getBentities().on(eventType, eventHandler);
+		external.getBentities().on(eventType, eventHandler);
 		bentityEventListners.push([eventType, eventHandler]);
 	}
 	
 	
 	// Bind event listners to bentities.  Call this function every time bentities are re-created.
 	function bindBentityListners() {
-		var bentities = baseMap.getBentities();
+		var bentities = external.getBentities();
 		for (var i = 0; i < bentityEventListners.length; i++) {
 			bentities.on(bentityEventListners[i][0], bentityEventListners[i][1]);
 		}
 	}
-	
 	
 	
 	
@@ -383,7 +382,37 @@ var baseMap = (function() {
 	// Return D3 selection with bentity polygons
 	external.getBentities = function() {
 		return g.selectAll("path.bentities");
-	}
+	};
+
+
+
+
+
+
+	// Custom "nondragclick" event on the map, that will fire if the user clicks
+	// the map without dragging/panning it.  (to open info panel)
+	(function() {
+		var dragStarted = false; // whether this click is a drag
+			
+		map.on("mousedown", function(e) {
+			dragStarted = false;	
+		});
+			
+		map.on("dragstart", function(e) {
+			dragStarted = true;
+		});
+			
+		d3.select(map.getContainer()).on("mouseup", function() {
+			if (!dragStarted) {
+				// fire "nondragclick" event if the user clicked the map but isn't dragging
+				var event = document.createEvent("UIEvents");
+				event.initUIEvent("nondragclick", true, true, window, 1);
+				d3.event.target.dispatchEvent(event);
+			}
+		});
+	})();
+
+
 
 
 
@@ -495,6 +524,12 @@ var baseMap = (function() {
 		controls.getCurrentModeObject().resetView();
 	});
 	
+	
+	external.addBentityEventListner("nondragclick", function(d, i) {
+		if (controls.getCurrentModeObject()['bentityClickHandle']) {
+			controls.getCurrentModeObject().bentityClickHandle(d, i);
+		}
+	});
 	
 	
 	// resets zoom level and centering to the original values as when map was first loaded
@@ -636,33 +671,38 @@ var mapUtilities = (function() {
 	
 
 
-	// Open info panel for bentity when clicked
-	external.infoPanelBentity = function(data){
+
 	
-		//console.log(d3.select(data));
-		var props = external.datatest(data);
 	
-		var labelAttribute = "<h3 class='text-center'>"+props.BENTITY+"</h3>"+
-		"<br> Category<b>: "+props.category+"</b>";
-				
-		var finalId = props.BENTITY;
-				
-				//create info label div
-		var infolabel = d3.select("body").append("div")
+	// Open an overlay on top of the map
+	// Return a D3 selection of a div that you can use to append content to the
+	// info panel.
+	external.openInfoPanel = function() {
+		var panelOverlay = d3.select("body").append("div")
+		.attr("class", "infopanel-overlay")
+		.on("click", closeInfoPanel);
+	
+		var infoPanel = panelOverlay.append("div")
 			.attr("class", "infopanel") //for styling label
-			.attr("id", finalId+"label") //for future access to label div
-			.html(labelAttribute)
-			.append("div")
-			.attr("class","close-info")
-			.attr("id","close-info")
-			.html("x");
+			.on("click", function(){ return false }); // keep click event from bubbling up
+		
+		function closeInfoPanel() { panelOverlay.remove(); }
+		
+		// close-info-panel button
+		infoPanel.append("div")
+		.attr("class","close-info")
+		.attr("id","close-info")
+		.text("x")
+		.on("click", closeInfoPanel);
 			
-			d3.selectAll(".close-info")
-			.on("click",function(){
-				//console.log("clicked");
-				d3.selectAll(".infopanel").style("display","none");
-			});
-	};
+		var infoPanelContent = infoPanel.append("div").attr("class", "infopanel-content")
+		.html('Loading...');
+		
+		return infoPanelContent;
+	}
+
+
+
 	
 	
 	// sets the title for the current mode and displays the current selection
@@ -674,6 +714,7 @@ var mapUtilities = (function() {
 			$('#current-selection-title').html(currentTitleText);
 			$('#current-selection').html(currentSelectionText);
 	};
+	
 	
 	
 	
@@ -896,6 +937,8 @@ var speciesMode = (function() {
 		baseMap.getOverlayG().selectAll('.dot').remove(); // clear all dots
 		baseMap.resetChoropleth();
 	}
+	
+	
 	
 	
 	// called when the user presses the "map" button
@@ -1159,12 +1202,38 @@ var diversitySubfamilyMode = (function() {
 		+ d.properties.BENTITY + "</h4><br><b>" 
 		+ (currentData.subfamilyName || "") + "</b><br><b>" 
 		+ (currentData.sppPerBentity[d.properties.gid] || "0") + " species</b/>";
-	}
+	};
 	
+
+
+
+
+	// Open an info panel with a list of species for this bentity+subfamily
+	external.bentityClickHandle = function(d, i) {
+		if (!$.isEmptyObject(currentData.sppPerBentity)) { // is there some data mapped?
+			var infoPanel = mapUtilities.openInfoPanel();
+		
+
+			infoPanel.html("<h4>" + (currentData.sppPerBentity[d.properties.gid] || "0") + " species for " + currentData.subfamilyName + " in " + d.properties.BENTITY + "</h4>");
+		
+			// look up species list
+			$.getJSON('/dataserver/species-list', {bentity: d.properties.gid, subfamily: currentData.subfamilyName})
+			.error(whoopsNetworkError)
+			.done(function(data) {
+				var ul = infoPanel.append('ul');
+			
+				ul.selectAll('li')
+				.data(data.species)
+				.enter().append('li').text(function(d) {return d.display});
+			});
+		
+		}
+	}
 
 	
 	return external;
 })();
+
 
 
 
@@ -1314,6 +1383,27 @@ var diversityGenusMode = (function() {
 		+ (currentData.sppPerBentity[d.properties.gid] || "0") + " species</b/>";
 	}
 	
+
+
+	// Open an info panel with a list of species for this bentity+genus
+	external.bentityClickHandle = function(d, i) {
+		if (!$.isEmptyObject(currentData.sppPerBentity)) { // is there some data mapped?
+			var infoPanel = mapUtilities.openInfoPanel();
+			
+			infoPanel.html("<h4>" + (currentData.sppPerBentity[d.properties.gid] || "0") + " species for " + currentData.genusName + " in " + d.properties.BENTITY + "</h4>");
+			
+			// look up species list
+			$.getJSON('/dataserver/species-list', {bentity: d.properties.gid, genus: currentData.genusName})
+			.error(whoopsNetworkError)
+			.done(function(data) {
+				var ul = infoPanel.append('ul');
+						ul.selectAll('li')
+				.data(data.species)
+				.enter().append('li').text(function(d) {return d.display});
+			});
+		}
+	}
+
 
 	return external;
 })();
@@ -1482,6 +1572,27 @@ var diversityBentityMode = (function() {
 		
 		return labelHTML;
 	}
+	
+	
+	// Open an info panel with a list of species for this bentity+subfamily
+	external.bentityClickHandle = function(d, i) {
+		if (!$.isEmptyObject(currentData.sppPerBentity)) { // is there some data mapped?
+			var infoPanel = mapUtilities.openInfoPanel();
+			
+			infoPanel.html("<h4>" + (currentData.sppPerBentity[d.properties.gid] || "0") + " species in common between " + d.properties.BENTITY + " and " + currentData.mappedBentity.name + "</h4>");
+			
+			// look up species list
+			$.getJSON('/dataserver/species-list', {bentity: d.properties.gid, bentity2: currentData.mappedBentity.key})
+			.error(whoopsNetworkError)
+			.done(function(data) {
+				var ul = infoPanel.append('ul');
+					ul.selectAll('li')
+				.data(data.species)
+				.enter().append('li').text(function(d) {return d.display});
+			});
+		}
+	}
+	
 	
 	return external;
 })();
