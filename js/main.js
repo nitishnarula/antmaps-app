@@ -686,6 +686,7 @@ var mapUtilities = (function() {
 			.attr("class", "infopanel") //for styling label
 			.on("click", function(){ d3.event.stopPropagation(); }); // keep click event from bubbling up
 		
+		
 		function closeInfoPanel() { panelOverlay.remove(); }
 		
 		// close-info-panel button

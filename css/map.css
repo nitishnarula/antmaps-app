@@ -162,10 +162,6 @@
 			list-style: none;
 			text-align:center;
 		    font-style: italic;
-		    -webkit-transition: all 1s ease;
-			-moz-transition: all 1s ease;
-			-ms-transition: all 1s ease;
-			transition: all 1s ease;
 		}
 		
 		.infopanel-content li:hover{
