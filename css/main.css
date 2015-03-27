@@ -355,14 +355,14 @@
 		
 		/* BENTITY MODE */
 		
-		#bentity-instruction{
+		#select-bentity-instruction{
 			text-align: center;
 			margin-left: -55px;
 		}
 		
     	/* BENTITY CLICKED / MAP DIFFERENT REGION BUTTON */
 	    
-	    #bentity-clicked{
+	    #select-bentity-button{
 			margin-top: 30px;
 	    	margin-left: 14px;
 	    	font-family: Antenna,Helvetica,sans-serif;
@@ -383,13 +383,13 @@
 			background: #F47D66;
 			color: white;
 			border-radius:6px;
-			-webkit-transition: all 500ms ease;
-			-moz-transition: all 500ms ease;
-			-ms-transition: all 500ms ease;
-			transition: all 500ms ease;
+			-webkit-transition: all 200ms ease;
+			-moz-transition: all 200ms ease;
+			-ms-transition: all 200ms ease;
+			transition: all 200ms ease;
 		}
 		
-		#bentity-clicked:hover{
+		#select-bentity-button:hover{
 			color:black;
 			background-color:#F05253;
 			cursor:pointer;

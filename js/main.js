@@ -505,6 +505,40 @@ var baseMap = (function() {
 	
 	
 	
+	
+	
+	// hilight map bentities on mouseover
+	(function() {
+		var hilightColor;
+
+		// called in bentity-mode for select-a-bentity view
+		external.setHilightColor = function(color) {
+			hilightColor = color;
+		}
+		
+		// called by resetchoropleth
+		external.resetHilightColor = function() {
+			external.setHilightColor('black');
+		}
+		external.resetHilightColor();
+		
+		
+		// hilight bentity on mouseover
+		external.addBentityEventListner('mouseover.hilight', function() {
+			d3.select(this).style('fill', hilightColor);
+		});
+		
+		// de-hilight bentity on mouseout (set fill to 'choropleth-color' attribute)
+		external.addBentityEventListner('mouseout.dehilight', function() {
+			d3.select(this).style('fill', d3.select(this).attr('choropleth-color'));
+		});
+		
+	})();
+	
+	
+	
+	
+	
 	// return the projection used in the leaflet map for plotting points
 	external.getProjection = function() {
 		return function(xy){ return map.latLngToLayerPoint(new L.LatLng(xy[1], xy[0])) };
@@ -545,14 +579,15 @@ var baseMap = (function() {
 	// bentityColor should be a function that takes the D3-bound data for a 
 	// bentity as an argument, and returns the HTML color for the bentity.
 	external.choropleth = function(bentityColor) {
+		baseMap.resetHilightColor();
 		
 		baseMap.getBentities()
 		.each( function(d) {
 			var color = bentityColor(d);
 			
 			d3.select(this)
-			.style('fill', color);
-			//.attr('choropleth-color', color);
+			.style('fill', color)
+			.attr('choropleth-color', color);
 		});
 		
 	}
@@ -563,6 +598,7 @@ var baseMap = (function() {
 	external.resetChoropleth = function() {
 		baseMap.getBentities().style('fill', null).attr('choropleth-color', null);
 		d3.selectAll('div.legendRow').remove();
+		baseMap.resetHilightColor();
 	};
 	
 	
@@ -1430,9 +1466,15 @@ var diversityBentityMode = (function() {
 	var colorArray = ["#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
 	var legendColors = ["#ffffff","#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
 	
+	
+	
+	
+	// unlike other modes, selected bentity is in currentData because you can set it
+	// in more ways than just the select box
 	var currentData = null;
 	external.resetData = function(){
 		currentData = {
+			selectBentityView: true, // true if we're in the "select a bentity" mode, false for regular choropleth
 			selectedBentity: {// bentity selected in controls (may be different than currently-mapped bentity)
 				key: null,    // key to send to the server
 				name: null    // name to show the user
@@ -1447,14 +1489,24 @@ var diversityBentityMode = (function() {
 	};
 	external.resetData();
 	
-	// reset everything except for selected bentity, used for updating data to prevent asynchronous-related bugs
+	
+	
+	
+	// reset data that is used to color the map, but keep selection
 	function resetMappedData() {
 		var selectedBentity = currentData.selectedBentity;
+		var selectBentityView = currentData.selectBentityView;
+		
 		external.resetData();
+		
 		currentData.selectedBentity = selectedBentity;
+		currentData.selectBentityView = selectBentityView;
 	}
 	
 	
+	
+	
+	// update bentity selection in currentData when select box is changed
 	$('#bentityView-bentity-select').change(function() {
 		currentData.selectedBentity.key  = $('#bentityView-bentity-select').val();
 		currentData.selectedBentity.name = $('#bentityView-bentity-select option:selected').text();
@@ -1464,7 +1516,10 @@ var diversityBentityMode = (function() {
 	
 	
 	
-	external.activateMode = function(){ choropleth(); };
+	
+	
+	
+	external.activateMode = function(){ renderMap(); };
 	external.deactivateMode = function(){ baseMap.resetChoropleth(); };
 	
 	
@@ -1473,10 +1528,14 @@ var diversityBentityMode = (function() {
 	
 	
 	
+	
+	
+	// updates map data with current selection and draws map
 	external.updateData = function() {
 	
 		if (!getSelectedBentity().key) {
 			alert('Please select a region to map.');
+			external.selectBentityView();
 			return;
 		}
 		
@@ -1507,7 +1566,7 @@ var diversityBentityMode = (function() {
 				//key = gid, value = species_count
 			}
 			
-			choropleth();
+			renderMap();
 		
 		})
 		.always( function() {
@@ -1517,18 +1576,41 @@ var diversityBentityMode = (function() {
 		
 	}
 	
-	function choropleth() {
 	
+	
+	
+	
+	// either draw choropleth or "select a bentity" mode, and show appropriate controls
+	function renderMap() {
+		if (currentData.selectBentityView) {
+			$("#select-bentity-instruction").show();
+			$("#select-bentity-button").hide();
+			baseMap.resetChoropleth();
+			baseMap.setHilightColor(selectedBentityFill);
+		}
+		else {
+			$("#select-bentity-instruction").hide();
+			$("#select-bentity-button").show();
+			choropleth();
+		}
+	};
+	
+	
+	
+	
+	
+	
+	function choropleth() {
 		var selectedBentity = getSelectedBentity();
-		
+	
 		var currentModeTitle = "Region";
 		mapUtilities.setTitle(currentModeTitle,selectedBentity.name);
-		
-		
+	
+	
 		if (!$.isEmptyObject(currentData.sppPerBentity)) {
-			
+		
 			var colorScale = mapUtilities.logBinColorScale(currentData.maxSpeciesCount, zeroColor, colorArray);
-			
+		
 			// function called to determine color of each bentity, given d3-bound
 			// data (d) for the bentity
 			var bentityColor = function(d) {
@@ -1544,58 +1626,91 @@ var diversityBentityMode = (function() {
 				}
 				return color;
 			};
-				
+			
 			baseMap.choropleth(bentityColor);
 			mapUtilities.drawLegend(
 				d3.select("#diversity-bentity-legend"),
 				colorScale.binLabels(),
 				legendColors
 			);
-				
+			
 		}
 		else { // no data
 			baseMap.resetChoropleth();
 			if (getSelectedBentity().name) { // alert if there's a bentity selected
 				alert("No data with overlapping species for " + getSelectedBentity().name + ".");
+				external.selectBentityView();
 			}
 		}
 	}
 	
 	
+	
+	
+	
+	
 	external.bentityInfoLabelHTML = function(d, i) {
 		var labelHTML = "<h4 class='text-center'>" 
-		+ d.properties.BENTITY + "</h4><br><b>" 
-		+ (currentData.sppPerBentity[d.properties.gid] || "0")
+		+ d.properties.BENTITY + "</h4>";
 		
-		if (d.properties.gid == currentData.mappedBentity.key) {
-			labelHTML += " species in total</b>";
-		}
-		else {
-			labelHTML += " species in common with<br />" + currentData.mappedBentity.name + "</b/>";
-		}
+		if (!currentData.selectBentityView) {
+			labelHTML += "<br><b>" + (currentData.sppPerBentity[d.properties.gid] || "0")
 		
+			if (d.properties.gid == currentData.mappedBentity.key) {
+				labelHTML += " species in total</b>";
+			}
+			else {
+				labelHTML += " species in common with<br />" + currentData.mappedBentity.name + "</b/>";
+			}
+		
+		}
 		return labelHTML;
 	}
 	
 	
-	// Open an info panel with a list of species for this bentity+subfamily
+	
+	
+	
+	// Select a bentity, or open an info panel with a list of species for this bentity+subfamily
 	external.bentityClickHandle = function(d, i) {
-		if (!$.isEmptyObject(currentData.sppPerBentity)) { // is there some data mapped?
-			var infoPanel = mapUtilities.openInfoPanel();
+		// if we're in "select a bentity" mode, select a bentity and update data
+		if (currentData.selectBentityView) { 
+			currentData.selectBentityView = false; // switch to choropleth view
 			
-			infoPanel.html("<h4>" + (currentData.sppPerBentity[d.properties.gid] || "0") + " species in common between " + d.properties.BENTITY + " and " + currentData.mappedBentity.name + "</h4>");
+			// select the clicked bentity
+			currentData.selectedBentity.key = d.properties.gid;
+			currentData.selectedBentity.name = d.properties.BENTITY;
+			external.updateData();
+		}
+		
+		// if we're in regular choropleth mode, open popup panel
+		else {
+			if (!$.isEmptyObject(currentData.sppPerBentity)) { // is there some data mapped?
+				var infoPanel = mapUtilities.openInfoPanel();
 			
-			// look up species list
-			$.getJSON('/dataserver/species-list', {bentity: d.properties.gid, bentity2: currentData.mappedBentity.key})
-			.error(whoopsNetworkError)
-			.done(function(data) {
-				var ul = infoPanel.append('ul');
-					ul.selectAll('li')
-				.data(data.species)
-				.enter().append('li').text(function(d) {return d.display});
-			});
+				infoPanel.html("<h4>" + (currentData.sppPerBentity[d.properties.gid] || "0") + " species in common between " + d.properties.BENTITY + " and " + currentData.mappedBentity.name + "</h4>");
+			
+				// look up species list
+				$.getJSON('/dataserver/species-list', {bentity: d.properties.gid, bentity2: currentData.mappedBentity.key})
+				.error(whoopsNetworkError)
+				.done(function(data) {
+					var ul = infoPanel.append('ul');
+						ul.selectAll('li')
+					.data(data.species)
+					.enter().append('li').text(function(d) {return d.display});
+				});
+			}
 		}
 	}
+	
+	
+	
+	
+	// switch to "select a bentity" view
+	external.selectBentityView = function() {
+		external.resetData();
+		renderMap();
+	};
 	
 	
 	return external;

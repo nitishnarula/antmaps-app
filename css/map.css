@@ -18,11 +18,11 @@
 			fill:#3E454C;
 			opacity:0.6; 
 			stroke-width:0.5px;
+			cursor: default;
 		}
 		
 		.bentities:hover {
 			stroke: white;
-			fill: black !important; /* !important to override element-level choropleth styles */
 		}
 		
 		.water{
