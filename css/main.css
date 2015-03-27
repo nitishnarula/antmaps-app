@@ -420,7 +420,7 @@
 			font-family: 'Dosis', sans-serif;
 			font-size:20px;
 			position:absolute;
-			z-index:99999999999999999999999;
+			z-index:999;
 			text-shadow: 1px 2px 3px white;
 		}
 		
@@ -432,7 +432,7 @@
 			font-family: 'Dosis', sans-serif;
 			font-size:18px;
 			font-style: italic;
-			z-index:999999999999999;
+			z-index:999;
 			text-shadow: 1px 2px 3px white;
 		}
 	
@@ -441,7 +441,7 @@
 			position:absolute;
 			margin-top:30%;
 			margin-left:50%;
-			z-index:99999999999999999999999;
+			z-index:9999;
 			display:none;
 		}
 
