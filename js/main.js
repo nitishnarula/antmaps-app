@@ -38,7 +38,7 @@ var controls = (function() {
 	external.setMode = function(modeName) {
 		external.getCurrentModeObject().deactivateMode();
 		currentMode = modeName;
-		external.getCurrentModeObject().activateMode()
+		external.getCurrentModeObject().activateMode();
 	}
 
 
@@ -616,9 +616,7 @@ var baseMap = (function() {
 //////////////////////////////////////////////////////////////////////////
 // MAP UTILITIES
 //
-// Map-related functions: highlight/ dehighlight polygons and points, draw info panel
-// Included functions: highlight, dehighlight, datatest, openInfoPanel, 
-//                     circleHighlight, circleDehighlight
+// Included functions: 
 //////////////////////////////////////////////////////////////////////////
 
 var mapUtilities = (function() {
@@ -633,9 +631,7 @@ var mapUtilities = (function() {
 				return data; //else...what if it is null?
 			}
 	};
-	
-	
-	
+
 	
 	
 	// Renders an info label for a bentity or point.
@@ -648,7 +644,7 @@ var mapUtilities = (function() {
 		
 		if (labelHTMLoption === undefined) {
 			labelHTML = controls.getCurrentModeObject().bentityInfoLabelHTML(d, i);
-		}
+		} // there is a bentityInfoLabelHTML function in each mode
 		
 		mapUtilities.removeInfoLabel(); // clear already-existing label
 		
@@ -719,12 +715,13 @@ var mapUtilities = (function() {
 	// info panel.
 	external.openInfoPanel = function() {
 		var panelOverlay = d3.select("body").append("div")
-		.attr("class", "infopanel-overlay")
+		.attr("class", "infopanel-overlay") //set z-index higher than title
 		.on("click", closeInfoPanel);
 	
 		var infoPanel = panelOverlay.append("div")
 			.attr("class", "infopanel") //for styling label
 			.on("click", function(){ d3.event.stopPropagation(); }); // keep click event from bubbling up
+		
 		
 		function closeInfoPanel() { panelOverlay.remove(); }
 		
@@ -875,8 +872,8 @@ var speciesMode = (function() {
 	var external = {};
 
 
-	categoryArray=["endemic","native","unknown","dubious","non-native","invasive"];
-	categoryColor = ["#2166ac","#67a9cf","#d1e5f0","#fddbc7","#ef8a62","#b2182b"];
+	categoryArray=["native","internal introduced","invasive","dubious","unverified"];
+	categoryColor = ["#0571b0","#92c5de","#ca0020","#f4a582","#f7f7f7"];
 
 
 
@@ -1247,8 +1244,9 @@ var diversitySubfamilyMode = (function() {
 
 
 
-
+	// can change here (don't touch other modes)
 	// Open an info panel with a list of species for this bentity+subfamily
+	//click without dragging
 	external.bentityClickHandle = function(d, i) {
 		if (!$.isEmptyObject(currentData.sppPerBentity)) { // is there some data mapped?
 			var infoPanel = mapUtilities.openInfoPanel();
@@ -1265,6 +1263,7 @@ var diversitySubfamilyMode = (function() {
 				ul.selectAll('li')
 				.data(data.species)
 				.enter().append('li').text(function(d) {return d.display});
+				//can add class or use .infopanel li
 			});
 		
 		}
@@ -1286,8 +1285,8 @@ var diversitySubfamilyMode = (function() {
 var diversityGenusMode = (function() {
 
 	var zeroColor = "#ffffff";
-	var colorArray = ["#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
-	var legendColors = ["#ffffff","#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
+	var colorArray = ["#bfd3e6","#8c96c6","#8c6bb1","#88419d","#6e016b"];
+	var legendColors = ["#ffffff","#bfd3e6","#8c96c6","#8c6bb1","#88419d","#6e016b"];
 	
 	var external = {};
 	
@@ -1463,8 +1462,8 @@ var diversityBentityMode = (function() {
 	var selectedBentityFill = 'darkorange';
 	
 	var zeroColor = "#ffffff";
-	var colorArray = ["#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
-	var legendColors = ["#ffffff","#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
+	var colorArray = ["#d4b9da","#c994c7","#df65b0","#dd1c77","#980043"];
+	var legendColors = ["#ffffff","#d4b9da","#c994c7","#df65b0","#dd1c77","#980043"];
 	
 	
 	

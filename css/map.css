@@ -119,14 +119,15 @@
 		.infopanel{
 			position:absolute;
 			width: 60%;
-			margin-left:20%;
-			margin-right:20%;
-			margin-top:100px;
+			margin-left:25%;
+			margin-right:15%;
+			margin-top:150px;
 			height:500px;
 			background-color: #222;
 			color:white;
 			font-family: 'Dosis', sans-serif;
 			text-align: center;
+			z-index:9999;
 		}
 		
 		.close-info{
@@ -155,6 +156,24 @@
 			height: 100%;
 			width: 100%;
 			overflow: auto;
+		}
+		
+		.infopanel-content li{
+			list-style: none;
+			text-align:center;
+		    font-style: italic;
+		}
+		
+		.infopanel-content li:hover{
+			cursor:pointer;
+			opacity:0.7;
+		}
+		
+		.infopanel-content h4{
+			text-align:center;
+			padding-top:5px;
+			padding-bottom:5px;
+			/* text-transform: uppercase; */
 		}
 
 /* LEGEND */
