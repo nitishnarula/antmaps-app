@@ -684,7 +684,7 @@ var mapUtilities = (function() {
 	
 		var infoPanel = panelOverlay.append("div")
 			.attr("class", "infopanel") //for styling label
-			.on("click", function(){ return false }); // keep click event from bubbling up
+			.on("click", function(){ d3.event.stopPropagation(); }); // keep click event from bubbling up
 		
 		function closeInfoPanel() { panelOverlay.remove(); }
 		
