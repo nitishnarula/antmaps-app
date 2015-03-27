@@ -679,7 +679,7 @@ var mapUtilities = (function() {
 	// info panel.
 	external.openInfoPanel = function() {
 		var panelOverlay = d3.select("body").append("div")
-		.attr("class", "infopanel-overlay")
+		.attr("class", "infopanel-overlay") //set z-index higher than title
 		.on("click", closeInfoPanel);
 	
 		var infoPanel = panelOverlay.append("div")
@@ -1207,8 +1207,9 @@ var diversitySubfamilyMode = (function() {
 
 
 
-
+	// can change here (don't touch other modes)
 	// Open an info panel with a list of species for this bentity+subfamily
+	//click without dragging
 	external.bentityClickHandle = function(d, i) {
 		if (!$.isEmptyObject(currentData.sppPerBentity)) { // is there some data mapped?
 			var infoPanel = mapUtilities.openInfoPanel();
@@ -1225,6 +1226,7 @@ var diversitySubfamilyMode = (function() {
 				ul.selectAll('li')
 				.data(data.species)
 				.enter().append('li').text(function(d) {return d.display});
+				//can add class or use .infopanel li
 			});
 		
 		}
