@@ -43,6 +43,9 @@
 		.none{
 			display: none;
 		}
+		.italic{
+			font-style: italic; 
+		}
 		
     	
     	/* NAV */
@@ -130,14 +133,14 @@
 			/* opacity: 0; */
 			display: none;
 			position: absolute;
-			top:150px;
+			top:280px;
 			left:0px;
 		}
 		
 		
 		#spp_view{
 			position: absolute;
-			top:120px;
+			top:/* 120px; */ 280px;
 		}
 		
 		
@@ -147,54 +150,13 @@
 			left:50px;
 		}
 		
-		
-		/* TOGGLE BUTTON */
-		
-		.button-wrap {
-		  width: 100px;
-		  margin: 40px auto 0;
-		  cursor: pointer;
-		  position: absolute;
-		  left: 50px;
-		  top:35px;
-		}
-		.button-bg {
-		  width: 100%;
-		  height: 100%;
-		  background-color: #ddd;
-		  border-radius: 40px;
-		  padding: 3px;
-		  color:#fff;
-		  transition:all 0.2s ease;
-		}
-		.button-switch {
-		  position:relative;
-		  left:0px;
-		  width: 44px;
-		  height: 44px;
-		  background: url("../img/spp.png") no-repeat;
-		  transition:all 0.2s ease;
-		}
-		
-		.button-switch:hover{
-			background: url("../img/spp2.png") no-repeat;
-			transition:all 0.2s ease;
-			z-index: 999;
-		}
-		
-		.button-active .button-switch:hover{
-			background: url("../img/map2.png") no-repeat;
-			transition:all 0.2s ease;
-			z-index: 999;
+		/* SWITH VIEWS BUTTONS */
+		#mode-buttons{
+			position: absolute;
+			top:54px;
 		}
 		
 		
-		.button-active .button-switch { left:50px; }
-		.button-active .button-bg { background-color:/* #22bb22 */; }
-		.button-active .button-switch {
-			 background: url("../img/map1.png") no-repeat;
-		}
-
 		/* FORM */
 		
 		label{
@@ -363,7 +325,7 @@
     	/* BENTITY CLICKED / MAP DIFFERENT REGION BUTTON */
 	    
 	    #select-bentity-button{
-			margin-top: 30px;
+			margin-top: 20px;
 	    	margin-left: 14px;
 	    	font-family: Antenna,Helvetica,sans-serif;
 			display: inline-block;
@@ -397,43 +359,56 @@
     	
     	/* MAIN PANEL */
     	#main {
-		  padding: 0;
-		  margin-top: 0;
-		  margin-bottom: 0;
-		  margin-left: 0;
-		  margin-right: 20px;
-		  position: absolute;    
-		  top: 80px;
-		  left: 250px;
-		  right: 20px;
-		  bottom: 10px;
-		  overflow: auto;
-		  background-color:/*  #3E454C */none;
-		  height: 820px;
+		    padding: 0;
+		    margin-top: 0;
+		    margin-bottom: 0;
+		    margin-left: 0;
+		    margin-right: 20px;
+		    position: absolute;    
+		    top: 80px;
+		    left: 250px;
+		    right: 20px;
+		    bottom: 10px;
+		    overflow: auto;
+		    background-color:/*  #3E454C */none;
+		    height: 820px;
 		}	
 		
 		
 		#current-selection-title{
 			margin-top: 10px;
-			margin-left: 50px;
+			margin-left: 60px;
 			color:black;
 			font-family: 'Dosis', sans-serif;
-			font-size:20px;
+			font-size:30px;
 			position:absolute;
 			z-index:999;
 			text-shadow: 1px 2px 3px white;
+			text-transform: uppercase;
 		}
 		
 		#current-selection{
 			color:black;
 			position: absolute;
-			margin-top: 40px;
-			margin-left: 50px;
+			margin-top: 50px;
+			margin-left: 64px;
 			font-family: 'Dosis', sans-serif;
-			font-size:18px;
-			font-style: italic;
+			font-size:26px;
 			z-index:999;
 			text-shadow: 1px 2px 3px white;
+		}
+		
+		#view-description{
+			color:black;
+			position: absolute;
+			margin-top: 600px;
+			margin-left: 50px;
+			width:250px;
+			height:500px;
+			font-family: 'Dosis', sans-serif;
+			font-size:20px;
+			z-index:999;
+			text-align: center;
 		}
 	
 		/* AJAX LOADER */
@@ -488,11 +463,7 @@
 		a {
 		  color: #900;
 		  text-decoration: none;
-		}
-
-		a:hover {
-		  color: red;
-		  position: relative;
+		  text-align: center;
 		}
 
 		a#info1[data-title]:hover:after {
@@ -502,7 +473,7 @@
 		  padding: 4px 8px;
 		  color: #333;
 		  position: absolute;
-		  width:218px;
+		  width:150px;
 		  left: 5px;
 		  top:15px;
 		  /* white-space: nowrap; */
@@ -570,32 +541,100 @@
 		  background-image: -ms-linear-gradient(top, #eeeeee, #cccccc);
 		  background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
 		}
-		
-		a#browse1[data-title]:hover:after {
-		  font-family: 'Dosis', sans-serif;
-		  content: attr(data-title);
-		  padding: 4px 8px;
-		  color: #333;
-		  position: absolute;
-		  width:120px;
-		  left: 50px;
-		  top:50px;
-		  /* white-space: nowrap; */
-		  z-index: 9999;
-		  -moz-border-radius: 5px;
-		  -webkit-border-radius: 5px;
-		  border-radius: 5px;
-		  -moz-box-shadow: 0px 0px 4px #222;
-		  -webkit-box-shadow: 0px 0px 4px #222;
-		  box-shadow: 0px 0px 4px #222;
-		  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
-		  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #eeeeee),color-stop(1, #cccccc));
-		  background-image: -webkit-linear-gradient(top, #eeeeee, #cccccc);
-		  background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
-		  background-image: -ms-linear-gradient(top, #eeeeee, #cccccc);
-		  background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
-		}
+	
 
+	/* Switch View Buttons */
+	.button {
+		float: left;
+		min-width: 200px;
+		max-width: 200px;
+		display: block;
+		margin: 1em;
+		padding: 1em 2em;
+		border: none;
+		background: none;
+		color: inherit;
+		vertical-align: middle;
+		position: relative;
+		z-index: 1;
+		-webkit-backface-visibility: hidden;
+		-moz-osx-font-smoothing: grayscale;
+	}
+	.button:focus {
+		outline: none;
+	}
+	.button > span {
+		vertical-align: middle;
+	}
+
+	.button--winona {
+		overflow: hidden;
+		padding: 0;
+		-webkit-transition: border-color 0.3s, background-color 0.3s;
+		transition: border-color 0.3s, background-color 0.3s;
+		-webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+		transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+	}
+	.button--winona::after {
+		content: attr(data-text);
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		opacity: 0;
+		color: #3f51b5;
+		-webkit-transform: translate3d(0, 25%, 0);
+		transform: translate3d(0, 25%, 0);
+	}
+	.button--winona > span {
+		display: block;
+	}
+	.button--winona.button--inverted {
+		color: #7986cb;
+	}
+	.button--winona.button--inverted:after {
+		color: #fff;
+	}
+	.button--winona::after,
+	.button--winona > span {
+		padding: 1em 2em;
+		-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+		transition: transform 0.3s, opacity 0.3s;
+		-webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+		transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+	}
+	.button--winona:hover {
+		border-color: #3f51b5;
+		background-color: rgba(63, 81, 181, 0.1);
+	}
+	.button--winona.button--inverted:hover {
+		border-color: #21333C;
+		background-color: #21333C;
+	}
+	.button--winona:hover::after {
+		opacity: 1;
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0);
+	}
+	.button--winona:hover > span {
+		opacity: 0;
+		-webkit-transform: translate3d(0, -25%, 0);
+		transform: translate3d(0, -25%, 0);
+	}
+	.button--all{
+		border: 3px solid;
+		border-radius: 40px;
+		font-weight: 600;
+		letter-spacing: 2px;
+		text-transform: uppercase;
+		font-size: 10px;
+	}
+	.button-selected{
+		background-color:black;
+		color:white;
+		border:3px solid black;
+	}
 
 		
 		

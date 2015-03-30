@@ -212,3 +212,53 @@
 		margin-left:30px;
 		float:right;
 	}
+	
+	#diversity-subfamily-legend-title{
+		color:white;
+		font-family: 'Dosis', sans-serif;
+		text-align: center;
+		width:200px;
+		font-size:14px;
+		padding-top:10px;
+		margin-left:10px;
+		margin-top:20px;
+		position:absolute;
+	}
+	
+	#diversity-subfamily-legend{
+		position:absolute;
+		margin-top:60px;
+	}
+	
+	#diversity-genus-legend-title{
+		color:white;
+		font-family: 'Dosis', sans-serif;
+		text-align: center;
+		width:200px;
+		font-size:14px;
+		padding-top:10px;
+		margin-left:10px;
+		margin-top:20px;
+		position:absolute;
+	}
+	
+	#diversity-genus-legend{
+		position:absolute;
+		margin-top:60px;
+	}
+
+	#diversity-bentity-legend-title{
+		color:white;
+		font-family: 'Dosis', sans-serif;
+		text-align: center;
+		padding:10px;
+		font-size:14px;
+		margin-left:20px;
+		margin-top:20px;
+		position:absolute;
+	}
+	
+	#diversity-bentity-legend{
+		position:absolute;
+		margin-top:60px;
+	}

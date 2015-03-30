@@ -50,91 +50,114 @@ var controls = (function() {
 	};
 
 	
-	
 
-
-	// switch between species and 3-diversity modes when toggle button is clicked
-	$('.button-wrap').on("click", function(){
 	
-		$(this).toggleClass('button-active');  // toggle button 
+	// Different Views Tooptip
+	$("#species-button").hover(
+		function(){
+			$("#view-description").html('Select a species via the drop down menu after filtering by subfamily and genus to map its distribution, see its status in a region, and retrieve information on individual records.');
+		},function(){
+			$("#view-description").html('');
+	});
+	
+	$("#diveristy-subfamily-button").hover(
+		function(){
+			$("#view-description").html('Select a subfamily via the drop down menu to map its diversity and retrieve a species list for each region.');
+		},function(){
+			$("#view-description").html('');
+	});
+	
+	$("#diveristy-genus-button").hover(
+		function(){
+			$("#view-description").html('Select a genus via the drop down menu after filtering a subfamily to map its diversity and retrieve a species list for each region.');
+		},function(){
+			$("#view-description").html('');
+	});
+	
+	$("#diveristy-bentity-button").hover(
+		function(){
+			$("#view-description").html('Select a region, by clicking on the map or via the drop down menu, to visualize how its fauna is distributed across other regions.');
+		},function(){
+			$("#view-description").html('');
+	});
+	
+	
+	
+	
+	// TOGGLE VIEWS
+	$(".button").on("click",function(){
+		$(".button").removeClass("button-selected");
+		$(this).addClass("button-selected");
 		
-		// swap title
-		$('#view-title').html($('#view-title').text() == 
-			'Diversity View' ? 'Species View' : 'Diversity View');
-		
-		// button-active == diversity views
-		if($('.button-wrap').hasClass("button-active")){
+		if($("#species-button").hasClass("button-selected")){
+			
+			$("#spp_view").css("display","inline");
+			$("#diversity_view").css("display","none");
+			
+			$('#view-title').html('Species View');
+			
+			
+			external.getCurrentModeObject().deactivateMode();
+			currentMode = modes[0];
+			external.getCurrentModeObject().activateMode();
+			
+			
+			
+		}else if($("#diveristy-subfamily-button").hasClass("button-selected")){
 		
 			$("#spp_view").css("display","none");
 			$("#diversity_view").css("display","inline");
-		
-			//to make the subfamily tab default and always the one active when switching views
-			$(".diversity-button").removeClass("diversity-active");
-			$("#diveristy-subfamily-button").addClass("diversity-active");		
-		
+			
 			$("#diversity_subfamily").css("display","inline");
 			$("#diversity_genus").css("display","none");
 			$("#diversity_bentity").css("display","none");
 			
-			external.setMode(modes[1])
-		
+			$('#view-title').html('Subfamily View');
 			
-		}else{
-		
-		$("#spp_view").css("display","inline");
-		$("#diversity_view").css("display","none");
-		
-		
-		external.getCurrentModeObject().deactivateMode();
-		currentMode = modes[0];
-		external.getCurrentModeObject().activateMode();
-		
-	}
-	
-	});	
-
-
-
-
-	//diversity view 3-mode toggle		
-	$(".diversity-button").on("click",function(){
-	
-		// toggles button display 
-		$(".diversity-button").removeClass("diversity-active");
-		$(this).addClass("diversity-active");
-		
-	
-		if($("#diveristy-subfamily-button").hasClass("diversity-active")){
-
 			// toggle mode-specific controls
 			$("#diversity_subfamily").css("display","inline");
 			$("#diversity_genus").css("display","none");
 			$("#diversity_bentity").css("display","none");
 	
 			external.setMode(modes[1])
-
-		} 
-		else if($("#diveristy-genus-button").hasClass("diversity-active")){
-
+			
+		}else if($("#diveristy-genus-button").hasClass("button-selected")){
+		
+			$("#spp_view").css("display","none");
+			$("#diversity_view").css("display","inline");
+			
+			$("#diversity_subfamily").css("display","none");
+			$("#diversity_genus").css("display","inline");
+			$("#diversity_bentity").css("display","none");
+		
+			$('#view-title').html('Genus View');
+			
 			$("#diversity_subfamily").css("display","none");
 			$("#diversity_genus").css("display","inline");
 			$("#diversity_bentity").css("display","none");
 	
 			external.setMode(modes[2])
-
-		}
-		else if($("#diveristy-bentity-button").hasClass("diversity-active")){
-	
+			
+		}else if($("#diveristy-bentity-button").hasClass("button-selected")){
+		
+			$("#diversity_subfamily").css("display","none");
+			$("#diversity_genus").css("display","none");
+			$("#diversity_bentity").css("display","inline");
+		
+			$("#spp_view").css("display","none");
+			$("#diversity_view").css("display","inline");
+		
+			$('#view-title').html('Region View');
+			
 			$("#diversity_subfamily").css("display","none");
 			$("#diversity_genus").css("display","none");
 			$("#diversity_bentity").css("display","inline");
 			
 			external.setMode(modes[3])
-
 		}
-	}); 
+		
+	});
 
-	
 	
 	
 
@@ -744,12 +767,19 @@ var mapUtilities = (function() {
 	
 	// sets the title for the current mode and displays the current selection
 	external.setTitle = function(currentMode, currentSelection){
-			
+			console.log("currentMode");
+			console.log(currentMode);
 			var currentTitleText = "Current "+ currentMode+ " :";
 			var currentSelectionText =currentSelection;
 			
 			$('#current-selection-title').html(currentTitleText);
 			$('#current-selection').html(currentSelectionText);
+			
+			if(currentMode == "Species" || currentMode == "Genus"){
+				$('#current-selection').addClass('italic');
+			}else{
+				$('#current-selection').removeClass('italic');
+			}	
 	};
 	
 	
@@ -1085,8 +1115,8 @@ var speciesMode = (function() {
 var diversitySubfamilyMode = (function() {
 
 	var zeroColor = "#ffffff";
-	var colorArray = ["#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
-	var legendColors = ["#ffffff","#fee5d9","#fcae91","#fb6a4a","#de2d26","#a50f15"];
+	var colorArray = ["#2166ac","#92c5de","#f4a582","#d6604d","#b2182b"];
+	var legendColors = ["#ffffff","#2166ac","#92c5de","#f4a582","#d6604d","#b2182b"];
 	
 	var external = {};
 	
@@ -1220,6 +1250,8 @@ var diversitySubfamilyMode = (function() {
 			
 			baseMap.choropleth(bentityColor);
 			
+			$("#diversity-subfamily-legend-title").removeClass("none").addClass("inline");
+			
 			mapUtilities.drawLegend(
 				d3.select("#diversity-subfamily-legend"),
 				colorScale.binLabels(),
@@ -1294,8 +1326,8 @@ var diversitySubfamilyMode = (function() {
 var diversityGenusMode = (function() {
 
 	var zeroColor = "#ffffff";
-	var colorArray = ["#bfd3e6","#8c96c6","#8c6bb1","#88419d","#6e016b"];
-	var legendColors = ["#ffffff","#bfd3e6","#8c96c6","#8c6bb1","#88419d","#6e016b"];
+	var colorArray = ["#2166ac","#92c5de","#f4a582","#d6604d","#b2182b"];
+	var legendColors = ["#ffffff","#2166ac","#92c5de","#f4a582","#d6604d","#b2182b"];
 	
 	var external = {};
 	
@@ -1406,11 +1438,14 @@ var diversityGenusMode = (function() {
 			
 			baseMap.choropleth(bentityColor);
 			
+			$("#diversity-genus-legend-title").removeClass("none").addClass("inline");
+			
 			mapUtilities.drawLegend(
 				d3.select("#diversity-genus-legend"),
 				colorScale.binLabels(),
 				legendColors
 			);
+		
 			
 
 		}
@@ -1471,8 +1506,8 @@ var diversityBentityMode = (function() {
 	var selectedBentityFill = 'darkorange';
 	
 	var zeroColor = "#ffffff";
-	var colorArray = ["#d4b9da","#c994c7","#df65b0","#dd1c77","#980043"];
-	var legendColors = ["#ffffff","#d4b9da","#c994c7","#df65b0","#dd1c77","#980043"];
+	var colorArray = ["#fcbba1","#fc9272","#fb6a4a","#de2d26","#a50f15"];
+	var legendColors = ["#ffffff","#fcbba1","#fc9272","#fb6a4a","#de2d26","#a50f15"];
 	
 	
 	
@@ -1592,13 +1627,11 @@ var diversityBentityMode = (function() {
 	// either draw choropleth or "select a bentity" mode, and show appropriate controls
 	function renderMap() {
 		if (currentData.selectBentityView) {
-			$("#select-bentity-instruction").show();
 			$("#select-bentity-button").hide();
 			baseMap.resetChoropleth();
 			baseMap.setHilightColor(selectedBentityFill);
 		}
 		else {
-			$("#select-bentity-instruction").hide();
 			$("#select-bentity-button").show();
 			choropleth();
 		}
@@ -1635,6 +1668,8 @@ var diversityBentityMode = (function() {
 				}
 				return color;
 			};
+			
+			$("#diversity-bentity-legend-title").removeClass("none").addClass("inline");
 			
 			baseMap.choropleth(bentityColor);
 			mapUtilities.drawLegend(

@@ -54,7 +54,7 @@
                     </li>
                   
                     <li>
-                        <a href="report.html">Report Error</a>
+                        <a href="report.html">Report Data Error</a>
                     </li>
                 </ul>
             </div>
@@ -65,13 +65,9 @@
     
     <div id="side">
     	
-    		<a id ="info1" data-title="There are four views in this application, each view allows you to visualize something different.&nbsp;&nbsp;
-    		(1) SPECIES VIEW:  Select a species to map its distribution, see its status in a region, and retrieve information on individual records. &nbsp;&nbsp;
-    		(2) DIVERSITY VIEW-Subfamily: Select a subfamily to map its diversity and retrieve a species list for each region. &nbsp;&nbsp;
-    		(3) DIVERSITY VIEW-Genus: Select a genus to map its diversity and retrieve a species list for each region. &nbsp;&nbsp;
-    		(4) DIVERSITY VIEW-Region: Select a region to visualize how its fauna is distributed across other regions.&nbsp;&nbsp;" data-html="true" rel="tooltip" href="#"><div id="info" class="hvr-shrink"></div></a>
-    		<a id ="resetAll1" data-title="&nbsp;&nbsp;&nbsp;&nbsp;RESET ALL" data-html="true" data-clicked="no" rel="tooltip" href="#" onclick="resetMap();" ><div id="resetAll" class="hvr-shrink"></div></a>
-    		<a id ="resetZoom" data-title="&nbsp;&nbsp;&nbsp;&nbsp;RESET ZOOM" data-html="true" rel="tooltip" href="#" onclick="baseMap.resetZoom();"><div class="hvr-shrink" id="reset_zoom">
+    		<a id ="info1" data-title="Click on a view to start" data-html="true" rel="tooltip" href="#"><div id="info" class="hvr-shrink"></div></a>
+    		<a id ="resetAll1" data-title="RESET ALL" data-html="true" data-clicked="no" rel="tooltip" href="#" onclick="resetMap();" ><div id="resetAll" class="hvr-shrink"></div></a>
+    		<a id ="resetZoom" data-title="RESET ZOOM" data-html="true" rel="tooltip" href="#" onclick="baseMap.resetZoom();"><div class="hvr-shrink" id="reset_zoom">
  		    </div></a>
     		<!-- 
 <a id ="export1" data-title="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORT" data-html="true" rel="tooltip" href="#"><div id="export" class="hvr-shrink"></div></a>
@@ -81,11 +77,23 @@
 	    				Species View
 	    	</h3>
 	    		  
-	    		  <div class="button-wrap">
+	    		  <!-- 
+				  <div class="button-wrap">
 				    <div class="button-bg">
 				      <div class="button-switch"></div>
 				    </div>
 				  </div>
+ -->
+ 			<div id="mode-buttons">
+					<button id="species-button" class="button button--winona button--all button-selected" data-text="Species View">
+						<span>Species View</span></button>
+					<button id="diveristy-subfamily-button" class="button button--winona button--all" data-text="Subfamily View">
+						<span>Subfamily View</span></button>
+					<button id="diveristy-genus-button" class="button button--winona button--all" data-text="Genus View">
+						<span>Genus View</span></button>
+					<button id="diveristy-bentity-button" class="button button--winona button--all" data-text="Region View">
+						<span>Region View</span></button>
+			</div>
 				  
 			
 			
@@ -107,20 +115,13 @@
 						</select><br>
 					</form>	
 					
-					
-					
-					<a id ="browse1" data-title="&nbsp;&nbsp;BROWSE SPECIES" data-html="true" rel="tooltip" href="#"><div id="browse" class="hvr-shrink"></div></a>
-					
 					<div id="map-spp" class="text-center" onclick="speciesMode.updateData();"></div>
 					
 					<div id = "species-legend"> </div>
 			</div> <!-- end spp_view -->
 			
 			<div id="diversity_view"> 
-				<div id="diveristy-subfamily-button" class="diversity-button diversity-active">  Subfamily </div> 
-				<div id="diveristy-genus-button" class="diversity-button"> Genus </div> 
-				<div id="diveristy-bentity-button" class="diversity-button"> Region </div> 
-				
+		
 				<div id="diversity_subfamily">
 				<form id="querySubfamily">
 					<label> Subfamily </label><br>
@@ -131,6 +132,7 @@
 					<div id="map-subfamily" class="text-center" onclick="diversitySubfamilyMode.updateData()"></div>
 					<!-- map button -->
 					
+					<div id="diversity-subfamily-legend-title" class="none"> Number of species by region </div>
 					<div id = "diversity-subfamily-legend"> </div>
 				</div>
 				
@@ -148,6 +150,8 @@
 				</form>
 					<div id="map-genus" class="text-center" onclick="diversityGenusMode.updateData()"></div>
 					<!-- map button -->
+					
+					<div id="diversity-genus-legend-title" class="none"> Number of species by region </div>
 					<div id = "diversity-genus-legend"> </div>
 				</div>
 				
@@ -155,8 +159,6 @@
 				<div id="diversity_bentity" class="none">
 					<div id="select-bentity-button" onclick="diversityBentityMode.selectBentityView()">Map a Different Region</div>
 					<div> </div>
-					<p id="select-bentity-instruction"><span style="font-size:130%;font-weight:bold">Click a region on the map</span><br />to compare species <br><br></p>
-					<p>Or</p>
 					<form id="queryBentity">
 						<label> Region </label>
 						<select id="bentityView-bentity-select" name="bentity" disabled>
@@ -164,7 +166,8 @@
 						</select><br>
 					</form>
 					<div id="map-bentity" class="text-center" onclick="diversityBentityMode.updateData()"></div>
-					<div id = "diversity-bentity-legend"> </div>
+					<div id="diversity-bentity-legend-title" class="none"> Number of species in common </div>
+					<div id="diversity-bentity-legend"> </div>
 				</div>
 
 				
@@ -183,6 +186,8 @@
 		
 		<div id="current-selection-title"></div>
 		<div id="current-selection"></div>
+		
+		<div id="view-description"></div>
     
     
     	<div id="mapContainer">
