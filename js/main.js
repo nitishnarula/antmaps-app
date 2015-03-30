@@ -1550,6 +1550,7 @@ var diversityBentityMode = (function() {
 		
 			resetMappedData();
 			currentData.mappedBentity = selectedBentity;
+			currentData.selectBentityView = false;  // out of "select a bentity" view
 
 			
 			for (var i = 0; i < data.bentities.length; i++) {
