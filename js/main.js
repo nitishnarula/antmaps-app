@@ -758,9 +758,18 @@ var mapUtilities = (function() {
 	// color scale generator for choropleth
 	external.logBinColorScale = function(maxSpecies, zeroColor, colorArray) {
 
-		// maxSpecies+0.0001 so the output is never colorArray.length, so we don't overstep the color array
-		// domain of log scale can never be 0
-		var logscale = d3.scale.log().domain([1, maxSpecies+0.0001]).range([0, colorArray.length]);
+		var continuousScale;
+		if (maxSpecies > colorArray.length) {
+			// Use log scale if there are more domain values than colors
+			// maxSpecies+0.0001 so the output is never colorArray.length, so we don't overstep the color array
+			// domain of log scale can never be 0
+			continuousScale = d3.scale.log().domain([1, maxSpecies+0.0001]).range([0, colorArray.length]);
+		}
+		else {
+			// Use a linear scale if there are more (or same number) colors than domain values
+			continuousScale = d3.scale.linear().domain([1, maxSpecies+0.0001]).range([0, maxSpecies]);
+		}
+
 
 		// convert log value to color
 		var colorscale = function(x) {
@@ -769,7 +778,7 @@ var mapUtilities = (function() {
 			}
 			else {
 				// round log value down to nearest integer to get colors
-				return colorArray[Math.floor(logscale(x))];
+				return colorArray[Math.floor(continuousScale(x))];
 			}
 		}
 		
@@ -780,7 +789,7 @@ var mapUtilities = (function() {
 			// get the boundries of the different color categories
 			var boundries = [0];
 			for (var y = 1; y < colorArray.length && y < maxSpecies; y++) {
-				boundries.push(Math.floor(logscale.invert(y)));
+				boundries.push(Math.floor(continuousScale.invert(y)));
 			}
 			boundries.push(maxSpecies);
 			
