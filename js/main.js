@@ -1,14 +1,3 @@
-//////////////////////////////////////////////////////////////////////////
-// Error Message
-//////////////////////////////////////////////////////////////////////////
-
-function whoopsNetworkError() {
-	alert('Whoops!  Something went wrong.  Please check your internet connection and try again, or refresh the page.');
-}
-
-
-
-
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -28,9 +17,16 @@ var controls = (function() {
 			"diversityBentityMode"];
 	var currentMode = modes[0];// default is species mode
 
+
+
 	// references to each of the mode objects.  This is filled in at the bottom
 	// of this file, after the mode objects have been declared.  Keys are the modes in 'modes' variable
 	external.modeObjects = {};  
+	
+	// called in each mode file
+	external.registerModeObject = function(name, obj) {
+		external.modeObjects[name] = obj;
+	};
 	
 	
 	
@@ -189,7 +185,7 @@ var controls = (function() {
 			fillSelectbox(boxes, data.subfamilies);
 			boxes.prop('disabled', false);
 		})
-		.fail(whoopsNetworkError);
+		.fail(external.whoopsNetworkError);
 	});
 	
 	
@@ -204,7 +200,7 @@ var controls = (function() {
 			fillSelectbox(boxes, data.bentities);
 			boxes.prop('disabled', false);
 		})
-		.fail(whoopsNetworkError);
+		.fail(external.whoopsNetworkError);
 	});
 	
 	
@@ -233,7 +229,7 @@ var controls = (function() {
 				fillSelectbox(box, data.genera);
 				box.prop('disabled', false);
 			})
-			.fail(whoopsNetworkError);
+			.fail(external.whoopsNetworkError);
 		}
 		else {
 			$('#sppView-genus-select').html('<option value="">Select Genus</option>').prop('disabled', 'disabled');
@@ -255,7 +251,7 @@ var controls = (function() {
 				fillSelectbox(box, data.species);
 				box.prop('disabled', false);
 			})
-			.fail(whoopsNetworkError);
+			.fail(external.whoopsNetworkError);
 		}
 		else {
 			$('#sppView-species-select').html('<option value="">Select Species</option>').prop('disabled', 'disabled');
@@ -278,7 +274,7 @@ var controls = (function() {
 				fillSelectbox(box, data.genera);
 				box.prop('disabled', false);
 			})
-			.fail(whoopsNetworkError);
+			.fail(external.whoopsNetworkError);
 		}
 		else {
 			$('#genusView-genus-select').html('<option value="">Select Genus</option>').prop('disabled', 'disabled');
@@ -287,10 +283,50 @@ var controls = (function() {
 	
 
 
-	
+
+	// display error message
+	external.whoopsNetworkError = function() {
+		alert('Whoops!  Something went wrong.  Please check your internet connection and try again, or refresh the page.');
+	}
+
+
+
+
+
+	// Resets the map to its original view as when just loaded
+	// Resets zoom, sets toggle button to species view, clear points, 
+	// resets dropdown menus, closes all info panels
+	external.resetMap = function(){
+		
+		// reset data for all modes		
+		for (var i = 0; i < modes.length; i++) {
+			modeObjects[mode].resetData();
+		}
+		
+
+		
+		//then should set mode to species mode and activate mode
+		controls.setMode("speciesMode");
+			// then should switch the toggle button back
+		$(".button-wrap").removeClass("button-active");
+		$("#spp_view").css("display","inline");
+		$("#diversity_view").css("display","none");
+		$("#view-title").html("Species View");
+		//$("#current-species").html("");
+		$(".infopanel").css("display","none");
+		//then should repopulate subfamily select boxes
+		controls.resetSubFamilySelectors();	
+		baseMap.resetZoom(); 
+	}
+
+
 	return external;
 })();
 
+
+$(document).ready(function() {
+	controls.getCurrentModeObject().activateMode(); // activate the first mode
+});
 
 
 
@@ -1043,7 +1079,7 @@ var speciesMode = (function() {
 		.always( function() {
 			$("#loading-message").hide();
 		})
-		.fail(whoopsNetworkError);
+		.fail(controls.whoopsNetworkError);
 	}
 	
 	
@@ -1101,6 +1137,7 @@ var speciesMode = (function() {
 	return external;
 	
 })();
+controls.registerModeObject("speciesMode", speciesMode);
 
 
 
@@ -1196,7 +1233,7 @@ var diversitySubfamilyMode = (function() {
 		.always( function() {
 			$("#loading-message").hide();
 		})
-		.fail(whoopsNetworkError);
+		.fail(controls.whoopsNetworkError);
 		
 	};
 	
@@ -1297,7 +1334,7 @@ var diversitySubfamilyMode = (function() {
 		
 			// look up species list
 			$.getJSON('/dataserver/species-list', {bentity: d.properties.gid, subfamily: currentData.subfamilyName})
-			.error(whoopsNetworkError)
+			.error(controls.whoopsNetworkError)
 			.done(function(data) {
 				var ul = infoPanel.append('ul');
 			
@@ -1313,6 +1350,8 @@ var diversitySubfamilyMode = (function() {
 	
 	return external;
 })();
+controls.registerModeObject("diversitySubfamilyMode", diversitySubfamilyMode);
+
 
 
 
@@ -1398,7 +1437,7 @@ var diversityGenusMode = (function() {
 		.always( function() {
 			$("#loading-message").hide();
 		})
-		.fail(whoopsNetworkError);
+		.fail(controls.whoopsNetworkError);
 	};
 	
 	
@@ -1477,7 +1516,7 @@ var diversityGenusMode = (function() {
 			
 			// look up species list
 			$.getJSON('/dataserver/species-list', {bentity: d.properties.gid, genus: currentData.genusName})
-			.error(whoopsNetworkError)
+			.error(controls.whoopsNetworkError)
 			.done(function(data) {
 				var ul = infoPanel.append('ul');
 						ul.selectAll('li')
@@ -1490,7 +1529,7 @@ var diversityGenusMode = (function() {
 
 	return external;
 })();
-
+controls.registerModeObject("diversityGenusMode", diversityGenusMode);
 
 
 
@@ -1589,7 +1628,7 @@ var diversityBentityMode = (function() {
 		$("#loading-message").show();
 		
 		$.getJSON('/dataserver/species-in-common', {bentity: getSelectedBentity().key})
-		.fail(whoopsNetworkError)
+		.fail(controls.whoopsNetworkError)
 		.done(function(data) {
 		
 			resetMappedData();
@@ -1736,7 +1775,7 @@ var diversityBentityMode = (function() {
 			
 				// look up species list
 				$.getJSON('/dataserver/species-list', {bentity: d.properties.gid, bentity2: currentData.mappedBentity.key})
-				.error(whoopsNetworkError)
+				.error(controls.whoopsNetworkError)
 				.done(function(data) {
 					var ul = infoPanel.append('ul');
 						ul.selectAll('li')
@@ -1759,51 +1798,9 @@ var diversityBentityMode = (function() {
 	
 	return external;
 })();
+controls.registerModeObject("diversityBentityMode", diversityBentityMode);
 
 
-
-
-
-//////////////////////////////////////////////////////////////////////////
-// Resets the map to its original view as when just loaded
-// Resets zoom, sets toggle button to species view, clear points, 
-// resets dropdown menus, closes all info panels
-//////////////////////////////////////////////////////////////////////////
-
-function resetMap(){
-
-	speciesMode.resetData();
-	diversitySubfamilyMode.resetData();
-	diversityGenusMode.resetData();
-
-	//then should set mode to species mode and activate mode
-	controls.setMode("speciesMode");
-	
-
-	// then should switch the toggle button back
-	$(".button-wrap").removeClass("button-active");
-	$("#spp_view").css("display","inline");
-	$("#diversity_view").css("display","none");
-	$("#view-title").html("Species View");
-	//$("#current-species").html("");
-	$(".infopanel").css("display","none");
-	//then should repopulate subfamily select boxes
-
-	controls.resetSubFamilySelectors();	
-	
-	baseMap.resetZoom(); 
-	
-}
-
-
-// give the controls object a reference to each of the modes
-controls.modeObjects = {
-	'speciesMode': speciesMode,
-	'diversitySubfamilyMode': diversitySubfamilyMode,
-	'diversityGenusMode': diversityGenusMode,
-	'diversityBentityMode': diversityBentityMode
-}
-controls.getCurrentModeObject().activateMode(); // activate the first mode
 
 
 
