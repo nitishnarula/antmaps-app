@@ -1,5 +1,10 @@
 //////////////////////////////////////////////////////////////////////////
 //  DIVERSITY GENUS MODE
+//
+//	External Functions: resetData, updateData, activateMode, deactivateMode
+//						resetView, bentityInfoLabelHTML, bentityClickHandle
+//	Internal Functions: getSelectedGenus, choropleth
+//////////////////////////////////////////////////////////////////////////
 
 
 var diversityGenusMode = (function() {
@@ -42,6 +47,11 @@ var diversityGenusMode = (function() {
 		var genusName = selected.name;
 	
 	
+		if(!$("#genusView-subfamily-select").val()){
+			alert('Please select a subfamily.');
+			return;
+		}
+		
 		if (!selected.key) {
 			alert('Please select a genus to map.');
 			return;

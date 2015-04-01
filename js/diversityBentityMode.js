@@ -1,5 +1,11 @@
 //////////////////////////////////////////////////////////////////////////
 // DIVERSITY BENTITY MODE
+//
+//	External Functions: resetData, activateMode, deactivateMode, resetView 
+//						updateData, bentityInfoLabelHTML, bentityClickHandle
+//						selectBentityView
+//	Internal Functions: resetMappedData, getSelectedBentity, renderMap
+//						choropleth, 
 //////////////////////////////////////////////////////////////////////////
 
 var diversityBentityMode = (function() {
@@ -19,7 +25,7 @@ var diversityBentityMode = (function() {
 	var currentData = null;
 	external.resetData = function(){
 		currentData = {
-			selectBentityView: true, // true if we're in the "select a bentity" mode, false for regular choropleth
+			selectBentityView: true, // true if we're in the "select a bentity" mode (uncolored), false for regular choropleth
 			selectedBentity: {// bentity selected in controls (may be different than currently-mapped bentity)
 				key: null,    // key to send to the server
 				name: null    // name to show the user

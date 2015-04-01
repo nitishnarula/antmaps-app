@@ -17,8 +17,9 @@
 //
 //  Functionalities for species mode: gets data, gets current species, draws points,
 //                                    recolors map, draws legend, resets mode 
-//  Included functions: resetView, activateMode, deactivateMode, updateData,
-//                      drawLegend, updateMapColor,choropleth
+//  External Functions: resetData, resetView, activateMode, deactivateMode, updateData,
+//						bentityInfoLabelHTML, circleHighlight, choropleth
+//	Internal Functions: getSelectedSpecies, renderMap
 //////////////////////////////////////////////////////////////////////////
 
 
