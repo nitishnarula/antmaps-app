@@ -318,6 +318,23 @@ var controls = (function() {
 	}
 
 
+
+	// Open report-an-error link
+	external.openErrorReport = function() {
+		window.open('/report.html'); // do this instead of a regular link with target=_blank so we can use window.opener
+	};
+
+
+	external.errorReportData = function() {
+		if(external.getCurrentModeObject().errorReportData) {
+			return external.getCurrentModeObject().errorReportData();
+		}
+		else {
+			return "";
+		}
+	};
+
+
 	return external;
 })();
 

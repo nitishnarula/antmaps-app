@@ -167,6 +167,12 @@ var diversityGenusMode = (function() {
 	}
 
 
+
+	
+	external.errorReportData = function() {
+		return "Genus diversity mode\nSelected genus: " + (currentData.genusName || "none selected");
+	}
+
 	return external;
 })();
 controls.registerModeObject("diversityGenusMode", diversityGenusMode);

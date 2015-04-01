@@ -213,8 +213,14 @@ var speciesMode = (function() {
 			
 	};
 	
-	return external;
+
+
 	
+	external.errorReportData = function() {
+		return "Species distribution mode\nSelected species: " + (currentData.speciesName || "none selected");
+	}
+
+	return external;
 })();
 controls.registerModeObject("speciesMode", speciesMode);
 

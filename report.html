@@ -24,9 +24,7 @@
     
     <!-- Custom Report Page CSS -->
     <link rel="stylesheet" href="css/report.css">
-    
-    <!-- Leafet CSS -->
-    <link rel="stylesheet" href="js/leaflet/leaflet.css" type="text/css" />
+
 
 </head>
 <body>
@@ -43,25 +41,12 @@
                 </button>
                 <a class="navbar-brand" href="index.html">AntMaps</a>
             </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                  
-                    <li>
-                        <a href="report.html">Report Error</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
     </nav>
     
      <div class="container-fluid">
       <section class="module content">
 
-	      	<form id="ajax-contact" method="post" action="mailer.php">
+	      	<form id="ajax-contact" method="post">
 			    <div class="field">
 			        <label for="name">Name</label>
 			        <input type="text" id="name" name="name" required>
@@ -78,7 +63,7 @@
 			    </div>
 			
 			    <div class="field">
-			        <div class="button" id="button2" type="submit">Send</button>
+			        <div class="button" id="button-submit" type="submit">Send</button>
 			    </div>
 			</form> 
 			      
@@ -89,40 +74,21 @@
      </div> <!-- end container -->
     
     
-    
-
-    
-    
-    
     <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-    
-    <!-- Underscore -->
-    <script src="http://underscorejs.org/underscore-min.js"></script>
+    <script src="js/libraries/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="js/libraries/bootstrap.min.js"></script>
     
-    <!-- D3 -->
-    <script src="http://d3js.org/d3.v3.js"></script>
-    
-    
-    <!-- D3.geo -->
-    <script src="http://d3js.org/d3.geo.projection.v0.min.js"></script>
-    
-    <!-- Topojson -->
-	<script src="topojson-js/topojson.min.js"></script> 
-	
-	<!-- Leaflet -->
-	<script src="js/leaflet/leaflet.js" type="text/javascript"></script>
-	
-	<!-- D3/Javascript custom code file -->
-	<script src="js/main.js"></script>
 	
 	
-	
-   
-    <script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+		    if (window.opener) {
+			    var reportData = window.opener.controls.errorReportData();
+			    $('#message').append('Current Antmaps view\n--------------------------------\n' + reportData + '\n\n');
+			}
+		});
 	</script>
 
 

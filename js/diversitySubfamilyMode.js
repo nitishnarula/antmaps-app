@@ -198,8 +198,14 @@ var diversitySubfamilyMode = (function() {
 			});
 		
 		}
-	}
+	};
 
+
+
+
+	external.errorReportData = function() {
+		return "Subfamily diversity mode\nSelected subfamily: " + (currentData.subfamilyName || "none selected");
+	}
 	
 	return external;
 })();

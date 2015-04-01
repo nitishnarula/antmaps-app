@@ -259,6 +259,11 @@ var diversityBentityMode = (function() {
 	};
 	
 	
+	
+	external.errorReportData = function() {
+		return "Region comparison mode\nSelected region: " + (currentData.mappedBentity.name || "none selected");
+	}
+	
 	return external;
 })();
 controls.registerModeObject("diversityBentityMode", diversityBentityMode);
