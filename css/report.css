@@ -79,8 +79,8 @@
 		label {
 		  display: block;
 		  text-transform: uppercase;
-		  margin-top: 14px;
-		  margin-bottom: 14px;
+		  margin-top: 25px;
+		  margin-bottom: 10px;
 		  color: black;
 		  font-size: 16px;
 		  font-family: 'Dosis', sans-serif;
@@ -153,17 +153,12 @@
 				  border-radius: 4px;
 		}
 
-		.error {
-		  width: 450px;
-		  padding: 20px;
-		  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-		  text-align: center;
-		  margin-left: auto;
-		  margin-right: auto;
-		  color: #b94a48;
-		  background-color: #f2dede;
-		  border: 1px solid rgba(185, 74, 72, 0.3);
-		  -webkit-border-radius: 4px;
-			 -moz-border-radius: 4px;
-				  border-radius: 4px;
+		
+		.errorlist {
+			font-weight: bold;
+			color: white;
+			background: darkred;
+			border-radius: 3px;
+			padding-top: 5px;
+			padding-bottom: 5px;
 		}

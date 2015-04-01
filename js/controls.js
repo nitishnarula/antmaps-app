@@ -321,7 +321,7 @@ var controls = (function() {
 
 	// Open report-an-error link
 	external.openErrorReport = function() {
-		window.open('/report.html'); // do this instead of a regular link with target=_blank so we can use window.opener
+		window.open('/dataserver/error-report.html'); // do this instead of a regular link with target=_blank so we can use window.opener
 	};
 
 
