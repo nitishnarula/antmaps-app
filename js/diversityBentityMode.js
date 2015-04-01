@@ -9,6 +9,8 @@
 //////////////////////////////////////////////////////////////////////////
 
 var diversityBentityMode = (function() {
+
+			
 	var external = {};
 	
 	var selectedBentityFill = 'darkorange';
@@ -136,6 +138,9 @@ var diversityBentityMode = (function() {
 	
 	// either draw choropleth or "select a bentity" mode, and show appropriate controls
 	function renderMap() {
+		var currentModeTitle = "Region";
+		mapUtilities.setTitle(currentModeTitle,'');
+		
 		if (currentData.selectBentityView) {
 			$("#select-bentity-button").hide();
 			$("#bentity-description").show();
