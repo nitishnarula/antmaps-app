@@ -137,7 +137,16 @@ var speciesMode = (function() {
 	external.updateData = function() {
 		var selectedSpp = getSelectedSpecies();
 	
-
+	
+		if(!$("#sppView-subfamily-select").val()){
+			alert('Please select a subfamily.');
+			return;
+		}
+		
+		if(!$("#sppView-genus-select").val()){
+			alert('Please select a genus.');
+			return;
+		}
 		
 		if (!selectedSpp.taxon_code) {
 			alert('Please select a species to map.');
