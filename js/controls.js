@@ -2,8 +2,10 @@
 //  CONTROLS
 //
 //  Controls: Switch modes & fill select boxes
-//  Included functions: fillSelectbox,
-//					    getCurrentModeObject, setCurrentModeObject
+//  External functions: registerModeObject, setMode, getCurrentModeObject,
+//						clearSelectbox, resetSubFamilySelectors, 
+//						whoopsNetworkError, resetMap
+//	Internal functions: fillSelectbox
 //////////////////////////////////////////////////////////////////////////
 
 var controls = (function() {
@@ -49,28 +51,28 @@ var controls = (function() {
 	// Different Views Tooptip
 	$("#species-button").hover(
 		function(){
-			$("#view-description").html('Select a species via the drop down menu after filtering by subfamily and genus to map its distribution, see its status in a region, and retrieve information on individual records.');
+			$("#view-description").html("Select a species via the drop down menu after filtering by subfamily and genus, then click 'MAP' to map its distribution, see its status in a region, and retrieve information on individual records.");
 		},function(){
 			$("#view-description").html('');
 	});
 	
 	$("#diveristy-subfamily-button").hover(
 		function(){
-			$("#view-description").html('Select a subfamily via the drop down menu to map its diversity and retrieve a species list for each region.');
+			$("#view-description").html("Select a subfamily via the drop down menu, then click 'MAP' to map its diversity and retrieve a species list for each region.");
 		},function(){
 			$("#view-description").html('');
 	});
 	
 	$("#diveristy-genus-button").hover(
 		function(){
-			$("#view-description").html('Select a genus via the drop down menu after filtering a subfamily to map its diversity and retrieve a species list for each region.');
+			$("#view-description").html("Select a genus via the drop down menu after filtering by subfamily, then click 'MAP' to map its diversity and retrieve a species list for each region.");
 		},function(){
 			$("#view-description").html('');
 	});
 	
 	$("#diveristy-bentity-button").hover(
 		function(){
-			$("#view-description").html('Select a region, by clicking on the map or via the drop down menu, to visualize how its fauna is distributed across other regions.');
+			$("#view-description").html("Select a region, by clicking on the map or via the drop down menu and click on 'MAP', to visualize how its fauna is distributed across other regions. To map a different region click on 'MAP A DIFFERENT REGION'.");
 		},function(){
 			$("#view-description").html('');
 	});

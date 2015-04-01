@@ -5,8 +5,14 @@
 // Draw base map: set width and height, add tile with leaflet
 // draw polygons with D3 after loading json file
 // define projection in leaflet + D3 and function to reset zoom
-// Included functions: projectPoint, projectPoint180, reset, getProjection,
-//					   getOverlayG,
+// external functions: addBentityEventListner, getBentities, setHilightColor,
+//					   resetHilightColor, getProjection, 
+//					   addBentityEventListner ("mouseover.hilight),
+//				       addBentityEventListner ("mouseover.dehilight),
+//                     getOverlayG, addBentityEventListner("nondragclick"),
+//					   resetZoom, choropleth, resetChoropleth
+// internal functions: bindBentityListners, projectPoint, projectPoint180,
+//                     loadBentities, resetView
 ///////////////////////////////////////////////////////////////////////////////
 
 var baseMap = (function() {

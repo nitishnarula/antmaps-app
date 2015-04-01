@@ -1,8 +1,16 @@
 //////////////////////////////////////////////////////////////////////////
 // DIVERSITY BENTITY MODE
+//
+//	External Functions: resetData, activateMode, deactivateMode, resetView 
+//						updateData, bentityInfoLabelHTML, bentityClickHandle
+//						selectBentityView
+//	Internal Functions: resetMappedData, getSelectedBentity, renderMap
+//						choropleth, 
 //////////////////////////////////////////////////////////////////////////
 
 var diversityBentityMode = (function() {
+
+			
 	var external = {};
 	
 	var selectedBentityFill = 'darkorange';
@@ -19,7 +27,7 @@ var diversityBentityMode = (function() {
 	var currentData = null;
 	external.resetData = function(){
 		currentData = {
-			selectBentityView: true, // true if we're in the "select a bentity" mode, false for regular choropleth
+			selectBentityView: true, // true if we're in the "select a bentity" mode (uncolored), false for regular choropleth
 			selectedBentity: {// bentity selected in controls (may be different than currently-mapped bentity)
 				key: null,    // key to send to the server
 				name: null    // name to show the user
@@ -35,6 +43,7 @@ var diversityBentityMode = (function() {
 	external.resetData();
 	
 	
+
 	
 	
 	// reset data that is used to color the map, but keep selection
@@ -113,6 +122,7 @@ var diversityBentityMode = (function() {
 			}
 			
 			renderMap();
+			
 		
 		})
 		.always( function() {
@@ -128,19 +138,23 @@ var diversityBentityMode = (function() {
 	
 	// either draw choropleth or "select a bentity" mode, and show appropriate controls
 	function renderMap() {
+		var currentModeTitle = "Region";
+		mapUtilities.setTitle(currentModeTitle,'');
+		
 		if (currentData.selectBentityView) {
 			$("#select-bentity-button").hide();
+			$("#bentity-description").show();
+			$("#diversity-bentity-legend-title").hide();
 			baseMap.resetChoropleth();
 			baseMap.setHilightColor(selectedBentityFill);
 		}
 		else {
 			$("#select-bentity-button").show();
+			$("#bentity-description").hide();
+			$("#diversity-bentity-legend-title").show();
 			choropleth();
 		}
 	};
-	
-	
-	
 	
 	
 	
@@ -258,6 +272,7 @@ var diversityBentityMode = (function() {
 		renderMap();
 	};
 	
+
 	
 	
 	external.errorReportData = function() {

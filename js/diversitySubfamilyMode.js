@@ -1,5 +1,11 @@
 //////////////////////////////////////////////////////////////////////////
 // DIVERSITY SUBFAMILY MODE
+//
+// External Functions: resetData, getCurrentData, updateData, activateMode,
+//					   deactivateMode, resetView, bentityInfoLabelHTML,
+//					   bentityClickHandle
+// Internal Functions: getSelectedSubfamily, choropleth
+//////////////////////////////////////////////////////////////////////////
 
 
 var diversitySubfamilyMode = (function() {

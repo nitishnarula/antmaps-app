@@ -157,8 +157,9 @@
 				
 
 				<div id="diversity_bentity" class="none">
-					<div id="select-bentity-button" onclick="diversityBentityMode.selectBentityView()">Map a Different Region</div>
-					<div> </div>
+				
+					<div id="bentity-description"> Click on a Region <br><br> OR </div>
+					
 					<form id="queryBentity">
 						<label> Region </label>
 						<select id="bentityView-bentity-select" name="bentity" disabled>
@@ -166,6 +167,8 @@
 						</select><br>
 					</form>
 					<div id="map-bentity" class="text-center" onclick="diversityBentityMode.updateData()"></div>
+					<div id="select-bentity-button" onclick="diversityBentityMode.selectBentityView()">Map a Different Region</div>
+					
 					<div id="diversity-bentity-legend-title" class="none"> Number of species in common </div>
 					<div id="diversity-bentity-legend"> </div>
 				</div>

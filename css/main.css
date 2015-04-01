@@ -316,10 +316,14 @@
 		}
 		
 		/* BENTITY MODE */
+	
 		
-		#select-bentity-instruction{
-			text-align: center;
-			margin-left: -55px;
+		#bentity-description{
+			color:white;
+	    	font-family: 'Dosis', sans-serif;
+	    	margin-top: 20px;
+	    	margin-left: 10px;
+	    	text-align: center;
 		}
 		
     	/* BENTITY CLICKED / MAP DIFFERENT REGION BUTTON */
@@ -401,9 +405,9 @@
 		#view-description{
 			color:black;
 			position: absolute;
-			margin-top: 600px;
+			margin-top: 500px;
 			margin-left: 50px;
-			width:250px;
+			width:280px;
 			height:500px;
 			font-family: 'Dosis', sans-serif;
 			font-size:20px;

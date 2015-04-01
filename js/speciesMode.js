@@ -17,8 +17,9 @@
 //
 //  Functionalities for species mode: gets data, gets current species, draws points,
 //                                    recolors map, draws legend, resets mode 
-//  Included functions: resetView, activateMode, deactivateMode, updateData,
-//                      drawLegend, updateMapColor,choropleth
+//  External Functions: resetData, resetView, activateMode, deactivateMode, updateData,
+//						bentityInfoLabelHTML, circleHighlight, choropleth
+//	Internal Functions: getSelectedSpecies, renderMap
 //////////////////////////////////////////////////////////////////////////
 
 
@@ -136,7 +137,16 @@ var speciesMode = (function() {
 	external.updateData = function() {
 		var selectedSpp = getSelectedSpecies();
 	
-
+	
+		if(!$("#sppView-subfamily-select").val()){
+			alert('Please select a subfamily.');
+			return;
+		}
+		
+		if(!$("#sppView-genus-select").val()){
+			alert('Please select a genus.');
+			return;
+		}
 		
 		if (!selectedSpp.taxon_code) {
 			alert('Please select a species to map.');

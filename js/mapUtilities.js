@@ -1,9 +1,8 @@
-
-
 //////////////////////////////////////////////////////////////////////////
 // MAP UTILITIES
 //
-// Included functions: 
+// External functions: datatest, infoLabel, removeInfoLabel, infoPanelPoints,
+//				       openInfoPanel, setTitle, logBinColorScale, drawLegend
 //////////////////////////////////////////////////////////////////////////
 
 var mapUtilities = (function() {
@@ -59,9 +58,6 @@ var mapUtilities = (function() {
 	baseMap.addBentityEventListner('mouseleave.infolabel', external.removeInfoLabel);
 
 
-	
-	
-
 	// Open info panel for point data when clicked
 	external.infoPanelPoints= function(data){
 
@@ -91,11 +87,7 @@ var mapUtilities = (function() {
 	};
 	
 	
-	
 
-
-
-	
 	
 	// Open an overlay on top of the map
 	// Return a D3 selection of a div that you can use to append content to the
