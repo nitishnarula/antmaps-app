@@ -41,6 +41,7 @@ var diversityBentityMode = (function() {
 	external.resetData();
 	
 	
+
 	
 	
 	// reset data that is used to color the map, but keep selection
@@ -119,6 +120,7 @@ var diversityBentityMode = (function() {
 			}
 			
 			renderMap();
+			
 		
 		})
 		.always( function() {
@@ -136,17 +138,18 @@ var diversityBentityMode = (function() {
 	function renderMap() {
 		if (currentData.selectBentityView) {
 			$("#select-bentity-button").hide();
+			$("#bentity-description").show();
+			$("#diversity-bentity-legend-title").hide();
 			baseMap.resetChoropleth();
 			baseMap.setHilightColor(selectedBentityFill);
 		}
 		else {
 			$("#select-bentity-button").show();
+			$("#bentity-description").hide();
+			$("#diversity-bentity-legend-title").show();
 			choropleth();
 		}
 	};
-	
-	
-	
 	
 	
 	
@@ -264,6 +267,7 @@ var diversityBentityMode = (function() {
 		renderMap();
 	};
 	
+
 	
 	return external;
 })();
