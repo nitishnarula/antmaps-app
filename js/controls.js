@@ -300,7 +300,7 @@ var controls = (function() {
 		
 		// reset data for all modes		
 		for (var i = 0; i < modes.length; i++) {
-			modeObjects[mode].resetData();
+			external.modeObjects[modes[i]].resetData();
 		}
 		
 
