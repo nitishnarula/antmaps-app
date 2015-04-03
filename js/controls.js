@@ -59,8 +59,6 @@ var controls = (function() {
 	//NEW...called by each view button when clicked
 	external.switchMode = function(mode){
 		
-		$(".button").removeClass("button-selected");
-		$(this).addClass("button-selected");
 		
 		external.hideAllWidgets();
 		
@@ -69,20 +67,32 @@ var controls = (function() {
 			
 			external.setMode(modes[0]);
 			
+			$(".button").removeClass("button-selected");
+			$("#species-button").addClass("button-selected");
+			
 		}else if(mode=="diversitySubfamilyMode"){
 			diversitySubfamilyMode.showViewWidgets();
 			
 			external.setMode(modes[1]);
+			
+			$(".button").removeClass("button-selected");
+			$("#diveristy-subfamily-button").addClass("button-selected");
 			
 		}else if(mode=="diversityGenusMode"){
 			diversityGenusMode.showViewWidgets();
 			
 			external.setMode(modes[2]);
 			
+			$(".button").removeClass("button-selected");
+			$("#diveristy-genus-button").addClass("button-selected");
+			
 		}else if(mode=="diversityBentityMode"){
 			diversityBentityMode.showViewWidgets();
 			
 			external.setMode(modes[3]);
+			
+			$(".button").removeClass("button-selected");
+			$("#diveristy-bentity-button").addClass("button-selected");
 		}
 	
 	};
