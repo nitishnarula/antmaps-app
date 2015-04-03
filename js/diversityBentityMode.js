@@ -132,8 +132,17 @@ var diversityBentityMode = (function() {
 		
 	}
 	
-	
-	
+	//NEW
+	external.showViewWidgets= function(){
+		$("#diversity_subfamily").css("display","none");
+		$("#diversity_genus").css("display","none");
+		$("#diversity_bentity").css("display","inline");
+		
+		$("#spp_view").css("display","none");
+		$("#diversity_view").css("display","inline");
+		
+		$('#view-title').html('Region View');
+	};
 	
 	
 	// either draw choropleth or "select a bentity" mode, and show appropriate controls

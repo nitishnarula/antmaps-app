@@ -173,6 +173,14 @@ var speciesMode = (function() {
 	
 	
 	
+	//NEW
+	external.showViewWidgets = function(){
+		$("#spp_view").css("display","inline");
+		$("#diversity_view").css("display","none");	
+		$('#view-title').html('Species View');
+	}
+	
+	
 	// plot points and render choropleth
 	function renderMap() {
 	

@@ -38,16 +38,56 @@ var controls = (function() {
 	}
 
 
-
-
 	// get the current mode object
 	external.getCurrentModeObject = function() {
 		return external.modeObjects[currentMode];
 	};
 
 	
-
+	//NEW...hides all view-specific widgets
+	external.hideAllWidgets = function(){
+		$('#view-title').html('');
+		$("#spp_view").css("display","none");
+		$("#diversity_view").css("display","none");	
+		$("#diversity_subfamily").css("display","none");
+		$("#diversity_genus").css("display","none");
+		$("#diversity_bentity").css("display","none");
+	};
 	
+	
+	
+	//NEW...called by each view button when clicked
+	external.switchMode = function(mode){
+		
+		$(".button").removeClass("button-selected");
+		$(this).addClass("button-selected");
+		
+		external.hideAllWidgets();
+		
+		if(mode=="speciesMode"){
+			speciesMode.showViewWidgets();
+			
+			external.setMode(modes[0]);
+			
+		}else if(mode=="diversitySubfamilyMode"){
+			diversitySubfamilyMode.showViewWidgets();
+			
+			external.setMode(modes[1]);
+			
+		}else if(mode=="diversityGenusMode"){
+			diversityGenusMode.showViewWidgets();
+			
+			external.setMode(modes[2]);
+			
+		}else if(mode=="diversityBentityMode"){
+			diversityBentityMode.showViewWidgets();
+			
+			external.setMode(modes[3]);
+		}
+	
+	};
+	
+
 	// Different Views Tooptip
 	$("#species-button").hover(
 		function(){
@@ -76,85 +116,6 @@ var controls = (function() {
 		},function(){
 			$("#view-description").html('');
 	});
-	
-	
-	
-	
-	// TOGGLE VIEWS
-	$(".button").on("click",function(){
-		$(".button").removeClass("button-selected");
-		$(this).addClass("button-selected");
-		
-		if($("#species-button").hasClass("button-selected")){
-			
-			$("#spp_view").css("display","inline");
-			$("#diversity_view").css("display","none");
-			
-			$('#view-title').html('Species View');
-			
-			
-			external.getCurrentModeObject().deactivateMode();
-			currentMode = modes[0];
-			external.getCurrentModeObject().activateMode();
-			
-			
-			
-		}else if($("#diveristy-subfamily-button").hasClass("button-selected")){
-		
-			$("#spp_view").css("display","none");
-			$("#diversity_view").css("display","inline");
-			
-			$("#diversity_subfamily").css("display","inline");
-			$("#diversity_genus").css("display","none");
-			$("#diversity_bentity").css("display","none");
-			
-			$('#view-title').html('Subfamily View');
-			
-			// toggle mode-specific controls
-			$("#diversity_subfamily").css("display","inline");
-			$("#diversity_genus").css("display","none");
-			$("#diversity_bentity").css("display","none");
-	
-			external.setMode(modes[1])
-			
-		}else if($("#diveristy-genus-button").hasClass("button-selected")){
-		
-			$("#spp_view").css("display","none");
-			$("#diversity_view").css("display","inline");
-			
-			$("#diversity_subfamily").css("display","none");
-			$("#diversity_genus").css("display","inline");
-			$("#diversity_bentity").css("display","none");
-		
-			$('#view-title').html('Genus View');
-			
-			$("#diversity_subfamily").css("display","none");
-			$("#diversity_genus").css("display","inline");
-			$("#diversity_bentity").css("display","none");
-	
-			external.setMode(modes[2])
-			
-		}else if($("#diveristy-bentity-button").hasClass("button-selected")){
-		
-			$("#diversity_subfamily").css("display","none");
-			$("#diversity_genus").css("display","none");
-			$("#diversity_bentity").css("display","inline");
-		
-			$("#spp_view").css("display","none");
-			$("#diversity_view").css("display","inline");
-		
-			$('#view-title').html('Region View');
-			
-			$("#diversity_subfamily").css("display","none");
-			$("#diversity_genus").css("display","none");
-			$("#diversity_bentity").css("display","inline");
-			
-			external.setMode(modes[3])
-		}
-		
-	});
-
-	
 	
 
 	// Taxon select boxes

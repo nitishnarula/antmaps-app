@@ -97,6 +97,19 @@ var diversitySubfamilyMode = (function() {
 	};
 	
 	
+	//NEW
+	external.showViewWidgets= function(){
+			$("#spp_view").css("display","none");
+			$("#diversity_view").css("display","inline");
+			
+			$('#view-title').html('Subfamily View');
+			
+			// toggle mode-specific controls
+			$("#diversity_subfamily").css("display","inline");
+			$("#diversity_genus").css("display","none");
+			$("#diversity_bentity").css("display","none");
+	}
+	
 	
 	// draw choropeth when mode is activated
 	external.activateMode = function(){
