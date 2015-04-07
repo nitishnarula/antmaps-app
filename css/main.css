@@ -147,7 +147,7 @@
 		#view-title{
 			position: absolute;
 			top:5px;
-			left:50px;
+			left:30px;
 		}
 		
 		/* SWITH VIEWS BUTTONS */
@@ -159,7 +159,14 @@
 		
 		/* FORM */
 		
-		#querySpecies,#querySubfamily,#queryGenus{
+		#querySpecies{
+			border: 1px dotted black;
+			padding:10px;
+			margin-top:80px;
+			margin-left:20px;
+		}
+		
+		#querySubfamily,#queryGenus{
 			border: 1px dotted black;
 			padding:10px;
 			margin-top:80px;
@@ -241,108 +248,19 @@
     		margin-top:20px;
     	}
     	
-    	
-    	/* BROWSE SPP BUTTON */
-    	
-    	#browse{
-    		margin-top: 44px;
-			margin-left: 90px;
-			width: 50px;
-			height: 50px;
-			background:url("../img/browse.png");
-			background-repeat: no-repeat;
-    	}
-    	
-    	
-    	/* MAP BUTTONS */
-	    
-	    #map-spp{
-			background:url("../img/map3.png");
-			background-repeat: no-repeat;
-			border: 0;
-			width: 50px;
-			height: 50px;
-			margin-top: 10px;
-			margin-left: 86px;
-		}
-		
-		#map-spp:hover{
-			background:url("../img/map4.png");
-			-webkit-transition: all 500ms ease;
-			-moz-transition: all 500ms ease;
-			-ms-transition: all 500ms ease;
-			transition: all 500ms ease;
-			cursor: pointer;
-		}
-		
-		#map-subfamily{
-			background:url("../img/map3.png");
-			background-repeat: no-repeat;
-			border: 0;
-			width: 50px;
-			height: 50px;
-			margin-top: 10px;
-			margin-left: 86px;
-		}
-		
-		#map-subfamily:hover{
-			background:url("../img/map4.png");
-			-webkit-transition: all 500ms ease;
-			-moz-transition: all 500ms ease;
-			-ms-transition: all 500ms ease;
-			transition: all 500ms ease;
-			cursor: pointer;
-		}
-		
-		#map-genus{
-			background:url("../img/map3.png");
-			background-repeat: no-repeat;
-			border: 0;
-			width: 50px;
-			height: 50px;
-			margin-top: 10px;
-			margin-left: 86px;
-			
-		}
-		
-		#map-genus:hover{
-			background:url("../img/map4.png");
-			-webkit-transition: all 500ms ease;
-			-moz-transition: all 500ms ease;
-			-ms-transition: all 500ms ease;
-			transition: all 500ms ease;
-			cursor: pointer;
-		}
-		
-		#map-bentity{
-			background:url("../img/map3.png");
-			background-repeat: no-repeat;
-			border: 0;
-			width: 50px;
-			height: 50px;
-			margin-top: 10px;
-			margin-left: 86px;
-			
-		}
-		
-		#map-bentity:hover{
-			background:url("../img/map4.png");
-			-webkit-transition: all 500ms ease;
-			-moz-transition: all 500ms ease;
-			-ms-transition: all 500ms ease;
-			transition: all 500ms ease;
-			cursor: pointer;
-		}
 		
 		/* BENTITY MODE */
 	
 		
 		#bentity-description{
 			color:white;
+			font-size:24px;
 	    	font-family: 'Dosis', sans-serif;
 	    	margin-top: 80px;
-	    	margin-left: 10px;
+	    	margin-left: 0px;
 	    	text-align: center;
+	    	margin-bottom:0px;
+	    	text-transform: uppercase;
 		}
 		
     	/* BENTITY CLICKED / MAP DIFFERENT REGION BUTTON */
@@ -366,7 +284,7 @@
 			z-index:999;
 			height: 40px;
 			width: 200px;
-			background: #F47D66;
+			background:#F05253;
 			color: white;
 			border-radius:6px;
 			-webkit-transition: all 200ms ease;
@@ -376,10 +294,39 @@
 		}
 		
 		#select-bentity-button:hover{
-			color:black;
-			background-color:#F05253;
+			color:white;
+			background-color:#F47D66;
 			cursor:pointer;
 		}
+		
+		@-webkit-keyframes hvr-pulse-grow {
+		  to {
+			-webkit-transform: scale(1.1);
+			transform: scale(1.1);
+		  }
+		}
+
+		@keyframes hvr-pulse-grow {
+		  to {
+			-webkit-transform: scale(1.1);
+			transform: scale(1.1);
+		  }
+		}
+
+		.pulse {
+		  -webkit-animation-name: hvr-pulse-grow;
+		  animation-name: hvr-pulse-grow;
+		  -webkit-animation-duration: 0.6s;
+		  animation-duration: 0.6s;
+		  -webkit-animation-timing-function: linear;
+		  animation-timing-function: linear;
+		  -webkit-animation-iteration-count: 2;
+		  animation-iteration-count: 2;
+		  -webkit-animation-direction: alternate;
+		  animation-direction: alternate;
+		}
+
+
     	
     	/* MAIN PANEL */
     	#main {
@@ -619,7 +566,7 @@
 		top: 0;
 		left: 0;
 		opacity: 0;
-		color: #3f51b5;
+		color: #F05253;
 		-webkit-transform: translate3d(0, 25%, 0);
 		transform: translate3d(0, 25%, 0);
 	}
@@ -641,7 +588,7 @@
 		transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
 	}
 	.button--winona:hover {
-		border-color: #3f51b5;
+		border-color: #F05253;
 		background-color: rgba(63, 81, 181, 0.1);
 	}
 	.button--winona.button--inverted:hover {

@@ -100,7 +100,7 @@ var diversityGenusMode = (function() {
 		$("#spp_view").css("display","none");
 		$("#diversity_view").css("display","inline");
 		
-		$('#view-title').html('Genus View');
+		$('#view-title').html('Genus Diversity');
 			
 		$("#diversity_subfamily").css("display","none");
 		$("#diversity_genus").css("display","inline");

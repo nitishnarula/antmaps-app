@@ -105,7 +105,7 @@ var diversitySubfamilyMode = (function() {
 			$("#spp_view").css("display","none");
 			$("#diversity_view").css("display","inline");
 			
-			$('#view-title').html('Subfamily View');
+			$('#view-title').html('Subfamily Diversity');
 			
 			// toggle mode-specific controls
 			$("#diversity_subfamily").css("display","inline");

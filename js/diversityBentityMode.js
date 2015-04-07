@@ -65,6 +65,8 @@ var diversityBentityMode = (function() {
 		currentData.selectedBentity.key  = $('#bentityView-bentity-select').val();
 		currentData.selectedBentity.name = $('#bentityView-bentity-select option:selected').text();
 		diversityBentityMode.updateData();
+// 		$('#select-bentity-button').removeClass('pulse');
+// 		$('#select-bentity-button').addClass('pulse');
 	});
 	
 	function getSelectedBentity() { return currentData.selectedBentity; }
@@ -142,7 +144,7 @@ var diversityBentityMode = (function() {
 		$("#spp_view").css("display","none");
 		$("#diversity_view").css("display","inline");
 		
-		$('#view-title').html('Region View');
+		$('#view-title').html('Region Comparison');
 		
 		
 		if (!currentData.selectBentityView) {

@@ -55,6 +55,13 @@ var speciesMode = (function() {
 		speciesMode.updateData();
 	});
 	
+	$('#sppView-genus-select').change(function(){
+		$('#querySpecies').css('margin-left',0);
+	});
+	
+	$('#sppView-subfamily-select').change(function(){
+		$('#querySpecies').css('margin-left',20);
+	});
 	
 	// Re-draws all the points on the map
 	// Called when the user updates the data, and when the map needs to be re-drawn 
@@ -82,7 +89,7 @@ var speciesMode = (function() {
 				.attr('cy',function(d){
 					return baseMap.getProjection()([d.lon,d.lat]).y;
 				})
-				.attr("fill","black")
+				.attr("fill","#F05253")
 				.attr('r',4)
 				.on("click",mapUtilities.infoPanelPoints)
 				.on("mouseover", function(d, i) {
@@ -112,7 +119,7 @@ var speciesMode = (function() {
 						'stroke-width':1,
 						'stroke-opacity':1,
 						'fill-opacity':1,
-						'stroke':'black'
+						'stroke':'#F05253'
 					});
 				});
 		
@@ -181,7 +188,7 @@ var speciesMode = (function() {
 	external.showViewWidgets = function(){
 		$("#spp_view").css("display","inline");
 		$("#diversity_view").css("display","none");	
-		$('#view-title').html('Species View');
+		$('#view-title').html('Species Distribution');
 	}
 	
 	
