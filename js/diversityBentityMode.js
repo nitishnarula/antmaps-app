@@ -220,7 +220,7 @@ var diversityBentityMode = (function() {
 	
 	external.bentityInfoLabelHTML = function(d, i) {
 		var labelHTML = "<h4 class='text-center'>" 
-		+ d.properties.BENTITY + "</h4>";
+		+ d.properties.bentity2_name + "</h4>";
 		
 		if (!currentData.selectBentityView) {
 			labelHTML += "<br><b>" + (currentData.sppPerBentity[d.properties.gid] || "0")
@@ -248,7 +248,7 @@ var diversityBentityMode = (function() {
 			
 			// select the clicked bentity
 			currentData.selectedBentity.key = d.properties.gid;
-			currentData.selectedBentity.name = d.properties.BENTITY;
+			currentData.selectedBentity.name = d.properties.bentity2_name;
 			external.updateData();
 		}
 		
@@ -257,7 +257,7 @@ var diversityBentityMode = (function() {
 			if (!$.isEmptyObject(currentData.sppPerBentity)) { // is there some data mapped?
 				var infoPanel = mapUtilities.openInfoPanel();
 			
-				infoPanel.html("<h4>" + (currentData.sppPerBentity[d.properties.gid] || "0") + " species in common between " + d.properties.BENTITY + " and " + currentData.mappedBentity.name + "</h4>");
+				infoPanel.html("<h4>" + (currentData.sppPerBentity[d.properties.gid] || "0") + " species in common between " + d.properties.bentity2_name + " and " + currentData.mappedBentity.name + "</h4>");
 			
 				// look up species list
 				$.getJSON('/dataserver/species-list', {bentity: d.properties.gid, bentity2: currentData.mappedBentity.key})

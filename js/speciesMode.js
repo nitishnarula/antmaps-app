@@ -195,7 +195,7 @@ var speciesMode = (function() {
 	
 	
 	external.bentityInfoLabelHTML = function(d, i) {
-		return "<h3 class='text-center'>"+d.properties.BENTITY+"</h3><br><b>Native</b>";
+		return "<h3 class='text-center'>"+d.properties.bentity2_name+"</h3><br><b>Native</b>";
 	};
 	
 	
