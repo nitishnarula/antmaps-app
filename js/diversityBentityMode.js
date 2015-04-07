@@ -13,7 +13,7 @@ var diversityBentityMode = (function() {
 			
 	var external = {};
 	
-	var selectedBentityFill = 'darkorange';
+	var selectedBentityFill = '#00ADA7';
 	
 	var zeroColor = "#ffffff";
 	var colorArray = ["#fcbba1","#fc9272","#fb6a4a","#de2d26","#a50f15"];
@@ -64,6 +64,7 @@ var diversityBentityMode = (function() {
 	$('#bentityView-bentity-select').change(function() {
 		currentData.selectedBentity.key  = $('#bentityView-bentity-select').val();
 		currentData.selectedBentity.name = $('#bentityView-bentity-select option:selected').text();
+		diversityBentityMode.updateData();
 	});
 	
 	function getSelectedBentity() { return currentData.selectedBentity; }
@@ -133,7 +134,7 @@ var diversityBentityMode = (function() {
 	}
 	
 	//NEW
-	external.showViewWidgets= function(){
+	external.showViewWidgets= function(){		
 		$("#diversity_subfamily").css("display","none");
 		$("#diversity_genus").css("display","none");
 		$("#diversity_bentity").css("display","inline");
@@ -142,6 +143,11 @@ var diversityBentityMode = (function() {
 		$("#diversity_view").css("display","inline");
 		
 		$('#view-title').html('Region View');
+		
+		
+		if (!currentData.selectBentityView) {
+			$('select-bentity-button').show();
+		}
 	};
 	
 	
@@ -153,6 +159,7 @@ var diversityBentityMode = (function() {
 		if (currentData.selectBentityView) {
 			$("#select-bentity-button").hide();
 			$("#bentity-description").show();
+			$("#queryBentity").css("margin-top",20);
 			$("#diversity-bentity-legend-title").hide();
 			baseMap.resetChoropleth();
 			baseMap.setHilightColor(selectedBentityFill);
@@ -160,6 +167,7 @@ var diversityBentityMode = (function() {
 		else {
 			$("#select-bentity-button").show();
 			$("#bentity-description").hide();
+			$("#queryBentity").css("margin-top",80);
 			$("#diversity-bentity-legend-title").show();
 			choropleth();
 		}

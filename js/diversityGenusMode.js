@@ -24,6 +24,10 @@ var diversityGenusMode = (function() {
 			     name: $('#genusView-genus-select option:selected').text() };
 	}
 
+	$('#genusView-genus-select').change(function() {
+		diversityGenusMode.updateData();
+	});
+	
 	
 	
 	

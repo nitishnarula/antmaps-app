@@ -27,6 +27,9 @@ var diversitySubfamilyMode = (function() {
 	}
 	
 	
+	$('#subfamilyView-subfamily-select').change(function() {
+		diversitySubfamilyMode.updateData()
+	});
 	
 	
 	// keep track of the data we're looking at right now

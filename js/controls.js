@@ -53,6 +53,7 @@ var controls = (function() {
 		$("#diversity_genus").css("display","none");
 		$("#diversity_bentity").css("display","none");
 		$("#entry-text").css("display","none");
+		$("#select-bentity-button").hide();
 	};
 	
 	external.hideEntryText= function(){
@@ -285,8 +286,9 @@ var controls = (function() {
 		
 		//then should set mode to species mode and activate mode
 		controls.setMode("speciesMode");
-			// then should switch the toggle button back
-		$(".button-wrap").removeClass("button-active");
+		
+		$(".button").removeClass("button-selected");
+		$("#species-button").addClass("button-selected");
 		$("#spp_view").css("display","inline");
 		$("#diversity_view").css("display","none");
 		$("#view-title").html("Species View");

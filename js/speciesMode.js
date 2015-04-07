@@ -51,6 +51,10 @@ var speciesMode = (function() {
 				 speciesName: $('#sppView-species-select option:selected').text() };
 	}
 	
+	$('#sppView-species-select').change(function() {
+		speciesMode.updateData();
+	});
+	
 	
 	// Re-draws all the points on the map
 	// Called when the user updates the data, and when the map needs to be re-drawn 
