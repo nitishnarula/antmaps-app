@@ -52,6 +52,13 @@ var controls = (function() {
 		$("#diversity_subfamily").css("display","none");
 		$("#diversity_genus").css("display","none");
 		$("#diversity_bentity").css("display","none");
+		$("#entry-text").css("display","none");
+	};
+	
+	external.hideEntryText= function(){
+		$(".button").hover(function() {
+			$("#entry-text").css("display","none");
+		});
 	};
 	
 	
@@ -314,5 +321,6 @@ var controls = (function() {
 
 $(document).ready(function() {
 	controls.getCurrentModeObject().activateMode(); // activate the first mode
+	controls.hideEntryText();
 });
 

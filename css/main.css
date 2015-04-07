@@ -413,6 +413,19 @@
 			z-index:999;
 			text-align: center;
 		}
+		
+		#entry-text{
+			color:black;
+			position: absolute;
+			margin-top: 490px;
+			margin-left: 70px;
+			width:200px;
+			font-family: 'Dosis', sans-serif;
+			font-size:30px;
+			z-index:999;
+			text-align: center;
+			text-transform: uppercase;
+		}
 	
 		/* AJAX LOADER */
 		#loading-message{
