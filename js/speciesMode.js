@@ -2,7 +2,7 @@
 * Each mode needs to have the following external methods:
 * activateMode() -- called when the user switches to this mode
 * deactivateMode() -- called to clean up, when the user switches to a different mode
-* updateData() -- called when the "map" button is pressed
+* updateData() -- called when the most specific select box is selected
 * resetData() -- clear the currently-saved data for this mode
 * resetView() -- called when the map has to be re-drawn, like on zoom
 * bentityInfoLabelHTML(d, i) -- returns the info-label text for a bentity, given D3-bound data d and index i

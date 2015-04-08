@@ -529,8 +529,8 @@
 	/* Switch View Buttons */
 	.button {
 		float: left;
-		min-width: 200px;
-		max-width: 200px;
+		min-width: 210px;
+		max-width: 210px;
 		display: block;
 		margin: 1em;
 		padding: 1em 2em;

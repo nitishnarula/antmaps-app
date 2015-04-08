@@ -48,10 +48,9 @@ var diversitySubfamilyMode = (function() {
 	
 	
 	
-	// called by "map" button
+	// called by "subfamilyView-subfamily-select" 
 	external.updateData = function() {
 		var selected = getSelectedSubfamily();
-		
 		
 		
 		external.resetData();
