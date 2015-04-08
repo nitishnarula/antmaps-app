@@ -61,15 +61,23 @@ var speciesRichnessMode = (function() {
 		choropleth();
 	};
 	
-	function choropleth(){};
 	
 	external.deactivateMode = function(){
 		baseMap.resetChoropleth();
 	};
+	
+	external.showViewWidgets= function(){
+		$('#view-title').html('Species Richness');
+	};
+	
 
 
 	// draw  choropleth
 	function choropleth(){
+		
+		var regionName = ''; // currentData.selectedBentity.name;
+		var currentModeTitle = "Region";
+		mapUtilities.setTitle(currentModeTitle,regionName);
 	
 	};
 	
@@ -111,7 +119,7 @@ var speciesRichnessMode = (function() {
 		return "Total species richness mode\nSelected region: " + (currentData.selectedBentity.name || "none selected");
 	}
 
-	
+	return external;
 })();
 
 

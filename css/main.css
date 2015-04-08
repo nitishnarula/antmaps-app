@@ -299,6 +299,8 @@
 			cursor:pointer;
 		}
 		
+		/* ANIMATION */
+		/* (Click on Bentity text and Map a different region button) */
 		@-webkit-keyframes hvr-pulse-grow {
 		  to {
 			-webkit-transform: scale(1.1);
@@ -316,8 +318,8 @@
 		.pulse {
 		  -webkit-animation-name: hvr-pulse-grow;
 		  animation-name: hvr-pulse-grow;
-		  -webkit-animation-duration: 0.6s;
-		  animation-duration: 0.6s;
+		  -webkit-animation-duration: 0.8s;
+		  animation-duration: 0.8s;
 		  -webkit-animation-timing-function: linear;
 		  animation-timing-function: linear;
 		  -webkit-animation-iteration-count: 2;

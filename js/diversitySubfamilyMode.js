@@ -136,9 +136,9 @@ var diversitySubfamilyMode = (function() {
 	// draw diversity-mode choropleth
 	function choropleth(){
 
-		var genusName = currentData.subfamilyName;
+		var subfamilyName = currentData.subfamilyName;
 		var currentModeTitle = "Subfamily";
-		mapUtilities.setTitle(currentModeTitle,genusName);
+		mapUtilities.setTitle(currentModeTitle,subfamilyName);
 		
 	
 		if (!$.isEmptyObject(currentData.sppPerBentity)) {
