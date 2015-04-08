@@ -34,7 +34,7 @@ var speciesMode = (function() {
 						 "D": "Dubious",
 						 "V": "Needs Verification"};
 	var categoryColors = ["#F7E46D","#A7BD5B","#DC574E","#8DC7B8","#ED9355"];
-
+	var notPresentColor = "white";
 
 
 	// the current data selected and mapped by the user
@@ -139,6 +139,7 @@ var speciesMode = (function() {
 	// called when this mode is selected
 	external.activateMode = function() {
 		renderMap();
+		renderPoints();
 		
 	}
 	
@@ -299,11 +300,12 @@ var speciesMode = (function() {
 					return colorScale(currentData.bentityCategories[d.properties.gid]);
 				}
 				else {
-					return null;
+					return notPresentColor;
 				}
 			};
 			
 			baseMap.choropleth(bentityColor);
+			drawLegend();
 		}
 		
 		
@@ -311,6 +313,21 @@ var speciesMode = (function() {
 	}
 	
 
+	function drawLegend() {
+		var legendColors = categoryColors.concat([notPresentColor]);
+		
+		var legendLabels = [];
+		for (var i = 0; i < categoryCodes.length; i++) {
+			legendLabels.push(categoryNames[categoryCodes[i]]);
+		}
+		legendLabels.push("Not Present");
+		
+		mapUtilities.drawLegend(
+			d3.select("#species-legend"),
+			legendLabels,
+			legendColors
+		);
+	}
 
 	
 	external.errorReportData = function() {
