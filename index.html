@@ -71,13 +71,13 @@
  		    </div></a>
     	
 	    	<h3 id="view-title" class="text-center">
-	    				Species Distribution 
+	    				Species Richness 
 	    	</h3>
 	    		  
 
  			<div id="mode-buttons">
  					<button id="species-richness-button" class="button button--winona button--all button-selected" data-text="Species Richness" 
-					onclick=controls.switchMode('speciesMode');>
+					onclick=controls.switchMode('speciesRichnessMode');>
 						<span>Species Richness</span></button>
 					<button id="species-button" class="button button--winona button--all" data-text="Species Distribution" 
 					onclick=controls.switchMode('speciesMode');>
@@ -95,7 +95,7 @@
 				  
 			
 			
-			<div id="spp_view">
+			<div id="spp_view" class="none">
 				<form id="querySpecies">
 					<h4> Select a species: </h4>
 					<label> Subfamily </label><br>
@@ -244,6 +244,7 @@
 	<script src="js/diversitySubfamilyMode.js" type="text/javascript"></script>
 	<script src="js/diversityGenusMode.js" type="text/javascript"></script>
 	<script src="js/diversityBentityMode.js" type="text/javascript"></script>
+	<script src="js/speciesRichnessMode.js" type="text/javascript"></script>
 
 	
 	
