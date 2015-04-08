@@ -189,7 +189,7 @@ var diversitySubfamilyMode = (function() {
 	
 	external.bentityInfoLabelHTML = function(d, i) {
 		return "<h4 class='text-center'>" 
-		+ d.properties.BENTITY + "</h4><br><b>" 
+		+ d.properties.bentity2_name + "</h4><br><b>" 
 		+ (currentData.subfamilyName || "") + "</b><br><b>" 
 		+ (currentData.sppPerBentity[d.properties.gid] || "0") + " species</b/>";
 	};
@@ -205,7 +205,7 @@ var diversitySubfamilyMode = (function() {
 			var infoPanel = mapUtilities.openInfoPanel();
 		
 
-			infoPanel.html("<h4>" + (currentData.sppPerBentity[d.properties.gid] || "0") + " species for " + currentData.subfamilyName + " in " + d.properties.BENTITY + "</h4>");
+			infoPanel.html("<h4>" + (currentData.sppPerBentity[d.properties.gid] || "0") + " species for " + currentData.subfamilyName + " in " + d.properties.bentity2_name + "</h4>");
 		
 			// look up species list
 			$.getJSON('/dataserver/species-list', {bentity: d.properties.gid, subfamily: currentData.subfamilyName})

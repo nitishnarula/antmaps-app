@@ -177,12 +177,20 @@ var baseMap = (function() {
 	
 	
 	
-	
+	// load bentities from TopoJSON file and create SVG objects
 	function loadBentities() {
 
-		d3.json("../data/bentities_lores2.topojson", function(error, data){
+		d3.json("../data/ben2ready25.topojson", function(error, data){
 	
-			external.bentities = topojson.feature(data,data.objects.bentities_Jan2015_highres); 
+			var mergedBentities = {
+				type: "GeometryCollection",
+				geometries: [].concat( 
+					data.objects.ben2_polygons.geometries,
+					data.objects.ben2island_polygons.geometries,
+					data.objects.ben2island_circles.geometries)
+			}
+	
+			external.bentities = topojson.feature(data, mergedBentities); 
 		
 		
 			var feature = external.getBentities()
@@ -220,7 +228,7 @@ var baseMap = (function() {
 			g.attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
 
 			g.selectAll('path.bentities').attr("d", function(d) {
-				if (d.properties.BENTITY == "Russia East" || d.properties.BENTITY == "Fiji") {
+				if (d.properties.bentity2_name == "Russia East" || d.properties.bentity2_name == "Fiji") {
 					return path180(d)
 				}
 				else {
