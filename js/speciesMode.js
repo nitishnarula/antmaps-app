@@ -27,8 +27,13 @@ var speciesMode = (function() {
 	var external = {};
 
 
-	categoryArray=["native","internal introduced","invasive","dubious","unverified"];
-	categoryColor = ["#0571b0","#92c5de","#ca0020","#f4a582","#f7f7f7"];
+	var categoryCodes = ["N", "E", "I", "D", "V"];
+	var categoryNames = {"N": "Native",
+						 "I": "Indoor Introduced",
+						 "E": "Exotic",
+						 "D": "Dubious",
+						 "V": "Needs Verification"};
+	var categoryColors = ["#F7E46D","#A7BD5B","#DC574E","#8DC7B8","#ED9355"];
 
 
 
@@ -37,7 +42,9 @@ var speciesMode = (function() {
 	external.resetData = function() {
 		currentData = {
 		'speciesName': null, // current species name
-		'pointRecords': null // current points to show, with {gabi_acc_number:xxx, lat:xxx, lon:xxx} for each
+		'speciesCode': null, // current species code
+		'pointRecords': null, // current points to show, with {gabi_acc_number:xxx, lat:xxx, lon:xxx} for each
+		'bentityCategories': {} // keys are bentity GID's, values are category codes
 		}
 	};
 	external.resetData();
@@ -132,6 +139,7 @@ var speciesMode = (function() {
 	// called when this mode is selected
 	external.activateMode = function() {
 		renderMap();
+		
 	}
 	
 	// called to reset the map back to its original state, without any data
@@ -147,6 +155,10 @@ var speciesMode = (function() {
 	// called when the user presses the "map" button
 	external.updateData = function() {
 		var selectedSpp = getSelectedSpecies();
+		
+		external.resetData();
+		currentData.speciesCode = selectedSpp.taxon_code;
+		currentData.speciesName = selectedSpp.speciesName;
 	
 	
 		if(!$("#sppView-subfamily-select").val()){
@@ -167,17 +179,54 @@ var speciesMode = (function() {
 		// TODO show loading graphic?
 		$("#loading-message").show();
 		
-		$.getJSON('/dataserver/species-points', {taxon_code: selectedSpp.taxon_code})
-		.done(function(data) {
-			if (data.records) {
-				currentData.pointRecords = data.records;
-				currentData.speciesName = selectedSpp.speciesName;
+		
+		
+		$.getJSON('/dataserver/species-bentity-categories', {taxon_code: selectedSpp.taxon_code})
+		.fail(controls.whoopsNetworkError)
+		.done( function(data) {
+		
+			// make sure the user hasn't already selected a different species
+			if (selectedSpp.taxon_code == currentData.speciesCode) {
+			
+				if (data.bentities) {
+				
+					if (data.bentities.length==0) { 
+						alert('No data for this species!');
+					};
+				
+				
+					for (var i = 0; i < data.bentities.length; i++) {
+						var record = data.bentities[i];
+						currentData.bentityCategories[record.gid] = record.category;
+					}
+				
+				}
 				
 				renderMap();
+				
 			}
+			
 		})
 		.always( function() {
 			$("#loading-message").hide();
+		});
+		
+		
+		
+		// get species points
+		$.getJSON('/dataserver/species-points', {taxon_code: selectedSpp.taxon_code})
+		.done(function(data) {
+			
+			// make sure the user hasn't already selected a different species
+			if (selectedSpp.taxon_code == currentData.speciesCode) {
+			
+				if (data.records) {
+					currentData.pointRecords = data.records;
+				
+					renderPoints();
+				}
+			
+			}
 		})
 		.fail(controls.whoopsNetworkError);
 	}
@@ -191,6 +240,7 @@ var speciesMode = (function() {
 		$('#view-title').html('Species Distribution');
 	}
 	
+
 	
 	// plot points and render choropleth
 	function renderMap() {
@@ -199,14 +249,22 @@ var speciesMode = (function() {
 		var currentModeTitle = "Species";
 		mapUtilities.setTitle(currentModeTitle,speciesName);
 	
+		
+		choropleth();
+	}
+	
+	
+	// called once points are loaded
+	function renderPoints() {
 		external.resetView();
-		//external.choropleth();
 	}
 	
 	
 	
 	external.bentityInfoLabelHTML = function(d, i) {
-		return "<h3 class='text-center'>"+d.properties.bentity2_name+"</h3><br><b>Native</b>";
+		return "<h3 class='text-center'>"
+			+ d.properties.bentity2_name + "</h3><br><b>"
+			+ (categoryNames[currentData.bentityCategories[d.properties.gid]] || "") + "</b>";
 	};
 	
 	
@@ -229,18 +287,28 @@ var speciesMode = (function() {
 	
 
 	
-	external.choropleth = function(d, recolorMap){
-	//Get data value
+	
+	function choropleth() {
+		
+		
+		if (!$.isEmptyObject(currentData.bentityCategories)) {
+			var colorScale = d3.scale.ordinal().domain(categoryCodes).range(categoryColors);
 			
-			var value = d.properties.category; 
-			if (value) {
-				return recolorMap(value);
-			} else {
-				return "black"; 
+			var bentityColor = function(d) {
+				if (currentData.bentityCategories[d.properties.gid]) {
+					return colorScale(currentData.bentityCategories[d.properties.gid]);
+				}
+				else {
+					return null;
+				}
 			};
 			
-			
-	};
+			baseMap.choropleth(bentityColor);
+		}
+		
+		
+		
+	}
 	
 
 
