@@ -286,6 +286,7 @@
 			width: 200px;
 			background:#F05253;
 			color: white;
+			border: solid 2px black;
 			border-radius:6px;
 			-webkit-transition: all 200ms ease;
 			-moz-transition: all 200ms ease;
@@ -295,7 +296,7 @@
 		
 		#select-bentity-button:hover{
 			color:white;
-			background-color:#F47D66;
+			background-color:black;
 			cursor:pointer;
 		}
 		
@@ -334,7 +335,7 @@
     	#main {
 		    padding: 0;
 		    margin-top: 0;
-		    margin-bottom: 0;
+		    margin-bottom: 20px;
 		    margin-left: 0;
 		    margin-right: 20px;
 		    position: absolute;    
@@ -344,7 +345,7 @@
 		    bottom: 10px;
 		    overflow: auto;
 		    background-color:/*  #3E454C */none;
-		    height: 820px;
+		    height: /* 820px; */ 100%;
 		}	
 		
 		
@@ -395,6 +396,96 @@
 			text-align: center;
 			text-transform: uppercase;
 		}
+		
+		/* WELCOME SCREEN */
+		#welcome-message-bg-bg{
+			position: absolute;
+			z-index:9999;
+			width:75%;
+			height:70%;
+			margin-top:150px;
+			margin-left:12.5%;
+			margin-right:12.5%;
+			background-color:gray;
+		}
+		
+		#welcome-message-bg{
+			position: absolute;
+			z-index:10000;
+			width:75%;
+			height:70%;
+			margin-top:150px;
+			margin-left:12.5%;
+			margin-right:12.5%;
+			background: url("../img/one1.jpg") no-repeat;
+			opacity:0.6;
+		}
+		#welcome-message{
+			position: absolute;
+			z-index:10000;
+			width:75%;
+			height:70%;
+			margin-top:150px;
+			margin-left:12.5%;
+			margin-right:12.5%;
+			overflow-y:auto;
+			border: 1px solid black;
+			
+		}
+		
+		#welcome-message h1{
+			font-family: 'Dosis', sans-serif;
+			font-size:40px;
+			text-shadow: 2px 2px #000000;
+			opacity:1;
+		}
+		
+		#welcome-message h2{
+			padding-top:4%;
+			padding-bottom:2%;
+			padding-left:10%;
+			padding-right:10%;
+			text-transform:uppercase;
+			font-style:normal;
+			color:white;
+			font-size:24px;
+		}
+		
+		#welcome-message h3{
+			padding-top:5%;
+			padding-left:10%;
+			padding-right:10%;
+		}
+		
+		#welcome-message h4{
+			font-family: 'Dosis', sans-serif;
+			color:white;
+			padding-top:2%;
+		}
+		
+		#welcome-message img:hover{
+			cursor:pointer;
+		}
+		
+		img.center{
+			display:block;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		
+		#welcome-overlay {
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    width: 100%;
+		    height: 100%;
+		    z-index: 9999;
+		    background: rgba(0,0,0,0.3);
+		}
+		
+		#welcome-overlay:hover{
+			/* cursor:pointer; */
+		}
 	
 		/* AJAX LOADER */
 		#loading-message{
@@ -442,6 +533,19 @@
 			-moz-transition: all 1s ease;
 			-ms-transition: all 1s ease;
 			transition: all 1s ease;
+		}
+		
+		/* FOOTER */
+		footer{
+			width:100%;
+			height:30px;
+			background-color:none;
+			color:white;
+			position:absolute;
+			bottom:-120px;
+		}
+		footer p{
+			text-align:center;
 		}
 		
 		/* TOOLTIP */

@@ -31,7 +31,7 @@ var baseMap = (function() {
 	
 		// map width and height in pixels
 		var width = $("#mapContainer").parent().width();
-		var height= 800;
+		var height= $("#mapContainer").parent().height();
 	
 		// set width and height of Leaflet map div
 		$("#mapContainer").css({'height':height, 'width':width})
@@ -41,6 +41,8 @@ var baseMap = (function() {
 			zoom: 2,
 			minZoom: 2
 		});
+		
+		map.fitWorld();
 	
 		return map;
 	}();
