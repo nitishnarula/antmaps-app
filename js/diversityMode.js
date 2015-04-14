@@ -1,13 +1,10 @@
 //////////////////////////////////////////////////////////////////////////
-//  DIVERSITY GENUS MODE
+//  DIVERSITY MODE
 //
-//	External Functions: resetData, updateData, activateMode, deactivateMode
-//						resetView, bentityInfoLabelHTML, bentityClickHandle
-//	Internal Functions: getSelectedGenus, choropleth
 //////////////////////////////////////////////////////////////////////////
 
 
-var diversityGenusMode = (function() {
+var diversityMode = (function() {
 
 	var zeroColor = "#ffffff";
 	var colorArray = ["#2166ac","#92c5de","#f4a582","#d6604d","#b2182b"];
@@ -20,12 +17,18 @@ var diversityGenusMode = (function() {
 	// key is the key to send to the web server,
 	// name is what to show the user
 	function getSelectedGenus() {
-		return { key:  $('#genusView-genus-select').val(),
-			     name: $('#genusView-genus-select option:selected').text() };
+		return { key:  $('#diversityView-genus-select').val(),
+			     name: $('#diversityView-genus-select option:selected').text() };
 	}
+	
+	function getSelectedSubfamily() {
+		return { key:  $('#diversityView-subfamily-select').val(),
+				 name: $('#diversityView-subfamily-select option:selected').text() };
+	}
+	
 
-	$('#genusView-genus-select').change(function() {
-		diversityGenusMode.updateData();
+	$('#diversityView-genus-select, #diversityView-subfamily-select').change(function() {
+		external.updateData();
 	});
 	
 	
@@ -37,6 +40,9 @@ var diversityGenusMode = (function() {
 	external.resetData = function() {
 		currentData = {
 			genusName: null,      // name of the current genus
+			genusKey: null,      // database key for the current genus
+			subfamilyName: null,  // name of the current genus
+			subfamilyKey: null,  // database key for the current genus
 			sppPerBentity: {},    // keys are bentity ID, values are species count
 			maxSpeciesCount: 0    // maximum number of species for a bentity (for scale)
 		}
@@ -44,30 +50,35 @@ var diversityGenusMode = (function() {
 	external.resetData();
 
 
+
+
 	external.updateData = function() {
-		var selected = getSelectedGenus();
-		
+	
 		external.resetData();
-		var genusName = selected.name;
-	
-	
-		if(!$("#genusView-subfamily-select").val()){
-			alert('Please select a subfamily.');
-			return;
-		}
 		
-		if (!selected.key) {
-			alert('Please select a genus to map.');
-			return;
-		}
+		var selectedSubfamily = getSelectedSubfamily();
+		var selectedGenus = getSelectedGenus();
+		
+		currentData.genusName = selectedGenus.name;
+		currentData.genusKey = selectedGenus.key;
+		currentData.subfamilyName = selectedSubfamily.name;
+		currentData.subfamilyKey = selectedSubfamily.key;
+		
+	
 		
 		
 		$("#loading-message").show();
 		
-		$.getJSON('/dataserver/species-per-bentity', {genus_name: selected.key})
+		$.getJSON('/dataserver/species-per-bentity', 
+			{genus_name: selectedGenus.key, subfamily_name:selectedSubfamily.key})
 		.done(function(data) {	
-			external.resetData();
-			currentData.genusName = genusName;
+		
+			// make sure the user hasn't aready selected something else
+			if (currentData.subfamilyKey != selectedSubfamily.key ||
+						currentData.genusKey != selectedGenus.key)    {
+				return;			
+			}
+			
 			
 			if (data.bentities.length==0) { 
 				alert('No data for this taxon!');
@@ -83,10 +94,13 @@ var diversityGenusMode = (function() {
 				}
 				
 				currentData.sppPerBentity[record.gid] = record.species_count;
-				//key = gid, value = species_count
 			}
 			
-			choropleth();
+			
+			if (controls.getCurrentModeName() == "diversityMode") { 
+				// make sure the user hasn't switched to a different mode already
+				choropleth();
+			}
 		})
 		.always( function() {
 			$("#loading-message").hide();
@@ -97,18 +111,26 @@ var diversityGenusMode = (function() {
 	
 	//NEW
 	external.showViewWidgets= function(){
-		$("#spp_view").css("display","none");
 		$("#diversity_view").css("display","inline");
 		
-		$('#view-title').html('Genus Diversity');
+		$('#view-title').html('Diversity View');
 			
-		$("#diversity_subfamily").css("display","none");
-		$("#diversity_genus").css("display","inline");
-		$("#diversity_bentity").css("display","none");
 	}
 	
 	
-	external.activateMode = function(){ choropleth(); };
+	external.activateMode = function(){ 
+	
+		// load initial species richness data if the user hasn't selected anything
+		if ($.isEmptyObject(currentData.sppPerBentity) 
+				&& !currentData.genusKey 
+				&& !currentData.subfamilyKey) {
+			external.updateData();		
+		}
+		
+		choropleth(); 
+	};
+	
+	
 	external.deactivateMode = function(){ baseMap.resetChoropleth(); };
 	
 	
@@ -118,11 +140,19 @@ var diversityGenusMode = (function() {
 
 	// draw diversity-mode choropleth
 	function choropleth(){
-		var genusName = currentData.genusName;
+
+		if (currentData.genusKey) {
+			var currentModeTitle = "Genus";
+			mapUtilities.setTitle(currentModeTitle,currentData.genusName);
+		}
+		else if (currentData.subfamilyKey) {
+			var currentModeTitle = "Subfamily";
+			mapUtilities.setTitle(currentModeTitle,currentData.subfamilyName);
+		}
+		else {
+			mapUtilities.setTitle('Overall Species Richness','');
+		}
 		
-		//NEW
-		var currentModeTitle = "Genus";
-		mapUtilities.setTitle(currentModeTitle,genusName);
 		
 		if (!$.isEmptyObject(currentData.sppPerBentity)) {
 			
@@ -132,7 +162,7 @@ var diversityGenusMode = (function() {
 			// data (d) for the bentity
 			var bentityColor = function(d) {
 				var color = null;
-								if (currentData.sppPerBentity[d.properties.gid]) {
+				if (currentData.sppPerBentity[d.properties.gid]) {
 					color = colorScale(currentData.sppPerBentity[d.properties.gid]);
 				}
 				else { 
@@ -196,12 +226,12 @@ var diversityGenusMode = (function() {
 
 	
 	external.errorReportData = function() {
-		return "Genus diversity mode\nSelected genus: " + (currentData.genusName || "none selected");
+		return "Genus mode\nSelected genus: " + (currentData.genusName || "none selected");
 	}
 
 	return external;
 })();
-controls.registerModeObject("diversityGenusMode", diversityGenusMode);
+controls.registerModeObject("diversityMode", diversityMode);
 
 
 

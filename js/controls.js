@@ -13,9 +13,8 @@ var controls = (function() {
 	
 	
 	// keep track of which mode is currently selected
-	var modes = ["speciesRichnessMode", "speciesMode", "diversitySubfamilyMode", "diversityGenusMode", 
-			"diversityBentityMode"];
-	var currentMode = modes[0];// default is species richness mode
+	var modes = ["diversityMode", "speciesMode", "diversityBentityMode"];
+	var currentMode = modes[0];
 
 
 
@@ -30,18 +29,43 @@ var controls = (function() {
 	
 	
 	
-	// set the current mode
-	external.setMode = function(modeName) {
-		external.getCurrentModeObject().deactivateMode();
-		currentMode = modeName;
-		external.getCurrentModeObject().activateMode();
-	}
-
-
 	// get the current mode object
 	external.getCurrentModeObject = function() {
 		return external.modeObjects[currentMode];
 	};
+	
+	external.getCurrentModeName = function() {
+		return currentMode;
+	};
+	
+	
+	
+	// set the current mode
+	external.setMode = function(modeName) {
+	
+		external.getCurrentModeObject().deactivateMode();
+		currentMode = modeName;
+		
+		external.hideAllWidgets();
+		
+		external.getCurrentModeObject().activateMode();
+		
+		external.getCurrentModeObject().showViewWidgets();
+		
+		
+		// hilight button for current mode
+		$(".button").removeClass("button-selected");
+		if(modeName=="speciesMode"){
+			$("#species-button").addClass("button-selected");
+		}else if(modeName=="diversityBentityMode"){
+			$("#diveristy-bentity-button").addClass("button-selected");
+		}else if(modeName=="diversityMode"){
+			$("#diversity-button").addClass("button-selected");
+		}
+	}
+
+
+	
 
 	external.hideWelcomeMessage = function(){
 		$("#welcome-message").css("display","none");
@@ -68,63 +92,11 @@ var controls = (function() {
 	};
 	
 	
-	//NEW...called by each view button when clicked
-	external.switchMode = function(mode){
-		
-		
-		external.hideAllWidgets();
-		
-		if(mode=="speciesMode"){
-			speciesMode.showViewWidgets();
-			
-			external.setMode(modes[1]);
-			
-			$(".button").removeClass("button-selected");
-			$("#species-button").addClass("button-selected");
-			
-		}else if(mode=="diversitySubfamilyMode"){
-			diversitySubfamilyMode.showViewWidgets();
-			
-			external.setMode(modes[2]);
-			
-			$(".button").removeClass("button-selected");
-			$("#diveristy-subfamily-button").addClass("button-selected");
-			
-		}else if(mode=="diversityGenusMode"){
-			diversityGenusMode.showViewWidgets();
-			
-			external.setMode(modes[3]);
-			
-			$(".button").removeClass("button-selected");
-			$("#diveristy-genus-button").addClass("button-selected");
-			
-		}else if(mode=="diversityBentityMode"){
-			diversityBentityMode.showViewWidgets();
-			
-			external.setMode(modes[4]);
-			
-			$(".button").removeClass("button-selected");
-			$("#diveristy-bentity-button").addClass("button-selected");
-		}else if(mode=="speciesRichnessMode"){
-			speciesRichnessMode.showViewWidgets();
-			
-			external.setMode(modes[0]);
-			
-			$(".button").removeClass("button-selected");
-			
-			$("#species-richness-button").addClass("button-selected");
-		}
-	
-	};
+
 	
 
 	// Different Views Tooptip
-	$("#species-richness-button").hover(
-		function(){
-			$("#view-description").html('Click a region to see its total ant species richness.');
-		},function(){
-			$("#view-description").html('');
-	});
+
 	$("#species-button").hover(
 		function(){
 			$("#view-description").html("Select a species via the drop down menu after filtering by subfamily and genus to map its distribution, see its status in a region, and retrieve information on individual records.");
@@ -132,19 +104,6 @@ var controls = (function() {
 			$("#view-description").html('');
 	});
 	
-	$("#diveristy-subfamily-button").hover(
-		function(){
-			$("#view-description").html("Select a subfamily via the drop down menu to map its diversity and retrieve a species list for each region.");
-		},function(){
-			$("#view-description").html('');
-	});
-	
-	$("#diveristy-genus-button").hover(
-		function(){
-			$("#view-description").html("Select a genus via the drop down menu after filtering by subfamily to map its diversity and retrieve a species list for each region.");
-		},function(){
-			$("#view-description").html('');
-	});
 	
 	$("#diveristy-bentity-button").hover(
 		function(){
@@ -298,20 +257,12 @@ var controls = (function() {
 			external.modeObjects[modes[i]].resetData();
 		}
 		
-
+		controls.setMode("diversityMode");
 		
-		//then should set mode to species mode and activate mode
-		controls.setMode("speciesRichnessMode");
+		external.resetSubFamilySelectors();
 		
-		$(".button").removeClass("button-selected");
-		$("#species-richness-button").addClass("button-selected");
-		$("#spp_view").css("display","none");
-		$("#diversity_view").css("display","none");
-		$("#view-title").html("Species Richness");
-		//$("#current-species").html("");
 		$(".infopanel").css("display","none");
-		//then should repopulate subfamily select boxes
-		//controls.resetSubFamilySelectors();	
+
 		baseMap.resetZoom(); 
 	}
 
@@ -338,7 +289,7 @@ var controls = (function() {
 
 
 $(document).ready(function() {
-	controls.getCurrentModeObject().activateMode(); // activate the first mode
+	controls.setMode("diversityMode"); // set initial mode
 	controls.hideEntryText();
 });
 
