@@ -54,10 +54,9 @@ var controls = (function() {
 	external.hideAllWidgets = function(){
 		$('#view-title').html('');
 		$("#spp_view").css("display","none");
-		$("#diversity_view").css("display","none");	
-		$("#diversity_subfamily").css("display","none");
-		$("#diversity_genus").css("display","none");
-		$("#diversity_bentity").css("display","none");
+
+		$(".mode-controls").hide();
+
 		$("#entry-text").css("display","none");
 		$("#select-bentity-button").hide();
 	};

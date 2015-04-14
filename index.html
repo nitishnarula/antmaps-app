@@ -96,7 +96,7 @@
 				  
 			
 			
-			<div id="spp_view" class="none">
+			<div id="spp_view" class="none mode-controls">
 				<form id="querySpecies">
 					<h4> Select a species: </h4>
 					<label> Subfamily </label><br>
@@ -120,65 +120,52 @@
 					<div id = "species-legend"> </div>
 			</div> <!-- end spp_view -->
 			
-			<div id="diversity_view"> 
+			
 		
-				<div id="diversity_subfamily">
-				<form id="querySubfamily">
-					<h4> Select a subfamily: </h4>
-					<label> Subfamily </label><br>
-					<select id="subfamilyView-subfamily-select" name="subfamily" disabled>
-						<option>Loading...</option>
-					</select><br>
-				</form>
-					<!-- <div id="map-subfamily" class="text-center" onclick="diversitySubfamilyMode.updateData()"></div> -->
-					<!-- map button -->
-					
-					<div id="diversity-subfamily-legend-title" class="none"> Number of species by region </div>
-					<div id = "diversity-subfamily-legend"> </div>
-				</div>
-				
-				<div id="diversity_genus" class="none">
+						
+			<div id="diversity_view" class="none mode-controls">
 				<form id="queryGenus">
 					<h4> Select a genus: </h4>
 					<label> Subfamily </label><br>
 						<select id="genusView-subfamily-select" name="subfamily" disabled>
 							<option>Loading...</option>
 						</select><br>
-						
+					
 					<label> Genus </label><br>
 						<select id="genusView-genus-select" name="genus" disabled>
 							<option value="Select Genus">Select Genus</option>
 						</select><br>
 				</form>
-					<!-- <div id="map-genus" class="text-center" onclick="diversityGenusMode.updateData()"></div> -->
-					<!-- map button -->
-					
-					<div id="diversity-genus-legend-title" class="none"> Number of species by region </div>
-					<div id = "diversity-genus-legend"> </div>
-				</div>
+				<!-- <div id="map-genus" class="text-center" onclick="diversityGenusMode.updateData()"></div> -->
+				<!-- map button -->
+				
+				<div id="diversity-genus-legend-title" class="none"> Number of species by region </div>
+				<div id = "diversity-genus-legend"> </div>
+			</div>
 				
 
-				<div id="diversity_bentity" class="none">
+
+
+			<div id="diversity_bentity" class="none mode-controls">
+			
+				<div id="bentity-description" class="pulse"> Click on a region <br> <span style="font-size:12px;">OR</span></div>
 				
-					<div id="bentity-description" class="pulse"> Click on a region <br> <span style="font-size:12px;">OR</span></div>
-					
-					<form id="queryBentity">
-						<h4> Select a region: </h4>
-						<label> Region </label>
-						<select id="bentityView-bentity-select" name="bentity" disabled>
-							<option>Loading...</option>
-						</select><br>
-					</form>
-					<!-- <div id="map-bentity" class="text-center" onclick="diversityBentityMode.updateData()"></div> -->
-					<!-- <div id="select-bentity-button" onclick="diversityBentityMode.selectBentityView()">Map a Different Region</div> -->
-					
-					<div id="diversity-bentity-legend-title" class="none"> Number of species in common </div>
-					<div id="diversity-bentity-legend"> </div>
-				</div>
+				<form id="queryBentity">
+					<h4> Select a region: </h4>
+					<label> Region </label>
+					<select id="bentityView-bentity-select" name="bentity" disabled>
+						<option>Loading...</option>
+					</select><br>
+				</form>
+				<!-- <div id="map-bentity" class="text-center" onclick="diversityBentityMode.updateData()"></div> -->
+				<!-- <div id="select-bentity-button" onclick="diversityBentityMode.selectBentityView()">Map a Different Region</div> -->
+				
+				<div id="diversity-bentity-legend-title" class="none"> Number of species in common </div>
+				<div id="diversity-bentity-legend"> </div>
+			</div>
 
 				
 				
-			</div><!-- end diversity_view -->
 	    
     </div>
     
