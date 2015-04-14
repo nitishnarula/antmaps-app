@@ -19,7 +19,7 @@
 //                                    recolors map, draws legend, resets mode 
 //  External Functions: resetData, resetView, activateMode, deactivateMode, updateData,
 //						bentityInfoLabelHTML, circleHighlight, choropleth
-//	Internal Functions: getSelectedSpecies, renderMap
+//	Internal Functions: getSelectedSpecies, renderChoropleth
 //////////////////////////////////////////////////////////////////////////
 
 
@@ -27,13 +27,13 @@ var speciesMode = (function() {
 	var external = {};
 
 
-	var categoryCodes = ["N", "E", "I", "D", "V"];
+	var categoryCodes = ["N", "E", "I", "D", "V"]; // legend will be in this order
+	var categoryColors = ["#F7E46D","#A7BD5B","#DC574E","#8DC7B8","#ED9355"];
 	var categoryNames = {"N": "Native",
 						 "I": "Indoor Introduced",
 						 "E": "Exotic",
 						 "D": "Dubious",
 						 "V": "Needs Verification"};
-	var categoryColors = ["#F7E46D","#A7BD5B","#DC574E","#8DC7B8","#ED9355"];
 	var notPresentColor = "white";
 
 
@@ -70,21 +70,21 @@ var speciesMode = (function() {
 		$('#querySpecies').css('margin-left',20);
 	});
 	
+	
 	// Re-draws all the points on the map
 	// Called when the user updates the data, and when the map needs to be re-drawn 
 	// (eg every time the user zooms)
 	external.resetView = function() {
 	
-		//console.log("reset view");
 		
-	
+		
 		if (currentData.pointRecords) {
 		
 			var g = baseMap.getOverlayG();
 	
 			g.selectAll('.dot').remove(); // clear all dots
 	
-			  
+			  // plot dots
 			  g.selectAll('.dot')
 				.data(currentData.pointRecords)
 				.enter()
@@ -138,7 +138,7 @@ var speciesMode = (function() {
 	
 	// called when this mode is selected
 	external.activateMode = function() {
-		renderMap();
+		renderChoropleth();
 		renderPoints();
 		
 	}
@@ -156,12 +156,14 @@ var speciesMode = (function() {
 	// called when the user presses the "map" button
 	external.updateData = function() {
 		var selectedSpp = getSelectedSpecies();
-		
+	
+	
 		external.resetData();
 		currentData.speciesCode = selectedSpp.taxon_code;
 		currentData.speciesName = selectedSpp.speciesName;
 	
 	
+		// check to make sure a species is selected
 		if(!$("#sppView-subfamily-select").val()){
 			alert('Please select a subfamily.');
 			return;
@@ -177,11 +179,12 @@ var speciesMode = (function() {
 			return;
 		}
 		
-		// TODO show loading graphic?
+		// show loading graphic
 		$("#loading-message").show();
 		
 		
 		
+		// get status for each bentity
 		$.getJSON('/dataserver/species-bentity-categories', {taxon_code: selectedSpp.taxon_code})
 		.fail(controls.whoopsNetworkError)
 		.done( function(data) {
@@ -196,6 +199,7 @@ var speciesMode = (function() {
 					};
 				
 				
+					// switch representation of bentities from list to object
 					for (var i = 0; i < data.bentities.length; i++) {
 						var record = data.bentities[i];
 						currentData.bentityCategories[record.gid] = record.category;
@@ -203,7 +207,7 @@ var speciesMode = (function() {
 				
 				}
 				
-				renderMap();
+				renderChoropleth();
 				
 			}
 			
@@ -243,8 +247,8 @@ var speciesMode = (function() {
 	
 
 	
-	// plot points and render choropleth
-	function renderMap() {
+	// render choropleth and set map title
+	function renderChoropleth() {
 	
 		var speciesName = currentData.speciesName;
 		var currentModeTitle = "Species";
@@ -289,12 +293,14 @@ var speciesMode = (function() {
 
 	
 	
+	// color regions on the map
 	function choropleth() {
 		
-		
 		if (!$.isEmptyObject(currentData.bentityCategories)) {
+		
 			var colorScale = d3.scale.ordinal().domain(categoryCodes).range(categoryColors);
-			
+		
+			// return a color based on the category for the given bentity D3-bound data	
 			var bentityColor = function(d) {
 				if (currentData.bentityCategories[d.properties.gid]) {
 					return colorScale(currentData.bentityCategories[d.properties.gid]);
