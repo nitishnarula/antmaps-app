@@ -168,7 +168,7 @@ var diversityGenusMode = (function() {
 		return "<h4 class='text-center'>" 
 		+ d.properties.bentity2_name + "</h4><br><b>" 
 		+ (currentData.genusName || "") + "</b><br><b>" 
-		+ (currentData.sppPerBentity[d.properties.gid] || "0") + " species</b/>";
+		+ (currentData.sppPerBentity[d.properties.gid] || "0") + " native species</b/>";
 	}
 	
 
@@ -178,7 +178,7 @@ var diversityGenusMode = (function() {
 		if (!$.isEmptyObject(currentData.sppPerBentity)) { // is there some data mapped?
 			var infoPanel = mapUtilities.openInfoPanel();
 			
-			infoPanel.html("<h4>" + (currentData.sppPerBentity[d.properties.gid] || "0") + " species for " + currentData.genusName + " in " + d.properties.bentity2_name + "</h4>");
+			infoPanel.html("<h4>" + (currentData.sppPerBentity[d.properties.gid] || "0") + " native species for<br />" + currentData.genusName + " in " + d.properties.bentity2_name + "</h4>");
 			
 			// look up species list
 			$.getJSON('/dataserver/species-list', {bentity: d.properties.gid, genus: currentData.genusName})

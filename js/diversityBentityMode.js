@@ -239,7 +239,7 @@ var diversityBentityMode = (function() {
 				labelHTML += " species in total</b>";
 			}
 			else {
-				labelHTML += " species in common with<br />" + currentData.mappedBentity.name + "</b/>";
+				labelHTML += " native species in common with<br />" + currentData.mappedBentity.name + "</b/>";
 			}
 		
 		}
@@ -267,7 +267,14 @@ var diversityBentityMode = (function() {
 			if (!$.isEmptyObject(currentData.sppPerBentity)) { // is there some data mapped?
 				var infoPanel = mapUtilities.openInfoPanel();
 			
-				infoPanel.html("<h4>" + (currentData.sppPerBentity[d.properties.gid] || "0") + " species in common between " + d.properties.bentity2_name + " and " + currentData.mappedBentity.name + "</h4>");
+				if (d.properties.bentity2_name == currentData.mappedBentity.name) {
+					// the user clicked on the selected bentity
+					infoPanel.html("<h4>" + (currentData.sppPerBentity[d.properties.gid] || "0") + " native species<br />for " + d.properties.bentity2_name + "</h4>");
+				}
+				else {
+					// the user clicked a non-selected bentity
+					infoPanel.html("<h4>" + (currentData.sppPerBentity[d.properties.gid] || "0") + " native species in common<br />between " + d.properties.bentity2_name + " and " + currentData.mappedBentity.name + "</h4>");
+				}
 			
 				// look up species list
 				$.getJSON('/dataserver/species-list', {bentity: d.properties.gid, bentity2: currentData.mappedBentity.key})
