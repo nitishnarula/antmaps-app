@@ -20,8 +20,9 @@ var baseMap = (function() {
 	
 	
 	
-	// bentity topoJSON objects
-	external.bentities = null;
+	
+	var bentityPolygonFeatures; // bentity topoJSON objects with polygons
+	var bentityPointFeatures.   // bentity topoJSON objects with points (no polygons)
 	
 	
 	
@@ -177,13 +178,12 @@ var baseMap = (function() {
 	
 	
 	
-	
 	// load bentities from TopoJSON file and create SVG objects
 	function loadBentities() {
 
 		d3.json("../data/ben2ready25.topojson", function(error, data){
 	
-			var mergedBentities = {
+			var mergedPolgyonBentities = {
 				type: "GeometryCollection",
 				geometries: [].concat( 
 					data.objects.ben2_polygons.geometries,
@@ -191,11 +191,10 @@ var baseMap = (function() {
 					data.objects.ben2island_circles.geometries)
 			}
 	
-			external.bentities = topojson.feature(data, mergedBentities); 
-		
+			bentityPolygonFeatures = topojson.feature(data, mergedPolygonBentities); 
 		
 			var feature = external.getBentities()
-				.data(external.bentities.features)
+				.data(bentityPolygonFeatures.features)
 				.enter().append("path")
 				.attr("class","bentities");
 				//.on("click", mapUtilities.infoPanelBentity); // maybe add code to disable click on pan?
@@ -213,13 +212,11 @@ var baseMap = (function() {
 
 	// Reposition the SVG to cover the features on zoom/redraw
 	function resetView() {
-		if (external.bentities) {
-		 	var bounds = path.bounds(external.bentities),
+		if (bentityPolygonFeatures) {
+		 	var bounds = path.bounds(bentityPolygonFeatures),
 				topLeft = bounds[0],
 		 		bottomRight = bounds[1];
-		 	//path.bounds computes the projected bounding box in pixels for the specified feature
-		 	//This is handy for ie zooming in to a particular feature. 
-		 	//This method observes any clipping and resampling performed by the projection stream.
+		 		
 
 			svg.attr("width", bottomRight[0] - topLeft[0] + 1000)
 					.attr("height", bottomRight[1] - topLeft[1])
