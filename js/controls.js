@@ -43,6 +43,12 @@ var controls = (function() {
 		return external.modeObjects[currentMode];
 	};
 
+	external.hideWelcomeMessage = function(){
+		$("#welcome-message").css("display","none");
+		$("#welcome-message-bg-bg").css("display","none");
+		$("#welcome-message-bg").css("display","none");
+		$("#welcome-overlay").css("display","none");
+	};
 	
 	//NEW...hides all view-specific widgets
 	external.hideAllWidgets = function(){
@@ -61,7 +67,6 @@ var controls = (function() {
 			$("#entry-text").css("display","none");
 		});
 	};
-	
 	
 	
 	//NEW...called by each view button when clicked

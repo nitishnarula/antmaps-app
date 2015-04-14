@@ -200,23 +200,36 @@
     
     	<div id="mapContainer">
    		</div>
- 		
- 		
- 
 
 
     </div>
+    
     
     
     <div id="info-panel">
     	<div id="close-info">X</div>
     </div>
     
-    <div id="spp-browse-panel">
-    	<div id="close">X</div>
-    </div>
+     <div id="welcome-message-bg-bg"></div>
     
+    <div id="welcome-message-bg"></div>
     
+	<div id="welcome-message">
+		<h1 class="text-center"> - ANTMAPS - </h1>
+		<h3 class="text-center"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+		sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+		Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
+		fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa 
+		qui officia deserunt mollit anim id est laborum. </h3>
+		<h2 class="text-center"> Click on the buttons in the side bar to switch views</h2>
+		<img id="welcome-enter-button" class="center" src="../img/enter.png" onmouseover="this.src='../img/enter-hover.png'" 
+		onmouseout="this.src='../img/enter.png'" onclick="controls.hideWelcomeMessage()"/>
+		<h4 class="text-center"> Contributors: Evan, Benoit, Nitish, Matt, Julia</h4>
+	</div>
+    <div id="welcome-overlay" onclick="controls.hideWelcomeMessage()"></div>
+    
+   
     
     <!-- jQuery -->
     <script src="js/libraries/jquery.js"></script>
@@ -253,7 +266,11 @@
     <script>
 	</script>
 
-
+<footer>
+	<p>&copy; ANTMAPS &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Developers: Nitish Narula, Matt Ziegler, Julia Janicki 
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PI: Evan Economo, Benoit</p>
+</footer>
 
 </body>
+
 </html>
