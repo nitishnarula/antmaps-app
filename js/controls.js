@@ -177,8 +177,11 @@ var controls = (function() {
 	$(document).ready(function() {
 		$.getJSON('/dataserver/subfamily-list')
 		.done(function(data) {
-			var boxes = $('#genusView-subfamily-select, #subfamilyView-subfamily-select, #sppView-subfamily-select');
-			boxes.html('<option value="">Select Subfamily</option>');
+			var boxes = $('#diversityView-subfamily-select, #sppView-subfamily-select');
+			
+			$('#sppView-subfamily-select').html('<option value="">Select Subfamily</option>');
+			$('#diversityView-subfamily-select').html('<option value="">All Subfamilies</option>');
+			
 			fillSelectbox(boxes, data.subfamilies);
 			boxes.prop('disabled', false);
 		})
@@ -205,7 +208,7 @@ var controls = (function() {
 
 	// reset subfamiy selector controls (called by resetAll)
 	external.resetSubFamilySelectors = function(){
-			$('#genusView-subfamily-select, #subfamilyView-subfamily-select, #sppView-subfamily-select')
+			$('#diversityView-subfamily-select, #sppView-subfamily-select')
 				.val('')
 				.trigger('change'); // resets related select boxes
 	};
@@ -260,24 +263,19 @@ var controls = (function() {
 	
 
 	// When the genus-view subfamily select box changes, populate genus select box
-	$('#genusView-subfamily-select').change(function() {
-		var selected = $(this).val();
-		if (selected) {
-			var box = $('#genusView-genus-select');
-			box.html('<option value="">Loading...</option>');
-			box.prop('disabled', 'disabled');
-			$.getJSON('/dataserver/genus-list', {subfamily: selected}, function(data) {
-				box.html('<option value="">Select Genus</option>');
-				fillSelectbox(box, data.genera);
-				box.prop('disabled', false);
-			})
-			.fail(external.whoopsNetworkError);
-		}
-		else {
-			$('#genusView-genus-select').html('<option value="">Select Genus</option>').prop('disabled', 'disabled');
-		}
+	$('#diversityView-subfamily-select').change(function() {
+		var selected = $(this).val() || '';
+		var box = $('#diversityView-genus-select');
+		box.html('<option value="">Loading...</option>');
+		box.prop('disabled', 'disabled');
+		$.getJSON('/dataserver/genus-list', {subfamily: selected}, function(data) {
+			box.html('<option value="">All Genera</option>');
+			fillSelectbox(box, data.genera);
+			box.prop('disabled', false);
+		})
+		.fail(external.whoopsNetworkError);
 	});
-	
+	$('#diversityView-subfamily-select').change(); // populate on startup
 
 
 

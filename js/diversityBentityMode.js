@@ -138,7 +138,7 @@ var diversityBentityMode = (function() {
 	//NEW
 	external.showViewWidgets= function(){		
 		
-		$("#diversity_bentity").css("display","inline");
+		$("#bentity_view").css("display","inline");
 		
 		$('#view-title').html('Region Comparison');
 		

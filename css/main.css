@@ -129,7 +129,7 @@
 		
 		/* SIDE: 2 views */
 		
-		#diversity_view, #diversity_bentity{
+		#diversity_view, #bentity_view{
 			/* opacity: 0; */
 			display: none;
 			position: absolute;
