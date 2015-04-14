@@ -208,10 +208,24 @@ var diversityMode = (function() {
 		if (!$.isEmptyObject(currentData.sppPerBentity)) { // is there some data mapped?
 			var infoPanel = mapUtilities.openInfoPanel();
 			
-			infoPanel.html("<h4>" + (currentData.sppPerBentity[d.properties.gid] || "0") + " native species for<br />" + currentData.genusName + " in " + d.properties.bentity2_name + "</h4>");
+			var speciesListParams; // parameters to look up species list
+			
+			if (currentData.genusKey) { // if there's a genus mapped
+				infoPanel.html("<h4>" + (currentData.sppPerBentity[d.properties.gid] || "0") + " native species for<br />" + currentData.genusName + " in " + d.properties.bentity2_name + "</h4>");
+				
+				speciesListParams = {bentity: d.properties.gid, genus: currentData.genusKey};
+			}
+			
+			else if (currentData.subfamilyKey) { // if there's a subfamily mapped (but no genus)
+				infoPanel.html("<h4>" + (currentData.sppPerBentity[d.properties.gid] || "0") + " native species for<br />" + currentData.subfamilyName + " in " + d.properties.bentity2_name + "</h4>");
+			}
+			
+			else { // no genus or subfamily
+				infoPanel.html("<h4>" + (currentData.sppPerBentity[d.properties.gid] || "0") + " native species in " + d.properties.bentity2_name + "</h4>");
+			}
 			
 			// look up species list
-			$.getJSON('/dataserver/species-list', {bentity: d.properties.gid, genus: currentData.genusName})
+			$.getJSON('/dataserver/species-list', {bentity: d.properties.gid, genus: currentData.genusKey, subfamily: currentData.subfamilyKey})
 			.error(controls.whoopsNetworkError)
 			.done(function(data) {
 				var ul = infoPanel.append('ul');
