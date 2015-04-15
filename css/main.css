@@ -195,6 +195,24 @@
     		max-width:200px;
     	}
     	
+    	
+    	
+    	
+    	/* SPECIES AUTOCOMPLETE */
+    	.ui-autocomplete.ui-menu {
+    		background: white;
+    		border: #555 solid 1px;
+    		max-height: 200px;
+    		overflow: auto;
+    		overflow-x: hidden;
+    	}
+    	
+    	.ui-menu-item.ui-state-focus {
+    		background: #DDD;
+    	}
+    	
+    	
+    	
     	/* FORM DIVERSITY VIEW*/
     	.diversity-button{
 	    	margin-top: 10px;

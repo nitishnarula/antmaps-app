@@ -30,6 +30,9 @@
     
     <!-- Leafet CSS -->
     <link rel="stylesheet" href="js/libraries/leaflet/leaflet.css" type="text/css" />
+    
+    <!-- Jquery UI autocomplete -->
+    <link rel="stylesheet" href="js/libraries/jquery-ui-autocomplete/jquery-ui.min.css" />
 
 </head>
 <body>
@@ -96,6 +99,11 @@
 			
 			<div id="spp_view" class="none mode-controls">
 				<form id="querySpecies">
+					<h4> Enter a species: </h4>
+					<label> Species </label><br/>
+					<input id="species-autocomplete" />
+				
+				
 					<h4> Select a species: </h4>
 					<label> Subfamily </label><br>
 						<select id="sppView-subfamily-select" name="subfamily" disabled="disabled">
@@ -239,6 +247,10 @@
 	
 	<!-- Leaflet -->
 	<script src="js/libraries/leaflet/leaflet.js" type="text/javascript"></script>
+	
+	<!-- Jquery UI autocomplete -->
+	<script src="js/libraries/jquery-ui-autocomplete/jquery-ui.js" type="text/javascript"></script>
+	
 	
 	<!-- Antmaps project files -->
 	<script src="js/controls.js" type="text/javascript"></script>

@@ -246,6 +246,23 @@ var controls = (function() {
 
 
 
+
+	$('#species-autocomplete').autocomplete({
+		minLength: 3,
+		source: function(request, response) {
+			$.getJSON('/dataserver/species-autocomplete', {q: request.term})
+			.done(function(data) {
+				response(data.species);
+			})
+			.fail(function(data) {
+				external.whoopsNetworkError();
+				response([]);
+			});
+		}
+	});
+
+
+
 	// display error message
 	external.whoopsNetworkError = function() {
 		alert('Whoops!  Something went wrong.  Please check your internet connection and try again, or refresh the page.');
