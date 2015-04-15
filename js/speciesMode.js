@@ -285,6 +285,12 @@ var speciesMode = (function() {
 			return false;
 		})
 	
+		// when the user focuses a list item without selecting it, show the label instead of value
+		.on("autocompletefocus", function(event, ui) {
+			$(this).val(ui.item.label);
+			return false;
+		})
+	
 		// do a search when the text box is clicked, if the text exceeds minlength
 		.on("click", function() {
 			if($(this).val().length >= $(this).autocomplete("option", "minLength")) {
