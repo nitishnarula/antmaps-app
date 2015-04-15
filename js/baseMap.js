@@ -128,7 +128,7 @@ var baseMap = (function() {
 
 	// Return D3 selection with bentity polygons
 	external.getBentities = function() {
-		return g.selectAll("path.bentities");
+		return g.selectAll(".bentities");
 	};
 
 
@@ -200,20 +200,20 @@ var baseMap = (function() {
 	
 			// plot polygon bentities
 			bentityPolygonFeatures = topojson.feature(data, data.objects.ben2_polygons); 
-			external.getBentities()
+			g.selectAll('path.poly-bentities')
 				.data(bentityPolygonFeatures.features)
 				.enter().append("path")
-				.attr("class","benties poly-bentities")
+				.attr("class","bentities poly-bentities")
 				.attr("id", function(d) {return "poly_" + d.id});;
 
-		
+			
 			// plot point bentities
 			bentityPointFeatures = topojson.feature(data, data.objects.ben2_islands); 
-			external.getBentities()
+			g.selectAll('circle.point-bentities')
 				.data(bentityPointFeatures.features)
 				.enter().append("circle")
 				.attr("class","bentities point-bentities")
-				.attr("r", "8").attr("fill", "black");
+				.attr("r", "6");
 			
 		
 			bindBentityListners();
@@ -259,7 +259,14 @@ var baseMap = (function() {
 			});
 			
 			g.selectAll("circle.point-bentities")
-				.attr("d", path);
+			.each(function(d) {	
+				var point = map.latLngToLayerPoint(new L.LatLng(d.geometry.coordinates[1], d.geometry.coordinates[0]));
+				
+				d3.select(this)
+					.attr("cx", point.x)
+					.attr("cy", point.y);
+
+			});	
 		}
 	}
 		
