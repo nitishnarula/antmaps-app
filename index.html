@@ -98,13 +98,13 @@
 			
 			
 			<div id="spp_view" class="none mode-controls">
-				<form id="querySpecies">
+				<div id="querySpecies">
 					<h4> Enter a species: </h4>
-					<label> Species </label><br/>
-					<input id="species-autocomplete" />
+					<label> Start typing a species </label><br/>
+					<input id="species-autocomplete" /><br /><br /><br />
 				
 				
-					<h4> Select a species: </h4>
+					<h4> OR &ndash; browse by: </h4>
 					<label> Subfamily </label><br>
 						<select id="sppView-subfamily-select" name="subfamily" disabled="disabled">
 							<option>Loading...</option>
@@ -119,7 +119,7 @@
 						<select id="sppView-species-select" name="species" disabled="disabled">
 							<option value="Select Species">Select Species</option>
 						</select><br>
-					</form>	
+					</div>	
 					
 					<!-- <div id="map-spp" class="text-center" onclick="speciesMode.updateData();"></div> -->
 					
@@ -130,7 +130,7 @@
 		
 						
 			<div id="diversity_view" class="none mode-controls">
-				<form id="queryGenus">
+				<div id="queryGenus">
 					<label> Subfamily </label><br>
 						<select id="diversityView-subfamily-select" name="subfamily" disabled>
 							<option value="">Loading...</option>
@@ -140,7 +140,7 @@
 						<select id="diversityView-genus-select" name="genus" disabled>
 							<option value="">Loading...</option>
 						</select><br>
-				</form>
+				</div>
 				<!-- <div id="map-genus" class="text-center" onclick="diversityGenusMode.updateData()"></div> -->
 				<!-- map button -->
 				
@@ -155,13 +155,13 @@
 			
 				<div id="bentity-description" class="pulse"> Click on a region <br> <span style="font-size:12px;">OR</span></div>
 				
-				<form id="queryBentity">
+				<div id="queryBentity">
 					<h4> Select a region: </h4>
 					<label> Region </label>
 					<select id="bentityView-bentity-select" name="bentity" disabled>
 						<option>Loading...</option>
 					</select><br>
-				</form>
+				</div>
 				<!-- <div id="map-bentity" class="text-center" onclick="diversityBentityMode.updateData()"></div> -->
 				<!-- <div id="select-bentity-button" onclick="diversityBentityMode.selectBentityView()">Map a Different Region</div> -->
 				

@@ -67,12 +67,13 @@ var speciesMode = (function() {
 	
 	
 	
-	// taxon_code is the key to send the server,
-	// speciesName is what to display to the user
-	function getSelectedSpecies() {
-		return { taxon_code:  $('#sppView-species-select').val(),
-				 speciesName: $('#sppView-species-select option:selected').text() };
+
+	// taxon_code is the key to send the server, speciesName is what to display to the user
+	function getSelectBoxSpecies() {
+			return { taxon_code:  $('#sppView-species-select').val(),
+					 speciesName: $('#sppView-species-select option:selected').text() };
 	}
+	
 	
 	$('#sppView-species-select').change(function() {
 		speciesMode.updateData();
@@ -172,30 +173,23 @@ var speciesMode = (function() {
 	
 	
 	// called when the user presses the "map" button
-	external.updateData = function() {
-		var selectedSpp = getSelectedSpecies();
+	// speciesCode is optional, if not provided it will be looked up from select boxes
+	external.updateData = function(selectedSpp) {
+		
+		// get selectedSpp from select box if it wasn't provided as an argument
+		var selectedSpp = selectedSpp || getSelectBoxSpecies();
 	
+	
+		if (!selectedSpp.taxon_code) {
+			alert('Please select a species to map.');
+			return;
+		}	
 	
 		external.resetData();
 		currentData.speciesCode = selectedSpp.taxon_code;
 		currentData.speciesName = selectedSpp.speciesName;
 	
-	
-		// check to make sure a species is selected
-		if(!$("#sppView-subfamily-select").val()){
-			alert('Please select a subfamily.');
-			return;
-		}
 		
-		if(!$("#sppView-genus-select").val()){
-			alert('Please select a genus.');
-			return;
-		}
-		
-		if (!selectedSpp.taxon_code) {
-			alert('Please select a species to map.');
-			return;
-		}
 		
 		// show loading graphic
 		$("#loading-message").show();
@@ -247,12 +241,57 @@ var speciesMode = (function() {
 					currentData.pointRecords = data.records;
 				
 					renderPoints();
-				}
+				} 
 			
 			}
 		})
 		.fail(controls.whoopsNetworkError);
-	}
+	};
+	
+	
+	
+	
+	
+	// SPECIES AUTOCOMPLETE BOX
+	(function() {
+
+		$('#species-autocomplete')		
+		
+		.val("") // clear value on page load (don't remember previously-entered value)
+		
+		// update data when a species is selected from the autocomplete box
+		.autocomplete({
+			minLength: 3, // wait for at least 3 characters
+		
+			// look up species list from server when the user starts typing
+			source: function(request, response) {
+				$.getJSON('/dataserver/species-autocomplete', {q: request.term})
+				.done(function(data) {
+					response(data.species);
+				})
+				.fail(function(data) {
+					external.whoopsNetworkError();
+					response([]);
+				});
+			}
+		})
+
+		// update data when an option is selected
+		.on("autocompleteselect", function(event, ui) {
+			external.updateData({taxon_code:ui.item.value, speciesName:ui.item.label});
+		
+			// fill the select box with the item's label instead of value (no periods)
+			$(this).val(ui.item.label);
+			return false;
+		})
+	
+		// do a search when the text box is clicked, if the text exceeds minlength
+		.on("click", function() {
+			if($(this).val().length >= $(this).autocomplete("option", "minLength")) {
+				$(this).autocomplete("search");
+			}
+		});
+	})();
 	
 	
 	
@@ -260,7 +299,7 @@ var speciesMode = (function() {
 	external.showViewWidgets = function(){
 		$("#spp_view").css("display","inline");
 		$('#view-title').html('Species Distribution');
-	}
+	};
 	
 
 	
