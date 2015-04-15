@@ -16,7 +16,22 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 var baseMap = (function() {
-	var external = {}; // methods and variables to return and expose externally
+	var external = {}; // methods and variables to return and expose externally	
+	
+	
+	
+	
+	// Bentities which overlap with other bentities, their DOM ID's, and DOM ID's of their child bentities
+	// (Used to switch between India/Colombia and their states.)
+	external.overlappingBentities = {
+		"BEN20533" : { domID: "poly_BEN20533",  // India
+			children: ["poly_BEN20200", "poly_BEN20177", "poly_BEN20363", "poly_BEN20170", "poly_BEN20372", "poly_BEN20487", "poly_BEN20046", "poly_BEN20505", "poly_BEN20166", "poly_BEN20245", "poly_BEN20340", "poly_BEN20247", "poly_BEN20012", "poly_BEN20148", "poly_BEN20215", "poly_BEN20219", "poly_BEN20457", "poly_BEN20419", "poly_BEN20024", "poly_BEN20267", "poly_BEN20291", "poly_BEN20255", "poly_BEN20280", "poly_BEN20473", "poly_BEN20026", "poly_BEN20077", "poly_BEN20106", "poly_BEN20103", "poly_BEN20104"]
+			},
+		"BEN20532": { domID: "poly_BEN20532", // Columbia
+			children: ["poly_BEN20052", "poly_BEN20074", "poly_BEN20470", "poly_BEN20110", "poly_BEN20526", "poly_BEN20246", "poly_BEN20047", "poly_BEN20379", "poly_BEN20269", "poly_BEN20067", "poly_BEN20019", "poly_BEN20154", "poly_BEN20070", "poly_BEN20061", "poly_BEN20521", "poly_BEN20489", "poly_BEN20068", "poly_BEN20183", "poly_BEN20293", "poly_BEN20027", "poly_BEN20496", "poly_BEN20319", "poly_BEN20018", "poly_BEN20492", "poly_BEN20100", "poly_BEN20441", "poly_BEN20226", "poly_BEN20160", "poly_BEN20080", "poly_BEN20399", "poly_BEN20364", "poly_BEN20370"]
+		}
+	}
+	
 	
 	
 	
@@ -197,10 +212,15 @@ var baseMap = (function() {
 			var feature = external.getBentities()
 				.data(external.bentities.features)
 				.enter().append("path")
-				.attr("class","bentities");
+				.attr("class","bentities")
+				.attr("id", function(d) {return "poly_" + d.id});
 				//.on("click", mapUtilities.infoPanelBentity); // maybe add code to disable click on pan?
 		
 			bindBentityListners();
+		
+		
+			// hide overlapping bentities
+			external.resetOverlappingBentities();
 		
 			resetView();
 			
@@ -342,6 +362,37 @@ var baseMap = (function() {
 		d3.selectAll('div.legendRow').remove();
 		baseMap.resetHilightColor();
 	};
+	
+	
+	
+	
+	// Hide all overlapping bentities, and show their child bentities.
+	external.resetOverlappingBentities = function() {
+		$.each(external.overlappingBentities, function(bentityID, domIDs) {
+			// hide larger bentity
+			$("#"+domIDs.domID).hide();
+			
+			// show child bentities
+			$.each(domIDs.children, function(i, domID) {
+				$('#'+domID).show();
+			});
+		});
+	}
+	
+	
+	
+	// Show one of the overlapping bentities with the given bentity ID, and hide
+	// all of it's child bentities.
+	external.showOverlappingBentity = function(bentityID) {
+		var domIDs = external.overlappingBentities[bentityID];
+		
+		$('#'+domIDs.domID).show();
+						
+		// hide child bentities
+		$.each(domIDs.children, function(i, domID) {
+			$('#'+domID).hide();
+		});
+	}
 	
 	
 	
