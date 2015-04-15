@@ -37,7 +37,7 @@ var baseMap = (function() {
 	
 	
 	var bentityPolygonFeatures; // bentity topoJSON objects with polygons
-	var bentityPointFeatures.   // bentity topoJSON objects with points (no polygons)
+	var bentityPointFeatures;   // bentity topoJSON objects with points (no polygons)
 	
 	
 	
@@ -198,22 +198,23 @@ var baseMap = (function() {
 
 		d3.json("../data/ben2ready25.topojson", function(error, data){
 	
-			var mergedPolgyonBentities = {
-				type: "GeometryCollection",
-				geometries: [].concat( 
-					data.objects.ben2_polygons.geometries)
-					//data.objects.ben2island_polygons.geometries)
-					//data.objects.ben2island_circles.geometries)
-			}
-	
-			bentityPolygonFeatures = topojson.feature(data, mergedPolygonBentities); 
-		
-			var feature = external.getBentities()
+			// plot polygon bentities
+			bentityPolygonFeatures = topojson.feature(data, data.objects.ben2_polygons); 
+			external.getBentities()
 				.data(bentityPolygonFeatures.features)
 				.enter().append("path")
-				.attr("class","bentities")
-				.attr("id", function(d) {return "poly_" + d.id});
-				//.on("click", mapUtilities.infoPanelBentity); // maybe add code to disable click on pan?
+				.attr("class","benties poly-bentities")
+				.attr("id", function(d) {return "poly_" + d.id});;
+
+		
+			// plot point bentities
+			bentityPointFeatures = topojson.feature(data, data.objects.ben2_islands); 
+			external.getBentities()
+				.data(bentityPointFeatures.features)
+				.enter().append("circle")
+				.attr("class","bentities point-bentities")
+				.attr("r", "8").attr("fill", "black");
+			
 		
 			bindBentityListners();
 		
@@ -248,7 +249,7 @@ var baseMap = (function() {
 
 			g.attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
 
-			g.selectAll('path.bentities').attr("d", function(d) {
+			g.selectAll('path.poly-bentities').attr("d", function(d) {
 				if (d.properties.bentity2_name == "Russia East" || d.properties.bentity2_name == "Fiji") {
 					return path180(d)
 				}
@@ -256,6 +257,9 @@ var baseMap = (function() {
 					return path(d);
 				}
 			});
+			
+			g.selectAll("circle.point-bentities")
+				.attr("d", path);
 		}
 	}
 		
