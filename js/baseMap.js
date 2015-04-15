@@ -201,9 +201,9 @@ var baseMap = (function() {
 			var mergedBentities = {
 				type: "GeometryCollection",
 				geometries: [].concat( 
-					data.objects.ben2_polygons.geometries,
-					data.objects.ben2island_polygons.geometries,
-					data.objects.ben2island_circles.geometries)
+					data.objects.ben2_polygons.geometries)
+					//data.objects.ben2island_polygons.geometries)
+					//data.objects.ben2island_circles.geometries)
 			}
 	
 			external.bentities = topojson.feature(data, mergedBentities); 
