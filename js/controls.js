@@ -66,6 +66,14 @@ var controls = (function() {
 
 
 	
+	
+	// called by baseMap after bentities are loaded
+	external.setDefaultMode = function() {
+		controls.setMode("diversityMode"); // set initial mode
+	}
+	
+	
+	
 
 	external.hideWelcomeMessage = function(){
 		$("#welcome-message").css("display","none");
@@ -289,7 +297,6 @@ var controls = (function() {
 
 
 $(document).ready(function() {
-	controls.setMode("diversityMode"); // set initial mode
 	controls.hideEntryText();
 });
 

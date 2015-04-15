@@ -203,6 +203,9 @@ var baseMap = (function() {
 			bindBentityListners();
 		
 			resetView();
+			
+			// activate first mode after bentities are rendered, to make sure we don't try to color the bentities before they exist
+			controls.setDefaultMode();
 		});
 	}
 	loadBentities();  
