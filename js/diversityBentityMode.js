@@ -137,12 +137,8 @@ var diversityBentityMode = (function() {
 	
 	//NEW
 	external.showViewWidgets= function(){		
-		$("#diversity_subfamily").css("display","none");
-		$("#diversity_genus").css("display","none");
-		$("#diversity_bentity").css("display","inline");
 		
-		$("#spp_view").css("display","none");
-		$("#diversity_view").css("display","inline");
+		$("#bentity_view").css("display","inline");
 		
 		$('#view-title').html('Region Comparison');
 		
