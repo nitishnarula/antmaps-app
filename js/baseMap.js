@@ -196,7 +196,7 @@ var baseMap = (function() {
 	// load bentities from TopoJSON file and create SVG objects
 	function loadBentities() {
 
-		d3.json("../data/ben2ready25.topojson", function(error, data){
+		d3.json("../data/ben2ready10.topojson", function(error, data){
 	
 			// plot polygon bentities
 			bentityPolygonFeatures = topojson.feature(data, data.objects.ben2_polygons); 
