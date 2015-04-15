@@ -19,7 +19,7 @@
 //                                    recolors map, draws legend, resets mode 
 //  External Functions: resetData, resetView, activateMode, deactivateMode, updateData,
 //						bentityInfoLabelHTML, circleHighlight, choropleth
-//	Internal Functions: getSelectedSpecies, renderChoropleth
+//	Internal Functions: getSelectedSpecies, 
 //////////////////////////////////////////////////////////////////////////
 
 
@@ -37,6 +37,22 @@ var speciesMode = (function() {
 	var notPresentColor = "white";
 
 
+
+
+
+	var overlappingBentities = {
+		"BEN20533" : { domID: "poly_BEN20533",  // India
+			children: ["poly_BEN20200", "poly_BEN20177", "poly_BEN20363", "poly_BEN20170", "poly_BEN20372", "poly_BEN20487", "poly_BEN20046", "poly_BEN20505", "poly_BEN20166", "poly_BEN20245", "poly_BEN20340", "poly_BEN20247", "poly_BEN20012", "poly_BEN20148", "poly_BEN20215", "poly_BEN20219", "poly_BEN20457", "poly_BEN20419", "poly_BEN20024", "poly_BEN20267", "poly_BEN20291", "poly_BEN20255", "poly_BEN20280", "poly_BEN20473"]
+			},
+		"BEN20532": { domID: "poly_BEN20532", // Columbia
+			children: ["poly_BEN20226", "poly_BEN20027", "poly_BEN20246", "poly_BEN20074", "poly_BEN20047", "poly_BEN20441", "poly_BEN20521", "poly_BEN20319", "poly_BEN20018", "poly_BEN20399", "poly_BEN20080", "poly_BEN20052", "poly_BEN20068", "poly_BEN20379", "poly_BEN20061", "poly_BEN20100", "poly_BEN20370", "poly_BEN20489", "poly_BEN20470", "poly_BEN20110", "poly_BEN20496", "poly_BEN20489", "poly_BEN20269", "poly_BEN20070", "poly_BEN20183", "poly_BEN20160", "poly_BEN20154", "poly_BEN20293", "poly_BEN20364", "poly_BEN20067", "poly_BEN20492", "poly_BEN20526"]
+		}
+	}
+
+
+
+
+
 	// the current data selected and mapped by the user
 	var currentData = null;
 	external.resetData = function() {
@@ -51,12 +67,13 @@ var speciesMode = (function() {
 	
 	
 	
-	// taxon_code is the key to send the server,
-	// speciesName is what to display to the user
-	function getSelectedSpecies() {
-		return { taxon_code:  $('#sppView-species-select').val(),
-				 speciesName: $('#sppView-species-select option:selected').text() };
+
+	// taxon_code is the key to send the server, speciesName is what to display to the user
+	function getSelectBoxSpecies() {
+			return { taxon_code:  $('#sppView-species-select').val(),
+					 speciesName: $('#sppView-species-select option:selected').text() };
 	}
+	
 	
 	$('#sppView-species-select').change(function() {
 		speciesMode.updateData();
@@ -138,46 +155,41 @@ var speciesMode = (function() {
 	
 	// called when this mode is selected
 	external.activateMode = function() {
-		renderChoropleth();
+		choropleth();
 		renderPoints();
 		
 	}
+	
 	
 	// called to reset the map back to its original state, without any data
 	// for this mode, so a different map mode can render the map
 	external.deactivateMode = function() {
 		baseMap.getOverlayG().selectAll('.dot').remove(); // clear all dots
 		baseMap.resetChoropleth();
+		baseMap.resetOverlappingBentities();
 	}
 	
 	
 	
 	
 	// called when the user presses the "map" button
-	external.updateData = function() {
-		var selectedSpp = getSelectedSpecies();
+	// speciesCode is optional, if not provided it will be looked up from select boxes
+	external.updateData = function(selectedSpp) {
+		
+		// get selectedSpp from select box if it wasn't provided as an argument
+		var selectedSpp = selectedSpp || getSelectBoxSpecies();
 	
+	
+		if (!selectedSpp.taxon_code) {
+			alert('Please select a species to map.');
+			return;
+		}	
 	
 		external.resetData();
 		currentData.speciesCode = selectedSpp.taxon_code;
 		currentData.speciesName = selectedSpp.speciesName;
 	
-	
-		// check to make sure a species is selected
-		if(!$("#sppView-subfamily-select").val()){
-			alert('Please select a subfamily.');
-			return;
-		}
 		
-		if(!$("#sppView-genus-select").val()){
-			alert('Please select a genus.');
-			return;
-		}
-		
-		if (!selectedSpp.taxon_code) {
-			alert('Please select a species to map.');
-			return;
-		}
 		
 		// show loading graphic
 		$("#loading-message").show();
@@ -207,7 +219,7 @@ var speciesMode = (function() {
 				
 				}
 				
-				renderChoropleth();
+				choropleth();
 				
 			}
 			
@@ -229,34 +241,68 @@ var speciesMode = (function() {
 					currentData.pointRecords = data.records;
 				
 					renderPoints();
-				}
+				} 
 			
 			}
 		})
 		.fail(controls.whoopsNetworkError);
-	}
+	};
 	
 	
 	
-	//NEW
+	
+	
+	// SPECIES AUTOCOMPLETE BOX
+	(function() {
+
+		$('#species-autocomplete')		
+		
+		.val("") // clear value on page load (don't remember previously-entered value)
+		
+		// update data when a species is selected from the autocomplete box
+		.autocomplete({
+			minLength: 3, // wait for at least 3 characters
+		
+			// look up species list from server when the user starts typing
+			source: function(request, response) {
+				$.getJSON('/dataserver/species-autocomplete', {q: request.term})
+				.done(function(data) {
+					response(data.species);
+				})
+				.fail(function(data) {
+					external.whoopsNetworkError();
+					response([]);
+				});
+			}
+		})
+
+		// update data when an option is selected
+		.on("autocompleteselect", function(event, ui) {
+			external.updateData({taxon_code:ui.item.value, speciesName:ui.item.label});
+		
+			// fill the select box with the item's label instead of value (no periods)
+			$(this).val(ui.item.label);
+			return false;
+		})
+	
+		// do a search when the text box is clicked, if the text exceeds minlength
+		.on("click", function() {
+			if($(this).val().length >= $(this).autocomplete("option", "minLength")) {
+				$(this).autocomplete("search");
+			}
+		});
+	})();
+	
+	
+	
+	
 	external.showViewWidgets = function(){
 		$("#spp_view").css("display","inline");
-		$("#diversity_view").css("display","none");	
 		$('#view-title').html('Species Distribution');
-	}
+	};
 	
 
 	
-	// render choropleth and set map title
-	function renderChoropleth() {
-	
-		var speciesName = currentData.speciesName;
-		var currentModeTitle = "Species";
-		mapUtilities.setTitle(currentModeTitle,speciesName);
-	
-		
-		choropleth();
-	}
 	
 	
 	// called once points are loaded
@@ -296,7 +342,16 @@ var speciesMode = (function() {
 	// color regions on the map
 	function choropleth() {
 		
+		// set map title
+		var speciesName = currentData.speciesName;
+		var currentModeTitle = "Species";
+		mapUtilities.setTitle(currentModeTitle,speciesName);
+		
+		
+		// any data to map?
 		if (!$.isEmptyObject(currentData.bentityCategories)) {
+		
+			baseMap.resetOverlappingBentities();
 		
 			var colorScale = d3.scale.ordinal().domain(categoryCodes).range(categoryColors);
 		
@@ -310,13 +365,31 @@ var speciesMode = (function() {
 				}
 			};
 			
+			toggleOverlappingBentities();
+			
 			baseMap.choropleth(bentityColor);
+			
 			drawLegend();
 		}
 		
 		
-		
 	}
+	
+	
+	
+	
+	// Check to see whether any of the overlapping bentities (India+Colombia) have data,
+	// show them if they do.
+	function toggleOverlappingBentities() {
+		$.each(baseMap.overlappingBentities, function(bentityID, domIDs) {
+			if (currentData.bentityCategories[bentityID]) {
+				baseMap.showOverlappingBentity(bentityID);
+			}
+		});
+
+	}
+	
+	
 	
 
 	function drawLegend() {
