@@ -47,7 +47,7 @@ var baseMap = (function() {
 	
 		// map width and height in pixels
 		 width = $("#mapContainer").parent().width();
-		 height= $("#mapContainer").parent().height()-40;
+		 height= $("#mapContainer").parent().height();
 		//for margin at bottom
 	
 		// set width and height of Leaflet map div
@@ -75,8 +75,11 @@ var baseMap = (function() {
 		tile2 = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}', {
 					attribution: 'Tiles &copy; Esri &mdash; Source: USGS, Esri, TANA, DeLorme, and NPS'
 					}),
-		tile3 = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}', {
-					attribution: 'Tiles &copy; Esri &mdash; Source: Esri'
+		tile3 = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+					attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'
+					}),
+		tile4 = L.tileLayer('http://{s}.tile.stamen.com/toner-lite/{z}/{x}/{y}.{ext}', {
+					attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 					});
 		
 		tile1.addTo(map);
@@ -86,7 +89,8 @@ var baseMap = (function() {
 		var layerControlItems = {
 		  "<div class='layer-titles'> OSM Landscape </div>": tile1,
 		  "<div class='layer-titles'> Terrain </div>": tile2,
-		  "<div class='layer-titles'> Shaded Relief </div>":tile3
+		  "<div class='layer-titles'> ESRI World Canvas </div>":tile3,
+		  "<div class='layer-titles'> Stamen Toner Lite </div>":tile4
 		};
 		L.control.layers(layerControlItems).addTo(map);
 
@@ -374,7 +378,7 @@ var baseMap = (function() {
 	};
 	
 	
-	external.bentityChanged = function(selected){
+	external.getBentityWithId = function(selected){
 		var bentities = baseMap.getBentities();
 		console.log("selected");
 		console.log(selected);
@@ -387,7 +391,7 @@ var baseMap = (function() {
 		});
 		
 		console.log(selectedPath);
-		//baseMap.zoomToBentity(selectedPath);
+		baseMap.zoomToBentity(selectedPath);
 	};
 	
 	external.zoomToBentity = function(d){
@@ -399,14 +403,17 @@ var baseMap = (function() {
 			scale = 0.08/Math.max(dx/width, dy/height),
 			translate = [width/2 - scale*x, height/2 - scale*y];
 			
+			//D3 top-left: bounds[0]
+			//D3 bottom-right: bounds[1]
+			
 			//console.log(bounds[0][1]+","+bounds[0][1]+","+bounds[1][1]+","+bounds[1][0]);
 			
-			var southWest = map.layerPointToLatLng([bounds[0][1],bounds[0][0]]);
-			var northEast = map.layerPointToLatLng([bounds[1][1],bounds[1][0]]);
+			var southWest = map.layerPointToLatLng([bounds[1][0],bounds[0][1]]);
+			var northEast = map.layerPointToLatLng([bounds[0][0],bounds[1][1]]);
 			
 			
 			var leafletBounds = new L.LatLngBounds([southWest,northEast]);
- 			 map.fitBounds(leafletBounds);
+ 			 map.fitBounds(leafletBounds, {maxZoom:6, animate:true});
 			
 			
 // 			baseMap.getOverlayG()

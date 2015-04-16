@@ -65,7 +65,7 @@ var diversityBentityMode = (function() {
 		currentData.selectedBentity.key  = $('#bentityView-bentity-select').val();
 		currentData.selectedBentity.name = $('#bentityView-bentity-select option:selected').text();
 		diversityBentityMode.updateData();
-		baseMap.bentityChanged(currentData.selectedBentity.key);
+		baseMap.getBentityWithId(currentData.selectedBentity.key);
 		
 	});
 	

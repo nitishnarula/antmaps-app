@@ -71,8 +71,10 @@
     <div id="side">
     	
     		
-    		<a id ="resetAll1" data-title="RESET ALL" data-html="true" data-clicked="no" rel="tooltip" href="#" onclick="controls.resetMap();" ><div id="resetAll" class="hvr-shrink"></div></a>
+    		<!-- 
+<a id ="resetAll1" data-title="RESET ALL" data-html="true" data-clicked="no" rel="tooltip" href="#" onclick="controls.resetMap();" ><div id="resetAll" class="hvr-shrink"></div></a>
     		
+ -->
     	
 	    	<h3 id="view-title" class="text-center">
 	    				Species Richness 
@@ -82,7 +84,7 @@
  			<div id="mode-buttons">
  					<button id="diversity-button" class="button button--winona button--all" data-text="Diversity View"
 	onclick="controls.setMode('diversityMode');">
-		<span>Diversity View</span></button>
+		<span>Diversity View </span></button>
  					
  					
 					<button id="species-button" class="button button--winona button--all" data-text="Species Distribution" 
@@ -99,9 +101,9 @@
 			
 			<div id="spp_view" class="none mode-controls">
 				<div id="querySpecies">
-					<h4> Enter a species: </h4>
-					<label> Start typing a species </label><br/>
-					<input id="species-autocomplete" /><br /><br /><br />
+					<h4>Start typing a species</h4> 
+					<!-- <label> Start typing a species </label><br/> -->
+					<input id="species-autocomplete"/> <br/><br/>
 				
 				
 					<h4> OR &ndash; browse by: </h4>
@@ -224,7 +226,7 @@
 		 <span style="text-transform:uppercase;"> Click on the buttons in the side bar to switch views.</span></h3>
 		<img id="welcome-enter-button" class="center" src="../img/enter.png" onmouseover="this.src='../img/enter-hover.png'" 
 		onmouseout="this.src='../img/enter.png'" onclick="controls.hideWelcomeMessage()"/>
-		<h4 class="text-center"> Contributors: Evan, Benoit, Nitish, Matt, Julia</h4>
+		<h4 class="text-center"> Contributors: Benoit Guenard, Evan Economo, Matt Ziegler, Nitish Narula, Julia Janicki</h4>
 	</div>
     <div id="welcome-overlay" onclick="controls.hideWelcomeMessage()"></div>
     
@@ -267,12 +269,11 @@
     <script>
 	</script>
 
-<!-- 
+
 <footer>
-	<p>&copy; ANTMAPS &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Developers: Nitish Narula, Matt Ziegler, Julia Janicki 
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PI: Evan Economo, Benoit</p>
+	<p>&copy; ANTMAPS &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Contributors: Benoit Guenard, Evan Economo, Matt Ziegler, Nitish Narula, Julia Janicki</p>
 </footer>
- -->
+
 
 </body>
 
