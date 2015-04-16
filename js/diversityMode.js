@@ -109,7 +109,7 @@ var diversityMode = (function() {
 	};
 	
 	
-	//NEW
+	
 	external.showViewWidgets= function(){
 		$("#diversity_view").css("display","inline");
 		
