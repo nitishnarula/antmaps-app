@@ -65,8 +65,8 @@ var diversityBentityMode = (function() {
 		currentData.selectedBentity.key  = $('#bentityView-bentity-select').val();
 		currentData.selectedBentity.name = $('#bentityView-bentity-select option:selected').text();
 		diversityBentityMode.updateData();
-// 		$('#select-bentity-button').removeClass('pulse');
-// 		$('#select-bentity-button').addClass('pulse');
+		baseMap.bentityChanged(currentData.selectedBentity.key);
+		
 	});
 	
 	function getSelectedBentity() { return currentData.selectedBentity; }
@@ -135,7 +135,7 @@ var diversityBentityMode = (function() {
 		
 	}
 	
-	//NEW
+
 	external.showViewWidgets= function(){		
 		
 		$("#bentity_view").css("display","inline");

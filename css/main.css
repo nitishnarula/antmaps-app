@@ -345,14 +345,14 @@
     	#main {
 		    padding: 0;
 		    margin-top: 0;
-		    margin-bottom: 20px;
+		    margin-bottom: 0px;
 		    margin-left: 0;
 		    margin-right: 20px;
 		    position: absolute;    
 		    top: 80px;
 		    left: 250px;
 		    right: 20px;
-		    bottom: 10px;
+		    bottom: 0px;
 		    overflow: auto;
 		    background-color:/*  #3E454C */none;
 		    height: /* 820px; */ 100%;
