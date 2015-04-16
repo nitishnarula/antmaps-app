@@ -239,7 +239,8 @@ var diversityMode = (function() {
 
 	
 	external.errorReportData = function() {
-		return "Genus mode\nSelected genus: " + (currentData.genusName || "none selected");
+		return "Diversity mode\nSelected subfamily: " + (currentData.subfamilyKey || "none selected") 
+			+" \nSelected genus: " + (currentData.genusKey || "none selected");
 	}
 
 	return external;
