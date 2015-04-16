@@ -124,7 +124,11 @@ var diversityBentityMode = (function() {
 				//key = gid, value = species_count
 			}
 			
-			renderMap();
+			
+			if (controls.getCurrentModeName() == "diversityBentityMode") { 
+				// make sure the user hasn't switched to a different mode already
+				renderMap();
+			}
 			
 		
 		})

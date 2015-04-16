@@ -219,7 +219,10 @@ var speciesMode = (function() {
 				
 				}
 				
-				choropleth();
+				if (controls.getCurrentModeName() == "speciesMode") { 
+					// make sure the user hasn't switched to a different mode already
+					choropleth();
+				}
 				
 			}
 			
