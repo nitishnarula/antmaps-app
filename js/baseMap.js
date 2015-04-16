@@ -46,8 +46,9 @@ var baseMap = (function() {
 	var map = function() {
 	
 		// map width and height in pixels
-		var width = $("#mapContainer").parent().width();
-		var height= $("#mapContainer").parent().height();
+		 width = $("#mapContainer").parent().width();
+		 height= $("#mapContainer").parent().height();
+		//for margin at bottom
 	
 		// set width and height of Leaflet map div
 		$("#mapContainer").css({'height':height, 'width':width})
@@ -56,7 +57,8 @@ var baseMap = (function() {
 			center: [37.8, 0], 
 			zoom: 2,
 			minZoom: 2,
-			maxBounds: [[-220, -220], [220, 220]]
+			maxBounds: [[-220, -220], [220, 220]],
+			maxZoom:7
 		});
 	
 		return map;
@@ -73,8 +75,11 @@ var baseMap = (function() {
 		tile2 = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}', {
 					attribution: 'Tiles &copy; Esri &mdash; Source: USGS, Esri, TANA, DeLorme, and NPS'
 					}),
-		tile3 = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}', {
-					attribution: 'Tiles &copy; Esri &mdash; Source: Esri'
+		tile3 = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+					attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'
+					}),
+		tile4 = L.tileLayer('http://{s}.tile.stamen.com/toner-lite/{z}/{x}/{y}.{ext}', {
+					attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 					});
 		
 		tile1.addTo(map);
@@ -84,7 +89,8 @@ var baseMap = (function() {
 		var layerControlItems = {
 		  "<div class='layer-titles'> OSM Landscape </div>": tile1,
 		  "<div class='layer-titles'> Terrain </div>": tile2,
-		  "<div class='layer-titles'> Shaded Relief </div>":tile3
+		  "<div class='layer-titles'> ESRI World Canvas </div>":tile3,
+		  "<div class='layer-titles'> Stamen Toner Lite </div>":tile4
 		};
 		L.control.layers(layerControlItems).addTo(map);
 
@@ -371,6 +377,51 @@ var baseMap = (function() {
 		baseMap.resetHilightColor();
 	};
 	
+	
+	external.getBentityWithId = function(selected){
+		var bentities = baseMap.getBentities();
+		console.log("selected");
+		console.log(selected);
+		console.log(bentities);
+		var selectedPath;
+		bentities.each(function(d){
+			if(d.id==selected){
+				selectedPath = d;
+			}
+		});
+		
+		console.log(selectedPath);
+		baseMap.zoomToBentity(selectedPath);
+	};
+	
+	external.zoomToBentity = function(d){
+		var bounds = path.bounds(d), // this is in pixels, not geographic coordinates
+			dx = bounds[1][0] - bounds[0][0],
+			dy = bounds[1][1] - bounds[0][1],
+			x = (bounds[0][0] + bounds[1][0])/2,
+			y = (bounds[0][1] + bounds[1][1])/2,
+			scale = 0.08/Math.max(dx/width, dy/height),
+			translate = [width/2 - scale*x, height/2 - scale*y];
+			
+			//D3 top-left: bounds[0]
+			//D3 bottom-right: bounds[1]
+			
+			//console.log(bounds[0][1]+","+bounds[0][1]+","+bounds[1][1]+","+bounds[1][0]);
+			
+			var southWest = map.layerPointToLatLng([bounds[1][0],bounds[0][1]]);
+			var northEast = map.layerPointToLatLng([bounds[0][0],bounds[1][1]]);
+			
+			
+			var leafletBounds = new L.LatLngBounds([southWest,northEast]);
+ 			 map.fitBounds(leafletBounds, {maxZoom:6, animate:true});
+			
+			
+// 			baseMap.getOverlayG()
+// 					.transition()
+// 					.duration(750)
+// 					.style("stroke-width", 1/scale+"px")
+// 					.attr("transform","translate("+translate+")scale("+scale+")");
+	};
 	
 	
 	

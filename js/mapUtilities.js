@@ -125,7 +125,14 @@ var mapUtilities = (function() {
 	external.setTitle = function(currentMode, currentSelection){
 			console.log("currentMode");
 			console.log(currentMode);
-			var currentTitleText = "Current "+ currentMode+ " :";
+			var currentTitleText;
+			
+			if(currentMode != "Overall Species Richness"){
+				currentTitleText = "Current "+ currentMode+ " :";
+			}else{
+				currentTitleText = "Overall Species Richness: "
+			}
+			 
 			var currentSelectionText =currentSelection;
 			
 			$('#current-selection-title').html(currentTitleText);

@@ -5,7 +5,7 @@
 		  margin: 0;
 		  width: 100%;
 		  height: 100%;
-		  background-color: gray;
+		  background-color: rgb(186, 186, 186);
 		}
 		
 		/* GENERAL */
@@ -70,7 +70,7 @@
 		  padding: 0;
 		  margin: 0;
 		  position: absolute;    
-		  top: 100px;
+		  top: 50px;
 		  left: 10px;
 		  margin-bottom: 20px; 
 		  min-height: 750px; 
@@ -154,7 +154,7 @@
 		#querySpecies{
 			border: 1px dotted black;
 			padding:10px;
-			margin-top:80px;
+			margin-top:60px;
 			margin-left:20px;
 		}
 		
@@ -209,6 +209,10 @@
     	
     	.ui-menu-item.ui-state-focus {
     		background: #DDD;
+    	}
+    	
+    	#species-autocomplete{
+    		padding-left:14px;
     	}
     	
     	
@@ -345,14 +349,14 @@
     	#main {
 		    padding: 0;
 		    margin-top: 0;
-		    margin-bottom: 20px;
+		    margin-bottom: 0px;
 		    margin-left: 0;
-		    margin-right: 20px;
+		    margin-right: 0px;
 		    position: absolute;    
-		    top: 80px;
+		    top: 50px;
 		    left: 250px;
-		    right: 20px;
-		    bottom: 10px;
+		    right: 0px;
+		    bottom: 0px;
 		    overflow: auto;
 		    background-color:/*  #3E454C */none;
 		    height: /* 820px; */ 100%;
@@ -387,11 +391,15 @@
 			position: absolute;
 			margin-top: 500px;
 			margin-left: 50px;
-			width:280px;
+			min-width:280px;
+			max-width:280px;
 			font-family: 'Dosis', sans-serif;
 			font-size:20px;
 			z-index:999;
 			text-align: center;
+			background-color:none;
+			border-radius:5px;
+			
 		}
 		
 		#entry-text{
@@ -556,10 +564,10 @@
 		footer{
 			width:100%;
 			height:30px;
-			background-color:none;
+			background-color:black;
 			color:white;
-			position:absolute;
-			bottom:-120px;
+			position:fixed;
+			bottom:0px;
 		}
 		footer p{
 			text-align:center;

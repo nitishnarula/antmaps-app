@@ -108,17 +108,37 @@ var controls = (function() {
 	$("#species-button").hover(
 		function(){
 			$("#view-description").html("Select a species via the drop down menu after filtering by subfamily and genus to map its distribution, see its status in a region, and retrieve information on individual records.");
+			$("#view-description").css("background-color","white");
+			$("#view-description").css("padding",5);
 		},function(){
 			$("#view-description").html('');
+			$("#view-description").css("background-color","none");
+			$("#view-description").css("padding",0);
 	});
 	
 	
 	$("#diveristy-bentity-button").hover(
 		function(){
+			$("#view-description").css("background-color","white");
+			$("#view-description").css("padding",5);
 			$("#view-description").html("Select a region, by clicking on the map or via the drop down menu to visualize how its fauna is distributed across other regions. To map a different region click on 'MAP A DIFFERENT REGION'.");
 		},function(){
 			$("#view-description").html('');
+			$("#view-description").css("background-color","none");
+			$("#view-description").css("padding",0);
 	});
+	
+	$("#diversity-button").hover(
+		function(){
+			$("#view-description").css("background-color","white");
+			$("#view-description").css("padding",5);
+			$("#view-description").html("Select a species via the drop down menu after filtering by subfamily and genus to map its distribution, see its status in a region, and retrieve information on individual records.");
+		},function(){
+			$("#view-description").html('');
+			$("#view-description").css("background-color","none");
+			$("#view-description").css("padding",0);
+	});
+	
 	
 
 	// Taxon select boxes
