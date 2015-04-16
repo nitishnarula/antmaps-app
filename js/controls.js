@@ -134,7 +134,7 @@ var controls = (function() {
 	// Taxon select boxes
 	// Disable sub-select boxes
 	external.clearSelectbox = function() {
-		var boxes = $('#sppView-genus-select, #sppView-species-select, #genusView-genus-select');
+		var boxes = $('#sppView-species-select');
 		boxes.prop('disabled', true);
 	};
 	
@@ -146,8 +146,7 @@ var controls = (function() {
 		.done(function(data) {
 			var boxes = $('#diversityView-subfamily-select, #sppView-subfamily-select');
 			
-			$('#sppView-subfamily-select').html('<option value="">Select Subfamily</option>');
-			$('#diversityView-subfamily-select').html('<option value="">All Subfamilies</option>');
+			boxes.html('<option value="">All Subfamilies</option>');
 			
 			fillSelectbox(boxes, data.subfamilies);
 			boxes.prop('disabled', false);
@@ -187,21 +186,19 @@ var controls = (function() {
 	$('#sppView-subfamily-select').change(function() {
 		var selected = $(this).val();
 		$('#sppView-species-select').html('<option value="">Select Species</option>').prop('disabled', 'disabled');
-		if (selected) {
-			var box = $('#sppView-genus-select');
-			box.html('<option value="">Loading...</option>');
-			box.prop('disabled', 'disabled');
-			$.getJSON('/dataserver/genus-list', {subfamily: selected}, function(data) {
-				box.html('<option value="">Select Genus</option>');
-				fillSelectbox(box, data.genera);
-				box.prop('disabled', false);
-			})
-			.fail(external.whoopsNetworkError);
-		}
-		else {
-			$('#sppView-genus-select').html('<option value="">Select Genus</option>').prop('disabled', 'disabled');
-		}
+
+		var box = $('#sppView-genus-select');
+		box.html('<option value="">Loading...</option>');
+		box.prop('disabled', 'disabled');
+		$.getJSON('/dataserver/genus-list', {subfamily: selected}, function(data) {
+			box.html('<option value="">Select Genus</option>');
+			fillSelectbox(box, data.genera);
+			box.prop('disabled', false);
+		})
+		.fail(external.whoopsNetworkError);
+
 	});
+	$('#sppView-subfamily-select').change(); // load all genera on page load
 	
 
 
