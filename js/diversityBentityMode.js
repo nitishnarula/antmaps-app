@@ -45,7 +45,7 @@ var diversityBentityMode = (function() {
 	// update bentity selection in mappedData when select box is changed
 	$('#bentityView-bentity-select').change(function() {
 		diversityBentityMode.updateData();
-		baseMap.getBentityWithId(mappedData.mappedBentity.key);	
+		baseMap.zoomToBentity(mappedData.mappedBentity.key);	
 	});
 	
 	

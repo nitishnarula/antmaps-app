@@ -378,50 +378,37 @@ var baseMap = (function() {
 	};
 	
 	
-	external.getBentityWithId = function(selected){
+	
+	
+	function lookupBentityGeom(bentityID) {
 		var bentities = baseMap.getBentities();
-		console.log("selected");
-		console.log(selected);
-		console.log(bentities);
 		var selectedPath;
-		bentities.each(function(d){
-			if(d.id==selected){
+		bentities.each(function(d) {
+			if(d.id==bentityID){
 				selectedPath = d;
 			}
 		});
-		
-		console.log(selectedPath);
-		baseMap.zoomToBentity(selectedPath);
+		return selectedPath;
 	};
 	
-	external.zoomToBentity = function(d){
-		var bounds = path.bounds(d), // this is in pixels, not geographic coordinates
-			dx = bounds[1][0] - bounds[0][0],
-			dy = bounds[1][1] - bounds[0][1],
-			x = (bounds[0][0] + bounds[1][0])/2,
-			y = (bounds[0][1] + bounds[1][1])/2,
-			scale = 0.08/Math.max(dx/width, dy/height),
-			translate = [width/2 - scale*x, height/2 - scale*y];
+	
+	
+	external.zoomToBentity = function(bentityID){
+		var bentityGeom = lookupBentityGeom(bentityID);
+		var bounds = path.bounds(bentityGeom); // this is in pixels, not geographic coordinates
 			
-			//D3 top-left: bounds[0]
-			//D3 bottom-right: bounds[1]
+		//D3 top-left: bounds[0]  
+		//D3 bottom-right: bounds[1]
+		
+		var southWest = map.layerPointToLatLng([bounds[1][0],bounds[0][1]]);
+		var northEast = map.layerPointToLatLng([bounds[0][0],bounds[1][1]]);
+		
+		var leafletBounds = new L.LatLngBounds([southWest,northEast]);
+		map.fitBounds(leafletBounds, {maxZoom:6, animate:true});
 			
-			//console.log(bounds[0][1]+","+bounds[0][1]+","+bounds[1][1]+","+bounds[1][0]);
-			
-			var southWest = map.layerPointToLatLng([bounds[1][0],bounds[0][1]]);
-			var northEast = map.layerPointToLatLng([bounds[0][0],bounds[1][1]]);
-			
-			
-			var leafletBounds = new L.LatLngBounds([southWest,northEast]);
- 			 map.fitBounds(leafletBounds, {maxZoom:6, animate:true});
-			
-			
-// 			baseMap.getOverlayG()
-// 					.transition()
-// 					.duration(750)
-// 					.style("stroke-width", 1/scale+"px")
-// 					.attr("transform","translate("+translate+")scale("+scale+")");
 	};
+	
+	
 	
 	
 	
