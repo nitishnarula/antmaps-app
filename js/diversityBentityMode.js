@@ -4,7 +4,7 @@
 //	External Functions: resetData, activateMode, deactivateMode, resetView 
 //						updateData, bentityInfoLabelHTML, bentityClickHandle
 //						selectBentityView
-//	Internal Functions: resetMappedData, getSelectedBentity, renderMap
+//	Internal Functions: getSelectedBentity, renderMap, resetMappedData
 //						choropleth, 
 //////////////////////////////////////////////////////////////////////////
 
@@ -44,8 +44,6 @@ var diversityBentityMode = (function() {
 	
 	
 
-	
-	
 	// reset data that is used to color the map, but keep selection
 	function resetMappedData() {
 		var selectedBentity = currentData.selectedBentity;
@@ -90,6 +88,7 @@ var diversityBentityMode = (function() {
 	// updates map data with current selection and draws map
 	external.updateData = function() {
 	
+		// get selected bentity
 		if (!getSelectedBentity().key) {
 			alert('Please select a region to map.');
 			external.selectBentityView();
@@ -100,11 +99,16 @@ var diversityBentityMode = (function() {
 		var selectedBentity = getSelectedBentity();
 
 		
+		
 		$("#loading-message").show();
+		
 		
 		$.getJSON('/dataserver/species-in-common', {bentity: getSelectedBentity().key})
 		.fail(controls.whoopsNetworkError)
+		
+		// when the data comes back from the server
 		.done(function(data) {
+	
 		
 			resetMappedData();
 			currentData.mappedBentity = selectedBentity;
