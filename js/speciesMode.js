@@ -41,9 +41,9 @@ var speciesMode = (function() {
 
 
 	// the current data selected and mapped by the user
-	var currentData = null;
+	var mappedData = null;
 	external.resetData = function() {
-		currentData = {
+		mappedData = {
 		'speciesName': null, // current species name
 		'speciesCode': null, // current species code
 		'pointRecords': null, // current points to show, with {gabi_acc_number:xxx, lat:xxx, lon:xxx} for each
@@ -82,7 +82,7 @@ var speciesMode = (function() {
 	
 		
 		
-		if (currentData.pointRecords) {
+		if (mappedData.pointRecords) {
 		
 			var g = baseMap.getOverlayG();
 	
@@ -90,7 +90,7 @@ var speciesMode = (function() {
 	
 			  // plot dots
 			  g.selectAll('.dot')
-				.data(currentData.pointRecords)
+				.data(mappedData.pointRecords)
 				.enter()
 				.append('circle')
 				.attr('class', 'dot')
@@ -107,7 +107,7 @@ var speciesMode = (function() {
 					var infoPanel = mapUtilities.openInfoPanel();
 					
 					infoPanel.html("<h3 class='text-center'>"+d.gabi_acc_number+"</h3>"+
-						"<br> Geographic Coordinates<b>:  ( "+d.lat+" , "+d.lon+" )</b>")
+						"<br> Geographic Coordinates<b>:  ( "+d.lat+" , "+d.lon+" )</b><br><br><br>Citations will be available soon.")
 				})
 				.on("mouseover", function(d, i) {
 					var labelHTML = "<h3 class='text-center'>" + d.gabi_acc_number + "</h3>";
@@ -179,8 +179,8 @@ var speciesMode = (function() {
 		}	
 	
 		external.resetData();
-		currentData.speciesCode = selectedSpp.taxon_code;
-		currentData.speciesName = selectedSpp.speciesName;
+		mappedData.speciesCode = selectedSpp.taxon_code;
+		mappedData.speciesName = selectedSpp.speciesName;
 	
 		
 		
@@ -195,7 +195,7 @@ var speciesMode = (function() {
 		.done( function(data) {
 		
 			// make sure the user hasn't already selected a different species
-			if (selectedSpp.taxon_code == currentData.speciesCode) {
+			if (selectedSpp.taxon_code == mappedData.speciesCode) {
 			
 				if (data.bentities) {
 				
@@ -207,7 +207,7 @@ var speciesMode = (function() {
 					// switch representation of bentities from list to object
 					for (var i = 0; i < data.bentities.length; i++) {
 						var record = data.bentities[i];
-						currentData.bentityCategories[record.gid] = record.category;
+						mappedData.bentityCategories[record.gid] = record.category;
 					}
 				
 				}
@@ -231,10 +231,10 @@ var speciesMode = (function() {
 		.done(function(data) {
 			
 			// make sure the user hasn't already selected a different species
-			if (selectedSpp.taxon_code == currentData.speciesCode) {
+			if (selectedSpp.taxon_code == mappedData.speciesCode) {
 			
 				if (data.records) {
-					currentData.pointRecords = data.records;
+					mappedData.pointRecords = data.records;
 				
 					renderPoints();
 				} 
@@ -317,7 +317,7 @@ var speciesMode = (function() {
 	external.bentityInfoLabelHTML = function(d, i) {
 		return "<h3 class='text-center'>"
 			+ d.properties.bentity2_name + "</h3><br><b>"
-			+ (categoryNames[currentData.bentityCategories[d.properties.gid]] || "") + "</b>";
+			+ (categoryNames[mappedData.bentityCategories[d.properties.gid]] || "") + "</b>";
 	};
 	
 	
@@ -345,13 +345,13 @@ var speciesMode = (function() {
 	function choropleth() {
 		
 		// set map title
-		var speciesName = currentData.speciesName;
+		var speciesName = mappedData.speciesName;
 		var currentModeTitle = "Species";
 		mapUtilities.setTitle(currentModeTitle,speciesName);
 		
 		
 		// any data to map?
-		if (!$.isEmptyObject(currentData.bentityCategories)) {
+		if (!$.isEmptyObject(mappedData.bentityCategories)) {
 		
 			baseMap.resetOverlappingBentities();
 		
@@ -359,8 +359,8 @@ var speciesMode = (function() {
 		
 			// return a color based on the category for the given bentity D3-bound data	
 			var bentityColor = function(d) {
-				if (currentData.bentityCategories[d.properties.gid]) {
-					return colorScale(currentData.bentityCategories[d.properties.gid]);
+				if (mappedData.bentityCategories[d.properties.gid]) {
+					return colorScale(mappedData.bentityCategories[d.properties.gid]);
 				}
 				else {
 					return notPresentColor;
@@ -384,12 +384,25 @@ var speciesMode = (function() {
 	// show them if they do.
 	function toggleOverlappingBentities() {
 		$.each(baseMap.overlappingBentities, function(bentityID, domIDs) {
-			if (currentData.bentityCategories[bentityID]) {
+			if (mappedData.bentityCategories[bentityID]) {
 				baseMap.showOverlappingBentity(bentityID);
 			}
 		});
 
 	}
+	
+	
+	
+	
+	
+	// Open info panel on bentity click
+	external.bentityClickHandle = function(d, i) {
+		if (!$.isEmptyObject(mappedData.bentityCategories)) {
+			var infoPanel = mapUtilities.openInfoPanel();
+			infoPanel.html("<h4>" + (mappedData.speciesName) + " in " + d.properties.bentity2_name + "</h4><br><br><br>Citations will be available soon.");
+		}
+	};
+	
 	
 	
 	
@@ -412,7 +425,7 @@ var speciesMode = (function() {
 
 	
 	external.errorReportData = function() {
-		return "Species distribution mode\nSelected species: " + (currentData.speciesName || "none selected");
+		return "Species distribution mode\nSelected species: " + (mappedData.speciesName || "none selected");
 	}
 
 	return external;
