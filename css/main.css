@@ -158,7 +158,7 @@
 		/* SWITH VIEWS BUTTONS */
 		#mode-buttons{
 			position: absolute;
-			top:54px;
+			top:20px;
 		}
 		
 		
@@ -167,14 +167,14 @@
 		#querySpecies{
 			border: 1px dotted black;
 			padding:10px;
-			margin-top:60px;
+			margin-top:40px;
 			margin-left:20px;
 		}
 		
 		#querySubfamily,#queryGenus{
 			border: 1px dotted black;
 			padding:10px;
-			margin-top:80px;
+			margin-top:40px;
 			margin-left:20px;
 		}
 		#queryBentity{
@@ -283,7 +283,7 @@
 			color:white;
 			font-size:24px;
 	    	font-family: 'Dosis', sans-serif;
-	    	margin-top: 80px;
+	    	margin-top: 40px;
 	    	margin-left: 0px;
 	    	text-align: center;
 	    	margin-bottom:0px;
@@ -293,6 +293,14 @@
     	/* BENTITY CLICKED / MAP DIFFERENT REGION BUTTON */
 	    
 	    #select-bentity-button{
+			  /* 
+border: 3px solid;
+  			  border-radius: 40px;
+              font-weight: 600;
+  			  letter-spacing: 2px;
+ 			  text-transform: uppercase;
+  			  font-size: 10px;
+ */
 			margin-top: 100px;
 			margin-left: 54px;
 	    	font-family: Antenna,Helvetica,sans-serif;
@@ -381,7 +389,10 @@
 		
 		#current-selection-title{
 			margin-top: 10px;
-			margin-left: 60px;
+			margin-left: 50px;
+			min-width:100px;
+			/* background-color:white; */
+			padding:5px;
 			color:black;
 			font-family: 'Dosis', sans-serif;
 			font-size:30px;
@@ -389,6 +400,10 @@
 			z-index:999;
 			text-shadow: 1px 2px 3px white;
 			text-transform: uppercase;
+			/* 
+border-radius:5px;
+			opacity:0.8;
+ */
 		}
 		
 		#current-selection{
@@ -405,7 +420,7 @@
 		#view-description{
 			color:black;
 			position: absolute;
-			margin-top: 500px;
+			margin-top: 400px;
 			margin-left: 50px;
 			min-width:280px;
 			max-width:280px;
