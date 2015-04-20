@@ -280,10 +280,7 @@ var diversityBentityMode = (function() {
 				$.getJSON('/dataserver/species-list', {bentity: d.properties.gid, bentity2: mappedData.mappedBentity.key})
 				.error(controls.whoopsNetworkError)
 				.done(function(data) {
-					var ul = infoPanel.append('ul');
-						ul.selectAll('li')
-					.data(data.species)
-					.enter().append('li').text(function(d) {return d.display});
+					mapUtilities.appendSpeciesList(infoPanel, data.species);
 				});
 			}
 		}

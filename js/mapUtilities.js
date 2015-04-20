@@ -57,7 +57,7 @@ var mapUtilities = (function() {
 	external.openInfoPanel = function() {
 		var panelOverlay = d3.select("body").append("div")
 		.attr("class", "infopanel-overlay") //set z-index higher than title
-		.on("click", closeInfoPanel);
+		.on("click", external.closeInfoPanel);
 	
 		var infoPanel = panelOverlay.append("div")
 			.attr("class", "infopanel") //for styling label
@@ -66,21 +66,51 @@ var mapUtilities = (function() {
 		//add if statement here to detect if it is diversityBentity Mode, if it is, then add "map xxx" button 
 		// if it is already in the choropleth mode
 		
-		function closeInfoPanel() { panelOverlay.remove(); }
 		
 		// close-info-panel button
 		infoPanel.append("div")
 		.attr("class","close-info")
 		.attr("id","close-info")
 		.text("x")
-		.on("click", closeInfoPanel);
+		.on("click", external.closeInfoPanel);
 			
 		var infoPanelContent = infoPanel.append("div").attr("class", "infopanel-content")
 		.html('Loading...');
 		
 		return infoPanelContent;
+	};
+
+
+
+
+	// Close info panel
+	external.closeInfoPanel = function() {
+		d3.select(".infopanel-overlay").remove();
 	}
 
+
+
+
+	// Given a conainer (D3-selection) and a list of species, append a UL with a list
+	// of species to the container.  Species should be a list of {key:xxx, display:xxx}.
+	external.appendSpeciesList = function(container, species) {
+		var ul = container.append("ul");
+		
+		ul.classed("species-list", true)
+			.selectAll("li")
+			.data(species)
+			.enter()
+				.append("li")
+				.text(function(d) {return d.display})
+				.on("click", function(d) {
+					external.closeInfoPanel();
+					controls.setMode("speciesMode");
+					controls.getCurrentModeObject().updateData(
+						{taxon_code:d.key, speciesName:d.display});
+					baseMap.resetZoom();
+				});
+	};	
+	
 
 
 	

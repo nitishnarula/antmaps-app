@@ -167,6 +167,7 @@ var speciesMode = (function() {
 	
 	// called when the user presses the "map" button
 	// speciesCode is optional, if not provided it will be looked up from select boxes
+	// If provided, selectedSpp should contain {taxon_code:xxx, speciesName:xxx}
 	external.updateData = function(selectedSpp) {
 		
 		// get selectedSpp from select box if it wasn't provided as an argument
