@@ -63,6 +63,8 @@ var mapUtilities = (function() {
 			.attr("class", "infopanel") //for styling label
 			.on("click", function(){ d3.event.stopPropagation(); }); // keep click event from bubbling up
 		
+		//add if statement here to detect if it is diversityBentity Mode, if it is, then add "map xxx" button 
+		// if it is already in the choropleth mode
 		
 		function closeInfoPanel() { panelOverlay.remove(); }
 		

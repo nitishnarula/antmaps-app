@@ -7,8 +7,8 @@
 var diversityMode = (function() {
 
 	var zeroColor = "#ffffff";
-	var colorArray = ["#2166ac","#92c5de","#f4a582","#d6604d","#b2182b"];
-	var legendColors = ["#ffffff","#2166ac","#92c5de","#f4a582","#d6604d","#b2182b"];
+	var colorArray = ["#5e4fa2","#3288bd","#abdda4","#e6f598","#fdae61","#d53e4f","#9e0142"];
+	var legendColors = ["#ffffff","#5e4fa2","#3288bd","#abdda4","#e6f598","#fdae61","#d53e4f","#9e0142"];
 	
 	var external = {};
 	
