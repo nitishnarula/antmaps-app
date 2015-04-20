@@ -40,19 +40,6 @@ var speciesMode = (function() {
 
 
 
-	var overlappingBentities = {
-		"BEN20533" : { domID: "poly_BEN20533",  // India
-			children: ["poly_BEN20200", "poly_BEN20177", "poly_BEN20363", "poly_BEN20170", "poly_BEN20372", "poly_BEN20487", "poly_BEN20046", "poly_BEN20505", "poly_BEN20166", "poly_BEN20245", "poly_BEN20340", "poly_BEN20247", "poly_BEN20012", "poly_BEN20148", "poly_BEN20215", "poly_BEN20219", "poly_BEN20457", "poly_BEN20419", "poly_BEN20024", "poly_BEN20267", "poly_BEN20291", "poly_BEN20255", "poly_BEN20280", "poly_BEN20473"]
-			},
-		"BEN20532": { domID: "poly_BEN20532", // Columbia
-			children: ["poly_BEN20226", "poly_BEN20027", "poly_BEN20246", "poly_BEN20074", "poly_BEN20047", "poly_BEN20441", "poly_BEN20521", "poly_BEN20319", "poly_BEN20018", "poly_BEN20399", "poly_BEN20080", "poly_BEN20052", "poly_BEN20068", "poly_BEN20379", "poly_BEN20061", "poly_BEN20100", "poly_BEN20370", "poly_BEN20489", "poly_BEN20470", "poly_BEN20110", "poly_BEN20496", "poly_BEN20489", "poly_BEN20269", "poly_BEN20070", "poly_BEN20183", "poly_BEN20160", "poly_BEN20154", "poly_BEN20293", "poly_BEN20364", "poly_BEN20067", "poly_BEN20492", "poly_BEN20526"]
-		}
-	}
-
-
-
-
-
 	// the current data selected and mapped by the user
 	var currentData = null;
 	external.resetData = function() {

@@ -123,8 +123,6 @@ var mapUtilities = (function() {
 	
 	// sets the title for the current mode and displays the current selection
 	external.setTitle = function(currentMode, currentSelection){
-			console.log("currentMode");
-			console.log(currentMode);
 			var currentTitleText;
 			
 			if(currentMode != "Overall Species Richness"){
