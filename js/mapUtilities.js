@@ -8,15 +8,6 @@
 var mapUtilities = (function() {
 	var external = {};
 		
-	
-	// what is this for?
-	external.datatest= function(data){
-			if (data.properties){ //if json data
-				return data.properties;
-			} else { 
-				return data; //else...what if it is null?
-			}
-	};
 
 	
 	
@@ -56,35 +47,6 @@ var mapUtilities = (function() {
 		}
 	};
 	baseMap.addBentityEventListner('mouseleave.infolabel', external.removeInfoLabel);
-
-
-	// Open info panel for point data when clicked
-	external.infoPanelPoints= function(data){
-
-		var props = external.datatest(data);
-	
-		// label content for info panel when point is clicked
-		var labelAttribute = "<h3 class='text-center'>"+props.gabi_acc_number+"</h3>"+
-		"<br> Geographic Coordinates<b>:  ( "+props.lat+" , "+props.lon+" )</b>";
-				
-		var finalId = props.lat+props.lon;
-				
-				//create info label div
-		var infolabel = d3.select("body").append("div")
-			.attr("class", "infopanel") //for styling label
-			.attr("id", finalId+"label") //for future access to label div
-			.html(labelAttribute)
-			.append("div")
-			.attr("class","close-info")
-			.attr("id","close-info")
-			.html("x");
-			
-			d3.selectAll(".close-info")
-			.on("click",function(){
-				//console.log("clicked");
-				d3.selectAll(".infopanel").style("display","none");
-			});
-	};
 	
 	
 

@@ -102,7 +102,13 @@ var speciesMode = (function() {
 				})
 				.attr("fill","#F05253")
 				.attr('r',4)
-				.on("click",mapUtilities.infoPanelPoints)
+				.on("click", function(d,i) {
+					// label content for info panel when point is clicked
+					var infoPanel = mapUtilities.openInfoPanel();
+					
+					infoPanel.html("<h3 class='text-center'>"+d.gabi_acc_number+"</h3>"+
+						"<br> Geographic Coordinates<b>:  ( "+d.lat+" , "+d.lon+" )</b>")
+				})
 				.on("mouseover", function(d, i) {
 					var labelHTML = "<h3 class='text-center'>" + d.gabi_acc_number + "</h3>";
 					mapUtilities.infoLabel(d, "dot" + i, 0, labelHTML);
