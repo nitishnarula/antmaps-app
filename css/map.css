@@ -118,9 +118,9 @@
 		
 		.infopanel{
 			position:absolute;
-			width: 60%;
-			margin-left:25%;
-			margin-right:15%;
+			width: 40%;
+			margin-left:35%;
+			margin-right:25%;
 			margin-top:150px;
 			height:500px;
 			background-color: #222;
@@ -128,21 +128,27 @@
 			font-family: 'Dosis', sans-serif;
 			text-align: center;
 			z-index:9999;
+			border-radius:10px;
+			background:url("../img/ant_bg.png");
+			background-size:   cover;                    
+    		background-repeat: no-repeat;
+   			background-position: center center;  
 		}
 		
 		.close-info{
 			opacity:1;
 			color:white;
-			background-color:#222;
+			background-color:none;
 			z-index:101;
 			position:absolute;
 			width:50px;
 			height:50px;
 			top:0;
-			right:15px;
-			padding:6px;
+			right:5px;
+			padding:0px;
 			font-size:30px;
 		}
+		
 		.close-info:hover{
 			cursor:pointer;
 			color:gray;
@@ -173,7 +179,7 @@
 			text-align:center;
 			padding-top:5px;
 			padding-bottom:5px;
-			/* text-transform: uppercase; */
+			text-transform: uppercase;
 		}
 
 /* LEGEND */
