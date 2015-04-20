@@ -94,49 +94,6 @@
 		}
 		
 		
-		/* SIDE: top icons */
-		#info{
-			position: absolute;
-			top:-30px;
-			left:27px;
-			background: url("../img/info.png") no-repeat;
-			width:50px;
-			height:50px;
-		
-		}
-		
-		#resetAll{
-			position: absolute;
-			top:-30px;
-			left:87px;
-			background: url("../img/reset-all.png") no-repeat;
-			width:50px;
-			height:50px;
-		
-		}
-		
-		#export{
-			position: absolute;
-			top:-30px;
-			left:147px;
-			background: url("../img/export.png") no-repeat;
-			width:50px;
-			height:50px;
-		
-		}
-		/* RESET ZOOM */
-
-	    #reset_zoom{
-			position: absolute;
-			top:-30px;
-			left:147px;
-			background-color: none;
-			height:50px;
-			width:50px;
-			background: url("../img/reset-map.png") no-repeat;
-			cursor: pointer;
-		}
-		
 		
 
 		
@@ -293,16 +250,8 @@
     	/* BENTITY CLICKED / MAP DIFFERENT REGION BUTTON */
 	    
 	    #select-bentity-button{
-			  /* 
-border: 3px solid;
-  			  border-radius: 40px;
-              font-weight: 600;
-  			  letter-spacing: 2px;
- 			  text-transform: uppercase;
-  			  font-size: 10px;
- */
 			margin-top: 100px;
-			margin-left: 54px;
+			margin-left: 64px;
 	    	font-family: Antenna,Helvetica,sans-serif;
 			display: none;
 			text-align: center;
@@ -321,8 +270,8 @@ border: 3px solid;
 			width: 200px;
 			background:#F05253;
 			color: white;
-			border: solid 2px black;
-			border-radius:6px;
+			border: solid 1px black;
+			border-radius:40px;
 			-webkit-transition: all 200ms ease;
 			-moz-transition: all 200ms ease;
 			-ms-transition: all 200ms ease;
@@ -644,8 +593,8 @@ border-radius:5px;
 		  color: #333;
 		  position: absolute;
 		  width:100px;
-		  left: 60px;
-		  top:15px;
+		  left: 30px;
+		  top:160px;
 		  /* white-space: nowrap; */
 		  z-index: 9999;
 		  -moz-border-radius: 5px;
@@ -662,15 +611,15 @@ border-radius:5px;
 		  background-image: -o-linear-gradient(top, #eeeeee, #cccccc);
 		}
 		
-		a#resetZoom[data-title]:hover:after {
+		a#resetZoom1[data-title]:hover:after {
 		  font-family: 'Dosis', sans-serif;
 		  content: attr(data-title);
 		  padding: 4px 8px;
 		  color: #333;
 		  position: absolute;
 		  width:100px;
-		  margin-top: 15px;
-		  margin-left:145px;
+		  margin-top: 120px;
+		  margin-left:30px;
 		  /* white-space: nowrap; */
 		  z-index: 9999999;
 		  -moz-border-radius: 5px;
@@ -689,10 +638,26 @@ border-radius:5px;
 		
 		#resetZoom{
 		  position: absolute;
-		  margin-top: 100px;
-		  margin-left: -140px;
+		  margin-top: 80px;
+		  margin-left: 10px;
 		  /* white-space: nowrap; */
-		  z-index: 999;
+		  z-index: 9999;
+		  background: url("../img/reset-map.png") no-repeat;
+		  height:50px;
+		  width:50px;
+		}
+	
+		
+		#resetAll{
+		  position: absolute;
+		  margin-top: 130px;
+		  margin-left:10px;
+		  /* white-space: nowrap; */
+		  z-index: 9999;
+			background: url("../img/reset-all.png") no-repeat;
+			width:50px;
+			height:50px;
+		
 		}
 	
 
