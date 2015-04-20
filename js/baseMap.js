@@ -46,12 +46,12 @@ var baseMap = (function() {
 	var map = function() {
 	
 		// map width and height in pixels
-		 width = $("#mapContainer").parent().width();
-		 height= $("#mapContainer").parent().height();
+		// width = $("#mapContainer").parent().width();
+		// height= $("#mapContainer").parent().height();
 		//for margin at bottom
 	
 		// set width and height of Leaflet map div
-		$("#mapContainer").css({'height':height, 'width':width})
+		//$("#mapContainer").css({'height':height, 'width':width})
 
 		var map = new L.Map("mapContainer", {
 			center: [37.8, 0], 

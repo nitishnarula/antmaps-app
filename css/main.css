@@ -70,15 +70,28 @@
 		  padding: 0;
 		  margin: 0;
 		  position: absolute;    
-		  top: 50px;
-		  left: 10px;
-		  margin-bottom: 20px; 
-		  min-height: 750px; 
-		  /* overflow: auto;  */   
-		  width: 280px;  
+		  top: 0;
+		  left: 0px;
+		  padding-top: 50px;
+		  padding-bottom: 30px; 
+		  width: 290px;  
+		  height: 100%;
 		  background-color: none;  
 		}
 		
+		
+		#side-content-rtl {
+		  overflow-y: auto;
+		  width: 100%;
+		  height:100%;
+		  direction: rtl;
+		  padding-left: 10px;
+		}
+		
+		#side-content-ltr {
+		  direction: ltr;
+		  position: relative;
+		}
 		
 		
 		/* SIDE: top icons */
@@ -353,13 +366,16 @@
 		    margin-left: 0;
 		    margin-right: 0px;
 		    position: absolute;    
-		    top: 50px;
-		    left: 250px;
+		    top: 0;
+		    left: 260px;
 		    right: 0px;
 		    bottom: 0px;
 		    overflow: auto;
 		    background-color:/*  #3E454C */none;
 		    height: /* 820px; */ 100%;
+		    box-sizing: border-box;
+		    padding-top: 50px;
+		    padding-bottom: 30px;
 		}	
 		
 		
