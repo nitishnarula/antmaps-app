@@ -34,7 +34,7 @@ var speciesMode = (function() {
 						 "E": "Exotic",
 						 "D": "Dubious",
 						 "V": "Needs Verification"};
-	var notPresentColor = "white";
+	var noRecordsColor = "white";
 
 
 
@@ -317,7 +317,7 @@ var speciesMode = (function() {
 	external.bentityInfoLabelHTML = function(d, i) {
 		return "<h3 class='text-center'>"
 			+ d.properties.bentity2_name + "</h3><br><b>"
-			+ (categoryNames[mappedData.bentityCategories[d.properties.gid]] || "") + "</b>";
+			+ (categoryNames[mappedData.bentityCategories[d.properties.gid]] || "No Records") + "</b>";
 	};
 	
 	
@@ -363,7 +363,7 @@ var speciesMode = (function() {
 					return colorScale(mappedData.bentityCategories[d.properties.gid]);
 				}
 				else {
-					return notPresentColor;
+					return noRecordsColor;
 				}
 			};
 			
@@ -408,13 +408,13 @@ var speciesMode = (function() {
 	
 
 	function drawLegend() {
-		var legendColors = categoryColors.concat([notPresentColor]);
+		var legendColors = categoryColors.concat([noRecordsColor]);
 		
 		var legendLabels = [];
 		for (var i = 0; i < categoryCodes.length; i++) {
 			legendLabels.push(categoryNames[categoryCodes[i]]);
 		}
-		legendLabels.push("Not Present");
+		legendLabels.push("No Records");
 		
 		mapUtilities.drawLegend(
 			d3.select("#species-legend"),
