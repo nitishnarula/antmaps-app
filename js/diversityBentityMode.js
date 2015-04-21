@@ -274,22 +274,26 @@ var diversityBentityMode = (function() {
 				else {
 					// the user clicked a non-selected bentity
 					infoPanel.html("<h4>" + (mappedData.sppPerBentity[d.properties.gid] || "0") + " native species in common<br />between " + d.properties.bentity2_name + " and " + mappedData.mappedBentity.name + "</h4>");
+				
+					infoPanel.append("a")
+						.classed("map-this-bentity-link", true)
+						.text("Map species in common with " + d.properties.bentity2_name)
+						.on("click", function() {
+							mapUtilities.closeInfoPanel();
+							controls.setMode("diversityBentityMode");
+							controls.getCurrentModeObject().updateData({key:d.properties.gid, name:d.properties.bentity2_name});
+						});
+				
 				}
 				
 				
-				infoPanel.append("a")
-					.text("Map species in common with " + d.properties.bentity2_name)
-					.on("click", function() {
-						mapUtilities.closeInfoPanel();
-						controls.setMode("diversityBentityMode");
-						controls.getCurrentModeObject().updateData({key:d.properties.gid, name:d.properties.bentity2_name});
-					});
-				
+				var loadingMessage=infoPanel.append("p").text("Loading...");
 			
 				// look up species list
 				$.getJSON('/dataserver/species-list', {bentity: d.properties.gid, bentity2: mappedData.mappedBentity.key})
 				.error(controls.whoopsNetworkError)
 				.done(function(data) {
+					loadingMessage.remove();
 					mapUtilities.appendSpeciesList(infoPanel, data.species);
 				});
 			}
