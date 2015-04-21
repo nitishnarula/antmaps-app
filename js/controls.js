@@ -82,7 +82,9 @@ var controls = (function() {
 		$("#welcome-overlay").css("display","none");
 	};
 	
-	//NEW...hides all view-specific widgets
+	
+	
+	//hides all view-specific widgets
 	external.hideAllWidgets = function(){
 		$('#view-title').html('');
 		$("#spp_view").css("display","none");
@@ -92,6 +94,7 @@ var controls = (function() {
 		$("#entry-text").css("display","none");
 		$("#select-bentity-button").hide();
 	};
+	
 	
 	external.hideEntryText= function(){
 		$(".button").hover(function() {
@@ -143,10 +146,12 @@ var controls = (function() {
 
 	// Taxon select boxes
 	// Populate a given select box (jquery object) with the given data
+	// fires a "listupdate" event after updated
 	function fillSelectbox(JQselectbox, data) {
 		for (var i = 0; i < data.length; i++) {
 			$('<option/>', {text:data[i].display, value:data[i].key}).appendTo(JQselectbox);
 		}
+		JQselectbox.trigger("listupdate");
 	}
 	
 
@@ -260,6 +265,55 @@ var controls = (function() {
 		.fail(external.whoopsNetworkError);
 	});
 	$('#diversityView-subfamily-select').change(); // populate on startup
+
+
+
+	(function() {
+		function nextSppviewSubfamily() {
+			var nextOption = $("#sppView-subfamily-select option:selected").next();
+			if (nextOption.length) {
+				// if there's a next option, select it
+				$("#sppView-subfamily-select").val(nextOption.val());
+				$("#sppView-subfamily-select").change();
+			}
+			else {
+				// if this is the last option, select the first subfamily
+				$("#sppView-subfamily-select").val($("#sppView-subfamily-select option:first").val());
+				$("#sppView-subfamily-select").change();
+			}
+		}
+
+		function nextSppviewGenus() {
+			var nextOption = $("#sppView-genus-select option:selected").next();
+			if (nextOption.length) {
+				// if there's a next option, select it
+				$("#sppView-genus-select").val(nextOption.val());
+				$("#sppView-genus-select").change();
+			}
+			else {
+				// if this is the last option, get the next subfamily, then get the next genus
+				$("#sppView-genus-select").one("listupdate", nextSppviewGenus);
+				nextSppviewSubfamily();
+			}
+		}
+
+		function nextSppviewSpecies() {
+			var nextOption = $("#sppView-species-select option:selected").next();
+			if (nextOption.length) {
+				// if there's a next option, select it
+				$("#sppView-species-select").val(nextOption.val());
+				$("#sppView-species-select").change();
+			}
+			else {
+				// if this is the last option, get the next genus, then get the next species
+				$("#sppView-species-select").one("listupdate", nextSppviewSpecies);
+				nextSppviewGenus();
+			}
+		}
+	
+		$("#sppView-next").click(nextSppviewSpecies);
+	})();
+
 
 
 
