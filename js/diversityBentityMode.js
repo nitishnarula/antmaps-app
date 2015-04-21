@@ -287,7 +287,7 @@ var diversityBentityMode = (function() {
 				}
 				
 				
-				var loadingMessage=infoPanel.append("p").text("Loading...");
+				var loadingMessage=infoPanel.append("p").classed("loading", true).text("Loading...");
 			
 				// look up species list
 				$.getJSON('/dataserver/species-list', {bentity: d.properties.gid, bentity2: mappedData.mappedBentity.key})

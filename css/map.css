@@ -180,7 +180,47 @@
 			text-align:center;
 			padding-top:5px;
 			padding-bottom:5px;
+			margin-bottom:20px;
 			text-transform: uppercase;
+		}
+		
+		.map-this-bentity-link{
+			font-family: Antenna,Helvetica,sans-serif;
+			text-align: center;
+			padding-top: 16px;
+			padding-bottom: 12px;
+			padding-left: 10px;
+			padding-right: 10px;
+			text-decoration: none;
+			font-weight: bold;
+			font-size: 12px;
+			line-height: 1.5;
+			text-transform: uppercase;
+			height: 40px;
+			width: 200px;
+			background: #F05253;
+			color: white;
+			border: solid 1px black;
+			border-radius: 40px;
+			margin-bottom:10px;
+			margin-top:10px;
+			-webkit-transition: all 200ms ease;
+			-moz-transition: all 200ms ease;
+			-ms-transition: all 200ms ease;
+			transition: all 200ms ease;
+		}
+		
+		.species-list{
+			margin-top:20px;
+		}
+		
+		.species-list li{
+			margin-left:-20px;
+		}
+		
+		.loading{
+			margin-bottom:10px;
+			margin-top:20px;
 		}
 
 /* LEGEND */
