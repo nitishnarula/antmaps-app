@@ -268,51 +268,91 @@ var controls = (function() {
 
 
 
+
+	
+	// species-view Prev/Next buttons, one function for each select box
+	// For each function, "direction" should be "prev" or "next"
 	(function() {
-		function nextSppviewSubfamily() {
-			var nextOption = $("#sppView-subfamily-select option:selected").next();
+		function nextSppviewSubfamily(direction) {
+			// get next or pevious option depending on selection
+			var selected = $("#sppView-subfamily-select option:selected");
+			var nextOption = (direction=="prev") ? selected.prev() : selected.next();
+				
 			if (nextOption.length) {
 				// if there's a next option, select it
 				$("#sppView-subfamily-select").val(nextOption.val());
 				$("#sppView-subfamily-select").change();
 			}
-			else {
-				// if this is the last option, select the first subfamily
-				$("#sppView-subfamily-select").val($("#sppView-subfamily-select option:first").val());
-				$("#sppView-subfamily-select").change();
+			else { // no next option
+				if (direction=="prev") {
+					// if we're going backwards, select the last option
+					$("#sppView-subfamily-select").val($("#sppView-subfamily-select option:last").val());
+					$("#sppView-subfamily-select").change();
+				}
+				else {
+					// if we're going forwards, select the first option
+					$("#sppView-subfamily-select").val($("#sppView-subfamily-select option:first").val());
+					$("#sppView-subfamily-select").change();
+				}
 			}
 		}
-
-		function nextSppviewGenus() {
-			var nextOption = $("#sppView-genus-select option:selected").next();
-			if (nextOption.length) {
+		
+		function nextSppviewGenus(direction) {
+			// get next or pevious option depending on selection
+			var selected = $("#sppView-genus-select option:selected");
+			var nextOption = (direction=="prev") ? selected.prev() : selected.next();
+			
+			if (nextOption.length && nextOption.val()) {
 				// if there's a next option, select it
 				$("#sppView-genus-select").val(nextOption.val());
 				$("#sppView-genus-select").change();
 			}
 			else {
 				// if this is the last option, get the next subfamily, then get the next genus
-				$("#sppView-genus-select").one("listupdate", nextSppviewGenus);
-				nextSppviewSubfamily();
+				$("#sppView-genus-select").one("listupdate", function(){
+					if (direction=="prev") {
+						// select last species if we're going backwards and just updated genus
+						$("#sppView-genus-select").val($("#sppView-genus-select option:last").val());
+						$("#sppView-genus-select").change();
+					}
+					else {
+						nextSppviewGenus(direction);
+					}
+				});
+				nextSppviewSubfamily(direction);
 			}
 		}
-
-		function nextSppviewSpecies() {
-			var nextOption = $("#sppView-species-select option:selected").next();
-			if (nextOption.length) {
+		
+		function nextSppviewSpecies(direction) {
+			// get next or pevious option depending on selection
+			var selected = $("#sppView-species-select option:selected");
+			var nextOption = (direction=="prev") ? selected.prev() : selected.next();
+			
+			if (nextOption.length && nextOption.val()) {
 				// if there's a next option, select it
 				$("#sppView-species-select").val(nextOption.val());
 				$("#sppView-species-select").change();
 			}
 			else {
 				// if this is the last option, get the next genus, then get the next species
-				$("#sppView-species-select").one("listupdate", nextSppviewSpecies);
-				nextSppviewGenus();
+				$("#sppView-species-select").one("listupdate", function(){
+					if (direction=="prev") {
+						// select last species if we're going backwards and just updated genus
+						$("#sppView-species-select").val($("#sppView-species-select option:last").val());
+					}
+					else { 
+						nextSppviewSpecies(direction);
+					}
+				});
+				nextSppviewGenus(direction);
 			}
 		}
-	
-		$("#sppView-next").click(nextSppviewSpecies);
+		
+		$("#sppView-next").click(function(){nextSppviewSpecies("next")});
+		$("#sppView-prev").click(function(){nextSppviewSpecies("prev")});
 	})();
+
+
 
 
 
