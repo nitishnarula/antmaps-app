@@ -401,10 +401,11 @@ border-radius:5px;
 			z-index:9999;
 			width:75%;
 			height:70%;
-			margin-top:150px;
+			margin-top:100px;
 			margin-left:12.5%;
 			margin-right:12.5%;
 			background-color:gray;
+			border-radius:10px;
 		}
 		
 		#welcome-message-bg{
@@ -412,30 +413,35 @@ border-radius:5px;
 			z-index:10000;
 			width:75%;
 			height:70%;
-			margin-top:150px;
+			margin-top:100px;
 			margin-left:12.5%;
 			margin-right:12.5%;
-			background: url("../img/one1.jpg") no-repeat;
+			background: url("../img/new-bg.png");
+			background-size:   cover;                    
+    		background-repeat: no-repeat;
+   		/* 	background-position: center center;  */
 			background-size:100%;
 			opacity:0.6;
+			border-radius:10px;
 		}
 		#welcome-message{
 			position: absolute;
 			z-index:10000;
 			width:75%;
 			height:70%;
-			margin-top:150px;
+			margin-top:100px;
 			margin-left:12.5%;
 			margin-right:12.5%;
 			overflow-y:auto;
 			border: 1px solid black;
+			border-radius:10px;
 			
 		}
 		
 		#welcome-message h1{
 			font-family: 'Dosis', sans-serif;
 			font-size:40px;
-			text-shadow: 2px 2px #000000;
+			/* text-shadow: 2px 2px #000000; */
 			opacity:1;
 		}
 		
@@ -454,7 +460,7 @@ border-radius:5px;
 			padding-top:3%;
 			padding-left:10%;
 			padding-right:10%;
-			text-shadow: 2px 2px #000000;
+			/* text-shadow: 2px 2px #000000; */
 			line-height: 34px;
 		}
 		
@@ -555,9 +561,13 @@ border-radius:5px;
 		
 		/* TOOLTIP */
 		a {
-		  color: #900;
 		  text-decoration: none;
 		  text-align: center;
+		}
+		
+		a:hover{
+			text-decoration: none;
+			color:black;
 		}
 
 		a#info1[data-title]:hover:after {
