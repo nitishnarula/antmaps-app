@@ -339,6 +339,7 @@ var controls = (function() {
 					if (direction=="prev") {
 						// select last species if we're going backwards and just updated genus
 						$("#sppView-species-select").val($("#sppView-species-select option:last").val());
+						$("#sppView-species-select").change();
 					}
 					else { 
 						nextSppviewSpecies(direction);
