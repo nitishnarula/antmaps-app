@@ -100,7 +100,7 @@
 				
 					<h4> OR &ndash; browse by: </h4>
 					
-					<a id="sppView-prev">&larr; Prev</a> <a id="sppView-next">Next &rarr;</a><br />
+					<a id="sppView-prev" class="prev-button">&larr;Prev</a> <a id="sppView-next" class="next-button">Next&rarr;</a><br />
 					
 					<label> Subfamily </label><br>
 						<select id="sppView-subfamily-select" name="subfamily" disabled="disabled">
@@ -130,12 +130,14 @@
 						
 			<div id="diversity_view" class="none mode-controls">
 				<div id="queryGenus">
-					<label> Subfamily </label><br>
+					<label> Subfamily </label> 
+						<a id="diversityView-subfamily-prev" class="prev-button">&larr;Prev</a> <a id="diversityView-subfamily-next" class="next-button">Next&rarr;</a><br>
 						<select id="diversityView-subfamily-select" name="subfamily" disabled>
 							<option value="">Loading...</option>
 						</select><br>
 					
-					<label> Genus </label><br>
+					<label> Genus </label>
+						<a id="diversityView-genus-prev" class="prev-button">&larr;Prev</a> <a id="diversityView-genus-next" class="next-button">Next&rarr;</a><br>
 						<select id="diversityView-genus-select" name="genus" disabled>
 							<option value="">Loading...</option>
 						</select><br>

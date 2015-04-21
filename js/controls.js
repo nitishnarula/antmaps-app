@@ -358,6 +358,70 @@ var controls = (function() {
 
 
 
+	(function() {
+		function nextDiversityviewSubfamily(direction) {
+			// get next or pevious option depending on selection
+			var selected = $("#diversityView-subfamily-select option:selected");
+			var nextOption = (direction=="prev") ? selected.prev() : selected.next();
+							if (nextOption.length) {
+				// if there's a next option, select it
+				$("#diversityView-subfamily-select").val(nextOption.val());
+				$("#diversityView-subfamily-select").change();
+			}
+			else { // no next option
+				if (direction=="prev") {
+					// if we're going backwards, select the last option
+					$("#diversityView-subfamily-select").val($("#diversityView-subfamily-select option:last").val());
+					$("#diversityView-subfamily-select").change();
+				}
+				else {
+					// if we're going forwards, select the first option
+					$("#diversityView-subfamily-select").val($("#diversityView-subfamily-select option:first").val());
+					$("#diversityView-subfamily-select").change();
+				}
+			}
+		}
+		
+		
+		$("#diversityView-subfamily-next").click(function(){ nextDiversityviewSubfamily("next") });
+		$("#diversityView-subfamily-prev").click(function(){ nextDiversityviewSubfamily("prev") });
+		
+		
+		
+		
+		function nextDiversityviewGenus(direction) {
+			// get next or pevious option depending on selection
+			var selected = $("#diversityView-genus-select option:selected");
+			var nextOption = (direction=="prev") ? selected.prev() : selected.next();
+			
+			if (nextOption.length) {
+				// if there's a next option, select it
+				$("#diversityView-genus-select").val(nextOption.val());
+				$("#diversityView-genus-select").change();
+			}
+			else {
+				// if this is the last option, get the next subfamily, then get the next genus
+				$("#diversityView-genus-select").one("listupdate", function(){
+					if (direction=="prev") {
+						// select last species if we're going backwards and just updated genus
+						$("#diversityView-genus-select").val($("#diversityView-genus-select option:last").val());
+					}
+					$("#diversityView-genus-select").change();
+
+				});
+				nextDiversityviewSubfamily(direction);
+			}
+		}
+		
+		$("#diversityView-genus-next").click(function(){ nextDiversityviewGenus("next") });
+		$("#diversityView-genus-prev").click(function(){ nextDiversityviewGenus("prev") });
+		
+	})();
+
+
+
+
+
 	// display error message
 	external.whoopsNetworkError = function() {
 		alert('Whoops!  Something went wrong.  Please check your internet connection and try again, or refresh the page.');
