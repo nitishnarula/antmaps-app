@@ -65,8 +65,8 @@ var diversityMode = (function() {
 		
 		
 		// update mapped data with selectedTaxon argument or select box values
-		var selectedSubfamily = selectedTaxon ? selectedTaxon.selectedGenus : getSelectBoxSubfamily();
-		var selectedGenus = selectedTaxon ? selectedTaxon.selectedSubfamily : getSelectBoxGenus();
+		var selectedSubfamily = selectedTaxon ? selectedTaxon.selectedSubfamily : getSelectBoxSubfamily();
+		var selectedGenus = selectedTaxon ? selectedTaxon.selectedGenus : getSelectBoxGenus();
 		
 		
 		mappedData.genusName = selectedGenus.name;
