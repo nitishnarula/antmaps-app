@@ -60,7 +60,17 @@ var diversityBentityMode = (function() {
 	
 	
 	
-	external.activateMode = function(){ renderMap(); };
+	external.activateMode = function(updateURL){
+		
+		// if updateURL is passed and there is some data mapped, update URL
+		if (updateURL && !mappedData.selectBentityView) {
+			$("body").trigger("mapstatechange"); 
+		}
+			
+		renderMap();
+	};
+	
+	
 	external.deactivateMode = function(){ baseMap.resetChoropleth(); };
 	
 	

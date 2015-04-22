@@ -147,7 +147,12 @@ var speciesMode = (function() {
 
 	
 	// called when this mode is selected
-	external.activateMode = function() {
+	external.activateMode = function(updateURL) {
+		// update URL if updateURL is passed and there's already data selected
+		if (updateURL && mappedData.speciesCode) {
+			$("body").trigger("mapstatechange");
+		}
+	
 		choropleth();
 		renderPoints();
 		

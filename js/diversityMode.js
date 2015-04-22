@@ -137,13 +137,17 @@ var diversityMode = (function() {
 	
 	
 	
-	external.activateMode = function(){ 
+	external.activateMode = function(updateURL){ 
 	
 		// load initial species richness data if the user hasn't selected anything
 		if ($.isEmptyObject(mappedData.sppPerBentity) 
 				&& !mappedData.genusKey 
 				&& !mappedData.subfamilyKey) {
 			external.updateData();		
+		}
+	
+		if (updateURL) {
+			$("body").trigger("mapstatechange"); // fire event to update URL
 		}
 	
 		choropleth(); 
