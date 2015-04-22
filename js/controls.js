@@ -17,6 +17,16 @@ var controls = (function() {
 	var currentMode = modes[0];
 
 
+	// How modes are encoded/decoded in Antmaps URLs.  (To change this, you also
+	// have to change them in the getURLParams() function of each mode module.)
+	var modeURLCodes = {
+		"diversity": "diversityMode",
+		"species":   "speciesMode",
+		"region":    "diversityBentityMode"
+	}
+
+
+
 
 	// references to each of the mode objects.  This is filled in at the bottom
 	// of this file, after the mode objects have been declared.  Keys are the modes in 'modes' variable
@@ -69,7 +79,7 @@ var controls = (function() {
 	
 	// called by baseMap after bentities are loaded
 	external.setDefaultMode = function() {
-		controls.setMode("diversityMode"); // set initial mode
+		decodeURL(); // set initial mode from URL
 	}
 	
 	
@@ -481,7 +491,7 @@ var controls = (function() {
 
 		return baseURL + "?" + queryString;
 	}
-
+	
 
 
 	// update browser URL on "mapstateChange" event
@@ -492,6 +502,30 @@ var controls = (function() {
 	});
 
 
+	
+	// This function to decode the current map state and set the URL is called 
+	// once the bentity polygons are loaded.
+	function decodeURL() {
+		// get querystring, replace + with spaces
+		var queryString = window.location.search.substring(1).replace(/\+/g, " ");
+		
+		var params = {};
+		$.each(queryString.split("&"), function(i,pair) {
+			var param = pair.split("=");
+			if (param.length == 2) {
+				params[decodeURIComponent(param[0])] = decodeURIComponent(param[1]);
+			}
+		});
+		
+		
+		// activate mode if it's given in the url (or use default mode)
+		var mode = modeURLCodes[params.mode] || external.getCurrentModeName();
+		external.setMode(mode);
+		external.getCurrentModeObject().decodeURLParams(params);
+		
+	}
+
+	$(window).on("popstate", decodeURL); // decode URL on back-button click
 
 
 	return external;

@@ -452,6 +452,22 @@ var speciesMode = (function() {
 	
 	
 	
+	// Given URL query string parameters as an object, update data with the given species.
+	// WILL NEED TO CHANGE THIS if relationship between speciesCode and speciesName ever changes
+	external.decodeURLParams = function(params) {
+		if (params.species) { // update data with given species code
+			var taxon_code = params.species;
+			var speciesName = taxon_code.replace(".", " "); // replace dots with spaces to get species name
+			external.updateData({taxon_code:taxon_code, speciesName:speciesName});
+		}
+		else { // no species provided
+			external.updateData();
+		}
+	}
+	
+	
+	
+	
 	
 	return external;
 })();

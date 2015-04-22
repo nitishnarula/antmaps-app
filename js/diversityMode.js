@@ -16,12 +16,12 @@ var diversityMode = (function() {
 	
 	// key is the key to send to the web server,
 	// name is what to show the user
-	function getSelectedGenus() {
+	function getSelectBoxGenus() {
 		return { key:  $('#diversityView-genus-select').val(),
 			     name: $('#diversityView-genus-select option:selected').text() };
 	}
 	
-	function getSelectedSubfamily() {
+	function getSelectBoxSubfamily() {
 		return { key:  $('#diversityView-subfamily-select').val(),
 				 name: $('#diversityView-subfamily-select option:selected').text() };
 	}
@@ -48,17 +48,26 @@ var diversityMode = (function() {
 		}
 	}
 	external.resetData();
+	
+	
 
 
 
-
-	external.updateData = function() {
+	// Called when the user selects something, fetches data and draws the map.
+	// selectedTaxon argument is optional, if provided should contain 
+	// {selectedGenus: {name:xxx, key:xxx}, selectedSubfamily:{name:xxx, key:xxx}}
+	// (selectedGenus.key and selectedSubfamily.key can be null to plot overall species richness)
+	external.updateData = function(selectedTaxon) {
+	
 	
 		// save selected genus and subfamily
 		external.resetData();
 		
-		var selectedSubfamily = getSelectedSubfamily();
-		var selectedGenus = getSelectedGenus();
+		
+		// update mapped data with selectedTaxon argument or select box values
+		var selectedSubfamily = selectedTaxon ? selectedTaxon.selectedGenus : getSelectBoxSubfamily();
+		var selectedGenus = selectedTaxon ? selectedTaxon.selectedSubfamily : getSelectBoxGenus();
+		
 		
 		mappedData.genusName = selectedGenus.name;
 		mappedData.genusKey = selectedGenus.key;
@@ -129,11 +138,11 @@ var diversityMode = (function() {
 	external.activateMode = function(){ 
 	
 		// load initial species richness data if the user hasn't selected anything
-		if ($.isEmptyObject(mappedData.sppPerBentity) 
+		/*if ($.isEmptyObject(mappedData.sppPerBentity) 
 				&& !mappedData.genusKey 
 				&& !mappedData.subfamilyKey) {
 			external.updateData();		
-		}
+		}*/
 		
 		choropleth(); 
 	};
@@ -279,6 +288,14 @@ var diversityMode = (function() {
 		return params;
 	}
 	
+	
+	
+	
+	external.decodeURLParams = function(params) {
+		external.updateData({
+			selectedGenus: {name: params.genus || "", key: params.genus || "" }, 
+			selectedSubfamily:{name: params.subfamily || "", key: params.subfamily || ""} });
+	}
 	
 	
 

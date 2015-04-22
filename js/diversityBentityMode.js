@@ -81,7 +81,7 @@ var diversityBentityMode = (function() {
 	
 		// get selected bentity
 		if (!selectedBentity.key) {
-			alert('Please select a region to map.');
+			//alert('Please select a region to map.');
 			external.selectBentityView();
 			return;
 		}
@@ -321,7 +321,7 @@ var diversityBentityMode = (function() {
 	
 	
 	
-	
+	// get state parameters for URL data
 	external.getURLParams = function() {
 		var params = {mode:"region"}; 
 		
@@ -331,6 +331,20 @@ var diversityBentityMode = (function() {
 		}
 		
 		return params;
+	}
+	
+	
+	
+	
+	// load map from URL parameters
+	external.decodeURLParams = function(params) {
+		if (params.regionKey && params.regionName) {
+			external.updateData({key:params.regionKey, name:params.regionName});
+			
+		}
+		else { // no bentity provided
+			external.updateData();
+		}
 	}
 	
 	
