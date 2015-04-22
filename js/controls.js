@@ -524,6 +524,10 @@ var controls = (function() {
 			}
 		});
 		
+		// hide welcome message if we're given query string parameters
+		if (params) {
+			external.hideWelcomeMessage();
+		}
 		
 		// activate mode if it's given in the url (or use default mode)
 		var mode = modeURLCodes[params.mode] || external.getCurrentModeName();
