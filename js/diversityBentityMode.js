@@ -172,6 +172,8 @@ var diversityBentityMode = (function() {
 			$("#diversity-bentity-legend-title").show();
 			choropleth();
 		}
+		
+		$("body").trigger("mapstatechange"); // fire event to update URL
 	};
 	
 	
@@ -315,6 +317,23 @@ var diversityBentityMode = (function() {
 	external.errorReportData = function() {
 		return "Region comparison mode\nSelected region: " + (mappedData.mappedBentity.name || "none selected");
 	}
+	
+	
+	
+	
+	
+	external.getURLParams = function() {
+		var params = {mode:"region"}; 
+		
+		if (mappedData.mappedBentity.key) {
+			params.regionKey = mappedData.mappedBentity.key;
+			params.regionName = mappedData.mappedBentity.name;
+		}
+		
+		return params;
+	}
+	
+	
 	
 	return external;
 })();

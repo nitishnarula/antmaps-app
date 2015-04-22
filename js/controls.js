@@ -468,6 +468,32 @@ var controls = (function() {
 	};
 
 
+
+
+
+	// return URL based on current map state
+	function encodeURL() {
+		// get URL query string with state of current mode
+		var queryString = $.param(external.getCurrentModeObject().getURLParams());
+		
+		// get current URL without query string
+		var baseURL = window.location.href.split("?")[0];
+
+		return baseURL + "?" + queryString;
+	}
+
+
+
+	// update browser URL on "mapstateChange" event
+	$("body").on("mapstatechange", function() {
+		if (typeof history.pushState === "function") {
+			history.pushState("", "", encodeURL());
+		}
+	});
+
+
+
+
 	return external;
 })();
 

@@ -44,10 +44,10 @@ var speciesMode = (function() {
 	var mappedData = null;
 	external.resetData = function() {
 		mappedData = {
-		'speciesName': null, // current species name
-		'speciesCode': null, // current species code
-		'pointRecords': null, // current points to show, with {gabi_acc_number:xxx, lat:xxx, lon:xxx} for each
-		'bentityCategories': {} // keys are bentity GID's, values are category codes
+		speciesName: null, // current species name
+		speciesCode: null, // current species code
+		pointRecords: null, // current points to show, with {gabi_acc_number:xxx, lat:xxx, lon:xxx} for each
+		bentityCategories: {} // keys are bentity GID's, values are category codes
 		}
 	};
 	external.resetData();
@@ -376,6 +376,8 @@ var speciesMode = (function() {
 		}
 		
 		
+		$("body").trigger("mapstatechange"); // fire event to update URL
+		
 	}
 	
 	
@@ -424,11 +426,33 @@ var speciesMode = (function() {
 		);
 	}
 
+
+
 	
 	external.errorReportData = function() {
 		return "Species distribution mode\nSelected species: " + (mappedData.speciesName || "none selected");
 	}
 
+
+
+
+	// URL parameters needed to serialize current state
+	// WILL NEED TO CHANGE THIS if relationship between speciesCode and speciesName ever changes
+	external.getURLParams = function() {
+		var params = {mode:"species"};
+		
+		if (mappedData.speciesCode) {
+			params.species = mappedData.speciesCode
+		}
+		
+		return params;
+	}
+	
+	
+	
+	
+	
+	
 	return external;
 })();
 controls.registerModeObject("speciesMode", speciesMode);

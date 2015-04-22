@@ -199,6 +199,8 @@ var diversityMode = (function() {
 		else { // no data
 			baseMap.resetChoropleth();
 		}
+		
+		$("body").trigger("mapstatechange"); // fire event to update URL
 	};
 	
 	
@@ -258,6 +260,27 @@ var diversityMode = (function() {
 		return "Diversity mode\nSelected subfamily: " + (mappedData.subfamilyKey || "none selected") 
 			+" \nSelected genus: " + (mappedData.genusKey || "none selected");
 	}
+	
+	
+	
+	
+	// URL parameters needed to serialize current state
+	// WILL NEED TO CHANGE THIS if genusKey is ever no longer equal to genusName (and for subfamily)
+	external.getURLParams = function() {
+		var params = {mode:"diversity"};
+		
+		if (mappedData.genusKey) {
+			params.genus = mappedData.genusKey;
+		}
+		
+		if (mappedData.subfamilyKey) {
+			params.subfamily = mappedData.subfamilyKey;
+		}
+		return params;
+	}
+	
+	
+	
 
 	return external;
 })();
