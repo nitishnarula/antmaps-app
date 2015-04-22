@@ -278,16 +278,17 @@ var diversityMode = (function() {
 	// Ignore subfamily if genus is provided
 	// WILL NEED TO CHANGE THIS if genusKey is ever no longer equal to genusName (and for subfamily)
 	external.getURLParams = function() {
-		var params = {mode:"diversity"};
-		
 		if (mappedData.genusKey) {
-			params.genus = mappedData.genusKey;
+			return {mode:"diversity", genus: mappedData.genusKey};
 		}
 		
 		else if (mappedData.subfamilyKey) {
-			params.subfamily = mappedData.subfamilyKey;
+			return {mode:"diversity", subfamily: mappedData.subfamilyKey};
 		}
-		return params;
+		
+		else {
+			return {};
+		}
 	}
 	
 	
@@ -305,11 +306,13 @@ var diversityMode = (function() {
 				$("#diversityView-genus-select").one("listupdate", function() {
 					$("#diversityView-genus-select").val(params.genus);
 				});	
+				$("#diversityView-subfamily-select").val("").change(); // reset subfamily
 			}
 		}
 		
 		else if (params.subfamily) {
-			$("#diversityView-subfamilg-select").val(params.subfamily);
+			$("#diversityView-subfamily-select").val(params.subfamily);
+			$("#diversityView-genus-select").val("");
 			
 			// is the subfamily list loaded yet?  If not try again once it is.
 			if ($("#diversityView-subfamily-select").val() != params.subfamily) {
@@ -317,6 +320,11 @@ var diversityMode = (function() {
 					$("#diversityView-subfamily-select").val(params.subfamily);
 				});	
 			}
+		}
+	
+		else {
+			$("#diversityView-subfamily-select").val("");
+			$("#diversityView-genus-select").val("");
 		}
 	
 		external.updateData({

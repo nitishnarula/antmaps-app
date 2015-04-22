@@ -14,7 +14,8 @@ var controls = (function() {
 	
 	// keep track of which mode is currently selected
 	var modes = ["diversityMode", "speciesMode", "diversityBentityMode"];
-	var currentMode = modes[0];
+	var initialMode = "diversityMode";
+	var currentMode = initialMode;
 
 
 	// How modes are encoded/decoded in Antmaps URLs.  (To change this, you also
@@ -528,12 +529,12 @@ var controls = (function() {
 		});
 		
 		// hide welcome message if we're given query string parameters
-		if (params) {
+		if (!$.isEmptyObject(params)) {
 			external.hideWelcomeMessage();
 		}
 		
-		// activate mode if it's given in the url (or use default mode)
-		var mode = modeURLCodes[params.mode] || external.getCurrentModeName();
+		// activate mode if it's given in the url (or use initial mode)
+		var mode = modeURLCodes[params.mode] || initialMode;
 		external.setMode(mode);
 		external.getCurrentModeObject().decodeURLParams(params);
 		

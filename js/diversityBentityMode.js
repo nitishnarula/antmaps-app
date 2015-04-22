@@ -323,14 +323,18 @@ var diversityBentityMode = (function() {
 	
 	// get state parameters for URL data
 	external.getURLParams = function() {
-		var params = {mode:"region"}; 
 		
 		if (mappedData.mappedBentity.key) {
-			params.regionName = mappedData.mappedBentity.name;
-			params.regionKey = mappedData.mappedBentity.key;
+			return {
+				mode:"region",
+				regionName: mappedData.mappedBentity.name,
+				regionKey:  mappedData.mappedBentity.key
+			};
 		}
 		
-		return params;
+		else {
+			return {};
+		}
 	}
 	
 	

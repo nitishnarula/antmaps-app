@@ -438,13 +438,13 @@ var speciesMode = (function() {
 	// URL parameters needed to serialize current state
 	// WILL NEED TO CHANGE THIS if relationship between speciesCode and speciesName ever changes
 	external.getURLParams = function() {
-		var params = {mode:"species"};
-		
 		if (mappedData.speciesCode) {
-			params.species = mappedData.speciesCode
+			return {mode:"species", species:mappedData.speciesCode}
 		}
 		
-		return params;
+		else {
+			return {};
+		}
 	}
 	
 	
