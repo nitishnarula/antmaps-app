@@ -504,7 +504,10 @@ var controls = (function() {
 	// update browser URL on "mapstateChange" event
 	$("body").on("mapstatechange", function() {
 		if (typeof history.pushState === "function") {
-			history.pushState("", "", encodeURL());
+			var newURL = encodeURL();
+			if (window.location.href != newURL) {
+				history.pushState("", "", newURL);
+			}
 		}
 	});
 
