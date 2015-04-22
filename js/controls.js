@@ -50,8 +50,9 @@ var controls = (function() {
 	
 	
 	
-	// set the current mode
-	external.setMode = function(modeName) {
+	// Set the current mode to modeName
+	// If optional argument updateURL is true, update page URL
+	external.setMode = function(modeName, updateURL) {
 	
 		external.getCurrentModeObject().deactivateMode();
 		currentMode = modeName;
@@ -71,6 +72,11 @@ var controls = (function() {
 			$("#diveristy-bentity-button").addClass("button-selected");
 		}else if(modeName=="diversityMode"){
 			$("#diversity-button").addClass("button-selected");
+		}
+		
+		
+		if (updateURL) {
+			$("body").trigger("mapstatechange"); // fire event to update URL	
 		}
 	}
 
@@ -468,6 +474,7 @@ var controls = (function() {
 	};
 
 
+	// Return a string with error report data
 	external.errorReportData = function() {
 		if(external.getCurrentModeObject().errorReportData) {
 			return external.getCurrentModeObject().errorReportData();

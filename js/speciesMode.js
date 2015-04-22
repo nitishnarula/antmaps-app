@@ -188,6 +188,7 @@ var speciesMode = (function() {
 		// show loading graphic
 		$("#loading-message").show();
 		
+		$("body").trigger("mapstatechange"); // fire event to update URL	
 		
 		
 		// get status for each bentity
@@ -375,8 +376,6 @@ var speciesMode = (function() {
 			drawLegend();
 		}
 		
-		
-		$("body").trigger("mapstatechange"); // fire event to update URL
 		
 	}
 	

@@ -76,7 +76,9 @@ var diversityMode = (function() {
 		
 	
 		$("#loading-message").show();
+
 	
+		$("body").trigger("mapstatechange"); // fire event to update URL	
 	
 		
 		$.getJSON('/dataserver/species-per-bentity', 
@@ -138,14 +140,15 @@ var diversityMode = (function() {
 	external.activateMode = function(){ 
 	
 		// load initial species richness data if the user hasn't selected anything
-		/*if ($.isEmptyObject(mappedData.sppPerBentity) 
+		if ($.isEmptyObject(mappedData.sppPerBentity) 
 				&& !mappedData.genusKey 
 				&& !mappedData.subfamilyKey) {
 			external.updateData();		
-		}*/
-		
+		}
+	
 		choropleth(); 
 	};
+	
 	
 	
 	external.deactivateMode = function(){ baseMap.resetChoropleth(); };
@@ -208,8 +211,6 @@ var diversityMode = (function() {
 		else { // no data
 			baseMap.resetChoropleth();
 		}
-		
-		$("body").trigger("mapstatechange"); // fire event to update URL
 	};
 	
 	
@@ -282,7 +283,7 @@ var diversityMode = (function() {
 			params.genus = mappedData.genusKey;
 		}
 		
-		if (mappedData.subfamilyKey) {
+		else if (mappedData.subfamilyKey) {
 			params.subfamily = mappedData.subfamilyKey;
 		}
 		return params;

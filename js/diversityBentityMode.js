@@ -93,6 +93,8 @@ var diversityBentityMode = (function() {
 		
 		$("#loading-message").show();
 		
+		$("body").trigger("mapstatechange"); // fire event to update URL	
+		
 		
 		// get data from web server
 		$.getJSON('/dataserver/species-in-common', {bentity: mappedData.mappedBentity.key})
@@ -172,8 +174,6 @@ var diversityBentityMode = (function() {
 			$("#diversity-bentity-legend-title").show();
 			choropleth();
 		}
-		
-		$("body").trigger("mapstatechange"); // fire event to update URL
 	};
 	
 	
@@ -338,12 +338,9 @@ var diversityBentityMode = (function() {
 	
 	// load map from URL parameters
 	external.decodeURLParams = function(params) {
+		// update data if a bentity is provided
 		if (params.regionKey && params.regionName) {
 			external.updateData({key:params.regionKey, name:params.regionName});
-			
-		}
-		else { // no bentity provided
-			external.updateData();
 		}
 	}
 	
