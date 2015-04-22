@@ -326,8 +326,8 @@ var diversityBentityMode = (function() {
 		var params = {mode:"region"}; 
 		
 		if (mappedData.mappedBentity.key) {
-			params.regionKey = mappedData.mappedBentity.key;
 			params.regionName = mappedData.mappedBentity.name;
+			params.regionKey = mappedData.mappedBentity.key;
 		}
 		
 		return params;

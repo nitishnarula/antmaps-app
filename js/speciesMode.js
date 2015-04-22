@@ -457,6 +457,7 @@ var speciesMode = (function() {
 		if (params.species) { // update data with given species code
 			var taxon_code = params.species;
 			var speciesName = taxon_code.replace(".", " "); // replace dots with spaces to get species name
+			$("#species-autocomplete").val(speciesName); // put species name in autocomplete box
 			external.updateData({taxon_code:taxon_code, speciesName:speciesName});
 		}
 		else { // no species provided

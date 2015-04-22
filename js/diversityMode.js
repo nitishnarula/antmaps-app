@@ -275,6 +275,7 @@ var diversityMode = (function() {
 	
 	
 	// URL parameters needed to serialize current state
+	// Ignore subfamily if genus is provided
 	// WILL NEED TO CHANGE THIS if genusKey is ever no longer equal to genusName (and for subfamily)
 	external.getURLParams = function() {
 		var params = {mode:"diversity"};
@@ -292,7 +293,32 @@ var diversityMode = (function() {
 	
 	
 	
+	// Update data based on URL parameters
+	// Ignore subfamily if genus is provided.
 	external.decodeURLParams = function(params) {
+		// update subfamily or genus select box
+		if (params.genus) {
+			$("#diversityView-genus-select").val(params.genus);
+			
+			// is the genus list loaded yet?  If not try again once it is.
+			if ($("#diversityView-genus-select").val() != params.genus) {
+				$("#diversityView-genus-select").one("listupdate", function() {
+					$("#diversityView-genus-select").val(params.genus);
+				});	
+			}
+		}
+		
+		else if (params.subfamily) {
+			$("#diversityView-subfamilg-select").val(params.subfamily);
+			
+			// is the subfamily list loaded yet?  If not try again once it is.
+			if ($("#diversityView-subfamily-select").val() != params.subfamily) {
+				$("#diversityView-subfamily-select").one("listupdate", function() {
+					$("#diversityView-subfamily-select").val(params.subfamily);
+				});	
+			}
+		}
+	
 		external.updateData({
 			selectedGenus: {name: params.genus || "", key: params.genus || "" }, 
 			selectedSubfamily:{name: params.subfamily || "", key: params.subfamily || ""} });
