@@ -66,14 +66,6 @@ var speciesMode = (function() {
 		speciesMode.updateData();
 	});
 	
-	$('#sppView-genus-select').change(function(){
-		$('#querySpecies').css('margin-left',0);
-	});
-	
-	$('#sppView-subfamily-select').change(function(){
-		$('#querySpecies').css('margin-left',20);
-	});
-	
 	
 	// Re-draws all the points on the map
 	// Called when the user updates the data, and when the map needs to be re-drawn 

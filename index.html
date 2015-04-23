@@ -100,7 +100,6 @@
 				
 					<h4> OR &ndash; browse by: </h4>
 					
-					<a id="sppView-prev" class="prev-button">&larr;Prev</a> <a id="sppView-next" class="next-button">Next&rarr;</a><br />
 					
 					<label> Subfamily </label><br>
 						<select id="sppView-subfamily-select" name="subfamily" disabled="disabled">
@@ -116,7 +115,12 @@
 						<select id="sppView-species-select" name="species" disabled="disabled">
 							<option value="">Select Species</option>
 						</select><br>
+					<div id="spp-prev_next">
+						<a id="sppView-prev" class="prev-button">Prev</a> <a id="sppView-next" class="next-button">Next</a>
+					</div>
+					<br><br>
 					</div>	
+					
 					
 
 					
@@ -130,20 +134,26 @@
 						
 			<div id="diversity_view" class="none mode-controls">
 				<div id="queryGenus">
-					<label> Subfamily </label> 
-						<a id="diversityView-subfamily-prev" class="prev-button">&larr;Prev</a> <a id="diversityView-subfamily-next" class="next-button">Next&rarr;</a><br>
+				<!-- <h4> Select subfamily or genus</h4> -->
+					<label> Subfamily </label><br>
 						<select id="diversityView-subfamily-select" name="subfamily" disabled>
 							<option value="">Loading...</option>
 						</select><br>
+					<div id="subfamily-prev_next"> 
+						<a id="diversityView-subfamily-prev" class="prev-button">Prev</a> <a id="diversityView-subfamily-next" class="next-button">Next</a>
+					</div>
+					<br>
 					
 					<label> Genus </label>
-						<a id="diversityView-genus-prev" class="prev-button">&larr;Prev</a> <a id="diversityView-genus-next" class="next-button">Next&rarr;</a><br>
 						<select id="diversityView-genus-select" name="genus" disabled>
 							<option value="">Loading...</option>
 						</select><br>
+					<div id="genus-prev_next">
+						<a id="diversityView-genus-prev" class="prev-button">Prev</a> <a id="diversityView-genus-next" class="next-button">Next</a>
+					</div>
+					<br><br>
 				</div>
-				<!-- <div id="map-genus" class="text-center" onclick="diversityGenusMode.updateData()"></div> -->
-				<!-- map button -->
+		
 				
 				<div id="diversity-genus-legend-title" class="none"> Number of species by region </div>
 				<div id = "diversity-genus-legend"> </div>

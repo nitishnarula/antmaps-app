@@ -93,8 +93,26 @@
 		  position: relative;
 		}
 		
+		.prev-button,.next-button{
+			padding:5px;
+			border:1px solid #F05253;
+			border-radius:20px;
+			text-transform: uppercase;
+			color:white;
+			background-color:#F05253;
+			font-family: Antenna,Helvetica,sans-serif;	
+			opacity:0.8
+		}
 		
-		
+		#spp-prev_next{
+			margin-top:10px;
+			float:right;
+		}
+		#subfamily-prev_next, #genus-prev_next{
+			margin-top:10px;
+			margin-bottom:15px;
+			float:right;
+		}
 
 		
 		/* SIDE: 2 views */
@@ -125,14 +143,16 @@
 			border: 1px dotted black;
 			padding:10px;
 			margin-top:40px;
-			margin-left:20px;
+			margin-left:0px;
+			width:230px;
 		}
 		
 		#querySubfamily,#queryGenus{
 			border: 1px dotted black;
 			padding:10px;
 			margin-top:40px;
-			margin-left:20px;
+			margin-left:0px;
+			width:230px;
 		}
 		#queryBentity{
 			border: 1px dotted black;
@@ -165,7 +185,11 @@
     		max-width:200px;
     	}
     	
-    	
+    	#querySpecies h4{
+    		color:#F05253;
+    		text-transform: uppercase;
+    		font-style:bold;
+    	}
     	
     	
     	/* SPECIES AUTOCOMPLETE */
@@ -232,19 +256,32 @@
     		margin-top:20px;
     	}
     	
+    	#queryGenus h4{
+			color:#F05253;
+    		text-transform: uppercase;
+    		font-style:bold;
+		}
+    	
 		
 		/* BENTITY MODE */
 	
 		
 		#bentity-description{
-			color:white;
+			color:#F05253;
+    		text-transform: uppercase;
+    		font-style:bold;
 			font-size:24px;
 	    	font-family: 'Dosis', sans-serif;
 	    	margin-top: 40px;
 	    	margin-left: 0px;
 	    	text-align: center;
 	    	margin-bottom:0px;
-	    	text-transform: uppercase;
+		}
+		
+		#queryBentity h4{
+			color:#F05253;
+    		text-transform: uppercase;
+    		font-style:bold;
 		}
 		
     	/* BENTITY CLICKED / MAP DIFFERENT REGION BUTTON */
