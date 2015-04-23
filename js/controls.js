@@ -34,8 +34,8 @@ var controls = (function() {
 	external.modeObjects = {};  
 	
 	// called in each mode file
-	external.registerModeObject = function(name, obj) {
-		external.modeObjects[name] = obj;
+	external.registerModeObject = function(modeName, obj) {
+		external.modeObjects[modeName] = obj;
 	};
 	
 	
