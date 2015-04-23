@@ -227,7 +227,7 @@ var diversityBentityMode = (function() {
 		else { // no data
 			baseMap.resetChoropleth();
 			if (mappedData.mappedBentity.name) { // alert if there's a bentity selected
-				alert("No data with overlapping species for " + mappedData.mappedBentity.name + ".");
+				alert("No data for " + mappedData.mappedBentity.name + ".");
 				external.selectBentityView();
 			}
 		}
