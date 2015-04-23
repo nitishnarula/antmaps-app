@@ -484,7 +484,7 @@ var controls = (function() {
 
 
 
-	// return URL based on current map state
+	// return a new URL based on current map state
 	function encodeURL() {
 		// get URL query string with state of current mode
 		var queryString = $.param(external.getCurrentModeObject().getURLParams());
@@ -497,12 +497,16 @@ var controls = (function() {
 	
 
 
-	// update browser URL on "mapstateChange" event
+	// Update browser URL on "mapstateChange" event
+	// This event is called when a mode is updated with new data, 
+	// or when the user clicks a mode button and the new mode has data.
 	$("body").on("mapstatechange", function() {
 		if (typeof history.pushState === "function") {
 			var newURL = encodeURL();
+			
+			// don't update the URL if it hasn't changed, for back-button behavior
 			if (window.location.href != newURL) {
-				history.pushState("", "", newURL);
+				history.pushState("", "", newURL); // update URL
 			}
 		}
 	});
@@ -515,6 +519,7 @@ var controls = (function() {
 		// get querystring, replace + with spaces
 		var queryString = window.location.search.substring(1).replace(/\+/g, " ");
 		
+		// parse querysting into key/value params
 		var params = {};
 		$.each(queryString.split("&"), function(i,pair) {
 			var param = pair.split("=");
