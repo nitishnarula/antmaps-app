@@ -53,12 +53,12 @@
 		.navbar-brand{
 	    	font-size: 30px;
 	    	font-family: 'Dosis', sans-serif;
-	    	color:white !important;
+	    	color:white !important; /* override bootstrap */
     	}
     	
     	nav li a{
 	    	font-family: 'Dosis', sans-serif;
-	    	color:white !important;
+	    	color:white !important; /* override bootstrap */
     	}
     	
     	.share-button{

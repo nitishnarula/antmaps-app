@@ -147,7 +147,7 @@ var controls = (function() {
 		function(){
 			$("#view-description").css("background-color","white");
 			$("#view-description").css("padding",5);
-			$("#view-description").html("Select a species via the drop down menu after filtering by subfamily and genus to map its distribution, see its status in a region, and retrieve information on individual records.");
+			$("#view-description").html("Displays the overall ant species richness by default. Select a subfamily to display the species richness of a particular subfamily, and select a genus to display the species richness by a particular genus.");
 		},function(){
 			$("#view-description").html('');
 			$("#view-description").css("background-color","none");
