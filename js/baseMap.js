@@ -158,6 +158,7 @@ var baseMap = (function() {
 		d3.select(map.getContainer()).on("mouseup", function() {
 			if (!dragStarted) {
 				// fire "nondragclick" event if the user clicked the map but isn't dragging
+				// D3 doesn't see the event if you use $.trigger
 				var event = document.createEvent("UIEvents");
 				event.initUIEvent("nondragclick", true, true, window, 1);
 				d3.event.target.dispatchEvent(event);

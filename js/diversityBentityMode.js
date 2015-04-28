@@ -253,7 +253,7 @@ var diversityBentityMode = (function() {
 				labelHTML += " species in total</b>";
 			}
 			else {
-				labelHTML += " native species in common with<br />" + mappedData.mappedBentity.name + "</b/>";
+				labelHTML += " native species also present in<br />" + mappedData.mappedBentity.name + "</b/>";
 			}
 		
 		}
@@ -289,7 +289,7 @@ var diversityBentityMode = (function() {
 				
 					infoPanel.append("a")
 						.classed("map-this-bentity-link", true)
-						.text("Map species in common with " + d.properties.bentity2_name)
+						.text("Map species present in " + d.properties.bentity2_name)
 						.on("click", function() {
 							mapUtilities.closeInfoPanel();
 							controls.setMode("diversityBentityMode");

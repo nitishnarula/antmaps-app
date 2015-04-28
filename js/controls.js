@@ -314,6 +314,7 @@ var controls = (function() {
 			var selected = $("#sppView-genus-select option:selected");
 			var nextOption = (direction=="prev") ? selected.prev() : selected.next();
 			
+			// if "select a genus" is the next option, nextOption.val() will be an empty string
 			if (nextOption.length && nextOption.val()) {
 				// if there's a next option, select it
 				$("#sppView-genus-select").val(nextOption.val());
@@ -328,6 +329,7 @@ var controls = (function() {
 						$("#sppView-genus-select").change();
 					}
 					else {
+						// skip first "select a genus" option
 						nextSppviewGenus(direction);
 					}
 				});
