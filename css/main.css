@@ -53,10 +53,12 @@
 		.navbar-brand{
 	    	font-size: 30px;
 	    	font-family: 'Dosis', sans-serif;
+	    	color:white !important;
     	}
     	
     	nav li a{
 	    	font-family: 'Dosis', sans-serif;
+	    	color:white !important;
     	}
     	
     	.share-button{
@@ -186,7 +188,7 @@
     	}
     	
     	#querySpecies h4{
-    		color:#F05253;
+    		color:white;
     		text-transform: uppercase;
     		font-style:bold;
     	}
@@ -257,7 +259,7 @@
     	}
     	
     	#queryGenus h4{
-			color:#F05253;
+			color:white;
     		text-transform: uppercase;
     		font-style:bold;
 		}
@@ -267,7 +269,7 @@
 	
 		
 		#bentity-description{
-			color:#F05253;
+			color:white;
     		text-transform: uppercase;
     		font-style:bold;
 			font-size:24px;
@@ -279,7 +281,7 @@
 		}
 		
 		#queryBentity h4{
-			color:#F05253;
+			color:white;
     		text-transform: uppercase;
     		font-style:bold;
 		}
