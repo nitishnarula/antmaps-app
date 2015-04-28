@@ -398,7 +398,7 @@ var speciesMode = (function() {
 	external.bentityClickHandle = function(d, i) {
 		if (!$.isEmptyObject(mappedData.bentityCategories)) {
 			var infoPanel = mapUtilities.openInfoPanel();
-			infoPanel.html("<h4>" + (mappedData.speciesName) + " in " + d.properties.bentity2_name + "</h4><br><br><br>Citations will be available soon.");
+			infoPanel.html("<h4>" + (mappedData.speciesName) + " in " + d.properties.bentity2_name + "</h4><br><br><br>Record data will be available soon.");
 		}
 	};
 	
