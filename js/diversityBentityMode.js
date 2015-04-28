@@ -16,8 +16,8 @@ var diversityBentityMode = (function() {
 	var selectedBentityFill = '#00ADA7';
 	
 	var zeroColor = "#ffffff";
-	var colorArray = ["#fcbba1","#fc9272","#fb6a4a","#de2d26","#a50f15"];
-	var legendColors = ["#ffffff","#fcbba1","#fc9272","#fb6a4a","#de2d26","#a50f15"];
+	var colorArray = ["#fcbba1","#fb6a4a","#ef3b2c","#b30000","#7f0000"];
+	var legendColors = ["#ffffff","#fcbba1","#fb6a4a","#ef3b2c","#b30000","#7f0000"];
 	
 	
 	
