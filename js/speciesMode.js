@@ -316,7 +316,7 @@ var speciesMode = (function() {
 	external.bentityInfoLabelHTML = function(d, i) {
 		return "<h3 class='text-center'>"
 			+ d.properties.bentity2_name + "</h3><br><b>"
-			+ (categoryNames[mappedData.bentityCategories[d.properties.gid]] || "No Records") + "</b>";
+			+ (categoryNames[mappedData.bentityCategories[d.properties.gid]] || "No records for this species") + "</b>";
 	};
 	
 	
