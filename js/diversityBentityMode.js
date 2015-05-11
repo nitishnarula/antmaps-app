@@ -154,8 +154,8 @@ var diversityBentityMode = (function() {
 	external.showViewWidgets= function(){		
 		
 		$("#bentity_view").css("display","inline");
-		
-		$('#view-title').html('Region Comparison');
+		$("#antWeb").html("");
+		$("#antWiki").html("");
 		
 		
 		if (!mappedData.selectBentityView) {

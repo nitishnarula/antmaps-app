@@ -39,8 +39,8 @@ var speciesMode = (function() {
 
 
 
-
-	// the current data selected and mapped by the user
+	
+	// the current data selected and mapped by the user	
 	var mappedData = null;
 	external.resetData = function() {
 		mappedData = {

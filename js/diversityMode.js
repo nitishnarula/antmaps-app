@@ -7,12 +7,11 @@
 var diversityMode = (function() {
 
 	var zeroColor = "#ffffff";
-	var colorArray = ["#5e4fa2","#3288bd","#abdda4","#e6f598","#fdae61","#d53e4f","#9e0142"];
-	var legendColors = ["#ffffff","#5e4fa2","#3288bd","#abdda4","#e6f598","#fdae61","#d53e4f","#9e0142"];
-	
+	var colorArray = ["#36486f","#3288bd","#abdda4","#e6f598","#fdae61","#d53e4f","#9e0142"];
+	var legendColors = ["#ffffff","#36486f","#3288bd","#abdda4","#e6f598","#fdae61","#d53e4f","#9e0142"];
+	//#5e4fa2
 	var external = {};
 	
-
 	
 	// key is the key to send to the web server,
 	// name is what to show the user
@@ -74,7 +73,9 @@ var diversityMode = (function() {
 		mappedData.subfamilyName = selectedSubfamily.name;
 		mappedData.subfamilyKey = selectedSubfamily.key;
 		
-	
+		
+		
+		
 		$("#loading-message").show();
 
 	
@@ -112,6 +113,8 @@ var diversityMode = (function() {
 			}
 			
 			
+		
+			
 			// make sure the user hasn't switched to a different mode already
 			if (controls.getCurrentModeName() == "diversityMode") { 
 				choropleth();
@@ -130,7 +133,7 @@ var diversityMode = (function() {
 
 	external.showViewWidgets= function(){
 		$("#diversity_view").css("display","inline");		
-		$('#view-title').html('Diversity View');
+		//$('#view-title').html('Diversity View');
 			
 	}
 	
@@ -167,15 +170,27 @@ var diversityMode = (function() {
 
 		// show map title
 		if (mappedData.genusKey) {
+			console.log(mappedData.genusName);
+			console.log(mappedData.subfamilyName);
 			var currentModeTitle = "Genus";
 			mapUtilities.setTitle(currentModeTitle,mappedData.genusName);
+			mapUtilities.setLinks(currentModeTitle,null, mappedData.genusName,mappedData.subfamilyName);
+			$("#antWeb").html("AntWeb");
+			$("#antWiki").html("AntWiki");
 		}
 		else if (mappedData.subfamilyKey) {
+			console.log(mappedData.genusName);
+			console.log(mappedData.subfamilyName);
 			var currentModeTitle = "Subfamily";
 			mapUtilities.setTitle(currentModeTitle,mappedData.subfamilyName);
+			mapUtilities.setLinks(currentModeTitle,null, mappedData.genusName,mappedData.subfamilyName);
+			$("#antWeb").html("AntWeb");
+			$("#antWiki").html("AntWiki");
 		}
 		else {
 			mapUtilities.setTitle('Overall Species Richness','');
+			$("#antWeb").html("");
+			$("#antWiki").html("");
 		}
 		
 		

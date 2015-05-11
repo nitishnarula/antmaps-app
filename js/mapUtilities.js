@@ -117,6 +117,9 @@ var mapUtilities = (function() {
 	
 	// sets the title for the current mode and displays the current selection
 	external.setTitle = function(currentMode, currentSelection){
+			//console.log("currentMode");
+			//console.log(currentMode);
+			
 			var currentTitleText;
 			
 			if(currentMode != "Overall Species Richness"){
@@ -124,6 +127,7 @@ var mapUtilities = (function() {
 			}else{
 				currentTitleText = "Overall Species Richness: "
 			}
+			
 			 
 			var currentSelectionText =currentSelection;
 			
@@ -135,8 +139,39 @@ var mapUtilities = (function() {
 			}else{
 				$('#current-selection').removeClass('italic');
 			}	
+			
+			
 	};
 	
+	
+	//sets the a href attributes for the current selection in order to link to the corresponding 
+	//pages on AntWeb and AntWiki 
+	external.setLinks = function(currentRank, currentSpecies,currentGenus,currentSubfamily){
+		var currentRank,
+		    antWebLink,
+		    antWikiLink;
+		    
+		    if(currentRank == "Subfamily"){
+		    	//console.log("in set links subfamily rank");
+		    	
+		    	antWebLink="http://www.antweb.org/description.do?subfamily="+currentSubfamily.toLowerCase()
+		    		+"&rank="+currentRank.toLowerCase()+"&project=allantwebants";
+		    	$("#antWeb").parent().attr('href',antWebLink);
+		    	
+		    	antWikiLink="http://www.antwiki.org/wiki/"+currentSubfamily.toLowerCase();
+		    	$("#antWiki").parent().attr('href',antWikiLink);
+		    	
+		    }else if(currentRank == "Genus"){
+		    	
+		    	antWebLink="http://www.antweb.org/description.do?subfamily="+currentSubfamily.toLowerCase()
+		    		+"&genus="+currentGenus.toLowerCase()+"&rank="+currentRank.toLowerCase()+"&project=allantwebants";
+		    	$("#antWeb").parent().attr('href',antWebLink);
+		    	
+		    	antWikiLink="http://www.antwiki.org/wiki/"+currentGenus.toLowerCase();
+		    	$("#antWiki").parent().attr('href',antWikiLink);
+		    
+		    }
+	};
 	
 	
 	

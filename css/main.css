@@ -377,7 +377,7 @@
 		
 		#current-selection-title{
 			margin-top: 10px;
-			margin-left: 50px;
+			margin-left: 60px;
 			min-width:100px;
 			/* background-color:white; */
 			padding:5px;
@@ -386,7 +386,7 @@
 			font-size:30px;
 			position:absolute;
 			z-index:999;
-			text-shadow: 1px 2px 3px white;
+			/* text-shadow: 1px 2px 3px white; */
 			text-transform: uppercase;
 			/* 
 border-radius:5px;
@@ -397,12 +397,39 @@ border-radius:5px;
 		#current-selection{
 			color:black;
 			position: absolute;
-			margin-top: 50px;
+			margin-top: 54px;
 			margin-left: 64px;
 			font-family: 'Dosis', sans-serif;
 			font-size:26px;
 			z-index:999;
-			text-shadow: 1px 2px 3px white;
+			padding-right:10px;
+			/* text-shadow: 1px 2px 3px white; */
+		}
+		
+		#antWeb{
+			color:blue;
+			position: absolute;
+			margin-top:90px;
+			margin-left: 66px;
+			font-family: 'Dosis', sans-serif;
+			font-size:16px;
+			z-index:999;
+			text-decoration:underline;
+		}
+		
+		#antWiki{
+			color:blue;
+			position: absolute;
+			margin-top: 90px;
+			margin-left: 130px;
+			font-family: 'Dosis', sans-serif;
+			font-size:16px;
+			z-index:999;
+			text-decoration:underline;
+		}
+		
+		#antWeb:hover,#antWiki:hover{
+			cursor: pointer;
 		}
 		
 		#view-description{
