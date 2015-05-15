@@ -47,7 +47,10 @@ var speciesMode = (function() {
 		speciesName: null, // current species name
 		speciesCode: null, // current species code
 		pointRecords: null, // current points to show, with {gabi_acc_number:xxx, lat:xxx, lon:xxx} for each
-		bentityCategories: {} // keys are bentity GID's, values are category codes
+		bentityCategories: {}, // keys are bentity GID's, values are category codes
+		//new
+		genusName:null,
+		subfamilyName:null
 		}
 	};
 	external.resetData();
@@ -179,6 +182,9 @@ var speciesMode = (function() {
 		external.resetData();
 		mappedData.speciesCode = selectedSpp.taxon_code;
 		mappedData.speciesName = selectedSpp.speciesName;
+		
+		console.log("mappedData.speciesName");
+		console.log(mappedData.speciesName);
 	
 		
 		
@@ -217,6 +223,26 @@ var speciesMode = (function() {
 				}
 				
 			}
+			
+		})
+		.always( function() {
+			$("#loading-message").hide();
+		});
+		
+		
+		//get genus name and subfamily name
+		$.getJSON('/dataserver/species-list', {taxon_code: selectedSpp.taxon_code})
+		.fail(controls.whoopsNetworkError)
+		.done(function(data){
+			// make sure the user hasn't already selected a different species
+			if (selectedSpp.taxon_code == mappedData.speciesCode) {
+				mappedData.genusName = data.species.genusName;
+				mappedData.subfamilyName = data.species.subfamilyName;
+			}
+			
+			console.log("check");
+			console.log(mappedData.genusName);
+			console.log(mappedData.subfamilyName);
 			
 		})
 		.always( function() {
@@ -343,11 +369,15 @@ var speciesMode = (function() {
 	// color regions on the map
 	function choropleth() {
 		
+		
 		// set map title
 		var speciesName = mappedData.speciesName;
 		var currentModeTitle = "Species";
 		mapUtilities.setTitle(currentModeTitle,speciesName);
 		
+		// mapUtilities.setLinks("Species",mappedData.speciesName, mappedData.genusName,mappedData.subfamilyName);
+// 					$("#antWeb").html("AntWeb");
+// 					$("#antWiki").html("AntWiki");
 		
 		// any data to map?
 		if (!$.isEmptyObject(mappedData.bentityCategories)) {

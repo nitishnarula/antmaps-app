@@ -43,7 +43,12 @@ var diversityMode = (function() {
 			subfamilyName: null,  // name of the current genus
 			subfamilyKey: null,  // database key for the current genus
 			sppPerBentity: {},    // keys are bentity ID, values are species count
-			maxSpeciesCount: 0    // maximum number of species for a bentity (for scale)
+			maxSpeciesCount: 0,    // maximum number of species for a bentity (for scale)
+			//new
+			num_records:0,
+			literature:0,
+			museum_specimen:0,
+			database_collection:0
 		}
 	}
 	external.resetData();
@@ -110,6 +115,12 @@ var diversityMode = (function() {
 				}
 				
 				mappedData.sppPerBentity[record.gid] = record.species_count;
+				
+				//new
+				mappedData.num_records = record.num_record;
+				mappedData.literature = record.literature;
+				mappedData.museum_specimen = record.museum_specimen;
+				mappedData.database_collection = record.database_collection;
 			}
 			
 			

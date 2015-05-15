@@ -170,6 +170,21 @@ var mapUtilities = (function() {
 		    	antWikiLink="http://www.antwiki.org/wiki/"+currentGenus.toLowerCase();
 		    	$("#antWiki").parent().attr('href',antWikiLink);
 		    
+		    }else if(currentRank == "Species"){
+		    	
+		    	//console.log(currentSpecies);
+		    	var currentSpeciesArray = currentSpecies.split(" ");
+		    	currentSpecies = currentSpeciesArray[1];
+		    	//console.log(currentSpecies);
+		    	
+		    	//antWebLink="http://www.antweb.org/description.do?subfamily="+currentSubfamily.toLowerCase()
+		    		+"&genus="+currentGenus.toLowerCase()+"&species="+currentSpecies.toLowerCase()
+		    		+"&rank="+currentRank.toLowerCase()+"&project=allantwebants";
+		    	$("#antWeb").parent().attr('href',antWebLink);
+		    	
+		    	//antWikiLink="http://www.antwiki.org/wiki/"+currentGenus.toLowerCase();
+		    	$("#antWiki").parent().attr('href',antWikiLink);
+		    	
 		    }
 	};
 	
