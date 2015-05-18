@@ -172,18 +172,41 @@ var mapUtilities = (function() {
 		    
 		    }else if(currentRank == "Species"){
 		    	
-		    	//console.log(currentSpecies);
-		    	var currentSpeciesArray = currentSpecies.split(" ");
-		    	currentSpecies = currentSpeciesArray[1];
+		    	console.log("setLinks species rank");
 		    	//console.log(currentSpecies);
 		    	
-		    	//antWebLink="http://www.antweb.org/description.do?subfamily="+currentSubfamily.toLowerCase()
+		    	var currentSpeciesArray = currentSpecies.split(" ");
+		    	
+		    	if(currentSpeciesArray.length==2){
+					
+					console.log(currentSpeciesArray.length);
+					currentSpecies = currentSpeciesArray[1];
+					
+					antWebLink="http://www.antweb.org/description.do?subfamily="+currentSubfamily.toLowerCase()
 		    		+"&genus="+currentGenus.toLowerCase()+"&species="+currentSpecies.toLowerCase()
 		    		+"&rank="+currentRank.toLowerCase()+"&project=allantwebants";
-		    	$("#antWeb").parent().attr('href',antWebLink);
+		    		$("#antWeb").parent().attr('href',antWebLink);
 		    	
-		    	//antWikiLink="http://www.antwiki.org/wiki/"+currentGenus.toLowerCase();
-		    	$("#antWiki").parent().attr('href',antWikiLink);
+					antWikiLink="http://www.antwiki.org/wiki/"+currentGenus+"_"+currentSpecies;
+					$("#antWiki").parent().attr('href',antWikiLink);
+					
+					
+		    	}else if(currentSpeciesArray.length==3){ //case for subspecies
+		    	
+					console.log(currentSpeciesArray.length);
+					currentSpecies = currentSpeciesArray[1];  
+					var currentSpecies2 = currentSpeciesArray[2];
+					
+					antWebLink="http://www.antweb.org/description.do?subfamily="+currentSubfamily.toLowerCase()
+		    		+"&genus="+currentGenus.toLowerCase()+"&species="+currentSpecies.toLowerCase()+"&subspecies="+currentSpecies2
+		    		+"&rank=subspecies&project=allantwebants";
+		    		$("#antWeb").parent().attr('href',antWebLink);
+		    	
+					antWikiLink="http://www.antwiki.org/wiki/"+currentGenus+"_"+currentSpecies+"_"+currentSpecies2;
+					$("#antWiki").parent().attr('href',antWikiLink);
+		    	}
+		    	
+		    	
 		    	
 		    }
 	};

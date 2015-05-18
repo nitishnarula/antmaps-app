@@ -46,9 +46,9 @@ var diversityMode = (function() {
 			maxSpeciesCount: 0,    // maximum number of species for a bentity (for scale)
 			//new
 			num_records:0,
-			literature:0,
-			museum_specimen:0,
-			database_collection:0
+			literature_count:0,
+			museum_count:0,
+			database_count:0
 		}
 	}
 	external.resetData();
@@ -104,6 +104,14 @@ var diversityMode = (function() {
 				alert('No data for this taxon!');
 			};
 			
+			mappedData.num_records = data.num_records;
+			mappedData.literature_count = data.literature_count;
+ 			mappedData.museum_count = data.museum_count;
+ 			mappedData.database_count = data.database_count;
+ 				
+ 				
+ 			console.log("mappedData");
+ 			console.log(mappedData);
 			
 			// populate mappedData.sppPerBentity with a key for each bentity, and value for species count
 			for (var i = 0; i < data.bentities.length; i++) {
@@ -115,12 +123,6 @@ var diversityMode = (function() {
 				}
 				
 				mappedData.sppPerBentity[record.gid] = record.species_count;
-				
-				//new
-				mappedData.num_records = record.num_record;
-				mappedData.literature = record.literature;
-				mappedData.museum_specimen = record.museum_specimen;
-				mappedData.database_collection = record.database_collection;
 			}
 			
 			
@@ -247,7 +249,7 @@ var diversityMode = (function() {
 	
 	
 	
-	
+	//information on mouseover
 	external.bentityInfoLabelHTML = function(d, i) {
 		return "<h4 class='text-center'>" 
 		+ d.properties.bentity2_name + "</h4><br><b>" 
@@ -255,7 +257,7 @@ var diversityMode = (function() {
 	}
 	
 
-
+	//information on click
 	// Open an info panel with a list of species for this bentity+genus
 	external.bentityClickHandle = function(d, i) {
 		if (!$.isEmptyObject(mappedData.sppPerBentity)) { // is there some data mapped?

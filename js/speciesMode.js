@@ -219,7 +219,31 @@ var speciesMode = (function() {
 				
 				if (controls.getCurrentModeName() == "speciesMode") { 
 					// make sure the user hasn't switched to a different mode already
-					choropleth();
+					
+					
+					//get genus name and subfamily name
+					$.getJSON('/dataserver/antweb-links', {taxon_code: selectedSpp.taxon_code})
+					.fail(controls.whoopsNetworkError)
+					.done(function(data){
+						// make sure the user hasn't already selected a different species
+						if (selectedSpp.taxon_code == mappedData.speciesCode) {
+							mappedData.genusName = data.taxonomy[0].genusName;
+							mappedData.subfamilyName = data.taxonomy[0].subfamilyName;
+						}
+			
+						//console.log(mappedData);
+						//console.log(data);
+				
+							choropleth();
+			
+		
+			
+					})
+					.always( function() {
+						$("#loading-message").hide();
+					});
+					
+				
 				}
 				
 			}
@@ -230,24 +254,7 @@ var speciesMode = (function() {
 		});
 		
 		
-		//get genus name and subfamily name
-		$.getJSON('/dataserver/species-list', {taxon_code: selectedSpp.taxon_code})
-		.fail(controls.whoopsNetworkError)
-		.done(function(data){
-			// make sure the user hasn't already selected a different species
-			if (selectedSpp.taxon_code == mappedData.speciesCode) {
-				mappedData.genusName = data.species.genusName;
-				mappedData.subfamilyName = data.species.subfamilyName;
-			}
-			
-			console.log("check");
-			console.log(mappedData.genusName);
-			console.log(mappedData.subfamilyName);
-			
-		})
-		.always( function() {
-			$("#loading-message").hide();
-		});
+		
 		
 		
 		
@@ -367,17 +374,12 @@ var speciesMode = (function() {
 	
 	
 	// color regions on the map
-	function choropleth() {
-		
+	function choropleth() {	
 		
 		// set map title
 		var speciesName = mappedData.speciesName;
 		var currentModeTitle = "Species";
 		mapUtilities.setTitle(currentModeTitle,speciesName);
-		
-		// mapUtilities.setLinks("Species",mappedData.speciesName, mappedData.genusName,mappedData.subfamilyName);
-// 					$("#antWeb").html("AntWeb");
-// 					$("#antWiki").html("AntWiki");
 		
 		// any data to map?
 		if (!$.isEmptyObject(mappedData.bentityCategories)) {
@@ -399,6 +401,11 @@ var speciesMode = (function() {
 			toggleOverlappingBentities();
 			
 			baseMap.choropleth(bentityColor);
+			
+			var currentModeTitle= "Species";
+			mapUtilities.setLinks(currentModeTitle,mappedData.speciesName, mappedData.genusName,mappedData.subfamilyName);
+			$("#antWeb").html("AntWeb");
+			$("#antWiki").html("AntWiki");
 			
 			drawLegend();
 		}

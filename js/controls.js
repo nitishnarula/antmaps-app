@@ -231,6 +231,9 @@ var controls = (function() {
 			box.html('<option value="">Select Genus</option>');
 			fillSelectbox(box, data.genera);
 			box.prop('disabled', false);
+			console.log(data);
+			console.log(data.genera);
+			console.log(data.species);
 		})
 		.fail(external.whoopsNetworkError);
 
@@ -249,7 +252,7 @@ var controls = (function() {
 			box.prop('disabled', 'disabled');
 			$.getJSON('/dataserver/species-list', {genus: selected}, function(data) {
 				box.html('<option value="">Select Species</option>');
-				fillSelectbox(box, data.species);
+				fillSelectbox(box, data.species);//data.species is undefined?
 				box.prop('disabled', false);
 			})
 			.fail(external.whoopsNetworkError);
