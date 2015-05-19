@@ -407,23 +407,33 @@ border-radius:5px;
 		}
 		
 		#antWeb{
+			background: url("../img/antweb50.png") no-repeat;
+		  	height:50px;
+		  	width:50px;
 			color:black;
 			position: absolute;
 			margin-top:90px;
 			margin-left: 66px;
-			font-family: 'Dosis', sans-serif;
+			/* 
+font-family: 'Dosis', sans-serif;
 			font-size:16px;
+ */
 			z-index:999;
 			/* text-decoration:underline; */
 		}
 		
 		#antWiki{
+			background: url("../img/antwiki50.png") no-repeat;
+		  	height:50px;
+		  	width:50px;
 			color:black;
 			position: absolute;
 			margin-top: 90px;
 			margin-left: 130px;
+/* 
 			font-family: 'Dosis', sans-serif;
 			font-size:16px;
+ */
 			z-index:999;
 			/* text-decoration:underline; */
 		}

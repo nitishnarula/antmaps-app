@@ -13,7 +13,7 @@ var diversityBentityMode = (function() {
 			
 	var external = {};
 	
-	var selectedBentityFill = '#00ADA7';
+	var selectedBentityFill = '#00C3A9';// '#00ADA7';
 	
 	var zeroColor = "#ffffff";
 	var colorArray = ["#36486f","#3288bd","#abdda4","#e6f598","#fdae61","#d53e4f","#9e0142"];
@@ -156,8 +156,10 @@ var diversityBentityMode = (function() {
 	external.showViewWidgets= function(){		
 		
 		$("#bentity_view").css("display","inline");
-		$("#antWeb").html("");
-		$("#antWiki").html("");
+		// $("#antWeb").html("");
+// 		$("#antWiki").html("");
+			$("#antWeb").css("display","none");
+			$("#antWiki").css("display","none");
 		
 		
 		if (!mappedData.selectBentityView) {

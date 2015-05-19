@@ -404,8 +404,10 @@ var speciesMode = (function() {
 			
 			var currentModeTitle= "Species";
 			mapUtilities.setLinks(currentModeTitle,mappedData.speciesName, mappedData.genusName,mappedData.subfamilyName);
-			$("#antWeb").html("AntWeb");
-			$("#antWiki").html("AntWiki");
+			// $("#antWeb").html("AntWeb");
+// 			$("#antWiki").html("AntWiki");
+			$("#antWeb").css("display","inline");
+			$("#antWiki").css("display","inline");
 			
 			drawLegend();
 		}
