@@ -407,29 +407,30 @@ border-radius:5px;
 		}
 		
 		#antWeb{
-			color:blue;
+			color:black;
 			position: absolute;
 			margin-top:90px;
 			margin-left: 66px;
 			font-family: 'Dosis', sans-serif;
 			font-size:16px;
 			z-index:999;
-			text-decoration:underline;
+			/* text-decoration:underline; */
 		}
 		
 		#antWiki{
-			color:blue;
+			color:black;
 			position: absolute;
 			margin-top: 90px;
 			margin-left: 130px;
 			font-family: 'Dosis', sans-serif;
 			font-size:16px;
 			z-index:999;
-			text-decoration:underline;
+			/* text-decoration:underline; */
 		}
 		
 		#antWeb:hover,#antWiki:hover{
 			cursor: pointer;
+			color:gray;
 		}
 		
 		#view-description{

@@ -405,7 +405,7 @@ var baseMap = (function() {
 		var northEast = map.layerPointToLatLng([bounds[0][0],bounds[1][1]]);
 		
 		var leafletBounds = new L.LatLngBounds([southWest,northEast]);
-		map.fitBounds(leafletBounds, {maxZoom:6, animate:true});
+		map.fitBounds(leafletBounds, {maxZoom:3, animate:true});
 			
 	};
 	

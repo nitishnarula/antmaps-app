@@ -16,8 +16,10 @@ var diversityBentityMode = (function() {
 	var selectedBentityFill = '#00ADA7';
 	
 	var zeroColor = "#ffffff";
-	var colorArray = ["#fcbba1","#fb6a4a","#ef3b2c","#b30000","#7f0000"];
-	var legendColors = ["#ffffff","#fcbba1","#fb6a4a","#ef3b2c","#b30000","#7f0000"];
+	var colorArray = ["#36486f","#3288bd","#abdda4","#e6f598","#fdae61","#d53e4f","#9e0142"];
+	var legendColors = ["#ffffff","#36486f","#3288bd","#abdda4","#e6f598","#fdae61","#d53e4f","#9e0142"];
+	// var colorArray = ["#fcbba1","#fb6a4a","#ef3b2c","#b30000","#7f0000"];
+// 	var legendColors = ["#ffffff","#fcbba1","#fb6a4a","#ef3b2c","#b30000","#7f0000"];
 	
 	
 	

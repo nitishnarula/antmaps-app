@@ -95,7 +95,7 @@ var speciesMode = (function() {
 				.attr('cy',function(d){
 					return baseMap.getProjection()([d.lon,d.lat]).y;
 				})
-				.attr("fill","#6a51a3")
+				.attr("fill","black")
 				.attr('r',4)
 				.on("click", function(d,i) {
 					// label content for info panel when point is clicked
@@ -131,7 +131,7 @@ var speciesMode = (function() {
 						'stroke-width':1,
 						'stroke-opacity':1,
 						'fill-opacity':1,
-						'stroke':'#6a51a3'
+						'stroke':'black'
 					});
 				});
 		
