@@ -626,14 +626,20 @@ font-family: 'Dosis', sans-serif;
 		/* FOOTER */
 		footer{
 			width:100%;
-			height:30px;
+			height:50px;
 			background-color:black;
 			color:white;
 			position:fixed;
 			bottom:0px;
 		}
 		footer p{
+			/* margin-top:5px; */
 			text-align:center;
+		}
+		
+		footer-logo{
+			width:40px;
+			height:40px;
 		}
 		
 		/* TOOLTIP */
@@ -749,97 +755,130 @@ font-family: 'Dosis', sans-serif;
 	
 
 	/* Switch View Buttons */
-	.button {
-		float: left;
-		min-width: 210px;
-		max-width: 210px;
-		display: block;
-		margin: 1em;
-		padding: 1em 2em;
-		border: none;
-		background: none;
-		color: inherit;
-		vertical-align: middle;
-		position: relative;
-		z-index: 1;
-		-webkit-backface-visibility: hidden;
-		-moz-osx-font-smoothing: grayscale;
-	}
-	.button:focus {
-		outline: none;
-	}
-	.button > span {
-		vertical-align: middle;
-	}
+		.button {
+			float: left;
+			min-width: 210px;
+			max-width: 210px;
+			display: block;
+			margin: 1em;
+			padding: 1em 2em;
+			border: none;
+			background: none;
+			color: inherit;
+			vertical-align: middle;
+			position: relative;
+			z-index: 1;
+			-webkit-backface-visibility: hidden;
+			-moz-osx-font-smoothing: grayscale;
+		}
+		.button:focus {
+			outline: none;
+		}
+		.button > span {
+			vertical-align: middle;
+		}
 
-	.button--winona {
-		overflow: hidden;
-		padding: 0;
-		-webkit-transition: border-color 0.3s, background-color 0.3s;
-		transition: border-color 0.3s, background-color 0.3s;
-		-webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
-		transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
-	}
-	.button--winona::after {
-		content: attr(data-text);
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		left: 0;
-		opacity: 0;
-		color: #F05253;
-		-webkit-transform: translate3d(0, 25%, 0);
-		transform: translate3d(0, 25%, 0);
-	}
-	.button--winona > span {
-		display: block;
-	}
-	.button--winona.button--inverted {
-		color: #7986cb;
-	}
-	.button--winona.button--inverted:after {
-		color: #fff;
-	}
-	.button--winona::after,
-	.button--winona > span {
-		padding: 1em 2em;
-		-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
-		transition: transform 0.3s, opacity 0.3s;
-		-webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
-		transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
-	}
-	.button--winona:hover {
-		border-color: #F05253;
-		background-color: rgba(63, 81, 181, 0.1);
-	}
-	.button--winona.button--inverted:hover {
-		border-color: #21333C;
-		background-color: #21333C;
-	}
-	.button--winona:hover::after {
-		opacity: 1;
-		-webkit-transform: translate3d(0, 0, 0);
-		transform: translate3d(0, 0, 0);
-	}
-	.button--winona:hover > span {
-		opacity: 0;
-		-webkit-transform: translate3d(0, -25%, 0);
-		transform: translate3d(0, -25%, 0);
-	}
-	.button--all{
-		border: 3px solid;
-		border-radius: 40px;
-		font-weight: 600;
-		letter-spacing: 2px;
-		text-transform: uppercase;
-		font-size: 10px;
-	}
-	.button-selected{
-		background-color:black;
-		color:white;
-		border:3px solid black;
-	}
+		.button--winona {
+			overflow: hidden;
+			padding: 0;
+			-webkit-transition: border-color 0.3s, background-color 0.3s;
+			transition: border-color 0.3s, background-color 0.3s;
+			-webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+			transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+		}
+		.button--winona::after {
+			content: attr(data-text);
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			opacity: 0;
+			color: #F05253;
+			-webkit-transform: translate3d(0, 25%, 0);
+			transform: translate3d(0, 25%, 0);
+		}
+		.button--winona > span {
+			display: block;
+		}
+		.button--winona.button--inverted {
+			color: #7986cb;
+		}
+		.button--winona.button--inverted:after {
+			color: #fff;
+		}
+		.button--winona::after,
+		.button--winona > span {
+			padding: 1em 2em;
+			-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+			transition: transform 0.3s, opacity 0.3s;
+			-webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+			transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+		}
+		.button--winona:hover {
+			border-color: #F05253;
+			background-color: rgba(63, 81, 181, 0.1);
+		}
+		.button--winona.button--inverted:hover {
+			border-color: #21333C;
+			background-color: #21333C;
+		}
+		.button--winona:hover::after {
+			opacity: 1;
+			-webkit-transform: translate3d(0, 0, 0);
+			transform: translate3d(0, 0, 0);
+		}
+		.button--winona:hover > span {
+			opacity: 0;
+			-webkit-transform: translate3d(0, -25%, 0);
+			transform: translate3d(0, -25%, 0);
+		}
+		.button--all{
+			border: 3px solid;
+			border-radius: 40px;
+			font-weight: 600;
+			letter-spacing: 2px;
+			text-transform: uppercase;
+			font-size: 10px;
+		}
+		.button-selected{
+			background-color:black;
+			color:white;
+			border:3px solid black;
+		}
 
+/* media query */
+@media all and (max-width: 420px) {
+	#side {    
+		  padding: 0;
+		  margin: 0;
+		  position: absolute;    
+		  top: 580px;
+		  left: 20%;
+		  padding-top: 50px;
+		  padding-bottom: 30px; 
+		  width: 300px;  
+		  height: 500px;
+		  background-color: none;  
+		}
 		
+	#main {
+		    padding: 0;
+		    margin-top: 0;
+		    margin-bottom: 0px;
+		    margin-left: 0;
+		    margin-right: 0px;
+		    position: absolute;    
+		    top: 0;
+		    left: 0px;
+		    right: 0px;
+		    bottom: 0px;
+		    overflow: auto;
+		    background-color:/*  #3E454C */none;
+		    height: /* 820px; */ 100%;
+		    box-sizing: border-box;
+		    padding-top: 50px;
+		    padding-bottom: 30px;
+		}	
+}		
 		

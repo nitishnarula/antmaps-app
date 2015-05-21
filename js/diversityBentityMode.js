@@ -35,7 +35,11 @@ var diversityBentityMode = (function() {
 				name: null    // name to display for currently-mapped bentity
 			},
 			sppPerBentity: {}, // keys are bentity ID, values are species count
-			maxSpeciesCount: 0 // max number of species seen so far (for scale)
+			maxSpeciesCount: 0, // max number of species seen so far (for scale)
+			numRecordsPerBentity:{},
+			museumCountPerBentity:{},
+			databaseCountPerBentity:{},
+			literatureCountPerBentity:{}
 		};
 	};
 	external.resetData();
@@ -135,6 +139,14 @@ var diversityBentityMode = (function() {
 				}
 				
 				mappedData.sppPerBentity[record.gid] = record.species_count;
+				
+				mappedData.numRecordsPerBentity[record.gid]=record.num_records;
+				mappedData.museumCountPerBentity[record.gid]=record.museum_count;
+				mappedData.databaseCountPerBentity[record.gid]=record.database_count;
+				mappedData.literatureCountPerBentity[record.gid]=record.literature_count;
+				
+				console.log("mappedData");
+				console.log(mappedData);
 			}
 			
 			
@@ -285,13 +297,23 @@ var diversityBentityMode = (function() {
 			
 				if (d.properties.bentity2_name == mappedData.mappedBentity.name) {
 					// the user clicked on the selected bentity
-					infoPanel.html("<h4>" + (mappedData.sppPerBentity[d.properties.gid] || "0") + " native species<br />for " + d.properties.bentity2_name + "</h4>");
+					infoPanel.html("<h4>" + (mappedData.sppPerBentity[d.properties.gid] || "0") + " native species<br />for " + d.properties.bentity2_name + "</h4>"
+					+"Total Records: "+ (mappedData.numRecordsPerBentity[d.properties.gid]|| "0")
+					+ ", Museum Records: "+(mappedData.museumCountPerBentity[d.properties.gid]|| "0")
+					+", Database Records: "+(mappedData.databaseCountPerBentity[d.properties.gid]|| "0")
+					+", Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0"));
 				}
+				
 				else {
 					// the user clicked a non-selected bentity
-					infoPanel.html("<h4>" + (mappedData.sppPerBentity[d.properties.gid] || "0") + " native species in common<br />between " + d.properties.bentity2_name + " and " + mappedData.mappedBentity.name + "</h4>");
+					infoPanel.html("<h4>" + (mappedData.sppPerBentity[d.properties.gid] || "0") + " native species in common<br />between " 
+					+ d.properties.bentity2_name + " and " + mappedData.mappedBentity.name + "</h4>"
+					+"Total Records: "+ (mappedData.numRecordsPerBentity[d.properties.gid]|| "0")
+					+ ", Museum Records: "+(mappedData.museumCountPerBentity[d.properties.gid]|| "0")
+					+", Database Records: "+(mappedData.databaseCountPerBentity[d.properties.gid]|| "0")
+					+", Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0"));
 				
-					infoPanel.append("a")
+					infoPanel.append("div").classed("bentity-link-wrapper", true).append("a")
 						.classed("map-this-bentity-link", true)
 						.text("Map species present in " + d.properties.bentity2_name)
 						.on("click", function() {

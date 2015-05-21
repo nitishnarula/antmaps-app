@@ -146,7 +146,7 @@
 			height:50px;
 			top:0;
 			right:5px;
-			padding:0px;
+			padding:5px;
 			font-size:30px;
 		}
 		
@@ -161,13 +161,15 @@
 		
 		.infopanel-content {
 			height: 100%;
-			width: 100%;
 			overflow: auto;
 		}
 		
+		.infopanel-content ul{
+			margin-left:40%;
+		}
 		.infopanel-content li{
 			list-style: none;
-			text-align:center;
+			text-align: left;
 		    font-style: italic;
 		}
 		
@@ -210,6 +212,9 @@
 			transition: all 200ms ease;
 		}
 		
+		.bentity-link-wrapper{
+			margin-top:20px;
+		}
 		.species-list{
 			margin-top:20px;
 		}
@@ -309,3 +314,20 @@
 		position:absolute;
 		margin-top:60px;
 	}
+
+/* media query */
+@media all and (max-width: 420px) {
+	.infopanel-content ul{
+		margin-left:20%;
+	}
+	
+	.infopanel-content h4{
+		margin-top:20px;
+		padding:10px;	
+	}
+	
+	.infopanel{
+		width:70%;
+		margin-left:20%;
+	}
+}
