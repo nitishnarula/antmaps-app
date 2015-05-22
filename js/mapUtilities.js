@@ -91,7 +91,7 @@ var mapUtilities = (function() {
 
 
 
-	// Given a conainer (D3-selection) and a list of species, append a UL with a list
+	// Given a container (D3-selection) and a list of species, append a UL with a list
 	// of species to the container.  Species should be a list of {key:xxx, display:xxx}.
 	external.appendSpeciesList = function(container, species) {
 		var ul = container.append("ul");
@@ -117,9 +117,7 @@ var mapUtilities = (function() {
 	
 	// sets the title for the current mode and displays the current selection
 	external.setTitle = function(currentMode, currentSelection){
-			//console.log("currentMode");
-			//console.log(currentMode);
-			
+
 			var currentTitleText;
 			
 			if(currentMode != "Overall Species Richness"){
@@ -152,7 +150,6 @@ var mapUtilities = (function() {
 		    antWikiLink;
 		    
 		    if(currentRank == "Subfamily"){
-		    	//console.log("in set links subfamily rank");
 		    	
 		    	antWebLink="http://www.antweb.org/description.do?subfamily="+currentSubfamily.toLowerCase()
 		    		+"&rank="+currentRank.toLowerCase()+"&project=allantwebants";
@@ -173,13 +170,11 @@ var mapUtilities = (function() {
 		    }else if(currentRank == "Species"){
 		    	
 		    	console.log("setLinks species rank");
-		    	//console.log(currentSpecies);
 		    	
 		    	var currentSpeciesArray = currentSpecies.split(" ");
 		    	
-		    	if(currentSpeciesArray.length==2){
+		    	if(currentSpeciesArray.length==2){ //for species only, not subspecies
 					
-					console.log(currentSpeciesArray.length);
 					currentSpecies = currentSpeciesArray[1];
 					
 					antWebLink="http://www.antweb.org/description.do?subfamily="+currentSubfamily.toLowerCase()
@@ -193,7 +188,6 @@ var mapUtilities = (function() {
 					
 		    	}else if(currentSpeciesArray.length==3){ //case for subspecies
 		    	
-					console.log(currentSpeciesArray.length);
 					currentSpecies = currentSpeciesArray[1];  
 					var currentSpecies2 = currentSpeciesArray[2];
 					

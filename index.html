@@ -68,14 +68,16 @@
     
     
     
-    <div id="side"> <div id="side-content-rtl"><div id="side-content-ltr"> <!-- rtl and ltr for right-scrollbar -->
+    <div id="side"> 
+    <div id="side-content-rtl">
+    <div id="side-content-ltr"> <!-- rtl and ltr for right-scrollbar -->
     	
     	
 
 
  			<div id="mode-buttons">
  					<button id="diversity-button" class="button button--winona button--all" data-text="Diversity View"
-	onclick="controls.setMode('diversityMode', true);">
+					onclick="controls.setMode('diversityMode', true);">
 						<span>Diversity View </span></button>
  					
  					
@@ -121,11 +123,6 @@
 					<br><br>
 					</div>	
 					
-					
-
-					
-					<!-- <div id="map-spp" class="text-center" onclick="speciesMode.updateData();"></div> -->
-					
 					<div id = "species-legend"> </div>
 			</div> <!-- end spp_view -->
 			
@@ -134,7 +131,6 @@
 						
 			<div id="diversity_view" class="none mode-controls">
 				<div id="queryGenus">
-				<!-- <h4> Select subfamily or genus</h4> -->
 					<label> Subfamily </label><br>
 						<select id="diversityView-subfamily-select" name="subfamily" disabled>
 							<option value="">Loading...</option>
@@ -157,7 +153,7 @@
 				
 				<div id="diversity-genus-legend-title" class="none"> Number of species by region </div>
 				<div id = "diversity-genus-legend"> </div>
-			</div>
+			</div><!-- end diversity_view -->
 				
 
 
@@ -173,17 +169,17 @@
 						<option>Loading...</option>
 					</select><br>
 				</div>
-				<!-- <div id="map-bentity" class="text-center" onclick="diversityBentityMode.updateData()"></div> -->
-				<!-- <div id="select-bentity-button" onclick="diversityBentityMode.selectBentityView()">Map a Different Region</div> -->
 				
 				<div id="diversity-bentity-legend-title" class="none"> Number of species in common </div>
 				<div id="diversity-bentity-legend"> </div>
-			</div>
+			</div><!-- end bentity_view -->
 
 				
 				
 	    
-    </div></div></div>
+    </div> <!-- end side-content-ltr -->
+    </div> <!-- end side-content-rtl -->
+    </div> <!-- end side -->
     
     
     
@@ -207,8 +203,6 @@
  		<a id ="resetAll1" data-title="RESET ALL" data-html="true" data-clicked="no" rel="tooltip" href="#" onclick="controls.resetMap();" ><div id="resetAll" class="hvr-shrink"></div></a>
 
 		
-		<!-- <div id="entry-text">Click on a view to start</div> -->
-		
 		<div id="view-description"></div>
     
     	<div id="select-bentity-button" class="pulse" onclick="diversityBentityMode.selectBentityView()">Map a Different Region</div>
@@ -226,29 +220,7 @@
 		</div>
 	
     
-    <!-- 
- <div id="welcome-message-bg-bg"></div>
     
-    <div id="welcome-message-bg"></div>
-    
-	<div id="welcome-message">
-		<h1 class="text-center"> - ANTMAPS - </h1>
-		<h3 class="text-center"> ANTMAPS is a web-based application to visualize the GABI
-		 database.  There are three views the user can select,
-		 each visualizing a different aspect of ant biodiversity.  The Diversity View 
-		 provides an overview of the total ant species richness in each region as well as the subfamily and
-		 genus diversity in each region .  The Species Distribution View visualizes individual species 
-		 distributions and its status (native etc.) in each region.   The Region Comparison View 
-		 displays the overlapping fauna between a selected region and every other region.<br> 
-		 <span style="text-transform:uppercase;"> Click on the buttons in the side bar to switch views.</span></h3>
-		<img id="welcome-enter-button" class="center" src="../img/enter.png" onmouseover="this.src='../img/enter-hover.png'" 
-		onmouseout="this.src='../img/enter.png'" onclick="controls.hideWelcomeMessage()"/>
-		<h4 class="text-center"> Contributors: Benoit Guenard, Evan Economo, Matt Ziegler, Nitish Narula, Julia Janicki</h4>
-	</div>
-    <div id="welcome-overlay" onclick="controls.hideWelcomeMessage()"></div>
- -->
-    
-   
     
     <!-- jQuery -->
     <script src="js/libraries/jquery.js"></script>

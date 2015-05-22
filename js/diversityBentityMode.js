@@ -3,9 +3,8 @@
 //
 //	External Functions: resetData, activateMode, deactivateMode, resetView 
 //						updateData, bentityInfoLabelHTML, bentityClickHandle
-//						selectBentityView
-//	Internal Functions: getSelectedBentity, renderMap, 
-//						choropleth, 
+//						selectBentityView,errorReportData,getURLParams,decodeURLParams
+//	Internal Functions: getSelectedBentity, renderMap, choropleth
 //////////////////////////////////////////////////////////////////////////
 
 var diversityBentityMode = (function() {
@@ -13,13 +12,12 @@ var diversityBentityMode = (function() {
 			
 	var external = {};
 	
-	var selectedBentityFill = '#00C3A9';// '#00ADA7';
+	var selectedBentityFill = '#00C3A9';
 	
 	var zeroColor = "#ffffff";
 	var colorArray = ["#36486f","#3288bd","#abdda4","#e6f598","#fdae61","#d53e4f","#9e0142"];
 	var legendColors = ["#ffffff","#36486f","#3288bd","#abdda4","#e6f598","#fdae61","#d53e4f","#9e0142"];
-	// var colorArray = ["#fcbba1","#fb6a4a","#ef3b2c","#b30000","#7f0000"];
-// 	var legendColors = ["#ffffff","#fcbba1","#fb6a4a","#ef3b2c","#b30000","#7f0000"];
+
 	
 	
 	
@@ -140,13 +138,12 @@ var diversityBentityMode = (function() {
 				
 				mappedData.sppPerBentity[record.gid] = record.species_count;
 				
+				// populate numRecordsPerBentity object with keys for bentity ID's and record count for value
 				mappedData.numRecordsPerBentity[record.gid]=record.num_records;
 				mappedData.museumCountPerBentity[record.gid]=record.museum_count;
 				mappedData.databaseCountPerBentity[record.gid]=record.database_count;
 				mappedData.literatureCountPerBentity[record.gid]=record.literature_count;
 				
-				console.log("mappedData");
-				console.log(mappedData);
 			}
 			
 			
@@ -168,10 +165,8 @@ var diversityBentityMode = (function() {
 	external.showViewWidgets= function(){		
 		
 		$("#bentity_view").css("display","inline");
-		// $("#antWeb").html("");
-// 		$("#antWiki").html("");
-			$("#antWeb").css("display","none");
-			$("#antWiki").css("display","none");
+		$("#antWeb").css("display","none");
+		$("#antWiki").css("display","none");
 		
 		
 		if (!mappedData.selectBentityView) {

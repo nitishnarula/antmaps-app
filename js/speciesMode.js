@@ -34,6 +34,20 @@ var speciesMode = (function() {
 						 "E": "Exotic",
 						 "D": "Dubious",
 						 "V": "Needs Verification"};
+						 
+	var pointColorsIndex = {"categories":[
+						 {"key":"N",
+						 "value": "#458C68"},
+						 {"key":"I",
+						 "value": "#C93C00"},
+						 {"key":"E", 
+						 "value":"#772424"},
+						 {"key":"D", 
+						 "value":"#155998"},	
+						 {"key":"V",
+						  "value":"#FFAB4A"}
+						  ]};
+	
 	var noRecordsColor = "white";
 
 
@@ -95,7 +109,15 @@ var speciesMode = (function() {
 				.attr('cy',function(d){
 					return baseMap.getProjection()([d.lon,d.lat]).y;
 				})
-				.attr("fill","black")
+				.attr("fill", function(d){
+					//console.log(pointColorsIndex.categories);
+					
+					for (var i=0; i<pointColorsIndex.categories.length;i++){
+						if(pointColorsIndex.categories[i].key==d.status){
+							return pointColorsIndex.categories[i].value;
+						}
+					}
+				})
 				.attr('r',4)
 				.on("click", function(d,i) {
 					// label content for info panel when point is clicked
@@ -183,8 +205,8 @@ var speciesMode = (function() {
 		mappedData.speciesCode = selectedSpp.taxon_code;
 		mappedData.speciesName = selectedSpp.speciesName;
 		
-		console.log("mappedData.speciesName");
-		console.log(mappedData.speciesName);
+		//console.log("mappedData.speciesName");
+		//console.log(mappedData.speciesName);
 	
 		
 		

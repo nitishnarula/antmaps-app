@@ -1,5 +1,9 @@
 //////////////////////////////////////////////////////////////////////////
 //  DIVERSITY MODE
+//  External Functions: resetData, updateData, showViewWidgets, activateMode, 
+//                      deactivateMode, resetView, bentityInfoLabelHTML, bentityClickHandle
+//						errorReportData, getURLParams, decordeURLParams 
+//	Internal Functions: getSelectBoxGenus, getSelectBoxSubfamily, choropleth 
 //
 //////////////////////////////////////////////////////////////////////////
 
@@ -9,7 +13,7 @@ var diversityMode = (function() {
 	var zeroColor = "#ffffff";
 	var colorArray = ["#36486f","#3288bd","#abdda4","#e6f598","#fdae61","#d53e4f","#9e0142"];
 	var legendColors = ["#ffffff","#36486f","#3288bd","#abdda4","#e6f598","#fdae61","#d53e4f","#9e0142"];
-	//#5e4fa2
+	
 	var external = {};
 	
 	
@@ -44,19 +48,16 @@ var diversityMode = (function() {
 			subfamilyKey: null,  // database key for the current genus
 			sppPerBentity: {},    // keys are bentity ID, values are species count
 			maxSpeciesCount: 0,    // maximum number of species for a bentity (for scale)
-			numRecordsPerBentity:{}, //keys are bentity ID
-			museumCountPerBentity:{},
-			databaseCountPerBentity:{},
-			literatureCountPerBentity:{}
+			numRecordsPerBentity:{}, //keys are bentity ID, values are number of total records
+			museumCountPerBentity:{}, //keys are bentity ID, values are number of museum records
+			databaseCountPerBentity:{},//keys are bentity ID, values are number of database records
+			literatureCountPerBentity:{} //keys are bentity ID, values are number of literature records
 			
 		}
 	}
 	external.resetData();
 	
 	
-
-
-
 	// Called when the user selects something, fetches data and draws the map.
 	// selectedTaxon argument is optional, if provided should contain 
 	// {selectedGenus: {name:xxx, key:xxx}, selectedSubfamily:{name:xxx, key:xxx}}
@@ -109,7 +110,7 @@ var diversityMode = (function() {
  				
  			
 			
-			// populate mappedData.sppPerBentity with a key for each bentity, and value for species count
+			
 			for (var i = 0; i < data.bentities.length; i++) {
 				var record = data.bentities[i];
 								
@@ -118,8 +119,12 @@ var diversityMode = (function() {
 					mappedData.maxSpeciesCount = record.species_count;
 				}
 				
+				// populate mappedData.sppPerBentity with a key for each bentity, and value for species count
 				mappedData.sppPerBentity[record.gid] = record.species_count;
 				
+				
+				// populate mappedData.numRecordsPerBentity with a key for each bentity, 
+				//and value for number of records
 				mappedData.numRecordsPerBentity[record.gid]=record.num_records;
 				mappedData.museumCountPerBentity[record.gid]=record.museum_count;
 				mappedData.databaseCountPerBentity[record.gid]=record.database_count;
@@ -148,7 +153,6 @@ var diversityMode = (function() {
 
 	external.showViewWidgets= function(){
 		$("#diversity_view").css("display","inline");		
-		//$('#view-title').html('Diversity View');
 			
 	}
 	
@@ -184,24 +188,27 @@ var diversityMode = (function() {
 	function choropleth(){
 
 		// show map title
+		// set antweb and antwiki links
+		
+		//if filter by genus
 		if (mappedData.genusKey) {
-			//console.log(mappedData.genusName);
-			//console.log(mappedData.subfamilyName);
+	
 			var currentModeTitle = "Genus";
 			mapUtilities.setTitle(currentModeTitle,mappedData.genusName);
 			mapUtilities.setLinks(currentModeTitle,null, mappedData.genusName,mappedData.subfamilyName);
 			$("#antWeb").css("display","inline");
 			$("#antWiki").css("display","inline");
 		}
+		//if filter by subfamily
 		else if (mappedData.subfamilyKey) {
-			//console.log(mappedData.genusName);
-			//console.log(mappedData.subfamilyName);
+			
 			var currentModeTitle = "Subfamily";
 			mapUtilities.setTitle(currentModeTitle,mappedData.subfamilyName);
 			mapUtilities.setLinks(currentModeTitle,null, mappedData.genusName,mappedData.subfamilyName);
 			$("#antWeb").css("display","inline");
 			$("#antWiki").css("display","inline");
 		}
+		//if no filter
 		else {
 			mapUtilities.setTitle('Overall Species Richness','');
 			$("#antWeb").css("display","none");
@@ -260,7 +267,7 @@ var diversityMode = (function() {
 	
 
 	//information on click
-	// Open an info panel with a list of species for this bentity+genus
+	// Open an info panel with a list of species for this bentity+genus and metadata for the records
 	external.bentityClickHandle = function(d, i) {
 		if (!$.isEmptyObject(mappedData.sppPerBentity)) { // is there some data mapped?
 			
@@ -275,8 +282,10 @@ var diversityMode = (function() {
 					
 							infoPanel.html("<h4>" + (mappedData.sppPerBentity[d.properties.gid] || "0") + 
 							" native species for<br/>" + mappedData.genusName + " in " + d.properties.bentity2_name + "</h4>"
-							+"Total Records: "+ (mappedData.numRecordsPerBentity[d.properties.gid]|| "0")+ ", Museum Records: "+(mappedData.museumCountPerBentity[d.properties.gid]|| "0")
-							+", Database Records: "+(mappedData.databaseCountPerBentity[d.properties.gid]|| "0")+", Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0"));
+							+"Total Records: "+ (mappedData.numRecordsPerBentity[d.properties.gid]|| "0")
+							+ ", Museum Records: "+(mappedData.museumCountPerBentity[d.properties.gid]|| "0")
+							+", Database Records: "+(mappedData.databaseCountPerBentity[d.properties.gid]|| "0")
+							+", Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0"));
 				
 							speciesListParams = {bentity: d.properties.gid, genus: mappedData.genusKey};
 						}
@@ -285,16 +294,20 @@ var diversityMode = (function() {
 						else if (mappedData.subfamilyKey) { // if there's a subfamily mapped (but no genus)
 							infoPanel.html("<h4>" + (mappedData.sppPerBentity[d.properties.gid] || "0") + 
 							" native species for<br />" + mappedData.subfamilyName + " in " + d.properties.bentity2_name + "</h4>"
-							+"Total Records: "+ (mappedData.numRecordsPerBentity[d.properties.gid]|| "0")+ ", Museum Records: "+(mappedData.museumCountPerBentity[d.properties.gid]|| "0")
-							+", Database Records: "+(mappedData.databaseCountPerBentity[d.properties.gid]|| "0")+", Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0"));
+							+"Total Records: "+ (mappedData.numRecordsPerBentity[d.properties.gid]|| "0")
+							+ ", Museum Records: "+(mappedData.museumCountPerBentity[d.properties.gid]|| "0")
+							+", Database Records: "+(mappedData.databaseCountPerBentity[d.properties.gid]|| "0")
+							+", Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0"));
 						}
 	
 	
 						else { // no genus or subfamily
 							infoPanel.html("<h4>" + (mappedData.sppPerBentity[d.properties.gid] || "0") + 
 							" native species in " + d.properties.bentity2_name + "</h4>"
-							+"Total Records: "+ (mappedData.numRecordsPerBentity[d.properties.gid]|| "0")+ ", Museum Records: "+(mappedData.museumCountPerBentity[d.properties.gid]|| "0")
-							+", Database Records: "+(mappedData.databaseCountPerBentity[d.properties.gid]|| "0")+", Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0"));
+							+"Total Records: "+ (mappedData.numRecordsPerBentity[d.properties.gid]|| "0")
+							+ ", Museum Records: "+(mappedData.museumCountPerBentity[d.properties.gid]|| "0")
+							+", Database Records: "+(mappedData.databaseCountPerBentity[d.properties.gid]|| "0")
+							+", Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0"));
 						} 
 			
 				
