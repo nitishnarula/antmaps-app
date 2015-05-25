@@ -294,21 +294,13 @@ var diversityBentityMode = (function() {
 			
 				if (d.properties.bentity2_name == mappedData.mappedBentity.name) {
 					// the user clicked on the selected bentity
-					infoPanel.html("<h4>" + (mappedData.sppPerBentity[d.properties.gid] || "0") + " native species<br />for " + d.properties.bentity2_name + "</h4>"
-					+"Total Records: "+ (mappedData.numRecordsPerBentity[d.properties.gid]|| "0")
-					+ ", Museum Records: "+(mappedData.museumCountPerBentity[d.properties.gid]|| "0")
-					+", Database Records: "+(mappedData.databaseCountPerBentity[d.properties.gid]|| "0")
-					+", Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0"));
+					infoPanel.html("<h4>" + (mappedData.sppPerBentity[d.properties.gid] || "0") + " native species<br />for " + d.properties.bentity2_name + "</h4>");
 				}
 				
 				else {
 					// the user clicked a non-selected bentity
 					infoPanel.html("<h4>" + (mappedData.sppPerBentity[d.properties.gid] || "0") + " native species in common<br />between " 
-					+ d.properties.bentity2_name + " and " + mappedData.mappedBentity.name + "</h4>"
-					+"Total Records: "+ (mappedData.numRecordsPerBentity[d.properties.gid]|| "0")
-					+ ", Museum Records: "+(mappedData.museumCountPerBentity[d.properties.gid]|| "0")
-					+", Database Records: "+(mappedData.databaseCountPerBentity[d.properties.gid]|| "0")
-					+", Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0"));
+					+ d.properties.bentity2_name + " and " + mappedData.mappedBentity.name + "</h4>");
 				
 					infoPanel.append("div").classed("bentity-link-wrapper", true).append("a")
 						.classed("map-this-bentity-link", true)

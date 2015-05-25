@@ -64,7 +64,11 @@ var speciesMode = (function() {
 		bentityCategories: {}, // keys are bentity GID's, values are category codes
 		//new
 		genusName:null,
-		subfamilyName:null
+		subfamilyName:null,
+		numRecordsPerBentity:{}, //keys are bentity ID, values are number of total records
+		museumCountPerBentity:{}, //keys are bentity ID, values are number of museum records
+		databaseCountPerBentity:{},//keys are bentity ID, values are number of database records
+		literatureCountPerBentity:{} //keys are bentity ID, values are number of literature records
 		}
 	};
 	external.resetData();
@@ -235,7 +239,13 @@ var speciesMode = (function() {
 					for (var i = 0; i < data.bentities.length; i++) {
 						var record = data.bentities[i];
 						mappedData.bentityCategories[record.gid] = record.category;
+						
+						mappedData.numRecordsPerBentity[record.gid]=record.num_records;
+						mappedData.literatureCountPerBentity[record.gid]=record.literature_count;
+						mappedData.museumCountPerBentity[record.gid]=record.museum_count;
+						mappedData.databaseCountPerBentity[record.gid]=record.database_count;
 					}
+					
 				
 				}
 				
@@ -457,7 +467,12 @@ var speciesMode = (function() {
 	external.bentityClickHandle = function(d, i) {
 		if (!$.isEmptyObject(mappedData.bentityCategories)) {
 			var infoPanel = mapUtilities.openInfoPanel();
-			infoPanel.html("<h4>" + (mappedData.speciesName) + " in " + d.properties.bentity2_name + "</h4><br><br><br>Record data will be available soon.");
+			infoPanel.html("<h4>" + (mappedData.speciesName) + " in " + d.properties.bentity2_name + "</h4><br>"
+			+"Total Records: "+ (mappedData.numRecordsPerBentity[d.properties.gid]|| "0")
+			+ ", Museum Records: "+(mappedData.museumCountPerBentity[d.properties.gid]|| "0")
+			+", Database Records: "+(mappedData.databaseCountPerBentity[d.properties.gid]|| "0")
+			+", Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0")
+			+"<br><br>Record data will be available soon.");
 		}
 	};
 	
