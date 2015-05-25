@@ -152,7 +152,11 @@ var diversityMode = (function() {
 
 
 	external.showViewWidgets= function(){
-		$("#diversity_view").css("display","inline");		
+		$("#diversity_view").css("display","inline");
+		if(mappedData.subfamilyKey != null){
+			$("#antWeb").html("AntWeb");
+ 			$("#antWiki").html("AntWiki");
+ 		}
 			
 	}
 	
@@ -196,8 +200,10 @@ var diversityMode = (function() {
 			var currentModeTitle = "Genus";
 			mapUtilities.setTitle(currentModeTitle,mappedData.genusName);
 			mapUtilities.setLinks(currentModeTitle,null, mappedData.genusName,mappedData.subfamilyName);
-			$("#antWeb").css("display","inline");
-			$("#antWiki").css("display","inline");
+			//$("#antWeb").css("display","inline");
+			//$("#antWiki").css("display","inline");
+			$("#antWeb").html("AntWeb");
+ 			$("#antWiki").html("AntWiki");
 		}
 		//if filter by subfamily
 		else if (mappedData.subfamilyKey) {
@@ -205,14 +211,18 @@ var diversityMode = (function() {
 			var currentModeTitle = "Subfamily";
 			mapUtilities.setTitle(currentModeTitle,mappedData.subfamilyName);
 			mapUtilities.setLinks(currentModeTitle,null, mappedData.genusName,mappedData.subfamilyName);
-			$("#antWeb").css("display","inline");
-			$("#antWiki").css("display","inline");
+			//$("#antWeb").css("display","inline");
+			//$("#antWiki").css("display","inline");
+			$("#antWeb").html("AntWeb");
+ 			$("#antWiki").html("AntWiki");
 		}
 		//if no filter
 		else {
 			mapUtilities.setTitle('Overall Species Richness','');
-			$("#antWeb").css("display","none");
-			$("#antWiki").css("display","none");
+			//$("#antWeb").css("display","none");
+			//$("#antWiki").css("display","none");
+			$("#antWeb").html("");
+ 			$("#antWiki").html("");
 		}
 		
 		

@@ -165,8 +165,10 @@ var diversityBentityMode = (function() {
 	external.showViewWidgets= function(){		
 		
 		$("#bentity_view").css("display","inline");
-		$("#antWeb").css("display","none");
-		$("#antWiki").css("display","none");
+		//$("#antWeb").css("display","none");
+		//$("#antWiki").css("display","none");
+		$("#antWeb").html("");
+		$("#antWiki").html("");
 		
 		
 		if (!mappedData.selectBentityView) {
