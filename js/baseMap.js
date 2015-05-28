@@ -204,9 +204,17 @@ var baseMap = (function() {
 	function loadBentities() {
 
 		d3.json("../data/ben2ready10.topojson", function(error, data){
-	
+			
+			// merge polygon bentities
+			var mergedPolygonBentities = {
+				type: "GeometryCollection",
+				geometries: [].concat( 
+					data.objects.ben2_polygons.geometries,
+					data.objects.ben2_islands.geometries)
+			}
+			
 			// plot polygon bentities
-			bentityPolygonFeatures = topojson.feature(data, data.objects.ben2_polygons); 
+			bentityPolygonFeatures = topojson.feature(data, mergedPolygonBentities); 
 			g.selectAll('path.poly-bentities')
 				.data(bentityPolygonFeatures.features)
 				.enter().append("path")
@@ -215,7 +223,7 @@ var baseMap = (function() {
 
 			
 			// plot point bentities
-			bentityPointFeatures = topojson.feature(data, data.objects.ben2_islands); 
+			bentityPointFeatures = topojson.feature(data, data.objects.ben2_islandpoints); 
 			g.selectAll('circle.point-bentities')
 				.data(bentityPointFeatures.features)
 				.enter().append("circle")
