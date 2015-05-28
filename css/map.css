@@ -120,6 +120,7 @@
 		.infopanel{
 			position:absolute;
 			width: 40%;
+			min-width:350px;
 			margin-left:35%;
 			margin-right:25%;
 			margin-top:150px;
@@ -183,6 +184,11 @@
 			padding-top:5px;
 			padding-bottom:5px;
 			margin-bottom:20px;
+			text-transform: uppercase;
+		}
+		
+		.total{
+			font-size:16px;
 			text-transform: uppercase;
 		}
 		
@@ -316,6 +322,17 @@
 	}
 
 /* media query */
+
+@media all and (max-width: 1300px) {
+	.infopanel{
+			position:absolute;
+			margin-top:100px;
+			height:400px;
+		}
+	.infopanel-content ul{
+		margin-left:35%;
+	}
+}
 @media all and (max-width: 420px) {
 	.infopanel-content ul{
 		margin-left:20%;
@@ -327,7 +344,11 @@
 	}
 	
 	.infopanel{
-		width:70%;
-		margin-left:20%;
+		margin-left:5%;
+	}
+	
+	.infolabel{
+		top:600px;
+		left:50px;
 	}
 }

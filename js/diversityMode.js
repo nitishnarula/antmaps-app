@@ -200,8 +200,6 @@ var diversityMode = (function() {
 			var currentModeTitle = "Genus";
 			mapUtilities.setTitle(currentModeTitle,mappedData.genusName);
 			mapUtilities.setLinks(currentModeTitle,null, mappedData.genusName,mappedData.subfamilyName);
-			//$("#antWeb").css("display","inline");
-			//$("#antWiki").css("display","inline");
 			$("#antWeb").html("AntWeb");
  			$("#antWiki").html("AntWiki");
 		}
@@ -211,16 +209,12 @@ var diversityMode = (function() {
 			var currentModeTitle = "Subfamily";
 			mapUtilities.setTitle(currentModeTitle,mappedData.subfamilyName);
 			mapUtilities.setLinks(currentModeTitle,null, mappedData.genusName,mappedData.subfamilyName);
-			//$("#antWeb").css("display","inline");
-			//$("#antWiki").css("display","inline");
 			$("#antWeb").html("AntWeb");
  			$("#antWiki").html("AntWiki");
 		}
 		//if no filter
 		else {
 			mapUtilities.setTitle('Overall Species Richness','');
-			//$("#antWeb").css("display","none");
-			//$("#antWiki").css("display","none");
 			$("#antWeb").html("");
  			$("#antWiki").html("");
 		}
@@ -292,10 +286,10 @@ var diversityMode = (function() {
 					
 							infoPanel.html("<h4>" + (mappedData.sppPerBentity[d.properties.gid] || "0") + 
 							" native species for<br/>" + mappedData.genusName + " in " + d.properties.bentity2_name + "</h4>"
-							+"Total Records: "+ (mappedData.numRecordsPerBentity[d.properties.gid]|| "0")
-							+ ", Museum Records: "+(mappedData.museumCountPerBentity[d.properties.gid]|| "0")
-							+", Database Records: "+(mappedData.databaseCountPerBentity[d.properties.gid]|| "0")
-							+", Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0"));
+							+"<div class='total'>Total Records: "+ (mappedData.numRecordsPerBentity[d.properties.gid]|| "0")
+							+"</div> <br>Museum Records: "+(mappedData.museumCountPerBentity[d.properties.gid]|| "0")
+							+"&nbsp;&nbsp;&nbsp;&nbsp;Database Records: "+(mappedData.databaseCountPerBentity[d.properties.gid]|| "0")
+							+"&nbsp;&nbsp;&nbsp;&nbsp;Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0"));
 				
 							speciesListParams = {bentity: d.properties.gid, genus: mappedData.genusKey};
 						}
