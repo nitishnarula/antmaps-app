@@ -152,12 +152,12 @@ var speciesMode = (function() {
 				.on("mouseout.border",function(){
 					d3.select(this)
 					.transition()
-					.duration(2000)
+					.duration(1000)
 					.style({
 						'stroke-width':1,
 						'stroke-opacity':1,
 						'fill-opacity':1,
-						'stroke':'black'
+						'stroke':'none'
 					});
 				});
 		
@@ -468,10 +468,10 @@ var speciesMode = (function() {
 		if (!$.isEmptyObject(mappedData.bentityCategories)) {
 			var infoPanel = mapUtilities.openInfoPanel();
 			infoPanel.html("<h4>" + (mappedData.speciesName) + " in " + d.properties.bentity2_name + "</h4><br>"
-			+"Total Records: "+ (mappedData.numRecordsPerBentity[d.properties.gid]|| "0")
-			+ ", Museum Records: "+(mappedData.museumCountPerBentity[d.properties.gid]|| "0")
-			+", Database Records: "+(mappedData.databaseCountPerBentity[d.properties.gid]|| "0")
-			+", Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0")
+			+"<div class='total'>Total Records: "+ (mappedData.numRecordsPerBentity[d.properties.gid]|| "0")
+			+ "</div> <br>Museum Records: "+(mappedData.museumCountPerBentity[d.properties.gid]|| "0")
+			+"&nbsp;&nbsp;&nbsp;&nbsp;Database Records: "+(mappedData.databaseCountPerBentity[d.properties.gid]|| "0")
+			+"&nbsp;&nbsp;&nbsp;&nbsp;Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0")
 			+"<br><br>Record data will be available soon.");
 		}
 	};

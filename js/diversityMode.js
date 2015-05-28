@@ -298,20 +298,20 @@ var diversityMode = (function() {
 						else if (mappedData.subfamilyKey) { // if there's a subfamily mapped (but no genus)
 							infoPanel.html("<h4>" + (mappedData.sppPerBentity[d.properties.gid] || "0") + 
 							" native species for<br />" + mappedData.subfamilyName + " in " + d.properties.bentity2_name + "</h4>"
-							+"Total Records: "+ (mappedData.numRecordsPerBentity[d.properties.gid]|| "0")
-							+ ", Museum Records: "+(mappedData.museumCountPerBentity[d.properties.gid]|| "0")
-							+", Database Records: "+(mappedData.databaseCountPerBentity[d.properties.gid]|| "0")
-							+", Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0"));
+							+"<div class='total'>Total Records: "+ (mappedData.numRecordsPerBentity[d.properties.gid]|| "0")
+							+"</div> <br>Museum Records: "+(mappedData.museumCountPerBentity[d.properties.gid]|| "0")
+							+"&nbsp;&nbsp;&nbsp;&nbsp;Database Records: "+(mappedData.databaseCountPerBentity[d.properties.gid]|| "0")
+							+"&nbsp;&nbsp;&nbsp;&nbsp;Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0"));
 						}
 	
 	
 						else { // no genus or subfamily
 							infoPanel.html("<h4>" + (mappedData.sppPerBentity[d.properties.gid] || "0") + 
 							" native species in " + d.properties.bentity2_name + "</h4>"
-							+"Total Records: "+ (mappedData.numRecordsPerBentity[d.properties.gid]|| "0")
-							+ ", Museum Records: "+(mappedData.museumCountPerBentity[d.properties.gid]|| "0")
-							+", Database Records: "+(mappedData.databaseCountPerBentity[d.properties.gid]|| "0")
-							+", Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0"));
+							+"<div class='total'>Total Records: "+ (mappedData.numRecordsPerBentity[d.properties.gid]|| "0")
+							+"</div> <br>Museum Records: "+(mappedData.museumCountPerBentity[d.properties.gid]|| "0")
+							+"&nbsp;&nbsp;&nbsp;&nbsp;Database Records: "+(mappedData.databaseCountPerBentity[d.properties.gid]|| "0")
+							+"&nbsp;&nbsp;&nbsp;&nbsp;Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0"));
 						} 
 			
 				

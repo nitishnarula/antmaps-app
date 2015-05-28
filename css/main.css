@@ -638,6 +638,13 @@ border-radius:5px;
 			height:40px;
 		}
 		
+		.footer-link{
+			color:#ffe1e1; important
+		}
+		.footer-link:hover{
+			color:gray; important
+		}
+		
 		/* TOOLTIP */
 		a {
 		  text-decoration: none;
