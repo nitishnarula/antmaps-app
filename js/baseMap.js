@@ -213,6 +213,8 @@ var baseMap = (function() {
 					data.objects.ben2_islands.geometries)
 			}
 			
+			
+			
 			// plot polygon bentities
 			bentityPolygonFeatures = topojson.feature(data, mergedPolygonBentities); 
 			g.selectAll('path.poly-bentities')
@@ -221,6 +223,7 @@ var baseMap = (function() {
 				.attr("class","bentities poly-bentities")
 				.attr("id", function(d) {return "poly_" + d.id});;
 
+			
 			
 			// plot point bentities
 			bentityPointFeatures = topojson.feature(data, data.objects.ben2_islandpoints); 
@@ -272,6 +275,15 @@ var baseMap = (function() {
 					return path(d);
 				}
 			});
+			
+			
+			if(map.getZoom()>4){
+				g.selectAll("circle.point-bentities").style("opacity",0);
+			}else{
+				g.selectAll('circle.point-bentities').style("opacity",0.7);
+			
+			}
+			
 			
 			g.selectAll("circle.point-bentities")
 			.each(function(d) {	
