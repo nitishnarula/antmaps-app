@@ -363,6 +363,10 @@ var speciesMode = (function() {
 	external.showViewWidgets = function(){
 		$("#spp_view").css("display","inline");
 		$('#view-title').html('Species Distribution');
+		if(mappedData.speciesName==null){
+			$("#antWeb").html("");
+			$("#antWiki").html("");
+		}
 	};
 	
 

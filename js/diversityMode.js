@@ -153,10 +153,10 @@ var diversityMode = (function() {
 
 	external.showViewWidgets= function(){
 		$("#diversity_view").css("display","inline");
-		if(mappedData.subfamilyKey != null){
-			$("#antWeb").html("AntWeb");
- 			$("#antWiki").html("AntWiki");
- 		}
+// 		if(mappedData.subfamilyKey != null){
+// 			$("#antWeb").html("AntWeb");
+//  			$("#antWiki").html("AntWiki");
+//  		}
 			
 	}
 	
