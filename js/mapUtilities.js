@@ -111,6 +111,26 @@ var mapUtilities = (function() {
 				});
 	};	
 	
+	
+	external.appendSpeciesMetadata = function(container, record){
+	
+		
+	
+		var ul=container.append("ul");
+		
+		ul.classed("record-list", true)
+			.selectAll("li")
+			.data(record)
+			.enter()
+				.append("li")
+				.html(function(d) {return d.gabi_acc_number+" ("+d.type_of_data+"): "+d.short_citation;})
+				.on("click", function(d) {
+					external.closeInfoPanel();
+					baseMap.resetZoom();
+				});
+	
+	
+	};
 
 
 	
