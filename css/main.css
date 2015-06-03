@@ -468,88 +468,7 @@ border-radius:5px;
 			text-transform: uppercase;
 		}
 		
-		/* WELCOME SCREEN */
-		#welcome-message-bg-bg{
-			position: absolute;
-			z-index:9999;
-			width:75%;
-			height:70%;
-			margin-top:100px;
-			margin-left:12.5%;
-			margin-right:12.5%;
-			background-color:gray;
-			border-radius:10px;
-		}
 		
-		#welcome-message-bg{
-			position: absolute;
-			z-index:10000;
-			width:75%;
-			height:70%;
-			margin-top:100px;
-			margin-left:12.5%;
-			margin-right:12.5%;
-			background: url("../img/new-bg.png");
-			background-size:   cover;                    
-    		background-repeat: no-repeat;
-   		/* 	background-position: center center;  */
-			background-size:100%;
-			opacity:0.6;
-			border-radius:10px;
-		}
-		#welcome-message{
-			position: absolute;
-			z-index:10000;
-			width:75%;
-			height:70%;
-			margin-top:100px;
-			margin-left:12.5%;
-			margin-right:12.5%;
-			overflow-y:auto;
-			border: 1px solid black;
-			border-radius:10px;
-			
-		}
-		
-		#welcome-message h1{
-			font-family: 'Dosis', sans-serif;
-			font-size:40px;
-			/* text-shadow: 2px 2px #000000; */
-			opacity:1;
-		}
-		
-		#welcome-message h2{
-			padding-top:4%;
-			padding-bottom:2%;
-			padding-left:10%;
-			padding-right:10%;
-			text-transform:uppercase;
-			font-style:normal;
-			color:white;
-			font-size:24px;
-		}
-		
-		#welcome-message h3{
-			padding-top:3%;
-			padding-left:10%;
-			padding-right:10%;
-			/* text-shadow: 2px 2px #000000; */
-			line-height: 34px;
-		}
-		
-		#welcome-message h4{
-			font-family: 'Dosis', sans-serif;
-			color:white;
-			padding-top:2%;
-		}
-		
-		#welcome-message img{
-			margin-top:4%;
-		}
-		
-		#welcome-message img:hover{
-			cursor:pointer;
-		}
 		
 		img.center{
 			display:block;
@@ -557,19 +476,7 @@ border-radius:5px;
 			margin-right: auto;
 		}
 		
-		#welcome-overlay {
-		    position: fixed;
-		    top: 0;
-		    left: 0;
-		    width: 100%;
-		    height: 100%;
-		    z-index: 9999;
-		    background: rgba(0,0,0,0.3);
-		}
 		
-		#welcome-overlay:hover{
-			/* cursor:pointer; */
-		}
 	
 		/* AJAX LOADER */
 		#loading-message{
@@ -581,43 +488,6 @@ border-radius:5px;
 		}
 
 		
-		/* SPECIES BROWSE PANEL */
-		#spp-browse-panel{
-			width: 60%;
-			margin-left:20%;
-			margin-right:20%;
-			margin-top:200px;
-			height:500px;
-			background-color:black;
-			z-index:100;
-			position:absolute;
-			top:0;
-			left:0;
-			display:none;
-			opacity:0.8;
-		}
-		
-		#close{
-			opacity:1;
-			color:white;
-			background-color:black;
-			z-index:101;
-			position:absolute;
-			width:50px;
-			height:50px;
-			top:0;
-			right:0;
-			padding:6px;
-			font-size:30px;
-		}
-		#close:hover{
-			cursor:pointer;
-			color:gray;
-			-webkit-transition: all 1s ease;
-			-moz-transition: all 1s ease;
-			-ms-transition: all 1s ease;
-			transition: all 1s ease;
-		}
 		
 		/* FOOTER */
 		footer{
@@ -852,34 +722,245 @@ border-radius:5px;
 
 /* media query */
 
-@media all and (max-width: 420px) {
+	
+@media all and (max-width: 550px) {
+	
+		/* SIDE MENU */
+    	
+    	/* side panel becomes integrated into main map */
+    	#side {    
 
-	#side {    
-		  width:500px;
+		  	left: 0px;
+		  	padding-top: 50px;
+		  	padding-bottom: 30px; 
+		  width: 500px;  
+		 	 
+		}
+
+		.prev-button,.next-button{
+			display:none;
 		}
 		
-	#main {
-		    padding: 0;
-		    margin-top: 0px;
-		    margin-bottom: 0px;
-		    margin-left: 0;
-		    margin-right: 0px;
-		    position: absolute;    
-		    top: 0;
-		    left: 0px;
-		    right: 0px;
-		    bottom: 0px;
-		    overflow: auto;
-		    background-color:/*  #3E454C */none;
-		    height: /* 820px; */ 100%;
-		    box-sizing: border-box;
-		    padding-top: 50px;
-		    padding-bottom: 30px;
+		#spp-prev_next{
+			display:none;
+		}
+		#subfamily-prev_next, #genus-prev_next{
+			display:none;
+		}
+
+		
+		/* SIDE: 2 views */
+		
+		
+		/* each view includes the select boxes and legend, but legend is not displayed on mobile version */
+		#spp_view, #diversity_view, #bentity_view{
+			position: absolute;
+			top:250px;
+			left:0px;
+			z-index: 999;
+		}
+		
+		#querySpecies{
+			margin-top:10px;
+			margin-left:0px;
+			width:150px;
+		}
+		
+		#querySubfamily,#queryGenus{
+			margin-top:10px;
+			margin-left:0px;
+			width:150px;
+		}
+		#queryBentity{
+			margin-top:20px;
+			margin-left:0px;
+		}
+		
+
+		
+		
+		/* select boxes for diversity view */
+		#diversityView-subfamily-select,#diversityView-genus-select{
+			margin-left:-5px;
+			margin-top:0px;
+			margin-bottom:0px;
+		}
+		
+		#sppView-species-select{
+			max-width:140px;
+		}
+		
+		/* select box labels for diversity view */
+		#queryGenus label{
+			margin-top:0px;
+		}
+		
+		
+		#querySpecies label{
+			font-size:14px;
+			margin-top:0px;
+			text-shadow: 1px 2px 3px black; 
+		}
+		
+		#querySpecies h4{
+			font-size:14px;
+			margin-top:0px;
+			text-shadow: 1px 2px 3px black; 
+			display:none;
+		}
+		
+		#queryBentity label{
+    		text-shadow: 1px 2px 3px black; 
+    	}
+    	
+    	#queryBentity h4{
+    		text-shadow: 1px 2px 3px black; 
+    	}
+		
+		
+    	select{
+    		margin-left: -5px;
+    	}
+    	
+    	label{
+    		margin-top:0px;
+    		text-shadow: 1px 2px 3px black; 
+    	}
+    	
+    	#bentityView-bentity-select{
+    		max-width: 150px;
+    		margin-left:5px;
+    	}
+    		
+
+		#view-title{
+			position: absolute;
+			top:5px;
+			left:30px;
+		}
+		
+		/* SWITH VIEWS BUTTONS */
+		
+		/* the 3 switch bottons as a group, below current selection */
+		#mode-buttons{
+			margin-top:30px; 
+			margin-left:32px;
+			width:100px;
+		}
+		
+		.button--all{
+			border: 3px solid black;
+			border-radius: 40px;
+			font-weight: 300;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+			font-size: 10px;
+		}
+		
+		.button {
+				float: left;
+			min-width: 120px;
+			max-height:50px;
+
+		}
+		
+		
+    	
+    	
+    	/* SPECIES AUTOCOMPLETE */
+    	
+    	#species-autocomplete{
+    		padding-left:0px;
+    		width:120px;
+    		display:none;
+    	}
+    	
+    	
+    	
+    	/* FORM DIVERSITY VIEW*/
+    	
+    	#diversity_bentity p{
+    		margin-top:20px;
+    	}
+    	
+    	#queryGenus h4{
+			color:white;
+    		text-transform: uppercase;
+    		font-style:bold;
+		}
+    	
+		
+		/* BENTITY MODE */
+	
+		#queryBentity h4{
+			color:white;
+    		text-transform: uppercase;
+    		font-style:bold;
+		}
+		
+
+		#select-bentity-button{
+			top:10px;
+			left:120px;
+			padding-top: 12px;
+			padding-bottom: 6px;
+			padding-left: 2px;
+			padding-right: 2px;
+			width:150px;
+			font-size:10px;
+		}
+		
+		/* click on a region or */
+		#bentity-description{
+			font-size:16px;
+			text-shadow: 1px 2px 3px black; 
+		}
+		
+
+    /* MAIN PANEL */
+    	
+    	/* CHANGED */
+    	#main {
+		    left:0px;
+				padding-top: 50px;
+				padding-bottom: 30px;
 		}	
 		
-	#mode-buttons{
-		margin-top:100px;
-		margin-left:80px;
-	}
-}		
+
+		#current-selection-title{
+				margin-top: 10px;
+				margin-left: 60px;
+			font-size:18px;
+		}
+
+		#current-selection{
+			margin-top: 35px;
+			margin-left: 70px;
+			font-size:14px;
+				
+		}
+		
+		#antWeb{
+			display:none;
+		}
+
+		#antWiki{
+			display:none;
+		}
+
+		#view-description{
+			display:none;
+		}
+		
+		footer p{
+			float:left;
+			padding-left:5px;
+		}
+		
+		#footer-attr{
+			display:none;
+		}
+
+		
+}
 		

@@ -185,7 +185,7 @@ var diversityBentityMode = (function() {
 		if (mappedData.selectBentityView) {
 			$("#select-bentity-button").hide();
 			$("#bentity-description").show();
-			$("#queryBentity").css("margin-top",20);
+			// $("#queryBentity").css("margin-top",20);
 			$("#diversity-bentity-legend-title").hide();
 			baseMap.resetChoropleth();
 			baseMap.setHilightColor(selectedBentityFill);
@@ -193,7 +193,7 @@ var diversityBentityMode = (function() {
 		else {
 			$("#select-bentity-button").show();
 			$("#bentity-description").hide();
-			$("#queryBentity").css("margin-top",80);
+			// $("#queryBentity").css("margin-top",80);
 			$("#diversity-bentity-legend-title").show();
 			choropleth();
 		}

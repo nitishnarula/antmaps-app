@@ -233,6 +233,36 @@
 			margin-bottom:10px;
 			margin-top:20px;
 		}
+		
+		.record-list{
+			margin-top:20px;
+		}
+		
+		.record-list li{
+			margin-left:-90px;
+			font-style: normal;
+		}
+		
+		.record-list li:hover{
+			cursor:auto;
+			color:white;
+			opacity:1; important
+		}
+		
+		
+		.gabi_acc{
+			margin-left:-14px;
+			width:90px;
+			position:absolute;
+		}
+		
+		.type_data{
+			margin-left:/* 14px; */ 80px;
+		}
+		
+		.short_citation{
+			margin-left:/* 14px; */ 10px;
+		}
 
 /* LEGEND */
 
@@ -333,14 +363,19 @@
 		margin-left:35%;
 	}
 }
-@media all and (max-width: 420px) {
+
+@media all and (max-width: 500px) {
 	.infopanel-content ul{
-		margin-left:20%;
+		margin-left:30%;
 	}
 	
 	.infopanel-content h4{
 		margin-top:20px;
-		padding:10px;	
+		padding:10px;
+	}
+	
+	.infopanel-content{
+		font-size:12px;	
 	}
 	
 	.infopanel{
@@ -348,7 +383,53 @@
 	}
 	
 	.infolabel{
-		top:600px;
-		left:50px;
+		top:450px;
+		left:60px;
 	}
+	
+	#species-legend{
+		margin-left:200px;
+		margin-top:-408px; 
+		/* to be below selected species without covering too much of map */
+		
+	}
+	
+	#species-legend span{
+		text-shadow: 1px 2px 3px black; 
+	}
+	
+	#diversity-genus-legend{
+		display:none;
+	}
+	
+	#diversity-subfamily-legend{
+		display:none;
+	}
+	
+	#diversity-bentity-legend{
+		display:none;
+	}
+	
+	#diversity-subfamily-legend-title{
+		display:none;
+	}
+	
+	#diversity-genus-legend-title{
+		display:none;
+	}
+	
+
+	#diversity-bentity-legend-title{
+		display:none;
+		opacity:0;
+	}
+	
+	.categoryName{
+		display:none;
+	}
+	
+	
+	
+
 }
+ 

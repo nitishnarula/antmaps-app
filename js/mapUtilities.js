@@ -111,6 +111,31 @@ var mapUtilities = (function() {
 				});
 	};	
 	
+	
+	external.appendSpeciesMetadata = function(container, record){
+	
+		
+	
+		var ul=container.append("ul");
+		
+		ul.classed("record-list", true)
+			.selectAll("li")
+			.data(record)
+			.enter()
+				.append("li")
+				.html(function(d) {
+				if(d.type_of_data == "Museum Specimen")
+				{	d.type_of_data="Museum";
+				}
+				
+				return "<span class='gabi_acc'>"+d.gabi_acc_number+"</span> <span class='type_data'>("+d.type_of_data+")</span> <span class='short_citation'>"+d.short_citation+"</span>";})
+				.on("click", function(d) {
+					external.closeInfoPanel();
+					baseMap.resetZoom();
+				});
+	
+	
+	};
 
 
 	
