@@ -251,13 +251,13 @@
 		
 		
 		.gabi_acc{
-			margin-left:-14px;
+			margin-left:0px;
 			width:90px;
-			position:absolute;
+			/* position:absolute; */
 		}
 		
 		.type_data{
-			margin-left:/* 14px; */ 80px;
+			margin-left:/* 14px; */ 10px;
 		}
 		
 		.short_citation{
