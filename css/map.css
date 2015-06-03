@@ -248,6 +248,21 @@
 			color:white;
 			opacity:1; important
 		}
+		
+		
+		.gabi_acc{
+			margin-left:-14px;
+			width:90px;
+			position:absolute;
+		}
+		
+		.type_data{
+			margin-left:/* 14px; */ 80px;
+		}
+		
+		.short_citation{
+			margin-left:/* 14px; */ 10px;
+		}
 
 /* LEGEND */
 
