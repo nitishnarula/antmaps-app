@@ -475,9 +475,16 @@ var speciesMode = (function() {
 			+"<div class='total'>Total Records: "+ (mappedData.numRecordsPerBentity[d.properties.gid]|| "0")
 			+ "</div> <br>Museum Records: "+(mappedData.museumCountPerBentity[d.properties.gid]|| "0")
 			+"&nbsp;&nbsp;&nbsp;&nbsp;Database Records: "+(mappedData.databaseCountPerBentity[d.properties.gid]|| "0")
-			+"&nbsp;&nbsp;&nbsp;&nbsp;Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0")
-			+"<br><br>Record data will be available soon.");
+			+"&nbsp;&nbsp;&nbsp;&nbsp;Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0"));
 		}
+		
+		$.getJSON('/dataserver/species-metadata', {taxon_code: mappedData.speciesCode, bentity: d.properties.gid })
+			.error(controls.whoopsNetworkError)
+			.done(function(data) {
+				console.log(data);
+				mapUtilities.appendSpeciesMetadata(infoPanel, data.records);
+			});	
+		
 	};
 	
 	

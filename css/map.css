@@ -233,6 +233,36 @@
 			margin-bottom:10px;
 			margin-top:20px;
 		}
+		
+		.record-list{
+			margin-top:20px;
+		}
+		
+		.record-list li{
+			margin-left:-90px;
+			font-style: normal;
+		}
+		
+		.record-list li:hover{
+			cursor:auto;
+			color:white;
+			opacity:1; important
+		}
+		
+		
+		.gabi_acc{
+			margin-left:-14px;
+			width:90px;
+			position:absolute;
+		}
+		
+		.type_data{
+			margin-left:/* 14px; */ 80px;
+		}
+		
+		.short_citation{
+			margin-left:/* 14px; */ 10px;
+		}
 
 /* LEGEND */
 
