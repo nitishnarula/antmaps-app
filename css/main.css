@@ -819,6 +819,10 @@ border-radius:5px;
     	}
 		
 		
+		#querySpecies,#queryGenus,#querySubfamily,#queryBentity{
+			border-width: 0px;
+		}
+		
     	select{
     		margin-left: -5px;
     	}
