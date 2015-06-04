@@ -756,7 +756,7 @@ border-radius:5px;
 		#spp_view, #diversity_view, #bentity_view{
 			position: absolute;
 			top:250px;
-			left:0px;
+			left:20px;
 			z-index: 999;
 		}
 		
@@ -784,10 +784,11 @@ border-radius:5px;
 			margin-left:-5px;
 			margin-top:0px;
 			margin-bottom:0px;
+			max-width:120px;
 		}
 		
-		#sppView-species-select{
-			max-width:140px;
+		#sppView-subfamily-select,#sppView-genus-select,#sppView-species-select{
+			max-width:120px;
 		}
 		
 		/* select box labels for diversity view */
@@ -843,7 +844,7 @@ border-radius:5px;
 		
 		/* the 3 switch bottons as a group, below current selection */
 		#mode-buttons{
-			margin-top:30px; 
+			margin-top:0px; 
 			margin-left:32px;
 			width:100px;
 		}
@@ -900,7 +901,7 @@ border-radius:5px;
 		
 
 		#select-bentity-button{
-			top:10px;
+			top:30px;
 			left:120px;
 			padding-top: 12px;
 			padding-bottom: 6px;
@@ -914,6 +915,11 @@ border-radius:5px;
 		#bentity-description{
 			font-size:16px;
 			text-shadow: 1px 2px 3px black; 
+			margin-top:0px;
+		}
+		
+		#resetZoom, #resetAll{
+			display:none;
 		}
 		
 
@@ -928,14 +934,15 @@ border-radius:5px;
 		
 
 		#current-selection-title{
-				margin-top: 10px;
-				margin-left: 60px;
-			font-size:18px;
+				margin-top: 30px;
+				margin-left: 180px;
+				max-width:150px;
+			font-size:16px;
 		}
 
 		#current-selection{
-			margin-top: 35px;
-			margin-left: 70px;
+			margin-top: 54px;
+			margin-left: 190px;
 			font-size:14px;
 				
 		}
