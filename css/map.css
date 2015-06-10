@@ -297,6 +297,10 @@
 		vertical-align: middle;
 	}
 	
+	.legendRow:last-of-type{
+		margin-bottom:40px;
+	}
+	
 	
 	.categoryName{
 		color:white;
@@ -354,6 +358,8 @@
 		position:absolute;
 		margin-top:60px;
 	}
+	
+	
 
 /* media query */
 
