@@ -56,9 +56,13 @@
 	    	color:white !important; /* override bootstrap */
     	}
     	
-    	nav li a{
+    	.nav li a{
 	    	font-family: 'Dosis', sans-serif;
 	    	color:white !important; /* override bootstrap */
+    	}
+    	
+    	.nav li a:hover{
+	    	opacity:0.8;
     	}
     	
     	.share-button{
