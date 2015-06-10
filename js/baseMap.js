@@ -69,11 +69,12 @@ var baseMap = (function() {
 	// add tile layers and layer control to Leaflet map	
 	(function() {	
 	
-		var tile1 = L.tileLayer('http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png', {
-					attribution: '&copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-					}),
-		tile2 = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}', {
+		var tile1 = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}', {
 					attribution: 'Tiles &copy; Esri &mdash; Source: USGS, Esri, TANA, DeLorme, and NPS'
+					}),
+		
+		tile2 = L.tileLayer('http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png', {
+					attribution: '&copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 					}),
 		tile3 = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
 					attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'
@@ -87,8 +88,8 @@ var baseMap = (function() {
 		
 		// layer control
 		var layerControlItems = {
-		  "<div class='layer-titles'> OSM Landscape </div>": tile1,
-		  "<div class='layer-titles'> Terrain </div>": tile2,
+		  "<div class='layer-titles'> Terrain </div>": tile1,
+		  "<div class='layer-titles'> OSM Landscape </div>": tile2,
 		  "<div class='layer-titles'> ESRI World Canvas </div>":tile3,
 		  "<div class='layer-titles'> Stamen Toner Lite </div>":tile4
 		};
