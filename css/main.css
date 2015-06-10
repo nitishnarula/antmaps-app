@@ -499,20 +499,20 @@ border-radius:5px;
 			bottom:0px;
 		}
 		footer p{
-			/* margin-top:5px; */
+			padding-top:5px; 
 			text-align:center;
 		}
 		
-		footer-logo{
-			width:40px;
-			height:40px;
+		#footer-logo{
+			width:42px;
+			height:42px;
 		}
 		
 		.footer-link{
 			color:#ffe1e1; important
 		}
 		.footer-link:hover{
-			color:gray; important
+			color:white; important
 		}
 		
 		/* TOOLTIP */
@@ -719,6 +719,32 @@ border-radius:5px;
 			color:white;
 			border:3px solid black;
 		}
+
+
+/* 	ABOUT PAGE */
+	    section{
+    		margin-top:100px;
+    	}
+    	
+    	section h2{
+    		font-style: normal;
+    		font-family: 'Dosis', sans-serif;
+    	}
+    	
+    	section h4{
+    		font-style: normal;
+    		font-family: 'Dosis', sans-serif;
+    		line-height:26px;
+    	}
+    	
+    	section .container{
+    		width:60%;
+    	}
+    	
+    	section h4:first-of-type{
+    		margin-top:30px;
+    	}
+
 
 /* media query */
 
