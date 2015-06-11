@@ -28,38 +28,38 @@ var speciesMode = (function() {
 
 
 	var categoryCodes = ["N", "E", "I", "D", "V"]; // legend will be in this order
-	var categoryColors = ["#b2df8a","#fb9a99","#fdbf6f","#a6cee3","#cab2d6"];
-	// ["#94B73E","#BF000A","#F24B0F","#008798","#F2CF66"];
+	var categoryColors = // ["#b2df8a","#fb9a99","#fdbf6f","#a6cee3","#cab2d6"];
+	 ["#94B73E","#BF000A","#F24B0F","#0079BD","#FCC240"];
 	var categoryNames = {"N": "Native",
 						 "I": "Indoor Introduced",
 						 "E": "Exotic",
 						 "D": "Dubious",
 						 "V": "Needs Verification"};
 						 
-	var pointColorsIndex = {"categories":[
-						 {"key":"N",
-						 "value": "#33a02c"},
-						 {"key":"I",
-						 "value": "#ff7f00"},
-						 {"key":"E", 
-						 "value":"#e31a1c"},
-						 {"key":"D", 
-						 "value":"#1f78b4"},	
-						 {"key":"V",
-						  "value":"#6a3d9a"}
-						  ]};
-						  // {"categories":[
+	var pointColorsIndex = // {"categories":[
 // 						 {"key":"N",
-// 						 "value": "#458C68"},
+// 						 "value": "#33a02c"},
 // 						 {"key":"I",
-// 						 "value": "#C93C00"},
+// 						 "value": "#ff7f00"},
 // 						 {"key":"E", 
-// 						 "value":"#772424"},
+// 						 "value":"#e31a1c"},
 // 						 {"key":"D", 
-// 						 "value":"#155998"},	
+// 						 "value":"#1f78b4"},	
 // 						 {"key":"V",
-// 						  "value":"#FFAB4A"}
+// 						  "value":"#6a3d9a"}
 // 						  ]};
+						  {"categories":[
+						 {"key":"N",
+						 "value": "#458C68"},
+						 {"key":"I",
+						 "value": "#C93C00"},
+						 {"key":"E", 
+						 "value":"#772424"},
+						 {"key":"D", 
+						 "value":"#155998"},	
+						 {"key":"V",
+						  "value":"#FFAB4A"}
+						  ]};
 	
 	var noRecordsColor = "white";
 

@@ -139,6 +139,7 @@
 		}
 		
 		/* SWITH VIEWS BUTTONS */
+		
 		#mode-buttons{
 			position: absolute;
 			top:20px;
@@ -201,6 +202,7 @@
     	
     	
     	/* SPECIES AUTOCOMPLETE */
+    	
     	.ui-autocomplete.ui-menu {
     		background: white;
     		border: #555 solid 1px;
@@ -220,6 +222,7 @@
     	
     	
     	/* FORM DIVERSITY VIEW*/
+    	
     	.diversity-button{
 	    	margin-top: 10px;
 	    	margin-left: 3px;
@@ -331,6 +334,7 @@
 		
 		/* ANIMATION */
 		/* (Click on Bentity text and Map a different region button) */
+		
 		@-webkit-keyframes hvr-pulse-grow {
 		  to {
 			-webkit-transform: scale(1.1);
@@ -361,6 +365,7 @@
 
     	
     	/* MAIN PANEL */
+    	
     	#main {
 		    padding: 0;
 		    margin-top: 0;
@@ -392,12 +397,9 @@
 			font-size:30px;
 			position:absolute;
 			z-index:999;
-			/* text-shadow: 1px 2px 3px white; */
+			text-shadow: 1px 2px 3px white; 
 			text-transform: uppercase;
-			/* 
-border-radius:5px;
-			opacity:0.8;
- */
+
 		}
 		
 		#current-selection{
@@ -409,7 +411,7 @@ border-radius:5px;
 			font-size:26px;
 			z-index:999;
 			padding-right:10px;
-			/* text-shadow: 1px 2px 3px white; */
+			text-shadow: 1px 2px 3px white;
 		}
 		
 		#antWeb{
@@ -423,7 +425,7 @@ border-radius:5px;
 			font-family: 'Dosis', sans-serif;
 			font-size:14px;
 			z-index:999;
-			/* text-decoration:underline; */
+			text-shadow: 1px 2px 3px white;
 		}
 		
 		#antWiki{
@@ -437,7 +439,7 @@ border-radius:5px;
 			font-family: 'Dosis', sans-serif;
 			font-size:14px;
 			z-index:999;
-			/* text-decoration:underline; */
+			text-shadow: 1px 2px 3px white;
 		}
 		
 		#antWeb:hover,#antWiki:hover{
@@ -448,12 +450,12 @@ border-radius:5px;
 		#view-description{
 			color:black;
 			position: absolute;
-			margin-top: 400px;
-			margin-left: 50px;
-			min-width:280px;
-			max-width:280px;
+			margin-top: 100px;
+			margin-left: 100px;
+			min-width:250px;
+			max-width:250px;
 			font-family: 'Dosis', sans-serif;
-			font-size:20px;
+			font-size:16px;
 			z-index:999;
 			text-align: center;
 			background-color:none;
@@ -485,6 +487,7 @@ border-radius:5px;
 		
 	
 		/* AJAX LOADER */
+		
 		#loading-message{
 			position:absolute;
 			margin-top:30%;
@@ -496,6 +499,7 @@ border-radius:5px;
 		
 		
 		/* FOOTER */
+		
 		footer{
 			width:100%;
 			height:50px;
@@ -522,6 +526,8 @@ border-radius:5px;
 		}
 		
 		/* TOOLTIP */
+		/* (reset map and reset zoom) */
+		
 		a {
 		  text-decoration: none;
 		  text-align: center;
@@ -634,6 +640,7 @@ border-radius:5px;
 	
 
 	/* Switch View Buttons */
+	
 		.button {
 			float: left;
 			min-width: 210px;
@@ -728,8 +735,10 @@ border-radius:5px;
 
 
 /* 	ABOUT PAGE */
+
 	    section{
     		margin-top:100px;
+    		margin-bottom:100px;
     	}
     	
     	section h2{
@@ -754,18 +763,27 @@ border-radius:5px;
 
 /* media query */
 
+@media all and (max-width: 1115px) {
+		#footer-logo{
+			width:30px;
+			height:30px;
+		}
+}
+
+
 	
 @media all and (max-width: 550px) {
 	
 		/* SIDE MENU */
     	
     	/* side panel becomes integrated into main map */
+    	
     	#side {    
 
 		  	left: 0px;
 		  	padding-top: 50px;
 		  	padding-bottom: 30px; 
-		  width: 500px;  
+		  	width: 500px;  
 		 	 
 		}
 
@@ -895,7 +913,7 @@ border-radius:5px;
 		}
 		
 		.button {
-				float: left;
+			float: left;
 			min-width: 120px;
 			max-height:50px;
 
@@ -964,15 +982,15 @@ border-radius:5px;
     	/* CHANGED */
     	#main {
 		    left:0px;
-				padding-top: 50px;
-				padding-bottom: 30px;
+			padding-top: 50px;
+			padding-bottom: 30px;
 		}	
 		
 
 		#current-selection-title{
-				margin-top: 30px;
-				margin-left: 180px;
-				max-width:150px;
+			margin-top: 30px;
+			margin-left: 180px;
+			max-width:150px;
 			font-size:16px;
 		}
 
