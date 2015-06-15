@@ -118,7 +118,7 @@ var controls = (function() {
 
 	
 
-	// Different Views Tooptip
+	// Different Views Tooltip
 
 	$("#species-button").hover(
 		function(){
