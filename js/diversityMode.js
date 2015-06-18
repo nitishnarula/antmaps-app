@@ -202,6 +202,8 @@ var diversityMode = (function() {
 			mapUtilities.setLinks(currentModeTitle,null, mappedData.genusName,mappedData.subfamilyName);
 			$("#antWeb").html("AntWeb");
  			$("#antWiki").html("AntWiki");
+ 			$("#antWeb").css("display","inline");
+ 			$("#antWiki").css("display","inline");
 		}
 		//if filter by subfamily
 		else if (mappedData.subfamilyKey) {
@@ -211,12 +213,16 @@ var diversityMode = (function() {
 			mapUtilities.setLinks(currentModeTitle,null, mappedData.genusName,mappedData.subfamilyName);
 			$("#antWeb").html("AntWeb");
  			$("#antWiki").html("AntWiki");
+ 			$("#antWeb").css("display","inline");
+ 			$("#antWiki").css("display","inline");
 		}
 		//if no filter
 		else {
 			mapUtilities.setTitle('Overall Species Richness','');
 			$("#antWeb").html("");
  			$("#antWiki").html("");
+ 			$("#antWeb").css("display","none");
+ 			$("#antWiki").css("display","none");
 		}
 		
 		

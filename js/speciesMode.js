@@ -379,6 +379,8 @@ var speciesMode = (function() {
 		if(mappedData.speciesName==null){
 			$("#antWeb").html("");
 			$("#antWiki").html("");
+			$("#antWeb").css("display","none");
+ 			$("#antWiki").css("display","none");
 		}
 	};
 	
@@ -453,8 +455,8 @@ var speciesMode = (function() {
 			mapUtilities.setLinks(currentModeTitle,mappedData.speciesName, mappedData.genusName,mappedData.subfamilyName);
 			$("#antWeb").html("AntWeb");
  			$("#antWiki").html("AntWiki");
-			//$("#antWeb").css("display","inline");
-			//$("#antWiki").css("display","inline");
+			$("#antWeb").css("display","inline");
+			$("#antWiki").css("display","inline");
 			
 			drawLegend();
 		}
