@@ -125,6 +125,18 @@
 		
 		/* SIDE: 2 views */
 		
+		#legendInfo{
+		  position: absolute;
+		  margin-top: 20px;
+		  margin-left: 180px;
+		  /* white-space: nowrap; */
+		  z-index: 9999;
+		  background: url("../img/info.png") no-repeat;
+		  height:50px;
+		  width:50px;
+		  display:none;
+		}
+		
 		
 		#spp_view, #diversity_view, #bentity_view{
 			position: absolute;
@@ -743,6 +755,11 @@
     	
     	section h2{
     		font-style: normal;
+    		font-family: 'Dosis', sans-serif;
+    	}
+    	
+    	section h3{
+    		color:black; 
     		font-family: 'Dosis', sans-serif;
     	}
     	

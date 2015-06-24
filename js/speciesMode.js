@@ -28,8 +28,7 @@ var speciesMode = (function() {
 
 
 	var categoryCodes = ["N", "E", "I", "V", "D"]; // legend will be in this order
-	var categoryColors = // ["#b2df8a","#fb9a99","#fdbf6f","#a6cee3","#cab2d6"];
-	 ["#94B73E","#BF000A","#F24B0F","#FCC240","#634AA6"];
+	var categoryColors = ["#94B73E","#BF000A","#F24B0F","#F8C830","#B37215"];
 	var categoryNames = {"N": "Native",
 						 "I": "Indoor Introduced",
 						 "E": "Exotic",
@@ -37,18 +36,7 @@ var speciesMode = (function() {
 						 "D": "Dubious"
 						 };
 						 
-	var pointColorsIndex = // {"categories":[
-// 						 {"key":"N",
-// 						 "value": "#33a02c"},
-// 						 {"key":"I",
-// 						 "value": "#ff7f00"},
-// 						 {"key":"E", 
-// 						 "value":"#e31a1c"},
-// 						 {"key":"D", 
-// 						 "value":"#1f78b4"},	
-// 						 {"key":"V",
-// 						  "value":"#6a3d9a"}
-// 						  ]};
+	var pointColorsIndex =
 						  {"categories":[
 						 {"key":"N",
 						 "value": "#458C68"},
@@ -59,7 +47,7 @@ var speciesMode = (function() {
 						 {"key":"V",
 						  "value":"#FFAB4A"},
 						 {"key":"D", 
-						 "value":"#63268F"}
+						 "value":"#8C644C"}
 						  ]};
 	
 	var noRecordsColor = "white";
@@ -521,6 +509,7 @@ var speciesMode = (function() {
 			legendLabels,
 			legendColors
 		);
+		$("#legendInfo").css("display","inline");
 	}
 
 
