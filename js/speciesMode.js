@@ -27,14 +27,15 @@ var speciesMode = (function() {
 	var external = {};
 
 
-	var categoryCodes = ["N", "E", "I", "D", "V"]; // legend will be in this order
+	var categoryCodes = ["N", "E", "I", "V", "D"]; // legend will be in this order
 	var categoryColors = // ["#b2df8a","#fb9a99","#fdbf6f","#a6cee3","#cab2d6"];
-	 ["#94B73E","#BF000A","#F24B0F","#0079BD","#FCC240"];
+	 ["#94B73E","#BF000A","#F24B0F","#FCC240","#634AA6"];
 	var categoryNames = {"N": "Native",
 						 "I": "Indoor Introduced",
 						 "E": "Exotic",
-						 "D": "Dubious",
-						 "V": "Needs Verification"};
+						 "V": "Needs Verification",
+						 "D": "Dubious"
+						 };
 						 
 	var pointColorsIndex = // {"categories":[
 // 						 {"key":"N",
@@ -54,11 +55,11 @@ var speciesMode = (function() {
 						 {"key":"I",
 						 "value": "#C93C00"},
 						 {"key":"E", 
-						 "value":"#772424"},
-						 {"key":"D", 
-						 "value":"#155998"},	
+						 "value":"#772424"},	
 						 {"key":"V",
-						  "value":"#FFAB4A"}
+						  "value":"#FFAB4A"},
+						 {"key":"D", 
+						 "value":"#63268F"}
 						  ]};
 	
 	var noRecordsColor = "white";
@@ -396,8 +397,8 @@ var speciesMode = (function() {
 	
 	
 	external.bentityInfoLabelHTML = function(d, i) {
-		return "<h3 class='text-center'>"
-			+ d.properties.bentity2_name + "</h3><br><b>"
+		return "<h4 class='text-center'>"
+			+ d.properties.bentity2_name + "</h4><br><b>"
 			+ (categoryNames[mappedData.bentityCategories[d.properties.gid]] || "No records for this species") + "</b>";
 	};
 	

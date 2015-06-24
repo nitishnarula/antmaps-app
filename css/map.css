@@ -103,6 +103,10 @@
 			text-align: center;
 			pointer-events: none;
 		}
+		
+		.infolabel h4{
+			font-size:20px; important
+		}
 
 
 /* INFO PANEL (ON CLICK) */
