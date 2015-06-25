@@ -137,6 +137,11 @@
 		  display:none;
 		}
 		
+		.legendCode{
+			width:15px;
+			height:15px;
+		}
+		
 		
 		#spp_view, #diversity_view, #bentity_view{
 			position: absolute;
@@ -1020,14 +1025,20 @@
 		
 		#antWeb{
 			display:none;
+			opacity:0;
 		}
 
 		#antWiki{
 			display:none;
+			opacity:0;
+			pointer-events: none;
+   			cursor: default;
 		}
 
 		#view-description{
 			display:none;
+			pointer-events: none;
+   			cursor: default;
 		}
 		
 		footer p{

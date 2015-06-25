@@ -146,9 +146,9 @@ var mapUtilities = (function() {
 			var currentTitleText;
 			
 			if(currentMode != "Overall Species Richness"){
-				currentTitleText = "Current "+ currentMode+ " :";
+				currentTitleText = "Current "+ currentMode;
 			}else{
-				currentTitleText = "Overall Species Richness: "
+				currentTitleText = "Overall Species Richness"
 			}
 			
 			 
