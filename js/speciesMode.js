@@ -64,7 +64,6 @@ var speciesMode = (function() {
 		speciesCode: null, // current species code
 		pointRecords: null, // current points to show, with {gabi_acc_number:xxx, lat:xxx, lon:xxx} for each
 		bentityCategories: {}, // keys are bentity GID's, values are category codes
-		//new
 		genusName:null,
 		subfamilyName:null,
 		numRecordsPerBentity:{}, //keys are bentity ID, values are number of total records
@@ -193,7 +192,7 @@ var speciesMode = (function() {
 	
 	
 	
-	// called when the user presses the "map" button
+	// called when the user selects a species from the species drop down or by typing in a species
 	// speciesCode is optional, if not provided it will be looked up from select boxes
 	// If provided, selectedSpp should contain {taxon_code:xxx, speciesName:xxx}
 	external.updateData = function(selectedSpp) {
@@ -259,6 +258,7 @@ var speciesMode = (function() {
 					$.getJSON('/dataserver/antweb-links', {taxon_code: selectedSpp.taxon_code})
 					.fail(controls.whoopsNetworkError)
 					.done(function(data){
+						
 						// make sure the user hasn't already selected a different species
 						if (selectedSpp.taxon_code == mappedData.speciesCode) {
 							mappedData.genusName = data.taxonomy[0].genusName;
@@ -341,13 +341,16 @@ var speciesMode = (function() {
 			external.updateData({taxon_code:ui.item.value, speciesName:ui.item.label});
 		
 			// fill the select box with the item's label instead of value (no periods)
-			$(this).val(ui.item.label);
+			$(this).val(ui.item.label); //ui.item.label is the species name
+			
+			//$("sppView-species-select").val(mappedData.speciesName);
 			return false;
 		})
 	
 		// when the user focuses a list item without selecting it, show the label instead of value
 		.on("autocompletefocus", function(event, ui) {
 			$(this).val(ui.item.label);
+			
 			return false;
 		})
 	
@@ -485,7 +488,7 @@ var speciesMode = (function() {
 		$.getJSON('/dataserver/species-metadata', {taxon_code: mappedData.speciesCode, bentity: d.properties.gid })
 			.error(controls.whoopsNetworkError)
 			.done(function(data) {
-				console.log(data);
+				//console.log(data);
 				mapUtilities.appendSpeciesMetadata(infoPanel, data.records);
 			});	
 		
