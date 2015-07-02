@@ -109,6 +109,10 @@ var diversityBentityMode = (function() {
 		
 		$("body").trigger("mapstatechange"); // fire event to update URL	
 		
+		// console.log(mappedData.mappedBentity.name);
+		
+		//sync up drop down with bentity clicked
+		$("#bentityView-bentity-select").val(mappedData.mappedBentity.key);
 		
 		// get data from web server
 		$.getJSON('/dataserver/species-in-common', {bentity: mappedData.mappedBentity.key})

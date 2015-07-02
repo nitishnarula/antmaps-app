@@ -86,6 +86,7 @@ var speciesMode = (function() {
 	
 	$('#sppView-species-select').change(function() {
 		speciesMode.updateData();
+		$('#species-autocomplete').val("");
 	});
 	
 	
