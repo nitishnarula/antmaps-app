@@ -107,6 +107,19 @@ var mapUtilities = (function() {
 					controls.setMode("speciesMode");
 					controls.getCurrentModeObject().updateData(
 						{taxon_code:d.key, speciesName:d.display});
+						
+					//console.log(d.display);
+					//var fullName = d.display;
+					//var genus = fullName.substr(0,fullName.indexOf(' '));
+					
+					
+					//$("#sppView-genus-select").val(genus);
+					//$("#sppView-species-select").prop('disabled',false);
+					//$("#sppView-species-select").val(fullName);
+					
+					//problem: genus called via ajax based on subfamily
+					// and species called via ajax based on genus
+					
 					baseMap.resetZoom();
 				});
 	};	

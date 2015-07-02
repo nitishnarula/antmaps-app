@@ -271,6 +271,43 @@
 		.short_citation{
 			margin-left:/* 14px; */ 10px;
 		}
+		
+		#data-availability{
+		  position: absolute;
+		  top: 40px;
+		  right: 10px;
+		  
+		  /* 
+		  z-index: 99999;
+		  background: url("../img/spp.png") no-repeat;
+		  height:44px;
+		  width:44px;
+		  cursor:pointer;
+ */
+ 			
+ 		    font-family: Antenna,Helvetica,sans-serif;
+			  padding-top: 10px;
+			  padding-bottom: 12px;
+			  padding-left: 6px;
+			  padding-right: 6px;
+			  text-decoration: none;
+			  font-weight: bold;
+			  font-size: 12px;
+			  line-height: 1.5;
+			  text-transform: uppercase;
+			  height: 40px;
+			  width: 80px;
+			  background: #F05253;
+			  color: white;
+			  border: solid 1px black;
+			  border-radius: 40px;
+			  margin-bottom: 10px;
+			  margin-top: 12px;
+			  -webkit-transition: all 200ms ease;
+			  -moz-transition: all 200ms ease;
+			  -ms-transition: all 200ms ease;
+			  transition: all 200ms ease;	
+		}
 
 /* LEGEND */
 
