@@ -221,10 +221,10 @@ var controls = (function() {
 	$('#species-autocomplete').on("autocompleteselect",(function(){
 
 			
-			$("#sppView-genus-select").val('');
+			//$("#sppView-genus-select").val('');
  			$("#sppView-species-select").val('');
 	
- 			$("#sppView-genus-select").prop('disabled', 'disabled');
+ 			//$("#sppView-genus-select").prop('disabled', 'disabled');
  			$("#sppView-species-select").prop('disabled', 'disabled');
 	}));	
 	
