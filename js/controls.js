@@ -217,8 +217,16 @@ var controls = (function() {
 	};
 	
 	
+	//clear and disable genus and species drop down menus when autocomplete is populated
+	$('#species-autocomplete').on("autocompleteselect",(function(){
+
+			
+			$("#sppView-genus-select").val('');
+ 			$("#sppView-species-select").val('');
 	
-	
+ 			$("#sppView-genus-select").prop('disabled', 'disabled');
+ 			$("#sppView-species-select").prop('disabled', 'disabled');
+	}));	
 	
 
 	// When the species-mode subfamily select box changes, populate species-mode genus select box
@@ -233,9 +241,7 @@ var controls = (function() {
 			box.html('<option value="">Select Genus</option>');
 			fillSelectbox(box, data.genera);
 			box.prop('disabled', false);
-			console.log(data);
-			console.log(data.genera);
-			console.log(data.species);
+			
 		})
 		.fail(external.whoopsNetworkError);
 
