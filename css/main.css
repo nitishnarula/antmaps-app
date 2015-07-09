@@ -431,6 +431,20 @@
 			text-shadow: 1px 2px 3px white;
 		}
 		
+		
+		#see-on{
+			height:50px;
+		  	width:50px;
+			color:black;
+			position: absolute;
+			margin-top:90px;
+			margin-left: 66px;
+			font-family: 'Dosis', sans-serif;
+			font-size:14px;
+			z-index:999;
+			text-shadow: 1px 2px 3px white;
+		}
+		
 		#antWeb{
 			/* background: url("../img/antweb50.png") no-repeat; */
 		  	height:50px;
@@ -438,7 +452,7 @@
 			color:black;
 			position: absolute;
 			margin-top:90px;
-			margin-left: 66px;
+			margin-left: 110px;
 			font-family: 'Dosis', sans-serif;
 			font-size:14px;
 			z-index:999;
@@ -452,7 +466,7 @@
 			color:black;
 			position: absolute;
 			margin-top: 90px;
-			margin-left: 130px;
+			margin-left: 174px;
 			font-family: 'Dosis', sans-serif;
 			font-size:14px;
 			z-index:999;
@@ -1023,12 +1037,9 @@
 				
 		}
 		
-		#antWeb{
+		#antWeb,#see-on,#antWiki{
 			display:none;
 			opacity:0;
-		}
-
-		#antWiki{
 			display:none;
 			opacity:0;
 			pointer-events: none;

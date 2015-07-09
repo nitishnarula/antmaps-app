@@ -29,6 +29,7 @@ var speciesMode = (function() {
 
 	var categoryCodes = ["N", "E", "I", "V", "D"]; // legend will be in this order
 	var categoryColors = ["#94B73E","#BF000A","#F24B0F","#F8C830","#B37215"];
+	
 	var categoryNames = {"N": "Native",
 						 "I": "Indoor Introduced",
 						 "E": "Exotic",
@@ -372,8 +373,10 @@ var speciesMode = (function() {
 		if(mappedData.speciesName==null){
 			$("#antWeb").html("");
 			$("#antWiki").html("");
+			$("#see-on").html("");
 			$("#antWeb").css("display","none");
  			$("#antWiki").css("display","none");
+ 			$("#see-on").css("display","none");
 		}
 	};
 	
@@ -448,8 +451,10 @@ var speciesMode = (function() {
 			mapUtilities.setLinks(currentModeTitle,mappedData.speciesName, mappedData.genusName,mappedData.subfamilyName);
 			$("#antWeb").html("AntWeb");
  			$("#antWiki").html("AntWiki");
+ 			$("#see-on").html("See on: ");
 			$("#antWeb").css("display","inline");
 			$("#antWiki").css("display","inline");
+			$("#see-on").css("display","inline");
 			
 			drawLegend();
 		}
@@ -480,7 +485,7 @@ var speciesMode = (function() {
 		if (!$.isEmptyObject(mappedData.bentityCategories)) {
 			var infoPanel = mapUtilities.openInfoPanel();
 			infoPanel.html("<h4>" + (mappedData.speciesName) + " in " + d.properties.bentity2_name + "</h4><br>"
-			+"<a href='about.html#dataAvailabilityAbout'><div id='data-availability' class='hvr-shrink'>Data Info</div></a>"
+			+"<a href='about.html#dataAvailabilityAbout'><div id='data-availability' class='hvr-shrink'>Data Access</div></a>"
 			+"<div class='total'>Total Records: "+ (mappedData.numRecordsPerBentity[d.properties.gid]|| "0")
 			+ "</div> <br>Museum Records: "+(mappedData.museumCountPerBentity[d.properties.gid]|| "0")
 			+"&nbsp;&nbsp;&nbsp;&nbsp;Database Records: "+(mappedData.databaseCountPerBentity[d.properties.gid]|| "0")
@@ -515,6 +520,9 @@ var speciesMode = (function() {
 			legendColors
 		);
 		$("#legendInfo").css("display","inline");
+		
+		
+		
 	}
 
 

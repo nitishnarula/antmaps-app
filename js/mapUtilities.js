@@ -309,11 +309,23 @@ var mapUtilities = (function() {
 	// and "legendColors" is an array with HTML color codes.
 	// The legend will have as many rows as legendLabels.length
 	external.drawLegend = function (legendContainer, legendLabels, legendColors) {
-						
+			
+		//console.log("legendContainer");			
+		//console.log(legendContainer[0][0].id);
+		//console.log(legendLabels);
+		
+		
 		// remove previously-existing legend
 		legendContainer.selectAll('div.legendRow').remove();
 						
-		// create a div for each legend item (color + label)
+
+			
+			
+ 		if (legendContainer[0][0].id == "species-legend"){
+// 			
+		var legendTooltip = ["Records that are considered native","Data that represent non-native species records with established populations in the wild",
+			"Data that represent non-native species records without established populations in the wild","Uncertain records in need of verification to be classified as valid or dubious.",
+			"Erroneous records reported in previous publications or databases but later identified as misidentifications"];
 		legendContainer.selectAll('div.legendRow')
 			.data(legendLabels)
 			.enter()
@@ -321,12 +333,52 @@ var mapUtilities = (function() {
 			.attr('class', 'legendRow')
 			.each(function(d, i) {
 				// add color box and label to each row
+				//console.log(this);
+ 				//console.log(i);
+				d3.select(this).append('div')
+					.attr("class","colorbox").attr('id','colorbox-'+i)
+						.style("background-color", legendColors[i])
+						.style("opacity",0.7);
+				d3.select(this).append('span').text(d);
+				
+				
+				d3.select(this).append('div').attr('class','legendTooltip')
+				.attr('id','tooltip-'+i).style("visibility", "hidden");
+				
+				d3.select('#'+'tooltip-'+i).text(legendTooltip[i]);
+				d3.select(this) // "#"+"colorbox"+i
+				.on('mouseover', function(){
+ 						return d3.select('#'+'tooltip-'+i).style("visibility", "visible").text(legendTooltip[i]);
+ 						
+						
+ 					})
+ 				.on('mouseout',function(){
+ 					return d3.select('#'+'tooltip-'+i).style("visibility", "hidden");
+ 				})
+				
+			});
+			
+		}else{
+		
+				// create a div for each legend item (color + label)
+		legendContainer.selectAll('div.legendRow')
+			.data(legendLabels)
+			.enter()
+			.append('div')
+			.attr('class', 'legendRow')
+			.each(function(d, i) {
+				// add color box and label to each row
+				console.log(this);
+				console.log(i);
 				d3.select(this).append('div')
 					.attr("class","colorbox")
 						.style("background-color", legendColors[i])
 						.style("opacity",0.7);
 				d3.select(this).append('span').text(d);
+				
 			});
+		
+		}
 	}
 
 	

@@ -273,18 +273,9 @@
 		}
 		
 		#data-availability{
-		  position: absolute;
-		  top: 40px;
-		  right: 10px;
-		  
-		  /* 
-		  z-index: 99999;
-		  background: url("../img/spp.png") no-repeat;
-		  height:44px;
-		  width:44px;
-		  cursor:pointer;
- */
- 			
+		  	position: absolute;
+		  	top: 40px;
+		  	right: 10px;
  		    font-family: Antenna,Helvetica,sans-serif;
 			  padding-top: 10px;
 			  padding-bottom: 12px;
@@ -296,10 +287,10 @@
 			  line-height: 1.5;
 			  text-transform: uppercase;
 			  height: 40px;
-			  width: 80px;
-			  background: #F05253;
-			  color: white;
-			  border: solid 1px black;
+			  width: 120px;
+			  background: none;
+			  color: #F05253;
+			  border: solid 1px #F05253;
 			  border-radius: 40px;
 			  margin-bottom: 10px;
 			  margin-top: 12px;
@@ -310,6 +301,31 @@
 		}
 
 /* LEGEND */
+
+
+	/* 
+#species-legend > .colorBox:nth-of-type(1){
+			color:red;
+	}
+ */
+ 
+	 .legendTooltip{
+ 		width:200px;
+ 		
+ 		/* background-color:white; */
+ 		color:black;
+ 		background: rgba(255,255,255,0.9);
+ 		position:absolute;
+ 		margin-left:60px;
+ 		margin-top:-40px;
+ 		z-index:9999999;
+ 		border-radius:5px;
+ 		padding-left:5px;
+ 		padding-right:5px;
+ 		text-align:center;
+ 		
+	 }
+	 
 
 	#species-legend{
 		position:absolute;

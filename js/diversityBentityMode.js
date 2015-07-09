@@ -12,11 +12,14 @@ var diversityBentityMode = (function() {
 			
 	var external = {};
 	
-	var selectedBentityFill = '#00C3A9';
+	var selectedBentityFill ='#00C3A9';
 	
 	var zeroColor = "#ffffff";
-	var colorArray = ["#36486f","#3288bd","#abdda4","#e6f598","#fdae61","#d53e4f","#9e0142"];
-	var legendColors = ["#ffffff","#36486f","#3288bd","#abdda4","#e6f598","#fdae61","#d53e4f","#9e0142"];
+ 	var colorArray = ["#36486f","#3288bd","#abdda4","#e6f598","#fdae61","#d53e4f","#9e0142"];
+ 	var legendColors = ["#ffffff","#36486f","#3288bd","#abdda4","#e6f598","#fdae61","#d53e4f","#9e0142"];
+	
+	//var colorArray =  ["#F9FB0E","#FABB43","#B1BE67","#52BD90","#08ABC1","#0661E1","#362B87"];
+	//var legendColors = ["#ffffff","#F9FB0E","#FABB43","#B1BE67","#52BD90","#08ABC1","#0661E1","#362B87"];
 
 	
 	
@@ -171,8 +174,10 @@ var diversityBentityMode = (function() {
 		$("#bentity_view").css("display","inline");
 		$("#antWeb").css("display","none");
 		$("#antWiki").css("display","none");
+		$("#see-on").css("display","none");
 		$("#antWeb").html("");
 		$("#antWiki").html("");
+		$("#see-on").html("");
 		
 		
 		if (!mappedData.selectBentityView) {

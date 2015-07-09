@@ -14,6 +14,12 @@ var diversityMode = (function() {
 	var colorArray = ["#36486f","#3288bd","#abdda4","#e6f598","#fdae61","#d53e4f","#9e0142"];
 	var legendColors = ["#ffffff","#36486f","#3288bd","#abdda4","#e6f598","#fdae61","#d53e4f","#9e0142"];
 	
+	 //var colorArray =  ["#F9FB0E","#FABB43","#B1BE67","#52BD90","#08ABC1","#0661E1","#362B87"];
+ 	//var legendColors = ["#ffffff","#F9FB0E","#FABB43","#B1BE67","#52BD90","#08ABC1","#0661E1","#362B87"];
+ 	
+	//var colorArray = ["#fee0d2","#fcbba1","#fc9272","#fb6a4a","#ef3b2c","#a50f15","#67000d"];
+	//var legendColors=["#ffffff","#fee0d2","#fcbba1","#fc9272","#fb6a4a","#ef3b2c","#a50f15","#67000d"];
+	
 	var external = {};
 	
 	
@@ -202,8 +208,10 @@ var diversityMode = (function() {
 			mapUtilities.setLinks(currentModeTitle,null, mappedData.genusName,mappedData.subfamilyName);
 			$("#antWeb").html("AntWeb");
  			$("#antWiki").html("AntWiki");
+ 			$("#see-on").html("See on: ");
  			$("#antWeb").css("display","inline");
  			$("#antWiki").css("display","inline");
+ 			$("#see-on").css("display","inline");
 		}
 		//if filter by subfamily
 		else if (mappedData.subfamilyKey) {
@@ -213,16 +221,20 @@ var diversityMode = (function() {
 			mapUtilities.setLinks(currentModeTitle,null, mappedData.genusName,mappedData.subfamilyName);
 			$("#antWeb").html("AntWeb");
  			$("#antWiki").html("AntWiki");
+ 			$("#see-on").html("See on: ");
  			$("#antWeb").css("display","inline");
  			$("#antWiki").css("display","inline");
+ 			$("#see-on").css("display","inline");
 		}
 		//if no filter
 		else {
 			mapUtilities.setTitle('Overall Species Richness','');
 			$("#antWeb").html("");
  			$("#antWiki").html("");
+ 			$("#see-on").html("");
  			$("#antWeb").css("display","none");
  			$("#antWiki").css("display","none");
+ 			$("#see-on").css("display","none");
 		}
 		
 		
