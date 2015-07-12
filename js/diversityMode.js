@@ -158,8 +158,8 @@ var diversityMode = (function() {
 					})
 					.always( function() {
 						$("#loading-message").hide();
-					}
-				});
+					});
+				}
 				
 				choropleth();
 			}
