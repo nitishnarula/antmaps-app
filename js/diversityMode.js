@@ -85,8 +85,24 @@ var diversityMode = (function() {
 		mappedData.subfamilyName = selectedSubfamily.name;
 		mappedData.subfamilyKey = selectedSubfamily.key;
 		
-		
-		
+		// For antweb links, when only genus is selected by user, get subfamily name
+		if (mappedData.genusKey.length > 0 && mappedData.subfamilyKey.length == 0) {
+			//console.log(mappedData)
+			$.getJSON('/dataserver/antweb-links', {genus_name: selectedGenus.name})
+			.fail(controls.whoopsNetworkError)
+			.done(function(data){
+				
+				// make sure the user hasn't already selected a different genus
+				if (mappedData.genusName == selectedGenus.name){
+					mappedData.subfamilyName = data.taxonomy[0].subfamilyName;
+				}
+			
+			})
+			.always( function() {
+				$("#loading-message").hide();
+			});
+		}
+		//console.log(mappedData)
 		
 		$("#loading-message").show();
 
@@ -142,25 +158,7 @@ var diversityMode = (function() {
 		
 			
 			// make sure the user hasn't switched to a different mode already
-			if (controls.getCurrentModeName() == "diversityMode") {
-				
-				// For antweb links, when only genus is selected by user, get subfamily name
-				if (mappedData.genusKey && !mappedData.subfamilyKey) {
-					$.getJSON('/dataserver/antweb-links', {genus_name: selectedGenus.name})
-					.fail(controls.whoopsNetworkError)
-					.done(function(data){
-						
-						// make sure the user hasn't already selected a different genus
-						if (mappedData.genusName == selectedGenus.name){
-							mappedData.subfamilyName = data.taxonomy[0].subfamilyName;
-						}
-					
-					})
-					.always( function() {
-						$("#loading-message").hide();
-					});
-				}
-				
+			if (controls.getCurrentModeName() == "diversityMode") {				
 				choropleth();
 			}
 		})
