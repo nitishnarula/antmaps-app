@@ -142,7 +142,25 @@ var diversityMode = (function() {
 		
 			
 			// make sure the user hasn't switched to a different mode already
-			if (controls.getCurrentModeName() == "diversityMode") { 
+			if (controls.getCurrentModeName() == "diversityMode") {
+				
+				// For antweb links, when only genus is selected by user, get subfamily name
+				if (mappedData.genusKey && !mappedData.subfamilyKey) {
+					$.getJSON('/dataserver/antweb-links', {genus_name: selectedGenus.key})
+					.fail(controls.whoopsNetworkError)
+					.done(function(data){
+						
+						// make sure the user hasn't already selected a different genus
+						if (mappedData.genusKey == selectedGenus.key){
+							mappedData.subfamilyName = data.taxonomy[0].subfamilyName;
+						}
+					
+					})
+					.always( function() {
+						$("#loading-message").hide();
+					}
+				});
+				
 				choropleth();
 			}
 		})
