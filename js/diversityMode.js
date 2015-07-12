@@ -146,12 +146,12 @@ var diversityMode = (function() {
 				
 				// For antweb links, when only genus is selected by user, get subfamily name
 				if (mappedData.genusKey && !mappedData.subfamilyKey) {
-					$.getJSON('/dataserver/antweb-links', {genus_name: selectedGenus.key})
+					$.getJSON('/dataserver/antweb-links', {genus_name: selectedGenus.name})
 					.fail(controls.whoopsNetworkError)
 					.done(function(data){
 						
 						// make sure the user hasn't already selected a different genus
-						if (mappedData.genusKey == selectedGenus.key){
+						if (mappedData.genusName == selectedGenus.name){
 							mappedData.subfamilyName = data.taxonomy[0].subfamilyName;
 						}
 					
