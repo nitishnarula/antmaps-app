@@ -236,13 +236,13 @@ var diversityMode = (function() {
 			if($("#diversityView-subfamily-select").val()=="All Subfamilies"){
 			//must look up the subfamily for the selected genus
 			
-				var selectedGenus = $("#diversityView-subfamily-select").val();
+				//var selectedGenusNew = $("#diversityView-subfamily-select").val();
 				
-				$.getJSON('/dataserver/antweb-links', {genus_name:selectedGenus})
+				$.getJSON('/dataserver/antweb-links', {genus_name:mappedData.genusName})
 				.error(controls.whoopsNetworkError)
 				.done(function(data) {
 					loadingMessage.remove();
-					mapUtilities.setLinks(currentModeTitle,null, selectedGenus,data.subfamilyName);
+					mapUtilities.setLinks(currentModeTitle,null, mappedData.genusName,data.subfamilyName);
 				});
 				
 			
