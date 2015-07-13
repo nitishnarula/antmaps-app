@@ -212,22 +212,46 @@ var diversityMode = (function() {
 
 	// draw diversity-mode choropleth
 	function choropleth(){
-
-		// show map title
-		// set antweb and antwiki links
-		
-		//if filter by genus
-		if (mappedData.genusKey) {
 	
+	
+	
+		if (mappedData.genusKey) {
+		
+			//console.log($("#diversityView-subfamily-select").val());
+			
 			var currentModeTitle = "Genus";
 			mapUtilities.setTitle(currentModeTitle,mappedData.genusName);
-			mapUtilities.setLinks(currentModeTitle,null, mappedData.genusName,mappedData.subfamilyName);
-			$("#antWeb").html("AntWeb");
- 			$("#antWiki").html("AntWiki");
- 			$("#see-on").html("See on: ");
- 			$("#antWeb").css("display","inline");
- 			$("#antWiki").css("display","inline");
- 			$("#see-on").css("display","inline");
+			
+				$("#antWeb").html("AntWeb");
+				$("#antWiki").html("AntWiki");
+				$("#see-on").html("See on: ");
+				$("#antWeb").css("display","inline");
+				$("#antWiki").css("display","inline");
+				$("#see-on").css("display","inline");
+			
+			
+			
+			//to ensure the subfamily is selected first before passing it to mapUtilities.setLinks, 
+			//otherwise the link for antweb would be broken since the subfamily would be All Subfamilies
+			if($("#diversityView-subfamily-select").val()=="All Subfamilies"){
+			//must look up the subfamily for the selected genus
+			
+				var selectedGenus = $("#diversityView-subfamily-select").val();
+				
+				$.getJSON('/dataserver/antweb-links', {genus_name:selectedGenus})
+				.error(controls.whoopsNetworkError)
+				.done(function(data) {
+					loadingMessage.remove();
+					mapUtilities.setLinks(currentModeTitle,null, selectedGenus,data.subfamilyName);
+				});
+				
+			
+			}else{
+				
+				mapUtilities.setLinks(currentModeTitle,null, mappedData.genusName,mappedData.subfamilyName);
+				
+ 			
+ 			}
 		}
 		//if filter by subfamily
 		else if (mappedData.subfamilyKey) {
@@ -252,6 +276,9 @@ var diversityMode = (function() {
  			$("#antWiki").css("display","none");
  			$("#see-on").css("display","none");
 		}
+		
+
+		
 		
 		
 		
