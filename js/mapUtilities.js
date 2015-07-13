@@ -207,7 +207,7 @@ var mapUtilities = (function() {
 		    
 		    }else if(currentRank == "Species"){
 		    	
-		    	console.log("setLinks species rank");
+		    	//console.log("setLinks species rank");
 		    	
 		    	var currentSpeciesArray = currentSpecies.split(" ");
 		    	
@@ -368,8 +368,8 @@ var mapUtilities = (function() {
 			.attr('class', 'legendRow')
 			.each(function(d, i) {
 				// add color box and label to each row
-				console.log(this);
-				console.log(i);
+				//console.log(this);
+				//console.log(i);
 				d3.select(this).append('div')
 					.attr("class","colorbox")
 						.style("background-color", legendColors[i])

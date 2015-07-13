@@ -230,10 +230,10 @@ var diversityMode = (function() {
 				$("#see-on").css("display","inline");
 			
 			
-			
+			console.log($("#diversityView-subfamily-select option:selected").text());
 			//to ensure the subfamily is selected first before passing it to mapUtilities.setLinks, 
 			//otherwise the link for antweb would be broken since the subfamily would be All Subfamilies
-			if($("#diversityView-subfamily-select").val()=="All Subfamilies"){
+			if($("#diversityView-subfamily-select option:selected").text()=="All Subfamilies"){
 			//must look up the subfamily for the selected genus
 			
 				//var selectedGenusNew = $("#diversityView-subfamily-select").val();
@@ -241,8 +241,8 @@ var diversityMode = (function() {
 				$.getJSON('/dataserver/antweb-links', {genus_name:mappedData.genusName})
 				.error(controls.whoopsNetworkError)
 				.done(function(data) {
-					loadingMessage.remove();
-					mapUtilities.setLinks(currentModeTitle,null, mappedData.genusName,data.subfamilyName);
+					console.log(data.taxonomy[0].subfamilyName);
+					mapUtilities.setLinks(currentModeTitle,null, mappedData.genusName,data.taxonomy[0].subfamilyName);
 				});
 				
 			
