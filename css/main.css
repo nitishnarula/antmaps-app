@@ -56,6 +56,7 @@
 	    	font-size: 30px;
 	    	font-family: 'Dosis', sans-serif;
 	    	color:white !important; /* override bootstrap */
+	    	line-height:10px;
     	}
     	
     	.nav li a{
