@@ -447,6 +447,37 @@ var controls = (function() {
 
 
 
+	// Set the subfamily, genus, and species for the species-view species-select dropdowns
+	external.setSpeciesDropdowns = function(subfamily, genus, specieskey) {
+		
+		// if the given species is already selected, then do nothing
+		if ($('#sppView-species-select').val() != specieskey) {
+		
+			// set species once the species-list is updated, after genus selection
+			$('#sppView-species-select').one('listupdate', function() {
+				$('#sppView-species-select').val(specieskey).change();
+			});
+		
+			// set genus once the genus-list is updated, after subfamily selection
+			$('#sppView-genus-select').one('listupdate', function() {
+				$('#sppView-genus-select').val(genus).change();
+			});
+		
+			// set subfamily
+			$('#sppView-subfamily-select').val(subfamily).change();
+		
+		}
+	};
+
+
+
+
+
+
+
+
+
+
 	// display error message
 	external.whoopsNetworkError = function() {
 		alert('Whoops!  Something went wrong.  Please check your internet connection and try again, or refresh the page.');

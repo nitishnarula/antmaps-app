@@ -456,6 +456,12 @@ var speciesMode = (function() {
 			$("#antWiki").css("display","inline");
 			$("#see-on").css("display","inline");
 			
+			
+			// Synchronize all species-selection controls with currently-mapped species
+			controls.setSpeciesDropdowns(mappedData.subfamilyName, mappedData.genusName, mappedData.speciesCode);
+			$('#species-autocomplete').val(mappedData.speciesName);
+			
+			
 			drawLegend();
 		}
 		
