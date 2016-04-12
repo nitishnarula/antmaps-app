@@ -95,6 +95,7 @@ var baseMap = (function() {
 		  "<div class='layer-titles'> ESRI World Canvas </div>":tile3,
 		  "<div class='layer-titles'> Stamen Toner Lite </div>":tile4
 		};
+		
 		L.control.layers(layerControlItems).addTo(map);
 
 	})();
@@ -224,7 +225,7 @@ var baseMap = (function() {
 				.data(bentityPolygonFeatures.features)
 				.enter().append("path")
 				.attr("class","bentities poly-bentities")
-				.attr("id", function(d) {return "poly_" + d.id});;
+				.attr("id", function(d) {return "poly_" + d.id});
 
 			
 			
