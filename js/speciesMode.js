@@ -491,7 +491,7 @@ var speciesMode = (function() {
 		if (!$.isEmptyObject(mappedData.bentityCategories)) {
 			var infoPanel = mapUtilities.openInfoPanel();
 			infoPanel.html("<h4>" + (mappedData.speciesName) + " in " + d.properties.bentity2_name + "</h4><br>"
-			+"<a href='about.html#dataAvailabilityAbout'><div id='data-availability' class='hvr-shrink'>Data Access</div></a>"
+		// 	+"<a href='about.html#dataAvailabilityAbout'><div id='data-availability' class='hvr-shrink'>Data Access</div></a>"
 			+"<div class='total'>Total Records: "+ (mappedData.numRecordsPerBentity[d.properties.gid]|| "0")
 			+ "</div> <br>Museum Records: "+(mappedData.museumCountPerBentity[d.properties.gid]|| "0")
 			+"&nbsp;&nbsp;&nbsp;&nbsp;Database Records: "+(mappedData.databaseCountPerBentity[d.properties.gid]|| "0")

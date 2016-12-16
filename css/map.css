@@ -243,7 +243,8 @@
 		}
 		
 		.record-list li{
-			margin-left:-80px;
+			margin-left:-200px;
+			margin-right:80px;
 			font-style: normal;
 		}
 		
@@ -259,17 +260,17 @@
 		}
 		
 		.gabi_acc{
-			margin-left:0px;
-			width:90px;
-			/* position:absolute; */
+			margin-left:-20px;
+			font-weight:400;
 		}
 		
 		.type_data{
-			margin-left:/* 14px; */ 10px;
+			
 		}
 		
 		.short_citation{
-			margin-left:/* 14px; */ 10px;
+			margin-left:20px;
+			width:200px;
 		}
 		
 		#data-availability{
@@ -429,6 +430,37 @@
 	.infopanel-content ul{
 		margin-left:35%;
 	}
+	
+	.record-list li{
+			margin-left:-100px;
+			margin-right:80px;
+			font-style: normal;
+		}
+		
+		.record-list li:hover{
+			cursor:auto;
+			color:white;
+			opacity:1; important
+		}
+		
+		ul li span:first-of-type { 
+    		float: left;
+   			width: 90px;
+		}
+		
+		.gabi_acc{
+			margin-left:-20px;
+			font-weight:400;
+		}
+		
+		.type_data{
+			
+		}
+		
+		.short_citation{
+			margin-left:20px;
+			width:200px;
+		}
 }
 
 @media all and (max-width: 1100px) and (min-width: 801px) {
@@ -444,6 +476,42 @@
 		font-size:12px;	
 
 	}
+	
+	
+}
+
+@media all and (max-width: 1000px) and (min-width: 801px) {
+
+		.record-list li{
+			margin-left:-80px;
+			margin-right:40px;
+			font-style: normal;
+		}
+		
+		.record-list li:hover{
+			cursor:auto;
+			color:white;
+			opacity:1; important
+		}
+		
+		ul li span:first-of-type { 
+    		float: left;
+   			width: 90px;
+		}
+		
+		.gabi_acc{
+			margin-left:-20px;
+			font-weight:400;
+		}
+		
+		.type_data{
+			
+		}
+		
+		.short_citation{
+			margin-left:20px;
+			width:200px;
+		}
 }
 
 @media all and (max-width: 800px) and (min-width: 621px) {
@@ -458,6 +526,37 @@
 		font-size:12px;	
 
 	}
+	.record-list li{
+		margin-left:-80px;
+		margin-right:40px;
+		font-style: normal;
+	}
+
+	.record-list li:hover{
+		cursor:auto;
+		color:white;
+		opacity:1; important
+	}
+
+	ul li span:first-of-type { 
+		float: left;
+		width: 90px;
+	}
+
+	.gabi_acc{
+		margin-left:-20px;
+		font-weight:400;
+	}
+
+	.type_data{
+	
+	}
+
+	.short_citation{
+		margin-left:20px;
+		width:200px;
+	}
+	
 
 }
 
@@ -468,6 +567,36 @@
 	.infopanel-content{
 		font-size:12px;	
 
+	}
+	.record-list li{
+		margin-left:-80px;
+		margin-right:40px;
+		font-style: normal;
+	}
+	
+	.record-list li:hover{
+		cursor:auto;
+		color:white;
+		opacity:1; important
+	}
+	
+	ul li span:first-of-type { 
+		float: left;
+		width: 90px;
+	}
+	
+	.gabi_acc{
+		margin-left:-20px;
+		font-weight:400;
+	}
+	
+	.type_data{
+		
+	}
+	
+	.short_citation{
+		margin-left:20px;
+		width:200px;
 	}
 
 }
@@ -536,6 +665,37 @@
 	
 	.categoryName{
 		display:none;
+	}
+	
+	.record-list li{
+		margin-left:-100px;
+		margin-right:20px;
+		font-style: normal;
+	}
+	
+	.record-list li:hover{
+		cursor:auto;
+		color:white;
+		opacity:1; important
+	}
+	
+	ul li span:first-of-type { 
+		float: left;
+		width: 90px;
+	}
+	
+	.gabi_acc{
+		margin-left:-20px;
+		font-weight:400;
+	}
+	
+	.type_data{
+		
+	}
+	
+	.short_citation{
+		margin-left:20px;
+		width:200px;
 	}
 	
 	
