@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+  
+    <title>antmaps.org - GABI API</title>
+
+    <link rel="icon" type="image/png" href="img/spp.png">
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts Dosis -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Dosis">
+    
+    <!-- Hover.css -->
+    <link rel="stylesheet" href="css/hover-min.css">
+    
+    <!-- Custom CSS -->
+   <link rel="stylesheet" href="css/main.css">
+   
+   <!-- Google Tracking Code -->
+   <script>
+     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+     ga('create', 'UA-64968443-1', 'auto');
+     ga('send', 'pageview');
+
+   </script>
+   
+   
+        
+    <style type="text/css">
+        section p, li {
+            font-style: normal;
+            font-family: 'Dosis', sans-serif;
+            line-height: 26px;
+            font-size: 18px;
+            color: rgb(51,51,51);
+        }
+        
+        a.api-example {
+            display:block;
+            color: rgb(51, 122, 183);
+            text-align: left;
+            background: #ccc;
+            padding: 4px;
+            margin: 2px 0;
+            border-radius: 3px;
+        }
+        a.api-example:hover {
+            color: rgb(51, 122, 183);
+            text-decoration: none;
+            background: #d7d7d7;
+        }
+        a.api-example span {
+            color:#777;
+        }
+        
+        li.contents-topic {
+            list-style: none;
+            padding-top: 12px;
+        }
+        
+        .h3 {
+            padding-top: 16px;
+        }
+    </style>
+
+</head>
+<body>
+
+ <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              
+                <a class="navbar-brand" href="index.html">antmaps.org</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+    </nav>
+     
+     
+     <section>
+        <div class="container">
+                   <div class="row">
+                           <h2>GABI Data API </h2>
+                        <p>You can access <a href="https://benoitguenard.wordpress.com/gabi-articles/" target="_blank">GABI</a>, the database behind antmaps.org, with the GABI API and R package.</p>
+                        <p><span class="label label-primary">TO DO</span> Here are a couple sentences explaining what GABI is, and a link to the paper.</p>
+                        <br>
+                        
+                        
+                        
+                        <h2>How to Use</h2>
+                        <p>To retrieve data from the API, load URL's on our web server to specify which data you want, and the server will return a file with the requested data.  You can request either CSV or JSON by appending <i>.csv</i> or <i>.json</i> to the file name.  See below for examples.</p>
+                        <p><span class="label label-primary">TO DO</span> The R package (link goes here) acts as a wrapper around the API, allowing you to easily access the API from within R and recieve the data in an R-friendly format.  Here will go some instructions about how to install the R package and where to find the documentation.</p>
+                        
+                        <div class="alert alert-info">
+                        <b>The GABI database changes over time</b> as we continue to add new data sources and make corrections.  Because of this, if you publish any work that uses GABI data, please be sure to publish your data from GABI so others can replicate your results.
+                        </div>
+                        <br>
+                        
+                        
+                        <h2>Data Resources</h2>
+                        <ul>
+                            <li class="contents-topic">Raw GABI data</li>
+                            <li><a href="#records"><span class="label label-primary">TO DO</span> Records</a></li>
+                            <li><a href="#geo-coords">Geographic coordinates</a></li>
+                            <li><a href="#bentities">Bentities - geographic entities</a></li>
+                            <li><a href="#bentities-search"><span class="label label-primary">TO DO</span> Bentity search</a></li>
+                            
+                            <li class="contents-topic">Aggregated data</li>
+                            <li><a href="#species-range">Species ranges</a></li>
+                            <li><a href="#species-diversity">Species diversity</a></li>
+                            <li><a href="#region-comparison">Region comparison</a></li>
+                            
+                            <li class="contents-topic">Taxonomy helper functions</li>
+                            <li><a href="#species">Species</a></li>
+                            <li><a href="#species-search">Species search</li>
+                            <li><a href="#genera">Genera</a></li>
+                            <li><a href="#subfamilies">Subfamilies</li>
+                        </ul>
+                        <br><br>
+                        
+                        
+                        
+                        <a name="records"></a>
+                        <h3>Records</h3>
+                        <p><span class="label label-primary">TO DO</span> This isn't implemented yet!  (High priority)</p>
+                        <p>Each record is made up of a species, a citation, and a geographhic entity.  This resource will have some handy ways to access and filter citations from GABI.</p>
+                        <br>
+                                               
+                        
+                        <a name="geo-coords"></a>
+                        <h3>Geographic coordinates</h3>
+                        <p>The GABI API has a separate resource for querying geospatial coordinates, because there are many cases where a single GPS point is related to thousands of records.  (There are also many records without geospatial coordinates, especially pre-1990.)  GABI uses a (lat, lon) coordinate system (EPSG 4236).<p>
+                        <p>The <i>status</i> field (native, exotic, etc.) in the results follows the <a href="about.html#status-legend" target="_blank">this legend</a>.
+                        <p><span class="label label-primary">TO DO</span> We should add more ways to query the geographic poins, like by genus and subfamily, and/or a geographic bounding box.</p>
+                        <p><span class="label label-primary">TO DO</span> It would be helpful to show the number of records for each point.  Can we also show the museum count, database count, etc?</p>
+                        <p class="api-examples">Examples:
+                            <a class="api-example" href="/api/v01/species-points.csv?species=Acanthognathus.brevicornis"><span>http://antmaps.org/api/v01</span>/species-points.csv?species=Acanthognathus.brevicornis</a>
+                        </p>
+                        <p class="arguments">Arguments:
+                            <ul>
+                                <li><b>species</b>: (required) the species for which to show coordinates.  The genus and species should be separated by a period, eg. (Acanthognathus.brevicornis).</li>
+                            </ul>
+                        </p>
+                        <br>
+                        
+                        
+                        <a name="bentities"></a>
+                        <h3>Bentities - geographic entities</h3>
+                        <p><span class="label label-primary">TO DO</span> This paragraph should explain what bentities are.</p>
+                        <p><span class="label label-primary">TO DO</span> We should upload the bentity outlines in a couple different formats (shapefiles and geoJSON?) and provide links to them here.</p>
+                        <p>When querying the API, bentities should be specified by their numeric ID.  You can see a list of all bentity names and ID's with this resource:</p>
+                        <p class="api-examples">
+                            <a class="api-example" href="/api/v01/bentities.csv"><span>http://antmaps.org/api/v01</span>/bentities.csv</a>
+                        </p>
+                        <br>
+                        
+                        
+                        
+                        <a name="bentities-search"></a>
+                        <h3>Bentity search</h3>
+                        <p><span class="label label-primary">TO DO</span> Not yet implemented</p>
+                        <p>To make bentities less painful to deal with, this resource will let users search for partial bentity names, similar to the species search resource.</p>
+                        <br>
+                        
+                        
+                        
+                        
+                        <a name="species-range"></a>
+                        <h3>Species ranges</h3>
+                        <p>For a given species, return a row for each bentity where the species is present, along with the status (native, exotic, etc,) and number of records.  The antmaps.org <a href="index.html?mode=species" target="_blank">species range maps</a> are rendered from this data resource.</p>
+                        <p>The <i>status</i> field (native, exotic, etc.) in the results follows the <a href="about.html#status-legend" target="_blank">this legend</a>.
+                        <p class="api-examples">Examples:
+                            <a class="api-example" href="/api/v01/species-range.csv?species=Bothriomyrmex.atlantis"><span>http://antmaps.org/api/v01</span>/species-range.csv?species=Bothriomyrmex.atlantis</a>
+                        </p>
+                        <p class="arguments">Arguments:
+                            <ul>
+                                <li><b>species</b>: (required) the species for which to show coordinates.  The genus and species should be separated by a period, eg. (Acanthognathus.brevicornis).</li>
+                            </ul>
+                        </p>
+                        <br>
+                        
+                        
+                        
+                        <a name="species-diversity"></a>
+                        <h3>Species diversity</h3>
+                        <p>View the number of native species in each bentity.  Optionally filter by a genus or subfamily, or omit any arguments for the overall species diversity.  The antmaps.org <a href="index.html?mode=diversity" target="_blank">diversity view</a> is rendered from this data resource.</p>
+                        <p class="api-examples">Examples:
+                            <a class="api-example" href="/api/v01/species-per-bentity.csv"><span>http://antmaps.org/api/v01</span>/species-per-bentity.csv</a>
+                            <a class="api-example" href="/api/v01/species-per-bentity.csv?subfamily=Leptanillinae"><span>http://antmaps.org/api/v01</span>/species-per-bentity.csv?subfamily=Leptanillinae</a>
+                            <a class="api-example" href="/api/v01/species-per-bentity.csv?genus=Heteroponera"><span>http://antmaps.org/api/v01</span>/species-per-bentity.csv?genus=Heteroponera</a>
+                        </p>
+                        <p class="arguments">Arguments:
+                            <ul>
+                                <li><b>genus</b>: (optional) only count species from this genus.</li>
+                                <li><b>subfamily</b>: (optional) only count species from this subfamily.  If you supply both a genus and a subfamily, the subfamily argument will be ignored.</li>
+                            </ul>
+                        </p>
+                        <br>
+                        
+                        
+                        
+                        <a name="region-comparison"></a>
+                        <h3>Region comparison</h3>
+                        <p>Given a geographic bentity as a query, return a list of all bentities which have native species in common with the query bentity, and the number of common native species for each.  The antmaps.org <a href="index.html?mode=region" target="_blank">region comparison</a> mode is rendered from this data resource.</p>
+                        <p class="api-examples">Examples:
+                            <a class="api-example" href="/api/v01/species-in-common.csv?bentity_id=BEN20327"><span>http://antmaps.org/api/v01</span>/species-in-common.csv?bentity_id=BEN20327</a>
+                        </p>
+                        <p class="arguments">Arguments:
+                            <ul>
+                                <li><b>bentity_id</b>: (required) The server will count species in common between this bentity and every other bentity.  See <a href="#bentities">bentities</a>.</li>
+                            </ul>
+                        </p>
+                        <br>
+                        
+                        
+                        
+                        <a name="species"></a>
+                        <h3>Species</h3>
+                        <p>List ant species, filtered by genus, subfamily, and/or native presence in 1 or 2 bentities.</p>
+                        <p class="api-examples">Examples:
+                            <a class="api-example" href="/api/v01/species.csv?subfamily=Leptanillinae"><span>http://antmaps.org/api/v01</span>/species.csv?subfamily=Leptanillinae</a>
+                            <a class="api-example" href="/api/v01/species.csv?genus=Heteroponera"><span>http://antmaps.org/api/v01</span>/species.csv?genus=Heteroponera</a>
+                            <a class="api-example" href="/api/v01/species.csv?bentity_id=BEN20335&genus=Strumigenys"><span>http://antmaps.org/api/v01</span>/species.csv?bentity_id=BEN20335&genus=Strumigenys</a>
+                            <a class="api-example" href="/api/v01/species.csv?bentity_id=BEN20053&bentity2_id=BEN20327"><span>http://antmaps.org/api/v01</span>/species.csv?bentity_id=BEN20053&bentity2_id=BEN20327</a>
+                        </p>
+                        <p class="arguments">Arguments (at least one is required): 
+                            <ul>
+                                <li><b>subfamily</b>: (optional) List only species from this subfamily.</li>
+                                <li><b>genus</b>: (optional) List only species from this genus.</li>
+                                <li><b>bentity_id</b>: (optional) List only species that are natively present in this bentity.  See <a href="#bentities">bentities</a>.</li>
+                                <li><b>bentity2_id</b>: (optional) You can filter by a second bentity using this argument, useful for finding species in common between the two bentities.</li>
+                            </ul>
+                        </p>
+                        <br>
+                        
+                        
+                        
+                        <a name="species-search"></a>
+                        <h3>Species search</h3>
+                        <p>Search for species by entering partial genus or species names.</p>
+                        <p class="api-examples">Examples:
+                            <a class="api-example" href="/api/v01/species-search.csv?q=ani"><span>http://antmaps.org/api/v01</span>/species-search.csv?q=ani</a>
+                            <a class="api-example" href="/api/v01/species-search.csv?q=lep ani"><span>http://antmaps.org/api/v01</span>/species-search.csv?q=lep ani</a>
+                        </p>
+                        <p class="arguments">Arguments:
+                            <ul>
+                                <li><b>q</b>: (required) The server will return species names that partially match this argument.  You can search on both genus and species names by separating your words with a space.</li>
+                            </ul>
+                        </p>
+                        <br>
+                        
+                        
+                        
+                        <a name="genera"></a>
+                        <h3>Genera</h3>
+                        <p>List ant genera, filtered by an optional subfamily.</p>
+                        <p class="api-examples">Examples:
+                            <a class="api-example" href="/api/v01/genera.csv"><span>http://antmaps.org/api/v01</span>/genera.csv</a>
+                            <a class="api-example" href="/api/v01/genera.csv?subfamily=Dorylinae"><span>http://antmaps.org/api/v01</span>/genera.csv?subfamily=Dorylinae</a>
+                        </p>
+                        <p class="arguments">Arguments:
+                            <ul>
+                                <li><b>subfamily</b>: (optional) List only genera of this subfamily.</li>
+                            </ul>
+                        </p>
+                        <br>
+                        
+                        
+                        
+                        <a name="subfamilies"></a>
+                        <h3>Subfamilies</h3>
+                        <p>List ant subfamilies.</p>
+                        <p class="api-examples">Examples:
+                            <a class="api-example" href="/api/v01/subfamilies.csv"><span>http://antmaps.org/api/v01</span>/subfamilies.csv</a>
+                        </p>
+        </div>
+    </section>
+    
+    
+    
+    <!-- jQuery -->
+    <script src="js/libraries/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/libraries/bootstrap.min.js"></script>
+    
+
+
+
+<footer>
+    <p>
+    
+    &copy;&nbsp;antmaps.org &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 
+    Lead Investigators: <a class="footer-link" href="http://arilab.unit.oist.jp/evan-economo/">Evan Economo</a>, 
+    <a class="footer-link" href="https://benoitguenard.wordpress.com/">Benoit Guénard</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    Developers: Matt Ziegler, Nitish Narula, <a class="footer-link" href="http://juliahanjanicki.com/">Julia Janicki</a></span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <span id="footer-attr">Powered by the <a class="footer-link" href="http://arilab.unit.oist.jp/">Economo Lab</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    Funded by <a class="footer-link" href="http://www.oist.jp/">OIST </a> <img id="footer-logo" src="img/oist.png"/>
+    </p>
+    
+</footer>
+
+
+
+</body>
+
+</html>
