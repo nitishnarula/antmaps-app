@@ -244,12 +244,13 @@
                         <a name="geo-coords"></a>
                         <h3>Geographic coordinates</h3>
                         <p>The GABI API has a separate resource for querying geospatial coordinates, because there are many cases where a single GPS point is related to thousands of records.  (There are also many records without geospatial coordinates, especially pre-1990.)  GABI uses a (latitide, longitude) coordinate system (EPSG 4236).<p>
-                        <p><span class="label label-warning">UNTESTED</span> There's a pretty good chance that there are some bugs in this resource.</p>
                         <p>There are several ways to query this resource.  You must specify a species, and you can optionally specify a bentity, a pair of (lat,lon) coordinates, or a geographic bounding box with a maximum and minimum latitude and longitude..</p>
                         <p>The <i>status</i> field (native, exotic, etc.) in the results follows the <a href="about.html#status-legend" target="_blank">this legend</a>.
-                        <p><span class="label label-primary">TO DO</span>: add more examples.</p>
                         <p class="api-examples">Examples:
                             <a class="api-example" href="/api/v01/species-points.csv?species=Acanthognathus.brevicornis"><span>http://antmaps.org/api/v01</span>/species-points.csv?species=Acanthognathus.brevicornis</a>
+                            <a class="api-example" href="/api/v01/species-points.csv?species=Acanthognathus.brevicornis&bentity_id=BEN20396"><span>http://antmaps.org/api/v01</span>/species-points.csv?species=Acanthognathus.brevicornis&bentity_id=BEN20396</a>
+                            <a class="api-example" href="/api/v01/species-points.csv?species=Acanthognathus.brevicornis&lat=-25.576&lon=-48.889"><span>http://antmaps.org/api/v01</span>/species-points.csv?species=Acanthognathus.brevicornis&lat=-25.576&lon=-48.889</a>
+                            <a class="api-example" href="/api/v01/species-points.csv?species=Acanthognathus.brevicornis&min_lat=-27.818&max_lat=-21.969&min_lon=-48.911&max_lon=-46.48333333"><span>http://antmaps.org/api/v01</span>/species-points.csv?species=Acanthognathus.brevicornis&min_lat=-27.818&max_lat=-21.969&min_lon=-48.911&max_lon=-46.48333333</a>
                         </p>
                         <p class="arguments">Arguments:
                             <ul>
