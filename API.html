@@ -128,7 +128,7 @@
                             <li><a href="#citations">Citations</a></li>
                             <li><a href="#geo-coords">Geographic coordinates</a></li>
                             <li><a href="#bentities">Bentities - geographic entities</a></li>
-                            <li><a href="#bentities-search"><span class="label label-primary">TO DO</span> Bentity search</a></li>
+                            <li><a href="#bentities-search">(TO DO) Bentity search</a></li>
                                                
                             <li class="contents-topic">Taxonomy helper functions</li>
                             <li><a href="#species-search">Species search</li>
@@ -243,16 +243,20 @@
                         
                         <a name="geo-coords"></a>
                         <h3>Geographic coordinates</h3>
-                        <p>The GABI API has a separate resource for querying geospatial coordinates, because there are many cases where a single GPS point is related to thousands of records.  (There are also many records without geospatial coordinates, especially pre-1990.)  GABI uses a (lat, lon) coordinate system (EPSG 4236).<p>
+                        <p>The GABI API has a separate resource for querying geospatial coordinates, because there are many cases where a single GPS point is related to thousands of records.  (There are also many records without geospatial coordinates, especially pre-1990.)  GABI uses a (latitide, longitude) coordinate system (EPSG 4236).<p>
+                        <p><span class="label label-warning">UNTESTED</span> There's a pretty good chance that there are some bugs in this resource.</p>
+                        <p>There are several ways to query this resource.  You must specify a species, and you can optionally specify a bentity, a pair of (lat,lon) coordinates, or a geographic bounding box with a maximum and minimum latitude and longitude..</p>
                         <p>The <i>status</i> field (native, exotic, etc.) in the results follows the <a href="about.html#status-legend" target="_blank">this legend</a>.
-                        <p><span class="label label-primary">TO DO</span> We should add more ways to query the geographic poins, like by genus and subfamily, and/or a geographic bounding box.</p>
-                        <p><span class="label label-primary">TO DO</span> It would be helpful to show the number of records for each point.  Can we also show the museum count, database count, etc?</p>
+                        <p><span class="label label-primary">TO DO</span>: add more examples.</p>
                         <p class="api-examples">Examples:
                             <a class="api-example" href="/api/v01/species-points.csv?species=Acanthognathus.brevicornis"><span>http://antmaps.org/api/v01</span>/species-points.csv?species=Acanthognathus.brevicornis</a>
                         </p>
                         <p class="arguments">Arguments:
                             <ul>
                                 <li><b>species</b>: (required) the species for which to show coordinates.  The genus and species should be separated by a period, eg. (Acanthognathus.brevicornis).</li>
+                                <li><b>bentity_id</b>: (optional) restrict coordinate-points to this bentity.</li>
+                                <li><b>lat</b> and <b>lon</b>: (optional) To ensure a match when supplying a latitude and longitude from GABI records, make sure to copy the coordinates exactly, without changing the rounding.</li>
+                                <li><b>max_lat</b>, <b>max_lon</b>, <b>min_lat</b>, and <b>min_lon</b>: (optional) Restrict points to the bounding-box specified by these coordinates.
                             </ul>
                         </p>
                         <br>
