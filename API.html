@@ -246,6 +246,7 @@
                         <p>The GABI API has a separate resource for querying geospatial coordinates, because there are many cases where a single GPS point is related to thousands of records.  (There are also many records without geospatial coordinates, especially pre-1990.)  GABI uses a (latitide, longitude) coordinate system (EPSG 4236).<p>
                         <p>There are several ways to query this resource.  You must specify a species, and you can optionally specify a bentity, a pair of (lat,lon) coordinates, or a geographic bounding box with a maximum and minimum latitude and longitude..</p>
                         <p>The <i>status</i> field (native, exotic, etc.) in the results follows the <a href="about.html#status-legend" target="_blank">this legend</a>.
+                        <p>Some records, especially pre-1990, do not have geograpic coordinates but are still associated with a bentity.  These records are excluded from queries that use latitude and longitude.</p>
                         <p class="api-examples">Examples:
                             <a class="api-example" href="/api/v01/species-points.csv?species=Acanthognathus.brevicornis"><span>http://antmaps.org/api/v01</span>/species-points.csv?species=Acanthognathus.brevicornis</a>
                             <a class="api-example" href="/api/v01/species-points.csv?species=Acanthognathus.brevicornis&bentity_id=BEN20396"><span>http://antmaps.org/api/v01</span>/species-points.csv?species=Acanthognathus.brevicornis&bentity_id=BEN20396</a>
