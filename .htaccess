@@ -1,0 +1,6 @@
+AuthUserFile /var/www/.htpasswd
+AuthName "GABI API"
+AuthType Basic
+<Files "API.html">
+    Require valid-user
+</Files>
