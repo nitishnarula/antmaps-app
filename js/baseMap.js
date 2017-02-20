@@ -69,7 +69,7 @@ var baseMap = (function() {
 	// add tile layers and layer control to Leaflet map	
 	(function() {	
 	
-		var tile1 = L.tileLayer('http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png', {
+		var tile1 = L.tileLayer('https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=f558d495599e45f38a987bfe87fed419', {
 					attribution: '&copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 					}),
 		
