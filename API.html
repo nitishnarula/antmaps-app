@@ -99,23 +99,37 @@
         <div class="container">
                    <div class="row">
                         <div class="alert alert-warning">
-                        <b>The GABI API is still under rapid development</b> and will continuously change until it's officially released in March.
+                        <b>The GABI database is not yet released.</b>  Please do not use this data before receiving permission from Benoit Guénard or Evan Economo.  The GABI API is still under rapid development and will continuously change until it's officially released.
                         </div>
                         
                         <h2>GABI Data API </h2>
                         <p>You can access <a href="https://benoitguenard.wordpress.com/gabi-articles/" target="_blank">GABI</a>, the database behind antmaps.org, with the GABI API and R package.</p>
-                        <p><span class="label label-primary">TO DO</span> Here are a couple sentences explaining what GABI is, and a link to the paper.</p>
+                        <p>The Global Ant Biodiversity Informatics (GABI) database, brings together data on ant geographic-ranges from numerous sources including published literature, museum collections, and specimen record databases.  GABI records are kept up-to-date with the current taxonomy, and are organized into a unified geographic representation.</p>
+                        <p>Each record in GABI associates a species with a geographic entity (see <a href="#bentities">bentities</a>.)  The GABI API includes several functions to aggregate the data, like species diversity views and region comparisons.</p>
+                        <p>For more details about GABI, find the full paper <a href="https://myrmecologicalnews.org/cms/index.php?option=com_download&view=download&filename=volume24/mn24_83-89_printable.pdf&format=raw" target="_blank">here</a>.</p>
+                        <div class="alert alert-info">
+                            <b>The GABI database changes over time</b> as we continue to add new data sources and make corrections.  Because of this, if you publish any work that uses GABI data, please be sure to publish your data from GABI so others can replicate your results.
+                        </div>
+                        
                         <br>
                         
                         
                         
                         <h2>How to Use</h2>
+                        <p>The GABI API can be accessed either as an HTTP RESTful API, or via an R package.</p>
                         <p>To retrieve data from the API, load URL's on our web server to specify which data you want, and the server will return a file with the requested data.  You can request either CSV or JSON by appending <i>.csv</i> or <i>.json</i> to the file name.  See below for examples.</p>
-                        <p><span class="label label-primary">TO DO</span> The R package (link goes here) acts as a wrapper around the API, allowing you to easily access the API from within R and recieve the data in an R-friendly format.  Here will go some instructions about how to install the R package and where to find the documentation.</p>
                         
-                        <div class="alert alert-info">
-                        <b>The GABI database changes over time</b> as we continue to add new data sources and make corrections.  Because of this, if you publish any work that uses GABI data, please be sure to publish your data from GABI so others can replicate your results.
-                        </div>
+                        <h3>R package</h3>
+                        <p>The GABIants R package acts as a wrapper around the API, allowing you to easily access the API from within R and recieve the data in an R-friendly format.  The R package contains all the same functionality as the API.</p>
+                        
+                        <p>To install the R package, use the following R commands:
+<pre>
+install.packages("devtools")
+devtools::install_bitbucket("GABIants/GABIants", password="XYZ")
+</pre>                        
+                        Replace <code>XYZ</code> with the password (ask Benoit or Evan for access.)  You can then view the R package documentation with <code>?GABIants</code>.
+                        </p>
+                        
                         <br>
                         
                         
@@ -270,7 +284,7 @@
                         
                         <a name="bentities"></a>
                         <h3>Bentities - geographic entities</h3>
-                        <p><span class="label label-primary">TO DO</span> This paragraph should explain what bentities are.</p>
+                        <p>"Bentities" are geographic units in the GABI database - most bentities represent a country or a state/province.  You can see the bentities drawn on the map on <a href="http://antmaps.org" target="_blank">antmaps.org</a>.</p>
                         <p><span class="label label-primary">TO DO</span> We should upload the bentity outlines in a couple different formats (shapefiles and geoJSON?) and provide links to them here.</p>
                         <p>When querying the API, bentities should be specified by their numeric ID.  You can see a list of all bentity names and ID's with this resource:</p>
                         <p class="api-examples">
@@ -282,8 +296,16 @@
                         
                         <a name="bentities-search"></a>
                         <h3>Bentity search</h3>
-                        <p><span class="label label-primary">TO DO</span> Not yet implemented</p>
+                        <p>Search for a bentity by name, or partial name.</p>
                         <p>To make bentities less painful to deal with, this resource will let users search for partial bentity names, similar to the species search resource.</p>
+                        <p class="api-examples">Examples:
+                            <a class="api-example" href="/api/v01/bentity-search.csv?q=gha"><span>http://antmaps.org/api/v01</span>/bentity-search.csv?q=gha</a>
+                        </p>
+                        <p class="arguments">Arguments:
+                            <ul>
+                                <li><b>q</b>: (required) The server will return a list of bentities with names that partially match this argument.</li>
+                            </ul>
+                        </p>
                         <br>
                         
 
