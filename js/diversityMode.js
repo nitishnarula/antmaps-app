@@ -110,8 +110,8 @@ var diversityMode = (function() {
 		$("body").trigger("mapstatechange"); // fire event to update URL	
 	
 		
-		$.getJSON('/dataserver/species-per-bentity', 
-			{genus_name: selectedGenus.key, subfamily_name:selectedSubfamily.key})
+		$.getJSON('/api/v01/species-per-bentity.json', 
+			{genus: selectedGenus.key, subfamily:selectedSubfamily.key})
 			
 		// when the data comes back from the server
 		.done(function(data) {	
@@ -238,7 +238,7 @@ var diversityMode = (function() {
 			
 				//var selectedGenusNew = $("#diversityView-subfamily-select").val();
 				
-				$.getJSON('/dataserver/antweb-links', {genus_name:mappedData.genusName})
+				$.getJSON('/api/v01/antweb-links.json', {genus_name:mappedData.genusName})
 				.error(controls.whoopsNetworkError)
 				.done(function(data) {
 					console.log(data.taxonomy[0].subfamilyName);
@@ -381,7 +381,7 @@ var diversityMode = (function() {
 			var loadingMessage=infoPanel.append("p").text("Loading...");
 			
 			// look up species list
-			$.getJSON('/dataserver/species-list', {bentity: d.properties.gid, genus: mappedData.genusKey, subfamily: mappedData.subfamilyKey})
+			$.getJSON('/api/v01/species.json', {bentity_id: d.properties.gid, genus: mappedData.genusKey, subfamily: mappedData.subfamilyKey})
 			.error(controls.whoopsNetworkError)
 			.done(function(data) {
 				loadingMessage.remove();

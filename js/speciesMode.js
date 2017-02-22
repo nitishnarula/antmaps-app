@@ -224,7 +224,7 @@ var speciesMode = (function() {
 		
 		
 		// get status for each bentity
-		$.getJSON('/dataserver/species-bentity-categories', {taxon_code: selectedSpp.taxon_code})
+		$.getJSON('/api/v01/species-range.json', {species: selectedSpp.taxon_code})
 		.fail(controls.whoopsNetworkError)
 		.done( function(data) {
 		
@@ -257,7 +257,7 @@ var speciesMode = (function() {
 					
 					
 					//get genus name and subfamily name
-					$.getJSON('/dataserver/antweb-links', {taxon_code: selectedSpp.taxon_code})
+					$.getJSON('/api/v01/antweb-links.json', {taxon_code: selectedSpp.taxon_code})
 					.fail(controls.whoopsNetworkError)
 					.done(function(data){
 						
@@ -293,7 +293,7 @@ var speciesMode = (function() {
 		
 		
 		// get species points
-		$.getJSON('/dataserver/species-points', {taxon_code: selectedSpp.taxon_code})
+		$.getJSON('/api/v01/species-points.json', {species: selectedSpp.taxon_code})
 		.done(function(data) {
 			
 			// make sure the user hasn't already selected a different species
@@ -327,7 +327,7 @@ var speciesMode = (function() {
 		
 			// look up species list from server when the user starts typing
 			source: function(request, response) {
-				$.getJSON('/dataserver/species-autocomplete', {q: request.term})
+				$.getJSON('/api/v01/species-search.json', {q: request.term})
 				.done(function(data) {
 					response(data.species);
 				})
@@ -498,7 +498,7 @@ var speciesMode = (function() {
 			+"&nbsp;&nbsp;&nbsp;&nbsp;Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0"));
 		}
 		
-		$.getJSON('/dataserver/species-metadata', {taxon_code: mappedData.speciesCode, bentity: d.properties.gid })
+		$.getJSON('/api/v01/species-metadata.json', {taxon_code: mappedData.speciesCode, bentity: d.properties.gid })
 			.error(controls.whoopsNetworkError)
 			.done(function(data) {
 				//console.log(data);

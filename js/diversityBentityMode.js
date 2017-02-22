@@ -118,7 +118,7 @@ var diversityBentityMode = (function() {
 		$("#bentityView-bentity-select").val(mappedData.mappedBentity.key);
 		
 		// get data from web server
-		$.getJSON('/dataserver/species-in-common', {bentity: mappedData.mappedBentity.key})
+		$.getJSON('/api/v01/species-in-common.json', {bentity_id: mappedData.mappedBentity.key})
 		.fail(controls.whoopsNetworkError)
 		
 		// when the data comes back from the server
@@ -326,7 +326,7 @@ var diversityBentityMode = (function() {
 				var loadingMessage=infoPanel.append("p").classed("loading", true).text("Loading...");
 			
 				// look up species list
-				$.getJSON('/dataserver/species-list', {bentity: d.properties.gid, bentity2: mappedData.mappedBentity.key})
+				$.getJSON('/api/v01/species.json', {bentity_id: d.properties.gid, bentity2_id: mappedData.mappedBentity.key})
 				.error(controls.whoopsNetworkError)
 				.done(function(data) {
 					loadingMessage.remove();

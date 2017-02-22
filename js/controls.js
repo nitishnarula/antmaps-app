@@ -179,7 +179,7 @@ var controls = (function() {
 
 	// On page load, get list of subfamilies and fill subfamily select boxes
 	$(document).ready(function() {
-		$.getJSON('/dataserver/subfamily-list')
+		$.getJSON('/api/v01/subfamilies.json')
 		.done(function(data) {
 			var boxes = $('#diversityView-subfamily-select, #sppView-subfamily-select');
 			
@@ -196,7 +196,7 @@ var controls = (function() {
 	
 	// On page load, get list of subfamilies and fill bentity select box
 	$(document).ready(function() {
-		$.getJSON('/dataserver/bentity-list')
+		$.getJSON('/api/v01/bentities.json')
 		.done(function(data) {
 			var boxes = $('#bentityView-bentity-select');
 			boxes.html('<option value="">Select Region</option>');
@@ -237,7 +237,7 @@ var controls = (function() {
 		var box = $('#sppView-genus-select');
 		box.html('<option value="">Loading...</option>');
 		box.prop('disabled', 'disabled');
-		$.getJSON('/dataserver/genus-list', {subfamily: selected}, function(data) {
+		$.getJSON('/api/v01/genera.json', {subfamily: selected}, function(data) {
 			box.html('<option value="">Select Genus</option>');
 			fillSelectbox(box, data.genera);
 			box.prop('disabled', false);
@@ -258,7 +258,7 @@ var controls = (function() {
 			var box = $('#sppView-species-select');
 			box.html('<option value="">Loading...</option>');
 			box.prop('disabled', 'disabled');
-			$.getJSON('/dataserver/species-list', {genus: selected}, function(data) {
+			$.getJSON('/api/v01/species.json', {genus: selected}, function(data) {
 				box.html('<option value="">Select Species</option>');
 				fillSelectbox(box, data.species);//data.species is undefined?
 				box.prop('disabled', false);
@@ -280,7 +280,7 @@ var controls = (function() {
 		var box = $('#diversityView-genus-select');
 		box.html('<option value="">Loading...</option>');
 		box.prop('disabled', 'disabled');
-		$.getJSON('/dataserver/genus-list', {subfamily: selected}, function(data) {
+		$.getJSON('/api/v01/genera.json', {subfamily: selected}, function(data) {
 			box.html('<option value="">All Genera</option>');
 			fillSelectbox(box, data.genera);
 			box.prop('disabled', false);
@@ -510,7 +510,7 @@ var controls = (function() {
 
 	// Open report-an-error link
 	external.openErrorReport = function() {
-		window.open('/dataserver/error-report.html'); // do this instead of a regular link with target=_blank so we can use window.opener
+		window.open('/api/v01/error-report.html'); // do this instead of a regular link with target=_blank so we can use window.opener
 	};
 
 
