@@ -130,11 +130,24 @@ var speciesMode = (function() {
 					// label content for info panel when point is clicked
 					var infoPanel = mapUtilities.openInfoPanel();
 					
-					infoPanel.html("<h3 class='text-center'>"+d.gabi_acc_number+"</h3>"+
-						"<br> Geographic Coordinates<b>:  ( "+d.lat+" , "+d.lon+" )</b><br><br><br>Citations will be available soon.")
+					infoPanel.html("<br><br>"
+					+"<div class='total'>Total Records: "+ (d.num_records || "0")
+					+"Geographic Coordinates<b>:  ( "+d.lat+" , "+d.lon+" )</b><br>" 
+					+ "</div> <br>Museum Records: "+(d.museum_count || "0")
+					+"&nbsp;&nbsp;&nbsp;&nbsp;Database Records: "+(d.database_count || "0")
+					+"&nbsp;&nbsp;&nbsp;&nbsp;Literature Records: "+ (d.literature_count || "0"));
+						
+						
+					// Fetch citations	
+				    $.getJSON('/api/v01/citations.json', {species: mappedData.speciesCode, lat: d.lat, lon: d.lon  })
+						.error(controls.whoopsNetworkError)
+						.done(function(data) {
+							//console.log(data);
+							mapUtilities.appendCitations(infoPanel, data.records);
+					});	
 				})
 				.on("mouseover", function(d, i) {
-					var labelHTML = "<h3 class='text-center'>" + d.gabi_acc_number + "</h3>";
+					var labelHTML = "<h4 class='text-center'>" + d.num_records + (d.num_records > 1 ? " records" : " record") + "</h4><br><b>(" + d.lat + "," + d.lon + ")</b>";
 					mapUtilities.infoLabel(d, "dot" + i, 0, labelHTML);
 				})
 				.on("mouseout", function(d,i) {
@@ -498,11 +511,11 @@ var speciesMode = (function() {
 			+"&nbsp;&nbsp;&nbsp;&nbsp;Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0"));
 		}
 		
-		$.getJSON('/api/v01/species-metadata.json', {taxon_code: mappedData.speciesCode, bentity: d.properties.gid })
+		$.getJSON('/api/v01/citations.json', {species: mappedData.speciesCode, bentity_id: d.properties.gid })
 			.error(controls.whoopsNetworkError)
 			.done(function(data) {
 				//console.log(data);
-				mapUtilities.appendSpeciesMetadata(infoPanel, data.records);
+				mapUtilities.appendCitations(infoPanel, data.records);
 			});	
 		
 	};

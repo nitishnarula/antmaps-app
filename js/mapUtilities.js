@@ -125,9 +125,8 @@ var mapUtilities = (function() {
 	};	
 	
 	
-	external.appendSpeciesMetadata = function(container, record){
 	
-		
+	external.appendCitations = function(container, record){
 	
 		var ul=container.append("ul");
 		
