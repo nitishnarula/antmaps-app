@@ -130,10 +130,10 @@ var speciesMode = (function() {
 					// label content for info panel when point is clicked
 					var infoPanel = mapUtilities.openInfoPanel();
 					
-					infoPanel.html("<br><br>"
-					+"<div class='total'>Total Records: "+ (d.num_records || "0")
-					+"Geographic Coordinates<b>:  ( "+d.lat+" , "+d.lon+" )</b><br>" 
-					+ "</div> <br>Museum Records: "+(d.museum_count || "0")
+					infoPanel.html("<br><br><br>"
+					+"<div class='total'>Total Records: "+ (d.num_records || "0") + "</div>"
+					+"Geographic Coordinates<b>:<br>  ( "+d.lat+" , "+d.lon+" )</b><br>" 
+					+ "<br>Museum Records: "+(d.museum_count || "0")
 					+"&nbsp;&nbsp;&nbsp;&nbsp;Database Records: "+(d.database_count || "0")
 					+"&nbsp;&nbsp;&nbsp;&nbsp;Literature Records: "+ (d.literature_count || "0"));
 						
