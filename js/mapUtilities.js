@@ -134,18 +134,14 @@ var mapUtilities = (function() {
 			.selectAll("li")
 			.data(record)
 			.enter()
-				.append("li")
-				.html(function(d) {
+			.append("li")
+			.html(function(d) {
 				if(d.type_of_data == "Museum Specimen")
 				{	d.type_of_data="Museum";
 				}
 				
-				return "<span class='gabi_acc'>"+d.gabi_acc_number+"</span> <span class='type_data'>("+d.type_of_data+")</span><span class='short_citation'>"+d.citation+"</span>";})
-				.on("click", function(d) {
-					external.closeInfoPanel();
-					baseMap.resetZoom();
-				});
-	
+				return "<span class='gabi_acc'>"+d.gabi_acc_number+"</span> <span class='type_data'>("+d.type_of_data+")</span><span class='short_citation'>"+d.citation+"</span>";
+			});	
 	
 	};
 
