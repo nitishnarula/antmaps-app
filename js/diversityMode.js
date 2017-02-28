@@ -278,6 +278,7 @@ var diversityMode = (function() {
 		}
 		
 
+		mapUtilities.setMapDownloadLink('/api/v01/species-per-bentity.csv?' + $.param({subfamily: mappedData.subfamilyName, genus: mappedData.genus}));
 		
 		
 		

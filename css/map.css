@@ -39,6 +39,11 @@
 			width:100px;
 			display:inline;
 		}
+		
+		.leaflet-control-layers {
+			position: relative;
+			top: 30px;
+		}
 
 /* ZOOM */
 		#zoom_control{

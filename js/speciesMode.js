@@ -438,6 +438,7 @@ var speciesMode = (function() {
 		var speciesName = mappedData.speciesName;
 		var currentModeTitle = "Species";
 		mapUtilities.setTitle(currentModeTitle,speciesName);
+		mapUtilities.setMapDownloadLink(mappedData.speciesCode ? '/api/v01/species-range.csv?' + $.param({species: mappedData.speciesCode}) : null);
 		
 		// any data to map?
 		if (!$.isEmptyObject(mappedData.bentityCategories)) {

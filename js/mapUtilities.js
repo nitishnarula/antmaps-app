@@ -244,6 +244,19 @@ var mapUtilities = (function() {
 	
 	
 	
+	// Show or hide the "download csv" link on the map
+	external.setMapDownloadLink = function(url) {
+		if (url) {
+			$('#download-map-data').attr('href', url).show();
+		}
+		else {
+			$('#download-map-data').hide();
+		}
+	}
+	
+	
+	
+	
 	// color scale generator for choropleth
 	external.logBinColorScale = function(maxSpecies, zeroColor, colorArray) {
 

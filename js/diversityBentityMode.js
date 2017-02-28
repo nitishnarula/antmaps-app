@@ -198,12 +198,14 @@ var diversityBentityMode = (function() {
 			$("#diversity-bentity-legend-title").hide();
 			baseMap.resetChoropleth();
 			baseMap.setHilightColor(selectedBentityFill);
+			mapUtilities.setMapDownloadLink(null);
 		}
 		else {
 			$("#select-bentity-button").show();
 			$("#bentity-description").hide();
 			// $("#queryBentity").css("margin-top",80);
 			$("#diversity-bentity-legend-title").show();
+			mapUtilities.setMapDownloadLink('/api/v01/species-in-common.csv?' + $.param({bentity_id: mappedData.mappedBentity.key}));
 			choropleth();
 		}
 	};
