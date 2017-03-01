@@ -332,6 +332,7 @@ var diversityBentityMode = (function() {
 				.error(controls.whoopsNetworkError)
 				.done(function(data) {
 					loadingMessage.remove();
+					infoPanel.setDownloadLink('/api/v01/species.csv?' + $.param({bentity_id: d.properties.gid, bentity2_id: mappedData.mappedBentity.key}))
 					mapUtilities.appendSpeciesList(infoPanel, data.species);
 				});
 			}

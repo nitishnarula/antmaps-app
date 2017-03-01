@@ -137,12 +137,15 @@ var speciesMode = (function() {
 					+"&nbsp;&nbsp;&nbsp;&nbsp;Database Records: "+(d.database_count || "0")
 					+"&nbsp;&nbsp;&nbsp;&nbsp;Literature Records: "+ (d.literature_count || "0"));
 						
+					var loadingMessage=infoPanel.append("p").classed("loading", true).text("Loading...");
+					
 						
 					// Fetch citations	
 				    $.getJSON('/api/v01/citations.json', {species: mappedData.speciesCode, lat: d.lat, lon: d.lon  })
 						.error(controls.whoopsNetworkError)
 						.done(function(data) {
-							//console.log(data);
+							infoPanel.setDownloadLink('/api/v01/citations.csv?' + $.param({species: mappedData.speciesCode, lat: d.lat, lon: d.lon  }));
+							loadingMessage.remove();
 							mapUtilities.appendCitations(infoPanel, data.records);
 					});	
 				})
@@ -510,15 +513,19 @@ var speciesMode = (function() {
 			+ "</div> <br>Museum Records: "+(mappedData.museumCountPerBentity[d.properties.gid]|| "0")
 			+"&nbsp;&nbsp;&nbsp;&nbsp;Database Records: "+(mappedData.databaseCountPerBentity[d.properties.gid]|| "0")
 			+"&nbsp;&nbsp;&nbsp;&nbsp;Literature Records: "+(mappedData.literatureCountPerBentity[d.properties.gid]|| "0"));
-		}
 		
-		$.getJSON('/api/v01/citations.json', {species: mappedData.speciesCode, bentity_id: d.properties.gid })
+		
+			var loadingMessage=infoPanel.append("p").classed("loading", true).text("Loading...");
+		
+			$.getJSON('/api/v01/citations.json', {species: mappedData.speciesCode, bentity_id: d.properties.gid })
 			.error(controls.whoopsNetworkError)
 			.done(function(data) {
-				//console.log(data);
+				infoPanel.setDownloadLink('/api/v01/citations.csv?' + $.param({species: mappedData.speciesCode, bentity_id: d.properties.gid }));
+				loadingMessage.remove();
 				mapUtilities.appendCitations(infoPanel, data.records);
 			});	
 		
+		}
 	};
 	
 	

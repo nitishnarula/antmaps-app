@@ -440,6 +440,7 @@
 			top: 60px;
 			box-shadow: 0 1px 5px rgba(0,0,0,0.4);
 			display: none;
+			border: 1px solid #777;
 		}
 		
 		.download-csv {
@@ -449,10 +450,9 @@
 			padding: 2px 4px;
 			border-radius: 5px;
 			text-transform: uppercase;
-			border: 1px solid #E56667;
-			background: #E56667;
+			border: 1px solid #F05253;
+			background: #F05253;
 			color: white;
-			
 		}
 		
 		

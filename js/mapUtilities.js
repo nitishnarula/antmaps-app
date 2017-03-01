@@ -73,9 +73,19 @@ var mapUtilities = (function() {
 		.attr("id","close-info")
 		.text("x")
 		.on("click", external.closeInfoPanel);
+		
+		var downloadLink = infoPanel.append("a").attr("class", "download-csv infopanel-download").html('Download CSV');
 			
 		var infoPanelContent = infoPanel.append("div").attr("class", "infopanel-content")
 		.html('Loading...');
+		
+		// Show/hide the download button, and set the download URL
+		infoPanelContent.setDownloadLink = function(url) {
+			if (url) {    
+				$('.infopanel-download').attr("href", url).show();  
+			}
+			else     {    $('.infopanel-download').hide();   }
+		};
 		
 		return infoPanelContent;
 	};

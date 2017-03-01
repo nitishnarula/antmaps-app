@@ -150,7 +150,7 @@
 			opacity:1;
 			color:white;
 			background-color:none;
-			z-index:101;
+			z-index:102;
 			position:absolute;
 			width:50px;
 			height:50px;
@@ -169,9 +169,18 @@
 			transition: all 1s ease;
 		}
 		
+		.infopanel-download {
+			position: absolute;
+			left: 12px;
+			top: 16px;
+			z-index: 101;
+			display: none;
+		}
+		
 		.infopanel-content {
 			height: 100%;
 			overflow: auto;
+			padding-top: 40px;
 		}
 		
 		.infopanel-content ul{
