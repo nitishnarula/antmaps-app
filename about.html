@@ -61,19 +61,19 @@
                    <div class="row">
                    		<h2>About antmaps.org </h2>
 					    <h4>
-			   				The goal of antmaps.org is to provide an intuitive and efficient framework for professional and amateur myrmecologists to visualize 
+			   				The goal of antmaps.org is to provide an intuitive and efficient framework for professional and amateur myrmecologists to visualize
 			   				the known distribution of ant species or higher taxon, and to access the underlying records for those data.    
 					    </h4>
 					    
 					    <h4>
-					        Antmaps.org is not a database <span class="italic">per se</span>, but rather a client-end tool for visualizing and interacting with the GABI database. 
-					        The <a href="https://benoitguenard.wordpress.com/gabi-articles/">Global Ant Biodiversity Informatics</a> (GABI) project (Guénard et al.
-					          <span class="italic">In Review</span>) is an ongoing effort to consolidate and curate 
-					        a comprehensive global database of ant species distributional records, including literature records, museum databases, and online 
-					        specimen databases.  The database includes records from over 8400 publications, most major digitized museum collections, 
-					        and specimen databases such as Antweb.  In total, the database now has over 1.6 million records including around 15000 described 
-					        ant species and subspecies.  The GABI data are currently housed in a <a href=" http://www.postgresql.org/">PostgreSQL</a> 
-					        database that syncronizes once per week with antmaps.org. 
+					        antmaps.org is not a database <span class="italic">per se</span>, but rather a client-end tool for visualizing and interacting with the GABI database. 
+					        The <a href="https://benoitguenard.wordpress.com/gabi-articles/">Global Ant Biodiversity Informatics</a> (GABI) project 
+					        (<a href="https://myrmecologicalnews.org/cms/index.php?option=com_download&view=download&filename=volume24/mn24_83-89_printable.pdf&format=raw">Guénard
+					        et al. 2017 <span class="italic">Myrmecological News</span></a>) is an attempt to consolidate and curate a comprehensive global database of ant species
+					        distributional records, including literature records, museum databases, and online specimen databases. As of July 2018, the database includes records
+					        from over 9300 publications, most major digitized museum collections, and specimen databases such as AntWeb. In total, the database now has over 1.9
+					        million records including around 15000 described ant species and subspecies. The GABI data are currently housed in a
+					        <a href=" http://www.postgresql.org/">PostgreSQL</a> database that synchronizes once per week with antmaps.org. 
 					    </h4>
 					    <h4>
 					    	Antmaps.org is intended to complement other invaluable web tools for myrmecology such as AntWeb and 
@@ -81,58 +81,129 @@
 					    	for a single purpose; mapping species distributions and aggregate diversity patterns and visualizing data from GABI. 
 					    </h4>
 					    
-					    <div id="dataAvailabilityAbout"></div>
 					     
 					    <h4>
-					    	In many ways GABI is raw material for myrmecologists, a point of departure for characterizing and understanding the geographic 
-					    	distribution of a species or group, and not a final answer.  There are errors and uncertainties that are inherited from the data sources, 
-					    	and others introduced during the databasing process. Distributional data in GABI should be viewed critically before forming the basis of 
-					    	scientific investigation.  We are continually curating and improving the dataset and welcome the participation of the myrmecological community 
-					    	in these efforts (if you see something questionable, click "Report data issue").  One of the main goals of antmaps.org is to facilitate and 
-					    	accelerate this process.
+					    	In many ways GABI is raw material for myrmecologists, a point of departure for characterizing and understanding the geographic distribution of a species
+					    	or group, and not a final answer. There are errors and uncertainties that are inherited from the data sources, and others that might have been introduced
+					    	during the databasing process. Distributional data in GABI should be viewed critically before forming the basis of scientific investigation. New records
+					    	are continuously compiled and taxonomic changes updated within GABI to provide the latest developments on ant biogeography and taxonomy (with a few weeks
+					    	needed for records to be processed). We welcome the participation of the myrmecological community in these efforts. If you see something questionable,
+					    	click "Report data issue" and let us know about the specific issue, or contact us to let us know about information we might have missed. One of the main
+					    	goals of antmaps.org is to facilitate and accelerate this process.
 					    </h4>
 					    
+					    <div id="dataAvailabilityAbout"></div>
+					    
+					    <h3>Data Sources (August 2018)</h3>
 					    <h4>
-					    The GABI project is led by Benoit Guénard and Evan Economo, in collaboration with Michael Weiser, Kiko Gomez, and Nitish Narula.  
-					    Many, many other people have helped by contributing data and/or expertise to the project.  
+							The full description of the project and data sources can be found in
+							<a href="https://myrmecologicalnews.org/cms/index.php?option=com_download&view=download&filename=volume24/mn24_83-89_printable.pdf&format=raw">Guénard
+					        et al. 2017</a>. Here we list the main components of the data. For a more detailed breakdown within these categories, click on the image thumbnail.
+					        <a target="_blank" href="img/antmaps_data.png">
+					            <img src="img/antmaps_data_thumb.jpg" style="float:right;padding:6px;border:2px solid #ddd;border-radius:4px;"/>
+					        </a>
+					        <ul style="list-style-type:circle">
+					            <li>Literature records: 827,000 records (~43%)</li>
+					            <li>Database collection: 744,000 records (39%) (e.g. Antweb 575,000 records)</li>
+					            <li>Museum specimens: 301,000 records (16%)</li>
+					            <li>Personal Collections: 48,000 records (2.5%) (person providing their personal records)</li>
+					        </ul>
+					        
+					    </h4>
+					    <h4>    
+					        Literature records have been compiled by three groups:
+					        <ul style="list-style-type:circle">
+					            <li>Benoit Guénard and Economo lab members (approximately 600,000 records, from 7660 publications).</li>
+					            <li>Mike Weiser, working with Rob Dunn and Nate Sanders (approx. 90,000 records, from 925 publications).</li>
+					            <li>Kiko Gomez (approx. 30,000 records from 717 publications)</li>
+					        </ul>
 					    </h4>
 					    
+					    <h3>Beyond Data Compilation</h3>
+					    <h4>
+					        Besides the process of data compilation and associating each species record with a valid taxonomic name and a particular geographic region to be correctly
+					        displayed on antmaps.org, we also work on other aspects of the information briefly introduced below.
+					    </h4>
+					    <h4>
+					        While far from perfect, antmaps.org also attempts to provide accurate information about species distribution and identity. Important efforts are thus
+					        directed to identify potential misidentifications that have accumulated over centuries of myrmecology. Patiently and one by one, nearly 25,000 records have
+					        been identified as potentially erroneous and many more probably remains. Slowly, as we detect these mistakes those are flagged within GABI and displayed on
+					        antmaps.org to prevent other researchers to repeat them and to adopt a cautious attitude towards them.  If you are aware of such errors, don’t hesitate to
+					        contact us to let us know about them so the ant community could benefit from this knowledge.
+					    </h4>
+					    <h4>
+					        Taxonomy is a living field of biology. Species identity and definition are not fixed and from time to time might change in function of new research being
+					        developed. We attempt to track these changes by following taxonomic literature and use Antcat.org as an ultimate reference. Monthly, taxonomic updates including
+					        new taxonomic descriptions, synonymy, splitting or any other changes are implemented within GABI to provide the latest development on species taxonomy and
+					        distribution.
+					    </h4>
+					    <h4>
+					        Biological invasions are increasingly widespread and ants are no exception. Native and exotic distribution are being tracked in GABI/antmaps.org to display
+					        known distribution of these species established outside their native range. However, establishing the extent of native versus exotic range represents in many
+					        instance a real challenge, with knowledge for many species relying on fragmentary information or guess more than proven results. Here we attempt to display those
+					        to the best of our knowledge and are looking for new studies determining exact ranges. You might disagree with our classification and we’ll be happy to discuss
+					        how our decisions were taken or on which sources they are relying. Here again, do not hesitate to contact us to let us know new records or simply inquiry about
+					        the status of a given species.
+					    </h4>
+					    <h4>
+					        Finally, note that continuous updates are being performed in GABI and thus antmaps.org, and we encourage you to note the date at which you retrieve a
+					        particular information as it is subject to potential changes in the future. 
+					    </h4>
 					    
 					    <h3> Data Accessibility </h3>
-					    <h4> For the very near future, the full GABI data and citation information are not freely accessible for download, but will be soon following the completion of the database and publication of several pending manuscripts. We apologize for the inconvenience. In the meantime, if you need to get access to specific 
-					    records or have an idea for an analysis using the data, we encourage users to contact us directly.  We don’t advise using raw data taken from 
-					    antmaps.org for research/publication without discussing the data with us first. (evaneconomo@gmail.com, zeroben@gmail.com)
+					    <h4>
+					        For the very near future, the full GABI data and citation information are not freely accessible for download, because we are still implementing data cleaning
+					        and processing steps, in addition to a large-scale georeferencing effort that is not done. We’d like to avoid large blocks of the data circulating until we can
+					        be sure of its quality and completeness. We apologize for the inconvenience. In the meantime, if you need to get access to specific records or have an idea for
+					        an analysis using the data, we encourage users to contact us directly and have never denied anyone access. We don’t advise using raw data taken from antmaps.org
+					        for research/publication without discussing the data with us first. (evaneconomo@gmail.com, zeroben@gmail.com)
 					    </h4>
 					    
 					    <h3>Credits </h3>
 					    <h4>
-					    The <a href="https://benoitguenard.wordpress.com/gabi-articles/">GABI</a> project is led by <a href="https://benoitguenard.wordpress.com/">
-					    Benoit Guénard</a> and <a href="http://arilab.unit.oist.jp/">Evan Economo</a>, in collaboration with <a href="http://weiser.ou.edu/">Michael Weiser</a>, Kiko Gomez, and Nitish Narula. 
-					    Many, many other people have helped by contributing data and/or expertise to the project. 
+					        The <a href="https://benoitguenard.wordpress.com/gabi-articles/">GABI</a> project is led by <a href="https://benoitguenard.wordpress.com/">
+					        Benoit Guénard</a> and <a href="http://arilab.unit.oist.jp/">Evan Economo</a>, in collaboration with <a href="http://weiser.ou.edu/">Michael Weiser</a>, Kiko Gomez,
+					        and Nitish Narula. Many, many other people have helped by contributing data and/or expertise to the project and we would like to warmly thank them.
 					    </h4>
 					    <h4>
-					    Antmaps.org is led by Evan Economo in collaboration with Benoit Guénard. <a href="http://juliahanjanicki.com/">Julia Janicki</a> is responsible for most of the interface design 
-					    and front-end development. Matt Ziegler and Nitish Narula designed the database structures and backend functionality. It was developed 
-					    using the <a href="https://www.djangoproject.com/">Django</a> (1.7) framework and visualized with <a href="http://leafletjs.com/">Leaflet</a>
-					    and <a href="http://d3js.org/">D3</a>.
+					        antmaps.org is led by Evan Economo (OIST) in collaboration with Benoit Guénard (HKU). <a href="http://juliahanjanicki.com/">Julia Janicki</a> is responsible for most
+					        of the interface design and front-end development. Matt Ziegler and Nitish Narula designed the database structures and backend functionality. It was developed using
+					        the <a href="https://www.djangoproject.com/">Django</a> (1.7) framework and visualized with <a href="http://leafletjs.com/">Leaflet</a> and <a href="http://d3js.org/">D3</a>.
 					    </h4>
 					    <h4>
-					    Both GABI and antmaps.org are funded by <a href="http://www.oist.jp/">OIST</a>, and GABI is also funded by the University of Hong Kong.
+					        Both GABI and antmaps.org are funded by <a href="http://www.oist.jp/">OIST</a>, JSPS Kakenhi, and the University of Hong Kong.
 					    </h4>
 					    
+					    <h3>Citations</h3>
 					    <h4>
-					    If you use <a href="http://antmaps.org/">antmaps.org</a> in your research, please cite the following paper:
-						<br>Janicki, J., Narula, N., Ziegler, M., Guénard, B. Economo, E.P. (2016) Visualizing and interacting with large-volume biodiversity data using client-server web-mapping applications: The design and implementation of <a href="http://antmaps.org/">antmaps.org</a>. <i>Ecological Informatics</i> 32: 185-193.
-						<br><br>Please check back in the future because there may be additional references as GABI gets better documented in the literature.
+					        If you use the GABI data in research product, please cite the paper below in your study.  This citation is important as it documents how the data were assembled.
+					    </h4>
+					    <h4 style="margin-left: 40px">
+					        Guénard, B., Weiser, M., Gomez, K., Narula, N., Economo, E.P. (2017) The Global Ant Biodiversity Informatics (GABI) database: a synthesis of ant species geographic
+					        distributions. Myrmecological News 24: 83-89.
+					    </h4>
+					    <h4>
+					        If you view data through antmaps.org, please also cite this paper (which is about the interface, not the dataset per se) in addition to the one above. Thank you.
+					    </h4>
+					    <h4 style="margin-left: 40px">
+					        Janicki, J., Narula, N., Ziegler, M., Guénard, B. Economo, E.P. (2016) Visualizing and interacting with large-volume biodiversity data using client-server web-mapping
+					        applications: The design and implementation of antmaps.org. Ecological Informatics 32: 185-193
+					    </h4>
+					    <h4>
+					        Finally, when browsing antmaps.org, you can see the underlying citations that are behind the data. It can be hard to cite hundreds or thousands of papers at
+					        the same time, but if the information you are looking for is due to a particular study or collection, say for example a study that discovered <i>Pheidole
+					        megacephala</i> in Okinawa, or maybe a recent checklist contributed most of the records for a particular region, please try to cite those original sources,
+					        as well! antmaps.org is intended to help you find those sources, not replace them.
+					        We also appreciate it if you credit antmaps.org if you use the maps or data in a talk.
 					    </h4>
 					    
 					    <a name="status-legend"></a>
 					    <h3 id="legendCode">Species Mode Legend Code </h3>
-					    <h4>Native (N) <img class="legendCode" src="img/native.png" style="vertical-align:middle"> : Records that are considered native. </h4>
-					    <h4>Exotic (E) <img class="legendCode" src="img/invasive.png" style="vertical-align:middle"> : Data that represent non-native species records with established populations in the wild.</h4>
-					    <h4>Indoor Introduced (I) <img class="legendCode" src="img/indoor.png" style="vertical-align:middle"> : Data that represent non-native species records without established populations in the wild (e.g. in buildings, greenhouses, airport, quarantine surveys).</h4>
-						<h4>Need Verification (V) <img class="legendCode" src="img/verification.png" style="vertical-align:middle"> : Uncertain records in need of verification to be classified as valid or dubious. </h4>
-						<h4>Dubious (D) <img class="legendCode" src="img/dubious.png" style="vertical-align:middle"> : Erroneous records reported in previous publications or databases but later identified as misidentifications. 
+					    <h4>Native <img class="legendCode" src="img/native.png" style="vertical-align:middle"> : Records that are considered native. </h4>
+					    <h4>Exotic <img class="legendCode" src="img/invasive.png" style="vertical-align:middle"> : Data that represent non-native species records with established populations in the wild.</h4>
+					    <h4>Indoor Introduced <img class="legendCode" src="img/indoor.png" style="vertical-align:middle"> : Data that represent non-native species records without established populations in the wild (e.g. in buildings, greenhouses, airport, quarantine surveys).</h4>
+						<h4>Need Verification <img class="legendCode" src="img/verification.png" style="vertical-align:middle"> : Uncertain records in need of verification to be classified as valid or dubious. </h4>
+						<h4>Dubious <img class="legendCode" src="img/dubious.png" style="vertical-align:middle"> : Erroneous records reported in previous publications or databases but later identified as misidentifications. 
 						Those are presented to prevent potential future misidentifications.</h4>
 						
 						
@@ -157,7 +228,7 @@
 	&copy;&nbsp;antmaps.org &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 
 	Lead Investigators: <a class="footer-link" href="http://arilab.unit.oist.jp/evan-economo/">Evan Economo</a>, 
 	<a class="footer-link" href="https://benoitguenard.wordpress.com/">Benoit Guénard</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-    Developers: Matt Ziegler, Nitish Narula, <a class="footer-link" href="http://juliahanjanicki.com/">Julia Janicki</a></span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    Developers: <a class="footer-link" href="http://mziegler.github.io">Matt Ziegler</a>, Nitish Narula, <a class="footer-link" href="http://juliahanjanicki.com/">Julia Janicki</a></span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 	<span id="footer-attr">Powered by the <a class="footer-link" href="http://arilab.unit.oist.jp/">Economo Lab</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 	Funded by <a class="footer-link" href="http://www.oist.jp/">OIST </a> <img id="footer-logo" src="img/oist.png"/>
 	</p>
