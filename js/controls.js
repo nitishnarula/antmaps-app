@@ -593,13 +593,13 @@ var controls = (function() {
     external.checkForEmbed = function() {
         var queryString = window.location.search
         
-        // check for "&embed=" anywhere in the query string
-        if (querystring.indexOf("&embed=") > -1) {
+        // check for "&embed=" or "?embed=" anywhere in the query string
+        if (querystring.indexOf("&embed=") > -1 || querystring.indexOf("?embed=") > -1) {
             // add "embedded" class to body
             $("body").addClass("embedded");
             
             // set the "View on Antmaps" link to open the same URL as the current one, but with the "embed" parameter changed to "fromEmbed"
-            $("a#view-on-antmaps").attr("href", window.location.href.replace("&embed=", "&fromEmbed="));
+            $("a#view-on-antmaps").attr("href", window.location.href.replace("&embed=", "&fromEmbed=").replace("?embed=","?fromEmbed="));
             
             map.map.setZoom(1);
         }
