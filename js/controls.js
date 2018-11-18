@@ -594,7 +594,7 @@ var controls = (function() {
         var queryString = window.location.search
         
         // check for "&embed=" or "?embed=" anywhere in the query string
-        if (querystring.indexOf("&embed=") > -1 || querystring.indexOf("?embed=") > -1) {
+        if (queryString.indexOf("&embed=") > -1 || queryString.indexOf("?embed=") > -1) {
             // add "embedded" class to body
             $("body").addClass("embedded");
             
