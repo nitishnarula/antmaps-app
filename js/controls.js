@@ -587,11 +587,30 @@ var controls = (function() {
 	$(window).on("popstate", decodeURL); // decode URL on back-button click
 
 
+
+    // Look for an "embed" parameter in the URL query string, and if one is present,
+    // add an "embedded" class to the body and set up the "View on AntMaps" link.
+    external.checkForEmbed = function() {
+        var queryString = window.location.search
+        
+        // check for "&embed=" anywhere in the query string
+        if (querystring.indexOf("&embed=") > -1) {
+            // add "embedded" class to body
+            $("body").addClass("embedded");
+            
+            // set the "View on Antmaps" link to open the same URL as the current one, but with the "embed" parameter changed to "fromEmbed"
+            $("a#view-on-antmaps").attr("href", window.location.href.replace("&embed=", "&fromEmbed="));
+            
+            map.map.setZoom(1);
+        }
+    }
+
 	return external;
 })();
 
 
 $(document).ready(function() {
 	controls.hideEntryText();
+	controls.checkForEmbed();
 });
 

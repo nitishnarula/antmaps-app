@@ -56,7 +56,7 @@ var baseMap = (function() {
 		var map = new L.Map("mapContainer", {
 			center: [37.8, 0], 
 			zoom: 2,
-			minZoom: 2,
+			//minZoom: 2,
 			maxBounds: [[-220, -220], [220, 220]],
 			maxZoom:7
 		});
