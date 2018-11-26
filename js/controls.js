@@ -601,7 +601,7 @@ var controls = (function() {
             // set the "View on Antmaps" link to open the same URL as the current one, but with the "embed" parameter changed to "fromEmbed"
             $("a#view-on-antmaps").attr("href", window.location.href.replace("&embed=", "&fromEmbed=").replace("?embed=","?fromEmbed="));
             
-            baseMap.map.setZoom(1);
+            baseMap.setZoom(1);
         }
     }
 

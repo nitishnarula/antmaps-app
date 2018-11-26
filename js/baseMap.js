@@ -373,7 +373,9 @@ var baseMap = (function() {
 	};
 	
 	
-	
+	external.setZoom = function(level){
+		map.setZoom(level);
+	};
 	
 	
 	// Color the bentities on the map, using the given bentityColor function.
