@@ -803,7 +803,7 @@
 
 /* embedded version */
 body.embedded footer,
-body.embedded div.navbar,
+body.embedded nav.navbar,
 body.embedded div#side,
 body.embedded div.leaflet-control-attribution leaflet-control,
 body.embedded div#current-selection-title,
@@ -826,6 +826,12 @@ body.embedded div.infopanel {
 body.embedded div.infolabel {
     top: 0;
     right: 0;
+}
+
+body.embedded #current-selection{
+	bottom: 50px;
+	margin-left: 20px;
+	font-size:20px;				
 }
 
 a#view-on-antmaps {
