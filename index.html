@@ -53,7 +53,7 @@
         // checks+stores whether this page is embedded: if the query string has "&embed=" or "?embed="
         var embeddedMode = false;
         if (window.location.search.indexOf("&embed=") > -1 || window.location.search.indexOf("?embed=") > -1) {
-            $("body").addClass("embedded");
+            document.body.className += " embedded";
             embeddedMode = true;
         }
     </script>

@@ -123,7 +123,7 @@ var diversityMode = (function() {
 			}
 			
 			
-			if (data.bentities.length==0) { 
+			if (data.bentities.length==0 & !embeddedMode) { 
 				alert('No data for this taxon!');
 			};
 			
