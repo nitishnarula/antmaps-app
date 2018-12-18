@@ -808,7 +808,8 @@ body.embedded div#side,
 body.embedded div.leaflet-control-attribution leaflet-control,
 body.embedded div#current-selection-title,
 body.embedded div#resetAll,
-body.embedded div#resetZoom {
+body.embedded div#resetZoom,
+body.embedded p#see-on {
     display: none;
 }
 
