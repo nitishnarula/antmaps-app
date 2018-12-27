@@ -55,8 +55,8 @@ var baseMap = (function() {
 
 		var map = new L.Map("mapContainer", {
 			center: [37.8, 0], 
-			zoom: 2,
-			minZoom: 2,
+			zoom: embeddedMode ? 1 : 2,
+			minZoom: embeddedMode ? 1 : 2,
 			maxBounds: [[-220, -220], [220, 220]],
 			maxZoom:7
 		});
@@ -373,7 +373,9 @@ var baseMap = (function() {
 	};
 	
 	
-	
+	external.setZoom = function(level){
+		map.setZoom(level);
+	};
 	
 	
 	// Color the bentities on the map, using the given bentityColor function.

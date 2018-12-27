@@ -480,7 +480,9 @@ var controls = (function() {
 
 	// display error message
 	external.whoopsNetworkError = function() {
-		alert('Whoops!  Something went wrong.  Please check your internet connection and try again, or refresh the page.');
+		if (!embeddedMode) {
+		    alert('Whoops!  Something went wrong.  Please check your internet connection and try again, or refresh the page.');
+		}
 	}
 
 
@@ -545,7 +547,9 @@ var controls = (function() {
 	// This event is called when a mode is updated with new data, 
 	// or when the user clicks a mode button and the new mode has data.
 	$("body").on("mapstatechange", function() {
-		if (typeof history.pushState === "function") {
+	    // Don't update URL when the map is in embedded mode.  This is to prevent the iframe from 
+	    // capturing back-button presses on the parent page.
+		if (!embeddedMode && typeof history.pushState === "function") {
 			var newURL = encodeURL();
 			
 			// don't update the URL if it hasn't changed, for back-button behavior
@@ -587,11 +591,22 @@ var controls = (function() {
 	$(window).on("popstate", decodeURL); // decode URL on back-button click
 
 
+
+    // Set up the page if the map is running in "embedded" mode.  
+    // Currently this function only sets the "view on antmaps" button URL.
+    external.checkForEmbed = function() { 
+        if (embeddedMode) {
+            // set the "View on Antmaps" link to open the same URL as the current one, but with the "embed" parameter changed to "fromEmbed"
+            $("a#view-on-antmaps").attr("href", window.location.href.replace("&embed=", "&fromEmbed=").replace("?embed=","?fromEmbed="));
+        }
+    }
+
 	return external;
 })();
 
 
 $(document).ready(function() {
 	controls.hideEntryText();
+	controls.checkForEmbed();
 });
 

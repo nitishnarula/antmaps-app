@@ -249,7 +249,9 @@ var diversityBentityMode = (function() {
 		else { // no data
 			baseMap.resetChoropleth();
 			if (mappedData.mappedBentity.name) { // alert if there's a bentity selected
-				alert("No data for " + mappedData.mappedBentity.name + ".");
+				if (!embeddedMode) {
+				    alert("No data for " + mappedData.mappedBentity.name + ".");
+				}
 				external.selectBentityView();
 			}
 		}

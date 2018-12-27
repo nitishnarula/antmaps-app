@@ -216,7 +216,7 @@ var speciesMode = (function() {
 		var selectedSpp = selectedSpp || getSelectBoxSpecies();
 	
 	
-		if (!selectedSpp.taxon_code) {
+		if (!selectedSpp.taxon_code && !embeddedMode) {
 			alert('Please select a species to map.');
 			return;
 		}	
@@ -246,7 +246,7 @@ var speciesMode = (function() {
 			
 				if (data.bentities) {
 				
-					if (data.bentities.length==0) { 
+					if (data.bentities.length==0 && !embeddedMode) { 
 						alert('No data for this species!');
 					};
 				
