@@ -48,7 +48,7 @@ var speciesMode = (function() {
 						 {"key":"V",
 						  "value":"#3860A0"},
 						 {"key":"D", 
-						 "value":"#8C644C"}
+						 "value":"#D1BC04"}
 						  ]};
 	
 	var noRecordsColor = "white";
