@@ -46,7 +46,7 @@ var speciesMode = (function() {
 						 {"key":"E", 
 						 "value":"#772424"},	
 						 {"key":"V",
-						  "value":"#FFAB4A"},
+						  "value":"#3860A0"},
 						 {"key":"D", 
 						 "value":"#8C644C"}
 						  ]};
