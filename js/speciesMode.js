@@ -28,7 +28,7 @@ var speciesMode = (function() {
 
 
 	var categoryCodes = ["N", "E", "I", "V", "D"]; // legend will be in this order
-	var categoryColors = ["#009E73","#D55E00","#FF8897","#C695FF","#FFCEEC"];
+	var categoryColors = ["#009E73","#D55E00","#FCB36B","#C695FF","#FFCEEC"]
 	
 	var categoryNames = {"N": "Native",
 						 "I": "Indoor Introduced",
@@ -42,9 +42,9 @@ var speciesMode = (function() {
 						 {"key":"N",
 						 "value": "#1F7100"},
 						 {"key":"I",
-						 "value": "#7F2200"},
+						 "value": "#FF7941"},
 						 {"key":"E", 
-						 "value":"#FF7941"},	
+						 "value":"#7F2200"},	
 						 {"key":"V",
 						  "value":"#8A41FF"},
 						 {"key":"D", 
