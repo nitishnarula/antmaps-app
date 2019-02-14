@@ -28,7 +28,7 @@ var speciesMode = (function() {
 
 
 	var categoryCodes = ["N", "E", "I", "V", "D"]; // legend will be in this order
-	var categoryColors = ["#009E73","#D55E00","#E69F00","#56B4E9","#F0E442"];
+	var categoryColors = ["#009E73","#D55E00","#FF8897","#C695FF","#FFCEEC"];
 	
 	var categoryNames = {"N": "Native",
 						 "I": "Indoor Introduced",
@@ -40,15 +40,15 @@ var speciesMode = (function() {
 	var pointColorsIndex =
 						  {"categories":[
 						 {"key":"N",
-						 "value": "#458C68"},
+						 "value": "#1F7100"},
 						 {"key":"I",
-						 "value": "#C93C00"},
+						 "value": "#7F2200"},
 						 {"key":"E", 
-						 "value":"#772424"},	
+						 "value":"#FF7941"},	
 						 {"key":"V",
-						  "value":"#3860A0"},
+						  "value":"#8A41FF"},
 						 {"key":"D", 
-						 "value":"#D1BC04"}
+						 "value":"#AB42BA"}
 						  ]};
 	
 	var noRecordsColor = "white";
