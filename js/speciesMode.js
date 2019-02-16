@@ -28,7 +28,7 @@ var speciesMode = (function() {
 
 
 	var categoryCodes = ["N", "E", "I", "V", "D"]; // legend will be in this order
-	var categoryColors = ["#009E73","#D55E00","#FCB36B","#C695FF","#FFCEEC"]
+	var categoryColors = ["#4575b4","#a50026","#f46d43","#ffffbf","#fee090"]
 	
 	var categoryNames = {"N": "Native",
 						 "I": "Indoor Introduced",
