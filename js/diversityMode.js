@@ -213,8 +213,6 @@ var diversityMode = (function() {
 	// draw diversity-mode choropleth
 	function choropleth(){
 
-
-
 		if (mappedData.genusKey) {
 
 			//console.log($("#diversityView-subfamily-select").val());
@@ -282,15 +280,21 @@ var diversityMode = (function() {
 
 
 
+
 		// color map if there is data for this taxon
 		if (!$.isEmptyObject(mappedData.sppPerBentity)) {
+
+			var valueArray = [];
+			mappedData.sppPerBentity.forEach(function(d){
+				valueArray.push(d.properties.gid);
+			})
 
 			// var colorScale = mapUtilities.logBinColorScale(mappedData.maxSpeciesCount, zeroColor, colorArray);
 
 			//**********************************************************
 		  // NEW color scale using quantile, need to pass full dataset
 			//**********************************************************
-			var colorScale = mapUtilities.customColorScale(mappedData.maxSpeciesCount,mappedData.sppPerBentity[record.gid], zeroColor, colorArray);
+			var colorScale = mapUtilities.customColorScale(mappedData.maxSpeciesCount,valueArray, zeroColor, colorArray);
 
 
 			// function called to determine color of each bentity, given d3-bound
