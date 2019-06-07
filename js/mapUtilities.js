@@ -370,6 +370,73 @@ var mapUtilities = (function() {
 	};
 
 
+	external.customColorScale2 = function(maxSpecies, zeroColor, colorArray) {
+
+		var continuousScale;
+		if (maxSpecies > colorArray.length) {
+			// Use log scale if there are more domain values than colors
+			// maxSpecies+0.0001 so the output is never colorArray.length, so we don't overstep the color array
+			// domain of log scale can never be 0
+			continuousScale = d3.scale.log().domain([1, maxSpecies+0.0001]).range([0, colorArray.length]);
+		}
+		else {
+			// Use a linear scale if there are more (or same number) colors than domain values
+			continuousScale = d3.scale.linear().domain([1, maxSpecies+0.0001]).range([0, maxSpecies]);
+		}
+
+
+		var colorscale = function(x) {
+				if (x == 0) {
+						return [zeroColor][Math.floor(continuousScale(x))];
+				} else if (x==1){
+						return [zeroColor,"#7f0000"][Math.floor(continuousScale(x))]
+				}else if (x==2){
+						return [zeroColor,"#b30000","#7f0000"][Math.floor(continuousScale(x))]
+				}else if (x==3){
+						return [zeroColor,"#d7301f","#b30000","#7f0000"][Math.floor(continuousScale(x))]
+				}else if (x==4){
+						return [zeroColor,"#ef6548","#d7301f","#b30000","#7f0000"][Math.floor(continuousScale(x))]
+				}else if (x==5){
+						return [zeroColor,"#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"][Math.floor(continuousScale(x))]
+				}else if (x==6){
+						return [zeroColor,"#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"][Math.floor(continuousScale(x))]
+				}else if (x==7){
+						return [zeroColor,"#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"][Math.floor(continuousScale(x))]
+				}else{
+						// round log value down to nearest integer to get colors
+						return colorArray[Math.floor(continuousScale(x))];
+				}
+		}
+
+
+		// return an array of labels for the legend  (call like logBinColorScale().binLabels)
+		colorscale.binLabels = function() {
+
+			// get the boundries of the different color categories
+			var boundries = [0];
+			for (var y = 1; y < colorArray.length && y < maxSpecies; y++) {
+				boundries.push(Math.floor(continuousScale.invert(y)));
+			}
+			boundries.push(maxSpecies);
+
+			// make string labels for each color category
+			var binLabels = ['0'];
+			for (var b = 0; b < boundries.length - 1; b++) {
+				if (boundries[b] == boundries[b+1] || (boundries[b] + 1) == boundries[b+1]) {
+					binLabels.push(boundries[b+1]);
+				}
+				else {
+					binLabels.push((boundries[b] + 1) + ' ~ ' + boundries[b+1]);
+				}
+			}
+
+			return binLabels;
+		}
+
+		return colorscale;
+	};
+
+
 
 
 
