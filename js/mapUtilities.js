@@ -322,19 +322,19 @@ var mapUtilities = (function() {
 				if (x == 0) {
 						return [zeroColor][Math.floor(continuousScale(x))];
 				} else if (x==1){
-						return [zeroColor,"#9e0142"][Math.floor(continuousScale(x))]
+						return [zeroColor,"#7f0000"][Math.floor(continuousScale(x))]
 				}else if (x==2){
-						return [zeroColor,"#d53e4f","#9e0142"][Math.floor(continuousScale(x))]
+						return [zeroColor,"#b30000","#7f0000"][Math.floor(continuousScale(x))]
 				}else if (x==3){
-						return [zeroColor,"#fdae61","#d53e4f","#9e0142"][Math.floor(continuousScale(x))]
+						return [zeroColor,"#d7301f","#b30000","#7f0000"][Math.floor(continuousScale(x))]
 				}else if (x==4){
-						return [zeroColor,"#e6f598","#fdae61","#d53e4f","#9e0142"][Math.floor(continuousScale(x))]
+						return [zeroColor,"#ef6548","#d7301f","#b30000","#7f0000"][Math.floor(continuousScale(x))]
 				}else if (x==5){
-						return [zeroColor,"#abdda4","#e6f598","#fdae61","#d53e4f","#9e0142"][Math.floor(continuousScale(x))]
+						return [zeroColor,"#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"][Math.floor(continuousScale(x))]
 				}else if (x==6){
-						return [zeroColor,"#3288bd","#abdda4","#e6f598","#fdae61","#d53e4f","#9e0142"][Math.floor(continuousScale(x))]
+						return [zeroColor,"#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"][Math.floor(continuousScale(x))]
 				}else if (x==7){
-						return [zeroColor,"#36486f","#3288bd","#abdda4","#e6f598","#fdae61","#d53e4f","#9e0142"][Math.floor(continuousScale(x))]
+						return [zeroColor,"#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"][Math.floor(continuousScale(x))]
 				}else{
 						// round log value down to nearest integer to get colors
 						return colorArray[Math.floor(continuousScale(x))];

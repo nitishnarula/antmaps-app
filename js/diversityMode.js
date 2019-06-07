@@ -11,8 +11,8 @@
 var diversityMode = (function() {
 
 	var zeroColor = "#ffffff";
- 	var colorArray = ["#fef0d9","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#990000"];
-    var legendColors = ["#ffffff","#fef0d9","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#990000"];
+ 	var colorArray = ["#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"];
+    var legendColors = ["#ffffff","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"];
 
 	 //var colorArray =  ["#F9FB0E","#FABB43","#B1BE67","#52BD90","#08ABC1","#0661E1","#362B87"];
  	//var legendColors = ["#ffffff","#F9FB0E","#FABB43","#B1BE67","#52BD90","#08ABC1","#0661E1","#362B87"];
@@ -290,7 +290,7 @@ var diversityMode = (function() {
 			//**********************************************************
 		  // NEW color scale using quantile, need to pass full dataset
 			//**********************************************************
-			var colorScale = mapUtilities.customColorScale(mappedData.maxSpeciesCount,mappedData.sppPerBentity[d.properties.gid], zeroColor, colorArray);
+			var colorScale = mapUtilities.customColorScale(mappedData.maxSpeciesCount,mappedData.sppPerBentity[record.gid], zeroColor, colorArray);
 
 
 			// function called to determine color of each bentity, given d3-bound
