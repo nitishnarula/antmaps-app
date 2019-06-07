@@ -285,6 +285,9 @@ var diversityMode = (function() {
 		if (!$.isEmptyObject(mappedData.sppPerBentity)) {
 
 			var valueArray = [];
+			console.log(mappedData);
+			console.log(mappedData.sppPerBentity);
+
 			mappedData.sppPerBentity.forEach(function(d){
 				valueArray.push(d.properties.gid);
 			})
