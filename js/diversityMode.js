@@ -11,14 +11,9 @@
 var diversityMode = (function() {
 
 	var zeroColor = "#ffffff";
- 	var colorArray = ["#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"];
-    var legendColors = ["#ffffff","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"];
+ 	var colorArray = ["#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"]; //shifted color up
+  var legendColors = ["#ffffff","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"];
 
-	 //var colorArray =  ["#F9FB0E","#FABB43","#B1BE67","#52BD90","#08ABC1","#0661E1","#362B87"];
- 	//var legendColors = ["#ffffff","#F9FB0E","#FABB43","#B1BE67","#52BD90","#08ABC1","#0661E1","#362B87"];
-
-	//var colorArray = ["#fee0d2","#fcbba1","#fc9272","#fb6a4a","#ef3b2c","#a50f15","#67000d"];
-	//var legendColors=["#ffffff","#fee0d2","#fcbba1","#fc9272","#fb6a4a","#ef3b2c","#a50f15","#67000d"];
 
 	var external = {};
 
