@@ -287,15 +287,9 @@ var diversityMode = (function() {
 			// 	valueArray.push(d.properties.gid);
 			// })
 
-		  //var colorScale = mapUtilities.logBinColorScale(mappedData.maxSpeciesCount, zeroColor, colorArray);
 
-			var colorScale = mapUtilities.customColorScale2(mappedData.maxSpeciesCount, zeroColor, colorArray);
+			var colorScale = mapUtilities.logBinColorScale(mappedData.maxSpeciesCount, zeroColor, colorArray);
 
-
-			//**********************************************************
-		  // NEW color scale using quantile, need to pass full dataset
-			//**********************************************************
-			//var colorScale = mapUtilities.customColorScale(mappedData.maxSpeciesCount,valueArray, zeroColor, colorArray);
 
 
 			// function called to determine color of each bentity, given d3-bound
