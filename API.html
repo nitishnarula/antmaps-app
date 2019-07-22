@@ -17,7 +17,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     
     <!-- Google Fonts Dosis -->
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Dosis">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dosis">
     
     <!-- Hover.css -->
     <link rel="stylesheet" href="css/hover-min.css">
@@ -162,10 +162,10 @@ devtools::install_bitbucket("GABIants/GABIants", password="XYZ")
                         <h3>Species</h3>
                         <p>List ant species, filtered by genus, subfamily, and/or native presence in 1 or 2 bentities.  You can use this resource to list all the species within a geographic area (<a href="#bentities">bentity</a>).</p>
                         <p class="api-examples">Examples:
-                            <a class="api-example" href="/api/v01/species.csv?subfamily=Leptanillinae"><span>http://antmaps.org/api/v01</span>/species.csv?subfamily=Leptanillinae</a>
-                            <a class="api-example" href="/api/v01/species.csv?genus=Heteroponera"><span>http://antmaps.org/api/v01</span>/species.csv?genus=Heteroponera</a>
-                            <a class="api-example" href="/api/v01/species.csv?bentity_id=BEN20335&genus=Strumigenys"><span>http://antmaps.org/api/v01</span>/species.csv?bentity_id=BEN20335&genus=Strumigenys</a>
-                            <a class="api-example" href="/api/v01/species.csv?bentity_id=BEN20053&bentity2_id=BEN20327"><span>http://antmaps.org/api/v01</span>/species.csv?bentity_id=BEN20053&bentity2_id=BEN20327</a>
+                            <a class="api-example" href="/api/v01/species.csv?subfamily=Leptanillinae"><span>https://antmaps.org/api/v01</span>/species.csv?subfamily=Leptanillinae</a>
+                            <a class="api-example" href="/api/v01/species.csv?genus=Heteroponera"><span>https://antmaps.org/api/v01</span>/species.csv?genus=Heteroponera</a>
+                            <a class="api-example" href="/api/v01/species.csv?bentity_id=BEN20335&genus=Strumigenys"><span>https://antmaps.org/api/v01</span>/species.csv?bentity_id=BEN20335&genus=Strumigenys</a>
+                            <a class="api-example" href="/api/v01/species.csv?bentity_id=BEN20053&bentity2_id=BEN20327"><span>https://antmaps.org/api/v01</span>/species.csv?bentity_id=BEN20053&bentity2_id=BEN20327</a>
                         </p>
                         <p class="arguments">Arguments (at least one is required): 
                             <ul>
@@ -185,7 +185,7 @@ devtools::install_bitbucket("GABIants/GABIants", password="XYZ")
                         <p>For a given species, return a row for each bentity where the species is present, along with the status (native, exotic, etc,) and number of records.  The antmaps.org <a href="index.html?mode=species" target="_blank">species range maps</a> are rendered from this data resource.</p>
                         <p>The <i>status</i> field (native, exotic, etc.) in the results follows the <a href="about.html#status-legend" target="_blank">this legend</a>.
                         <p class="api-examples">Examples:
-                            <a class="api-example" href="/api/v01/species-range.csv?species=Bothriomyrmex.atlantis"><span>http://antmaps.org/api/v01</span>/species-range.csv?species=Bothriomyrmex.atlantis</a>
+                            <a class="api-example" href="/api/v01/species-range.csv?species=Bothriomyrmex.atlantis"><span>https://antmaps.org/api/v01</span>/species-range.csv?species=Bothriomyrmex.atlantis</a>
                         </p>
                         <p class="arguments">Arguments:
                             <ul>
@@ -199,9 +199,9 @@ devtools::install_bitbucket("GABIants/GABIants", password="XYZ")
                         <h3>Species diversity</h3>
                         <p>View the number of native species in each bentity.  Optionally filter by a genus or subfamily, or omit any arguments for the overall species diversity.  The antmaps.org <a href="index.html?mode=diversity" target="_blank">diversity view</a> is rendered from this data resource.</p>
                         <p class="api-examples">Examples:
-                            <a class="api-example" href="/api/v01/species-per-bentity.csv"><span>http://antmaps.org/api/v01</span>/species-per-bentity.csv</a>
-                            <a class="api-example" href="/api/v01/species-per-bentity.csv?subfamily=Leptanillinae"><span>http://antmaps.org/api/v01</span>/species-per-bentity.csv?subfamily=Leptanillinae</a>
-                            <a class="api-example" href="/api/v01/species-per-bentity.csv?genus=Heteroponera"><span>http://antmaps.org/api/v01</span>/species-per-bentity.csv?genus=Heteroponera</a>
+                            <a class="api-example" href="/api/v01/species-per-bentity.csv"><span>https://antmaps.org/api/v01</span>/species-per-bentity.csv</a>
+                            <a class="api-example" href="/api/v01/species-per-bentity.csv?subfamily=Leptanillinae"><span>https://antmaps.org/api/v01</span>/species-per-bentity.csv?subfamily=Leptanillinae</a>
+                            <a class="api-example" href="/api/v01/species-per-bentity.csv?genus=Heteroponera"><span>https://antmaps.org/api/v01</span>/species-per-bentity.csv?genus=Heteroponera</a>
                         </p>
                         <p class="arguments">Arguments:
                             <ul>
@@ -217,7 +217,7 @@ devtools::install_bitbucket("GABIants/GABIants", password="XYZ")
                         <h3>Region comparison</h3>
                         <p>Given a geographic bentity as a query, return a list of all bentities which have native species in common with the query bentity, and the number of common native species for each.  The antmaps.org <a href="index.html?mode=region" target="_blank">region comparison</a> mode is rendered from this data resource.</p>
                         <p class="api-examples">Examples:
-                            <a class="api-example" href="/api/v01/species-in-common.csv?bentity_id=BEN20327"><span>http://antmaps.org/api/v01</span>/species-in-common.csv?bentity_id=BEN20327</a>
+                            <a class="api-example" href="/api/v01/species-in-common.csv?bentity_id=BEN20327"><span>https://antmaps.org/api/v01</span>/species-in-common.csv?bentity_id=BEN20327</a>
                         </p>
                         <p class="arguments">Arguments:
                             <ul>
@@ -239,9 +239,9 @@ devtools::install_bitbucket("GABIants/GABIants", password="XYZ")
                         </ol>
                         <p>The <i>status</i> field (native, exotic, etc.) in the results follows the <a href="about.html#status-legend" target="_blank">this legend</a>
                         <p class="api-examples">Examples:
-                            <a class="api-example" href="/api/v01/citations.csv?gabi_acc_number=GABI_00258203"><span>http://antmaps.org/api/v01</span>/citations.csv?gabi_acc_number=GABI_00258203</a>
-                            <a class="api-example" href="/api/v01/citations.csv?bentity_id=BEN20335&species=Acropyga.nipponensis"><span>http://antmaps.org/api/v01</span>/citations.csv?bentity_id=BEN20335&species=Acropyga.nipponensis</a>
-                            <a class="api-example" href="/api/v01/citations.csv?lat=8.406667&lon=-83.32833"><span>http://antmaps.org/api/v01</span>/citations.csv?lat=8.406667&lon=-83.32833</a>
+                            <a class="api-example" href="/api/v01/citations.csv?gabi_acc_number=GABI_00258203"><span>https://antmaps.org/api/v01</span>/citations.csv?gabi_acc_number=GABI_00258203</a>
+                            <a class="api-example" href="/api/v01/citations.csv?bentity_id=BEN20335&species=Acropyga.nipponensis"><span>https://antmaps.org/api/v01</span>/citations.csv?bentity_id=BEN20335&species=Acropyga.nipponensis</a>
+                            <a class="api-example" href="/api/v01/citations.csv?lat=8.406667&lon=-83.32833"><span>https://antmaps.org/api/v01</span>/citations.csv?lat=8.406667&lon=-83.32833</a>
                         </p>
                         <p class="arguments">Arguments:
                             <ul>
@@ -266,10 +266,10 @@ devtools::install_bitbucket("GABIants/GABIants", password="XYZ")
                         <p>The <i>status</i> field (native, exotic, etc.) in the results follows the <a href="about.html#status-legend" target="_blank">this legend</a>.
                         <p>Some records, especially pre-1990, do not have geograpic coordinates but are still associated with a bentity.  These records are excluded from queries that use latitude and longitude.</p>
                         <p class="api-examples">Examples:
-                            <a class="api-example" href="/api/v01/species-points.csv?species=Acanthognathus.brevicornis"><span>http://antmaps.org/api/v01</span>/species-points.csv?species=Acanthognathus.brevicornis</a>
-                            <a class="api-example" href="/api/v01/species-points.csv?species=Acanthognathus.brevicornis&bentity_id=BEN20396"><span>http://antmaps.org/api/v01</span>/species-points.csv?species=Acanthognathus.brevicornis&bentity_id=BEN20396</a>
-                            <a class="api-example" href="/api/v01/species-points.csv?species=Acanthognathus.brevicornis&lat=-25.576&lon=-48.889"><span>http://antmaps.org/api/v01</span>/species-points.csv?species=Acanthognathus.brevicornis&lat=-25.576&lon=-48.889</a>
-                            <a class="api-example" href="/api/v01/species-points.csv?species=Acanthognathus.brevicornis&min_lat=-27.818&max_lat=-21.969&min_lon=-48.911&max_lon=-46.48333333"><span>http://antmaps.org/api/v01</span>/species-points.csv?species=Acanthognathus.brevicornis&min_lat=-27.818&max_lat=-21.969&min_lon=-48.911&max_lon=-46.48333333</a>
+                            <a class="api-example" href="/api/v01/species-points.csv?species=Acanthognathus.brevicornis"><span>https://antmaps.org/api/v01</span>/species-points.csv?species=Acanthognathus.brevicornis</a>
+                            <a class="api-example" href="/api/v01/species-points.csv?species=Acanthognathus.brevicornis&bentity_id=BEN20396"><span>https://antmaps.org/api/v01</span>/species-points.csv?species=Acanthognathus.brevicornis&bentity_id=BEN20396</a>
+                            <a class="api-example" href="/api/v01/species-points.csv?species=Acanthognathus.brevicornis&lat=-25.576&lon=-48.889"><span>https://antmaps.org/api/v01</span>/species-points.csv?species=Acanthognathus.brevicornis&lat=-25.576&lon=-48.889</a>
+                            <a class="api-example" href="/api/v01/species-points.csv?species=Acanthognathus.brevicornis&min_lat=-27.818&max_lat=-21.969&min_lon=-48.911&max_lon=-46.48333333"><span>https://antmaps.org/api/v01</span>/species-points.csv?species=Acanthognathus.brevicornis&min_lat=-27.818&max_lat=-21.969&min_lon=-48.911&max_lon=-46.48333333</a>
                         </p>
                         <p class="arguments">Arguments:
                             <ul>
@@ -284,11 +284,11 @@ devtools::install_bitbucket("GABIants/GABIants", password="XYZ")
                         
                         <a name="bentities"></a>
                         <h3>Bentities - geographic entities</h3>
-                        <p>"Bentities" are geographic units in the GABI database - most bentities represent a country or a state/province.  You can see the bentities drawn on the map on <a href="http://antmaps.org" target="_blank">antmaps.org</a>.</p>
+                        <p>"Bentities" are geographic units in the GABI database - most bentities represent a country or a state/province.  You can see the bentities drawn on the map on <a href="https://antmaps.org" target="_blank">antmaps.org</a>.</p>
                         <p><span class="label label-primary">TO DO</span> We should upload the bentity outlines in a couple different formats (shapefiles and geoJSON?) and provide links to them here.</p>
                         <p>When querying the API, bentities should be specified by their numeric ID.  You can see a list of all bentity names and ID's with this resource:</p>
                         <p class="api-examples">
-                            <a class="api-example" href="/api/v01/bentities.csv"><span>http://antmaps.org/api/v01</span>/bentities.csv</a>
+                            <a class="api-example" href="/api/v01/bentities.csv"><span>https://antmaps.org/api/v01</span>/bentities.csv</a>
                         </p>
                         <br>
                         
@@ -299,7 +299,7 @@ devtools::install_bitbucket("GABIants/GABIants", password="XYZ")
                         <p>Search for a bentity by name, or partial name.</p>
                         <p>To make bentities less painful to deal with, this resource will let users search for partial bentity names, similar to the species search resource.</p>
                         <p class="api-examples">Examples:
-                            <a class="api-example" href="/api/v01/bentity-search.csv?q=gha"><span>http://antmaps.org/api/v01</span>/bentity-search.csv?q=gha</a>
+                            <a class="api-example" href="/api/v01/bentity-search.csv?q=gha"><span>https://antmaps.org/api/v01</span>/bentity-search.csv?q=gha</a>
                         </p>
                         <p class="arguments">Arguments:
                             <ul>
@@ -316,8 +316,8 @@ devtools::install_bitbucket("GABIants/GABIants", password="XYZ")
                         <h3>Species search</h3>
                         <p>Search for species by entering partial genus or species names.</p>
                         <p class="api-examples">Examples:
-                            <a class="api-example" href="/api/v01/species-search.csv?q=ani"><span>http://antmaps.org/api/v01</span>/species-search.csv?q=ani</a>
-                            <a class="api-example" href="/api/v01/species-search.csv?q=lep ani"><span>http://antmaps.org/api/v01</span>/species-search.csv?q=lep ani</a>
+                            <a class="api-example" href="/api/v01/species-search.csv?q=ani"><span>https://antmaps.org/api/v01</span>/species-search.csv?q=ani</a>
+                            <a class="api-example" href="/api/v01/species-search.csv?q=lep ani"><span>https://antmaps.org/api/v01</span>/species-search.csv?q=lep ani</a>
                         </p>
                         <p class="arguments">Arguments:
                             <ul>
@@ -332,8 +332,8 @@ devtools::install_bitbucket("GABIants/GABIants", password="XYZ")
                         <h3>Genera</h3>
                         <p>List ant genera, filtered by an optional subfamily.</p>
                         <p class="api-examples">Examples:
-                            <a class="api-example" href="/api/v01/genera.csv"><span>http://antmaps.org/api/v01</span>/genera.csv</a>
-                            <a class="api-example" href="/api/v01/genera.csv?subfamily=Dorylinae"><span>http://antmaps.org/api/v01</span>/genera.csv?subfamily=Dorylinae</a>
+                            <a class="api-example" href="/api/v01/genera.csv"><span>https://antmaps.org/api/v01</span>/genera.csv</a>
+                            <a class="api-example" href="/api/v01/genera.csv?subfamily=Dorylinae"><span>https://antmaps.org/api/v01</span>/genera.csv?subfamily=Dorylinae</a>
                         </p>
                         <p class="arguments">Arguments:
                             <ul>
@@ -348,7 +348,7 @@ devtools::install_bitbucket("GABIants/GABIants", password="XYZ")
                         <h3>Subfamilies</h3>
                         <p>List ant subfamilies.</p>
                         <p class="api-examples">Examples:
-                            <a class="api-example" href="/api/v01/subfamilies.csv"><span>http://antmaps.org/api/v01</span>/subfamilies.csv</a>
+                            <a class="api-example" href="/api/v01/subfamilies.csv"><span>https://antmaps.org/api/v01</span>/subfamilies.csv</a>
                         </p>
         </div>
     </section>
@@ -368,11 +368,11 @@ devtools::install_bitbucket("GABIants/GABIants", password="XYZ")
     <p>
     
     &copy;&nbsp;antmaps.org &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; 
-    Lead Investigators: <a class="footer-link" href="http://arilab.unit.oist.jp/evan-economo/">Evan Economo</a>, 
+    Lead Investigators: <a class="footer-link" href="https://arilab.unit.oist.jp/evan-economo/">Evan Economo</a>, 
     <a class="footer-link" href="https://benoitguenard.wordpress.com/">Benoit Guénard</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
     Developers: Matt Ziegler, Nitish Narula, <a class="footer-link" href="http://juliahanjanicki.com/">Julia Janicki</a></span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-    <span id="footer-attr">Powered by the <a class="footer-link" href="http://arilab.unit.oist.jp/">Economo Lab</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-    Funded by <a class="footer-link" href="http://www.oist.jp/">OIST </a> <img id="footer-logo" src="img/oist.png"/>
+    <span id="footer-attr">Powered by the <a class="footer-link" href="https://arilab.unit.oist.jp/">Economo Lab</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    Funded by <a class="footer-link" href="https://www.oist.jp/">OIST </a> <img id="footer-logo" src="img/oist.png"/>
     </p>
     
 </footer>
